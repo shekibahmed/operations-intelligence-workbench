@@ -5,12 +5,15 @@
 
 ## Current milestone
 
-**Wave 1 (Platform Skeleton) — nearly complete.** Wave 0 (M0 contract
-freeze) done. Merged so far in Wave 1: contracts v1.1, DB/persistence,
-pack validator/registry, app shell. In flight: schema-bound pack content
-(OIW-004b), seed/reset API extensions (OIW-107). Parked: OIW-105 (BLOCKED
-on OIW-107). Wave 2 (Asset Reliability vertical slice) starts when the
-board clears.
+**PAUSED by product owner (2026-08-31, machine shutdown). Wave 1 nearly
+complete.** All agent processes stopped cleanly; every worktree committed
+and clean; Postgres container stopped. TO RESUME: relaunch OIW-107 (Codex)
+in ../oiw-core per docs/tasks/OIW-107.md — use `codex exec ... </dev/null`
+(first launch stalled waiting on stdin). Then: merge OIW-107 → resume
+OIW-105 on its branch → Wave 1 exit review → cut Wave 2 vertical-slice
+packets. Merged in Wave 1 so far: contracts v1.1, DB/persistence,
+validator/registry, app shell, schema-bound packs (validate:packs = 3
+loaded / 0 invalid).
 
 ## Merged tasks
 
@@ -40,7 +43,7 @@ board clears.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | running (unblocks OIW-105) |
+| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | NOT RUNNING — first launch stalled on stdin and was killed before doing any work; worktree reset clean to latest main; relaunch on resume |
 | OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | parked | BLOCKED on OIW-107 (blocker detail: agent-run + PR #9) |
 
 Remaining merge order: OIW-107 → OIW-105 (resume on its existing branch
