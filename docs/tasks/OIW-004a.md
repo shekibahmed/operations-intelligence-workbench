@@ -1,10 +1,10 @@
 # Task OIW-004a: Synthetic Narrative Content for Three Packs
 
 ## Owner
-OpenCode (Sonnet via m900x, or Haiku for bulk generation)
+Claude Code (Sonnet, m900x account)
 
 ## Branch
-`agent/opencode/OIW-004a-narrative-fixtures`
+`agent/claude/OIW-004a-narrative-fixtures`
 
 ## Worktree
 `../oiw-packs`

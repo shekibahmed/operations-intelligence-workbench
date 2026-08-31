@@ -21,7 +21,7 @@ committed, reviewer subagents defined.
 |---|---|---|---|---|
 | OIW-001 | Codex (GPT-5.2-Codex, high) | `agent/codex/OIW-001-contracts` | `../oiw-core` | ready to launch |
 | OIW-003 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-003-ux-spec` | `../oiw-ux` | ready to launch |
-| OIW-004a | OpenCode (Sonnet, m900x) | `agent/opencode/OIW-004a-narrative-fixtures` | `../oiw-packs` | ready to launch |
+| OIW-004a | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004a-narrative-fixtures` | `../oiw-packs` | ready to launch |
 | OIW-005 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-005-quality-plan` | `../oiw-quality` | ready to launch |
 
 ## Frozen contracts
@@ -43,6 +43,10 @@ None.
 - GitHub branch protection is unavailable on this plan for private repos;
   until M3, `main` is protected by convention — merges only via PR, performed
   only by the lead integrator. Enable real protection when the repo goes public.
+- Harness note: OpenCode cannot authenticate against a Claude Max
+  subscription (Anthropic restricts sub sign-in to Claude Code), so the packs
+  track runs on Claude Code (m900x account) instead. OpenCode/cursor-agent
+  remain available as overflow workers with other providers if needed.
 
 ## Next integration sequence
 
