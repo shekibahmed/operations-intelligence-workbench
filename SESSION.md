@@ -45,15 +45,14 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-109 | Codex (high) | `agent/codex/OIW-109-event-defs-seed-entities` | `../oiw-core` | running (unblocks OIW-501; contracts v1.3 + seed entities) |
-| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED on OIW-109 (PR #15 holds blocker record: no event-definition contract, no occurredAt mapping, no seeded entities) |
+| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | `../oiw-core` | resumed (OIW-109 merged: contracts v1.3, eventDefinitions catalogue, 35 seeded entities incl. A-142/A-140) |
 
 
 Merged this batch: OIW-210 (PR #14, security PASS), OIW-108 (PR #13, contracts v1.2), OIW-301 (PR #12, test-reviewer PASS on all 9 criteria incl. smoke parity + injection inertness). Merge order for batch B: by completion (no shared paths). After batch B: batch C = case/action/decision/approval engines (Codex, executes the pending rule outcomes via the ActionExecutor seam) ∥ case+decision UI, then dashboards wiring + north-star e2e (M1).
 
 ## Frozen contracts
 
-`packages/contracts/` frozen at **v1.2** (v1.1 + additive OIW-108 PR #13:
+`packages/contracts/` frozen at **v1.3** (v1.2 + additive OIW-109: EventDefinition w/ occurredAt mapping, SeedEntity; ADR-010). Previously (v1.1 + additive OIW-108 PR #13:
 ObservationSchemaDefinition, validateObservationValue; ADR-009). Previously (v1.0 PR #3 + additive PR #5:
 negated observation status, alternativeCandidates, conflicting review
 state). Covers: canonical domain schemas (14 objects), pack manifest,
