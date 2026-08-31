@@ -31,7 +31,7 @@ export default async function AuditExplorerPage({
   const highlightedEntryId = Array.isArray(rawEntryParam) ? rawEntryParam[0] : rawEntryParam;
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="audit"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

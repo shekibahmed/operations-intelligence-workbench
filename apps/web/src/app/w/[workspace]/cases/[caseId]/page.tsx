@@ -41,7 +41,7 @@ export default async function CaseDetailPage({
   const { caseRecord, relatedEntities, evidence, timeline, signals, actionItems, decisions, approvals, closureRequirements } = view;
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="cases-detail"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

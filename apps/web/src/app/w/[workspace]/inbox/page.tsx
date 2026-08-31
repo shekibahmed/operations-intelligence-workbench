@@ -35,7 +35,7 @@ export default async function ArtifactInboxPage({
   const rows = mapArtifactsToInboxRows(artifacts, sources, observations, base);
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="inbox"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

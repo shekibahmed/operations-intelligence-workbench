@@ -13,6 +13,7 @@ export function WorkspaceShell({
   workspace,
   packName,
   packId,
+  section,
   lens,
   sessionMinutesRemaining,
   itemLabel,
@@ -23,6 +24,13 @@ export function WorkspaceShell({
   workspace: string;
   packName: string;
   packId: string;
+  /**
+   * The section of the page rendering this shell (e.g. "audit",
+   * "cases-detail", "technical-rules"). Passed down instead of reading
+   * usePathname() so nav/breadcrumb active state always matches the
+   * server-rendered tree during route transitions (hydration-safe).
+   */
+  section: string;
   lens: Lens;
   sessionMinutesRemaining: number;
   itemLabel?: string | undefined;
@@ -39,10 +47,10 @@ export function WorkspaceShell({
       <TopBar workspace={workspace} packName={packName} packId={packId} lens={lens} sessionMinutesRemaining={sessionMinutesRemaining} />
       <div className="flex flex-1 flex-col xl:flex-row">
         <MobileNavDrawer>
-          <PrimaryNav workspace={workspace} lens={lens} defaultArtifactId={defaultArtifactId} defaultRuleId={defaultRuleId} />
+          <PrimaryNav workspace={workspace} section={section} lens={lens} defaultArtifactId={defaultArtifactId} defaultRuleId={defaultRuleId} />
         </MobileNavDrawer>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          <Breadcrumbs workspace={workspace} packName={packName} lens={lens} itemLabel={itemLabel} />
+          <Breadcrumbs workspace={workspace} packName={packName} section={section} lens={lens} itemLabel={itemLabel} />
           <main id="main-content" className="flex flex-1 flex-col gap-4">
             {children}
           </main>

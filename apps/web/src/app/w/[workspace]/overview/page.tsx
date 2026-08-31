@@ -33,7 +33,7 @@ export default async function LeadershipOverviewPage({
   const values = packEntry !== undefined ? await evaluateMetrics(packEntry, getRepositories(), workspace.id, base, labels) : undefined;
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="overview"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

@@ -1,7 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-
 import type { Lens } from "@/lib/lens";
 import { workspaceBase, withLens } from "@/lib/routes";
 
@@ -18,16 +16,18 @@ interface NavLink {
  */
 export function PrimaryNav({
   workspace,
+  section,
   lens,
   defaultArtifactId,
   defaultRuleId,
 }: {
   workspace: string;
+  /** Section of the page rendering the shell — tree-consistent, unlike usePathname() mid-transition. */
+  section: string;
   lens: Lens;
   defaultArtifactId: string;
   defaultRuleId: string;
 }) {
-  const pathname = usePathname();
   const base = workspaceBase(workspace);
 
   // Nav labels are structural/procedural copy, never pack-configurable
@@ -49,11 +49,11 @@ export function PrimaryNav({
     { label: "Rules", href: `${base}/technical/rules/${defaultRuleId}` },
   ];
 
-  function isActive(section: string) {
-    return pathname === `${base}/${section}` || pathname.startsWith(`${base}/${section}/`);
+  function isActive(linkSection: string) {
+    return section === linkSection || section.startsWith(`${linkSection}-`);
   }
 
-  const technicalActive = pathname.startsWith(`${base}/technical`);
+  const technicalActive = section.startsWith("technical");
 
   return (
     <nav aria-label="Primary" className="flex flex-col gap-1">

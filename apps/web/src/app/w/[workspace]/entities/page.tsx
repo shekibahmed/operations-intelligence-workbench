@@ -54,7 +54,7 @@ export default async function EntityListPage({
   ];
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="entities"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

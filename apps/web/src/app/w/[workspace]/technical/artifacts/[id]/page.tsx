@@ -98,7 +98,7 @@ export default async function TechnicalArtifactInspectorPage({
   const evidenceRanges = evidenceHighlightRanges(observations, segmentsById);
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="technical-artifacts"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

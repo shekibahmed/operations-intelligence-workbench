@@ -78,7 +78,7 @@ export default async function DecisionCentrePage({
   );
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="decisions"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

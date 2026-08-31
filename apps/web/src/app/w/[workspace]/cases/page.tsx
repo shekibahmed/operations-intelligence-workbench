@@ -53,7 +53,7 @@ export default async function CaseListPage({
   ];
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="cases"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

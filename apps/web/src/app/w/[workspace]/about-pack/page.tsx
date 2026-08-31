@@ -29,7 +29,7 @@ export default async function AboutPackPage({
   const { workspace, labels } = await getWorkspaceContext(slug);
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="about-pack"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

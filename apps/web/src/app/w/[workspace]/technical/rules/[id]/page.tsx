@@ -40,7 +40,7 @@ export default async function TechnicalRuleTracePage({
   const linkedAuditEntryIds = [...new Set([view.evaluation.id, ...outcomes.map((outcome) => outcome.auditEntryId).filter((entryId): entryId is string => entryId !== null)])];
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="technical-rules"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

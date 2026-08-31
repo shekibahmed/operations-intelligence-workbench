@@ -72,7 +72,7 @@ export default async function ReviewQueuePage({
   );
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="review"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}

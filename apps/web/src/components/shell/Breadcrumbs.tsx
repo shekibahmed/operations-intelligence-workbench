@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import type { Lens } from "@/lib/lens";
@@ -28,32 +27,36 @@ const SECTION_LABEL: Record<string, string> = {
 export function Breadcrumbs({
   workspace,
   packName,
+  section,
   lens,
   itemLabel,
 }: {
   workspace: string;
   packName: string;
+  /** Section of the page rendering the shell — tree-consistent, unlike usePathname() mid-transition. */
+  section: string;
   lens: Lens;
   itemLabel?: string | undefined;
 }) {
-  const pathname = usePathname();
   const base = workspaceBase(workspace);
-  const rest = pathname.startsWith(base) ? pathname.slice(base.length + 1) : "";
-  const segments = rest.split("/").filter(Boolean);
+  // "cases-detail" → base section "cases" with a detail crumb; technical
+  // sections are "technical-artifacts" / "technical-rules".
+  const [baseSection, detail] = section.startsWith("technical-")
+    ? ["technical", section.slice("technical-".length)]
+    : [section.replace(/-detail$/, ""), section.endsWith("-detail") ? "detail" : undefined];
 
   const crumbs: Crumb[] = [{ label: packName, href: withLens(`${base}/overview`, lens) }];
 
-  if (segments[0] === "technical") {
+  if (baseSection === "technical") {
     crumbs.push({ label: "Technical" });
-    const kind = segments[1] === "rules" ? "Rules" : "Artifacts";
-    crumbs.push({ label: kind });
+    crumbs.push({ label: detail === "rules" ? "Rules" : "Artifacts" });
     if (itemLabel) crumbs.push({ label: itemLabel });
-  } else if (segments[0] && segments[0] !== "overview") {
-    const sectionLabel = SECTION_LABEL[segments[0]] ?? segments[0];
-    const hasDetail = segments.length > 1;
+  } else if (baseSection && baseSection !== "overview") {
+    const sectionLabel = SECTION_LABEL[baseSection] ?? baseSection;
+    const hasDetail = detail === "detail";
     crumbs.push({
       label: sectionLabel,
-      href: hasDetail ? withLens(`${base}/${segments[0]}`, lens) : undefined,
+      href: hasDetail ? withLens(`${base}/${baseSection}`, lens) : undefined,
     });
     if (hasDetail && itemLabel) crumbs.push({ label: itemLabel });
   }

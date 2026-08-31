@@ -36,7 +36,7 @@ export default async function EntityDetailPage({
   const { entity, relatedArtifacts, events, openCases, closedCases, patternSignals, relatedEntities } = view;
 
   return (
-    <WorkspaceShell
+    <WorkspaceShell section="entities-detail"
       workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
