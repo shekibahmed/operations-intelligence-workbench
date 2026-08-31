@@ -96,9 +96,13 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
     ...manifest.observationSchemas,
     ...manifest.caseDefinitions,
     ...manifest.evaluationSets,
-    manifest.tours.leadership,
-    ...(manifest.tours.operations !== undefined ? [manifest.tours.operations] : []),
-    ...(manifest.tours.technical !== undefined ? [manifest.tours.technical] : []),
+    ...(manifest.tours !== undefined
+      ? [
+          manifest.tours.leadership,
+          ...(manifest.tours.operations !== undefined ? [manifest.tours.operations] : []),
+          ...(manifest.tours.technical !== undefined ? [manifest.tours.technical] : []),
+        ]
+      : []),
   ];
   for (const relativePath of genericJsonPaths) {
     const result = await readJsonFile(resolve(packDirectory, relativePath), relativePath);

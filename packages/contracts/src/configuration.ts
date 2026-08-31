@@ -267,13 +267,16 @@ export const ScenarioPackManifestSchema = z
       })
       .strict(),
     evaluationSets: z.array(RelativePathSchema).min(1),
+    // Optional until the tour framework lands (amendment A7 defers tours;
+    // OIW-004b packs ship without them).
     tours: z
       .object({
         leadership: RelativePathSchema,
         operations: RelativePathSchema.optional(),
         technical: RelativePathSchema.optional(),
       })
-      .strict(),
+      .strict()
+      .optional(),
     defaultLens: z.enum(["leadership", "operations", "technical"]),
     defaultFixtureSet: z.enum(["smoke", "demo", "edge-cases"]),
   })
