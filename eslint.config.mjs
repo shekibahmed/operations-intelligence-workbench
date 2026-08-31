@@ -3,12 +3,12 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "coverage/**"],
+    ignores: ["**/dist/**", "**/node_modules/**", "coverage/**", "**/.next/**", "apps/web/playwright-report/**", "apps/web/test-results/**"],
   },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ["**/*.ts"],
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
