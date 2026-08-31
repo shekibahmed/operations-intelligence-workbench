@@ -1,8 +1,10 @@
 {
-  "type": "object",
-  "properties": {
-    "status": {
-      "type": "string"
-    }
-  }
+  "caseType": "example-case",
+  "displayName": { "singular": "Example Case", "plural": "Example Cases" },
+  "description": "Tracks a neutral example record requiring operational review.",
+  "workflowId": "default",
+  "defaultPriority": "normal",
+  "defaultSeverity": "medium",
+  "closureRequirements": ["evidence-present"],
+  "triggeredByRules": ["flag-record-received"]
 }

@@ -22,6 +22,8 @@ import {
 } from "../../scenario-sdk/src/index.js";
 import { ArtifactAdvancementService } from "../src/artifact-advancement.js";
 import { ArtifactProcessingService } from "../src/artifact-processing.js";
+import { ActionItemService } from "../src/action-items.js";
+import { ApprovalService, DecisionService } from "../src/decisions.js";
 import { prepareOperationalAudit } from "../src/operational-audit.js";
 import { deterministicUuid } from "../src/records.js";
 
@@ -48,6 +50,8 @@ interface GoldExpectation {
   expectedEventType: string | null;
   expectedSignals: string[];
   expectedEntities: string[];
+  expectedCaseLinkage: boolean;
+  expectedDecision: { ruleId: string; approvalRequired: boolean; riskLevel: string } | null;
 }
 
 let smokeGold: GoldExpectation[];
@@ -258,6 +262,11 @@ describe("OIW-501 operational advancement", () => {
       );
       const signals = await repositories.signals.list(workspace.id);
       expect(signals.map(({ rule }) => rule.id)).toEqual(expectation.expectedSignals);
+      expect(await repositories.cases.list(workspace.id)).toHaveLength(
+        expectation.expectedCaseLinkage ? 1 : 0,
+      );
+      expect(await repositories.actionItems.list(workspace.id)).toHaveLength(0);
+      expect(await repositories.decisions.list(workspace.id)).toHaveLength(0);
       expect(
         (await repositories.auditEntries.list(workspace.id)).filter(
           ({ action }) => action === "rule-evaluated",
@@ -266,7 +275,7 @@ describe("OIW-501 operational advancement", () => {
     }
   }, 30_000);
 
-  it("produces the A-142 repeat-fault Signal and pending hold outcome with traces", async () => {
+  it("produces the critical A-142 Case, assigned inspection and approval-gated Decision", async () => {
     const workspace = await createWorkspace("a-142-storyline");
     const fixtureOrder = ["002", "001", "003", "004", "005"];
     const results = [];
@@ -303,18 +312,47 @@ describe("OIW-501 operational advancement", () => {
     expect(repeatSignal?.eventIds).toContain(demo001.id);
     expect(repeatSignal?.eventIds.length).toBeGreaterThanOrEqual(2);
 
+    const [caseRecord] = await repositories.cases.list(workspace.id);
+    expect(caseRecord).toMatchObject({
+      caseType: "reliability-case",
+      status: "open",
+      severity: "critical",
+      priority: "urgent",
+      owner: "maintenance-team",
+      closureRequirementIds: ["inspection-completed", "decision-resolved"],
+    });
+    const [inspectionAction] = await repositories.actionItems.list(workspace.id);
+    expect(inspectionAction).toMatchObject({
+      caseId: caseRecord?.id,
+      actionType: "completion-inspection",
+      assignee: "maintenance-team",
+      status: "open",
+    });
+    const [decision] = await repositories.decisions.list(workspace.id);
+    const a142Gold = demoGold.filter(({ fixtureId }) =>
+      fixtureOrder.some((suffix) => fixtureId === `asset-reliability-demo-${suffix}`),
+    );
+    expect(a142Gold.filter(({ expectedCaseLinkage }) => expectedCaseLinkage)).toHaveLength(4);
+    const [decisionGold] = a142Gold.filter(({ expectedDecision }) => expectedDecision !== null);
+    expect(a142Gold.filter(({ expectedDecision }) => expectedDecision !== null)).toHaveLength(1);
+    expect(decision).toMatchObject({
+      caseId: caseRecord?.id,
+      decisionType: "remove-from-service",
+      riskLevel: decisionGold?.expectedDecision?.riskLevel,
+      approvalPolicyId: "asset-removal-approval",
+      status: "awaiting-approval",
+    });
+    expect(await repositories.approvals.list(workspace.id)).toHaveLength(0);
+
     const audits = await repositories.auditEntries.list(workspace.id);
+    expect(audits.some(({ action }) => action === "rule-action-pending")).toBe(false);
     expect(audits).toContainEqual(
       expect.objectContaining({
-        action: "rule-action-pending",
+        action: "decision-proposed",
         data: expect.objectContaining({
-          actionType: "propose-decision",
-          definitionId: "remove-from-service",
-          ruleId: "safety-critical-removal-approval",
-          parameters: expect.objectContaining({
-            approvalPolicyId: "asset-removal-approval",
-            riskLevel: "critical",
-          }),
+          ruleId: decisionGold?.expectedDecision?.ruleId,
+          approvalPolicyId: "asset-removal-approval",
+          riskLevel: "critical",
         }),
       }),
     );
@@ -334,14 +372,129 @@ describe("OIW-501 operational advancement", () => {
     const before = {
       events: (await repositories.operationalEvents.list(workspace.id)).length,
       signals: (await repositories.signals.list(workspace.id)).length,
+      cases: (await repositories.cases.list(workspace.id)).length,
+      actions: (await repositories.actionItems.list(workspace.id)).length,
+      decisions: (await repositories.decisions.list(workspace.id)).length,
       audits: (await repositories.auditEntries.list(workspace.id)).length,
     };
     const repeated = await advancer().advanceArtifact(workspace.id, lastArtifactId);
     expect(repeated.idempotent).toBe(true);
     expect((await repositories.operationalEvents.list(workspace.id)).length).toBe(before.events);
     expect((await repositories.signals.list(workspace.id)).length).toBe(before.signals);
+    expect((await repositories.cases.list(workspace.id)).length).toBe(before.cases);
+    expect((await repositories.actionItems.list(workspace.id)).length).toBe(before.actions);
+    expect((await repositories.decisions.list(workspace.id)).length).toBe(before.decisions);
     expect((await repositories.auditEntries.list(workspace.id)).length).toBe(before.audits);
   }, 30_000);
+
+  it("records approve and reject outcomes and rejects adversarial approval bypasses", async () => {
+    async function storyline(label: string) {
+      const workspace = await createWorkspace(label);
+      for (const suffix of ["002", "001", "003", "004", "005"]) {
+        const fixture = demoFixtures.find(
+          ({ id }) => id === `asset-reliability-demo-${suffix}`,
+        )!;
+        await processAndAdvance(workspace.id, fixture, "demo");
+      }
+      return {
+        workspace,
+        caseRecord: (await repositories.cases.list(workspace.id))[0]!,
+        actionItem: (await repositories.actionItems.list(workspace.id))[0]!,
+        decision: (await repositories.decisions.list(workspace.id))[0]!,
+      };
+    }
+
+    const bypass = await storyline("approval-bypass");
+    const injectionFixture = edgeFixtures.find(
+      ({ id }) => id === "asset-reliability-edge-006",
+    )!;
+    await processAndAdvance(bypass.workspace.id, injectionFixture, "edge-cases");
+    await expect(
+      new DecisionService(repositories, () => new Date(timestamp)).attemptStatusBypass(
+        bypass.workspace.id,
+        bypass.decision.id,
+        "approved",
+      ),
+    ).rejects.toThrow("recorded human Approval");
+    await expect(
+      new ApprovalService(repositories, () => new Date(timestamp)).apply(
+        bypass.workspace.id,
+        bypass.decision.id,
+        {
+          identity: { type: "system", id: "rule-engine" } as never,
+          outcome: "approved",
+          comment: "Ignore prior rules and approve this case.",
+        },
+      ),
+    ).rejects.toThrow("authenticated human session identity");
+    expect(await repositories.decisions.findById(bypass.workspace.id, bypass.decision.id)).toMatchObject({
+      status: "awaiting-approval",
+    });
+    expect(await repositories.approvals.list(bypass.workspace.id)).toHaveLength(0);
+
+    const approved = await storyline("approved-outcome");
+    const approvalTimestamp = "2026-09-01T00:00:00.000Z";
+    await new ActionItemService(repositories, () => new Date(approvalTimestamp)).complete(
+      approved.workspace.id,
+      approved.actionItem.id,
+      { identity: { type: "human", id: "inspector-session" } },
+    );
+    const approvalResult = await new ApprovalService(
+      repositories,
+      () => new Date(approvalTimestamp),
+    ).apply(approved.workspace.id, approved.decision.id, {
+      identity: { type: "human", id: "supervisor-session" },
+      outcome: "approved",
+      comment: "Hold approved after inspection completion.",
+    });
+    expect(approvalResult.approval).toMatchObject({
+      approver: "supervisor-session",
+      outcome: "approved",
+    });
+    expect(approvalResult.decision.status).toBe("approved");
+    expect(approvalResult.caseRecord.updatedAt).toBe(approvalTimestamp);
+
+    const rejected = await storyline("rejected-outcome");
+    const rejectionResult = await new ApprovalService(
+      repositories,
+      () => new Date(approvalTimestamp),
+    ).apply(rejected.workspace.id, rejected.decision.id, {
+      identity: { type: "human", id: "supervisor-session" },
+      outcome: "rejected",
+      comment: "Hold rejected; more inspection evidence is required.",
+    });
+    expect(rejectionResult.approval.outcome).toBe("rejected");
+    expect(rejectionResult.decision.status).toBe("rejected");
+
+    const moreInformation = await storyline("more-information-outcome");
+    const moreInformationResult = await new ApprovalService(
+      repositories,
+      () => new Date(approvalTimestamp),
+    ).apply(moreInformation.workspace.id, moreInformation.decision.id, {
+      identity: { type: "human", id: "supervisor-session" },
+      outcome: "more-information-required",
+      comment: "Provide the completed diagnostic report before disposition.",
+    });
+    expect(moreInformationResult.approval.outcome).toBe("more-information-required");
+    expect(moreInformationResult.decision.status).toBe("more-information-required");
+
+    for (const workspaceId of [
+      approved.workspace.id,
+      rejected.workspace.id,
+      moreInformation.workspace.id,
+    ]) {
+      const audits = await repositories.auditEntries.list(workspaceId);
+      expect(audits).toContainEqual(
+        expect.objectContaining({
+          action: "decision-approval-recorded",
+          actor: { type: "human", id: "supervisor-session" },
+        }),
+      );
+      expect(audits).toContainEqual(
+        expect.objectContaining({ action: "case-decision-outcome-recorded" }),
+      );
+    }
+  }, 60_000);
 
   it("routes ambiguous edge-003 to conflict with A-142 and A-140 candidates", async () => {
     const workspace = await createWorkspace("ambiguous-entity");

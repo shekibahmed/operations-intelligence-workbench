@@ -8,6 +8,8 @@
   "workflowId": "default",
   "defaultPriority": "normal",
   "defaultSeverity": "medium",
+  "defaultOwner": "maintenance-team",
+  "defaultDueInHours": 120,
   "closureRequirements": [
     "inspection-completed",
     "decision-resolved"

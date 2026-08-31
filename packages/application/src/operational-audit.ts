@@ -26,6 +26,7 @@ export async function prepareOperationalAudit(
     occurredAt: string;
     action: string;
     actorId: string;
+    actorType?: AuditEntry["actor"]["type"];
     subject: AuditEntry["subject"];
     cause: string;
     data: Record<string, JsonValue>;
@@ -37,7 +38,7 @@ export async function prepareOperationalAudit(
     workspaceId: input.workspaceId,
     occurredAt: nextTimestamp(input.occurredAt, entries),
     action: input.action,
-    actor: { type: "system", id: input.actorId },
+    actor: { type: input.actorType ?? "system", id: input.actorId },
     subject: input.subject,
     cause: input.cause,
     data: input.data,

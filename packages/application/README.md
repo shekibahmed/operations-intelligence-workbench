@@ -51,11 +51,42 @@ execution. Ambiguous Entity candidates become `conflicting` Observations and
 cannot silently form an Event. Event, Signal and action IDs are deterministic,
 and every rule evaluation is persisted as a hash-linked Audit Entry.
 
-The service supplies `create-signal` and `flag-review` executors. Until the
-batch-C operational engines land, `create-case`, `create-action` and
-`propose-decision` persist idempotent `rule-action-pending` outcomes. Callers
-may provide same-type executor overrides to activate those outcomes later
-without changing the rule engine or orchestration.
+The service supplies executors for the full closed action catalogue. Fired
+rules create Signals, reconcile typed pack-defined Cases, assign Action Items,
+propose Decisions and route source records to review. IDs are deterministic,
+so synchronous retry does not duplicate operational state. The generic
+executor registry still accepts same-type overrides for bounded tests or later
+orchestration changes without coupling the pure rule engine to persistence.
+
+## Cases and workflow transitions
+
+`CaseLifecycleService` consumes the validated `CaseDefinition` catalogue and
+its referenced Workflow. Triggering rules create or reconcile one Case per
+case type and related Entity; priority, severity, owner and due time come from
+pack defaults or declarative rule parameters. Signal severity can only raise,
+not silently lower, the Case priority/severity.
+
+`transitionCase` accepts only a declared transition from the current state.
+Guards run through the injected fact-catalogue evaluator, approval-gated
+transitions require both an approved Decision and its matching Approval row,
+and terminal transitions evaluate all configured closure requirements. Every
+successful transition appends a causal Audit Entry. Terminal Cases reject all
+further transitions.
+
+## Action Items, Decisions and Approvals
+
+`ActionItemService` creates assigned work from rule outcomes and records
+completion with optional, workspace-validated evidence segment references.
+`DecisionService` persists a proposal and advances it only to
+`awaiting-approval`; direct status changes, including service-level attempts to
+set `approved`, are prohibited.
+
+`ApprovalService.apply` is the sole application path for a Decision outcome.
+It requires a human session identity, inserts the separate Approval record and
+only then updates the Decision to `approved`, `rejected` or
+`more-information-required`. The database boundary independently rejects an
+approved Decision with no matching Approval. Both the Decision and its Case
+receive append-only outcome audits.
 
 ## Local commands
 

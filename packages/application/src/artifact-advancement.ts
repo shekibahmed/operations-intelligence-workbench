@@ -2,9 +2,12 @@ import { createHash } from "node:crypto";
 
 import type {
   ActionItem,
+  Approval,
   Artifact,
+  ArtifactSegment,
   AuditEntry,
   Case,
+  CaseDefinition,
   Decision,
   Entity,
   EventDefinition,
@@ -24,6 +27,7 @@ import {
   type OperationalAuditRepository,
 } from "./operational-audit.js";
 import { stableJson } from "./records.js";
+import { OperationalOutcomeCoordinator } from "./operational-outcome-executors.js";
 import {
   CreateSignalActionExecutor,
   FlagReviewActionExecutor,
@@ -50,6 +54,7 @@ export interface ArtifactAdvancementRepositories {
       status: Artifact["processingStatus"],
     ): Promise<Artifact | null>;
   };
+  artifactSegments: ScopedRepository<ArtifactSegment>;
   entities: ScopedRepository<Entity>;
   observations: ScopedRepository<Observation> & {
     listByArtifact(workspaceId: string, artifactId: string): Promise<Observation[]>;
@@ -62,9 +67,16 @@ export interface ArtifactAdvancementRepositories {
   };
   operationalEvents: ScopedRepository<OperationalEvent>;
   signals: ScopedRepository<Signal>;
-  cases: ScopedRepository<Case>;
-  actionItems: ScopedRepository<ActionItem>;
-  decisions: ScopedRepository<Decision>;
+  cases: ScopedRepository<Case> & {
+    update(workspaceId: string, id: string, value: Case): Promise<Case | null>;
+  };
+  actionItems: ScopedRepository<ActionItem> & {
+    update(workspaceId: string, id: string, value: ActionItem): Promise<ActionItem | null>;
+  };
+  decisions: ScopedRepository<Decision> & {
+    update(workspaceId: string, id: string, value: Decision): Promise<Decision | null>;
+  };
+  approvals: ScopedRepository<Approval>;
   auditEntries: ScopedRepository<AuditEntry> & OperationalAuditRepository;
 }
 
@@ -72,6 +84,7 @@ export interface ArtifactAdvancementPack {
   manifest: { id: string; version: string };
   observationSchemas: ReadonlyMap<string, ObservationSchemaDefinition>;
   eventDefinitions: ReadonlyMap<string, EventDefinition>;
+  caseDefinitions: ReadonlyMap<string, CaseDefinition>;
   workflows: Record<string, WorkflowDefinition>;
   rules: readonly RuleDefinition[];
 }
@@ -139,6 +152,7 @@ export class ArtifactAdvancementService {
   private readonly entityResolution: EntityResolutionService;
   private readonly eventAssembly: EventAssemblyService;
   private readonly actionExecutors: RuleActionExecutorRegistry;
+  private readonly outcomeCoordinator: OperationalOutcomeCoordinator;
 
   constructor(
     private readonly repositories: ArtifactAdvancementRepositories,
@@ -149,6 +163,14 @@ export class ArtifactAdvancementService {
   ) {
     this.entityResolution = new EntityResolutionService(repositories, clock);
     this.eventAssembly = new EventAssemblyService(repositories, clock);
+    this.outcomeCoordinator = new OperationalOutcomeCoordinator(
+      repositories,
+      ruleEvaluator,
+      clock,
+    );
+    const operationalExecutors = this.outcomeCoordinator.executors((workspaceId) =>
+      this.packResolver.resolve(workspaceId),
+    );
     this.actionExecutors = new RuleActionExecutorRegistry(
       [
         new CreateSignalActionExecutor(repositories, clock),
@@ -157,7 +179,7 @@ export class ArtifactAdvancementService {
         new PendingRuleOutcomeExecutor("create-action", repositories.auditEntries, clock),
         new PendingRuleOutcomeExecutor("propose-decision", repositories.auditEntries, clock),
       ],
-      executorOverrides,
+      [...operationalExecutors, ...executorOverrides],
     );
   }
 
@@ -241,6 +263,22 @@ export class ArtifactAdvancementService {
         },
         idempotencyKey: `rule:${evaluationKey(trace)}`,
       });
+      const firstAction = trace.firedActions[0];
+      const triggeredCases =
+        firstAction === undefined
+          ? []
+          : await this.outcomeCoordinator.ensureTriggeredCases(
+              {
+                workspaceId,
+                event: eventAssembly.event,
+                observations: entityResolution.observations,
+                rule,
+                trace,
+                action: firstAction,
+                actionIndex: 0,
+              },
+              pack,
+            );
       for (const [actionIndex, action] of trace.firedActions.entries()) {
         actionResults.push(
           await this.actionExecutors.execute({
@@ -254,6 +292,11 @@ export class ArtifactAdvancementService {
           }),
         );
       }
+      await this.outcomeCoordinator.reconcileCases(
+        workspaceId,
+        eventAssembly.event,
+        triggeredCases,
+      );
     }
 
     await appendOperationalAuditOnce(this.repositories.auditEntries, {

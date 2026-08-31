@@ -10,6 +10,7 @@ export { loadPackFromDirectory } from "./loader.js";
 export type { LoadedScenarioPack, PackLoadResult } from "./loader.js";
 export { getEventDefinition, validateEventDefinitionAmbiguity } from "./events.js";
 export type { EventDefinitionSource } from "./events.js";
+export { getCaseDefinition, getCaseDefinitionsForRule } from "./cases.js";
 export { getObservationSchema, validateObservationValue } from "./observations.js";
 export type {
   ObservationValueValidationIssue,

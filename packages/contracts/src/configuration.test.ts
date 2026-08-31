@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CaseDefinitionSchema,
   RuleDefinitionSchema,
   ScenarioPackManifestSchema,
   ScenarioPackSchema,
@@ -123,6 +124,41 @@ describe("Workflow contract", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues[0]?.path).toEqual(["transitions", 0, "to"]);
+    }
+  });
+});
+
+describe("Case definition contract", () => {
+  const validCaseDefinition = {
+    caseType: "example-case",
+    displayName: { singular: "Example Case", plural: "Example Cases" },
+    description: "Tracks one neutral operational issue.",
+    workflowId: "default-workflow",
+    defaultPriority: "normal",
+    defaultSeverity: "medium",
+    closureRequirements: ["review-complete"],
+    triggeredByRules: ["review-threshold"],
+  } as const;
+
+  it("accepts neutral defaults and supplies nullable ownership and due-date defaults", () => {
+    expect(CaseDefinitionSchema.parse(validCaseDefinition)).toMatchObject({
+      ...validCaseDefinition,
+      defaultOwner: null,
+      defaultDueInHours: null,
+    });
+  });
+
+  it("rejects duplicate closure requirements and triggering rules", () => {
+    const result = CaseDefinitionSchema.safeParse({
+      ...validCaseDefinition,
+      closureRequirements: ["review-complete", "review-complete"],
+      triggeredByRules: ["review-threshold", "review-threshold"],
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues.map((issue) => issue.path.join("."))).toEqual(
+        expect.arrayContaining(["closureRequirements", "triggeredByRules"]),
+      );
     }
   });
 });

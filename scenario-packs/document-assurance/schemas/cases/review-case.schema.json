@@ -5,6 +5,8 @@
   "workflowId": "default",
   "defaultPriority": "normal",
   "defaultSeverity": "medium",
+  "defaultOwner": "authorised-reviewer",
+  "defaultDueInHours": 72,
   "closureRequirements": [
     "decision-resolved",
     "evidence-present"

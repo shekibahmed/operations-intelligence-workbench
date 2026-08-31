@@ -2,10 +2,12 @@ import { access } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
+  CaseDefinitionSchema,
   EventDefinitionSchema,
   ObservationSchemaDefinitionSchema,
   SeedEntityCatalogueSchema,
   WorkflowDefinitionSchema,
+  type CaseDefinition,
   type EventDefinition,
   type ObservationSchemaDefinition,
   type RuleDefinition,
@@ -29,6 +31,7 @@ export interface LoadedScenarioPack {
   labels: Record<string, unknown>;
   observationSchemas: ReadonlyMap<string, ObservationSchemaDefinition>;
   eventDefinitions: ReadonlyMap<string, EventDefinition>;
+  caseDefinitions: ReadonlyMap<string, CaseDefinition>;
   seedEntities: readonly SeedEntity[];
   workflows: Record<string, WorkflowDefinition>;
   rules: RuleDefinition[];
@@ -108,7 +111,6 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
 
   const genericJsonPaths = [
     ...manifest.entityTypes.map((entityType) => entityType.schema),
-    ...manifest.caseDefinitions,
     ...manifest.evaluationSets,
     ...(manifest.tours !== undefined
       ? [
@@ -285,6 +287,7 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
 
   const declaredEventTypeIds = new Set(manifest.eventTypes.map((eventType) => eventType.id));
   const rules: RuleDefinition[] = [];
+  const ruleSources: Array<{ rule: RuleDefinition; path: string; index: number }> = [];
   for (const relativePath of manifest.rules) {
     const result = await readAndValidateJsonFile(resolve(packDirectory, relativePath), relativePath, RuleFileSchema);
     if (!result.ok) {
@@ -292,7 +295,79 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       continue;
     }
     rules.push(...result.value);
+    result.value.forEach((rule, index) => ruleSources.push({ rule, path: relativePath, index }));
     errors.push(...validateRuleEventTypes(result.value, declaredEventTypeIds, relativePath));
+  }
+
+  const caseDefinitions = new Map<string, CaseDefinition>();
+  const ruleIds = new Set(rules.map((rule) => rule.id));
+  for (const relativePath of manifest.caseDefinitions) {
+    const result = await readAndValidateJsonFile(
+      resolve(packDirectory, relativePath),
+      relativePath,
+      CaseDefinitionSchema,
+    );
+    if (!result.ok) {
+      errors.push(...result.issues);
+      continue;
+    }
+    const definition = result.value;
+    if (caseDefinitions.has(definition.caseType)) {
+      errors.push(
+        issueError(
+          `${relativePath}#caseType`,
+          `Duplicate Case definition: ${definition.caseType}`,
+        ),
+      );
+      continue;
+    }
+    const workflow = workflows[definition.workflowId];
+    if (workflow === undefined) {
+      errors.push(
+        issueError(
+          `${relativePath}#workflowId`,
+          `Case definition references unknown workflow "${definition.workflowId}"`,
+        ),
+      );
+    } else {
+      const closureRequirementIds = new Set(
+        workflow.closureRequirements.map((requirement) => requirement.id),
+      );
+      definition.closureRequirements.forEach((requirementId, index) => {
+        if (!closureRequirementIds.has(requirementId)) {
+          errors.push(
+            issueError(
+              `${relativePath}#closureRequirements.${index}`,
+              `Case definition references unknown closure requirement "${requirementId}"`,
+            ),
+          );
+        }
+      });
+    }
+    definition.triggeredByRules.forEach((ruleId, index) => {
+      if (!ruleIds.has(ruleId)) {
+        errors.push(
+          issueError(
+            `${relativePath}#triggeredByRules.${index}`,
+            `Case definition references unknown rule "${ruleId}"`,
+          ),
+        );
+      }
+    });
+    caseDefinitions.set(definition.caseType, definition);
+  }
+
+  for (const { rule, path, index: ruleIndex } of ruleSources) {
+    rule.then.forEach((action, actionIndex) => {
+      if (action.type === "create-case" && !caseDefinitions.has(action.definitionId)) {
+        errors.push(
+          issueError(
+            `${path}#${ruleIndex}.then.${actionIndex}.definitionId`,
+            `create-case references unknown Case definition "${action.definitionId}"`,
+          ),
+        );
+      }
+    });
   }
 
   const dashboards: Partial<Record<DashboardLens, DashboardDefinition>> = {};
@@ -332,6 +407,7 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       labels,
       observationSchemas,
       eventDefinitions,
+      caseDefinitions,
       seedEntities,
       workflows,
       rules,

@@ -214,6 +214,41 @@ export const WorkflowDefinitionSchema = z
     });
   });
 
+/**
+ * Additive contract for one pack-owned Case definition. Workflow state and
+ * closure policy stay in WorkflowDefinition; this record selects that policy
+ * and supplies neutral defaults for deterministic Case creation.
+ */
+export const CaseDefinitionSchema = z
+  .object({
+    caseType: SlugSchema,
+    displayName: z
+      .object({
+        singular: z.string().min(1).max(200),
+        plural: z.string().min(1).max(200),
+      })
+      .strict(),
+    description: z.string().min(1),
+    workflowId: SlugSchema,
+    defaultPriority: z.enum(["low", "normal", "high", "urgent"]),
+    defaultSeverity: z.enum(["info", "low", "medium", "high", "critical"]),
+    defaultOwner: z.string().min(1).nullable().default(null),
+    defaultDueInHours: z.number().int().positive().max(876_000).nullable().default(null),
+    closureRequirements: z.array(SlugSchema),
+    triggeredByRules: z.array(SlugSchema).min(1),
+  })
+  .strict()
+  .superRefine((definition, context) => {
+    for (const [field, values] of [
+      ["closureRequirements", definition.closureRequirements],
+      ["triggeredByRules", definition.triggeredByRules],
+    ] as const) {
+      if (new Set(values).size !== values.length) {
+        context.addIssue({ code: "custom", message: `${field} must be unique`, path: [field] });
+      }
+    }
+  });
+
 const PackTypeDefinitionSchema = z
   .object({
     id: SlugSchema,
@@ -510,6 +545,7 @@ export const ScenarioPackSchema = ScenarioPackManifestSchema;
 
 export type RuleDefinition = z.infer<typeof RuleDefinitionSchema>;
 export type WorkflowDefinition = z.infer<typeof WorkflowDefinitionSchema>;
+export type CaseDefinition = z.infer<typeof CaseDefinitionSchema>;
 export type ObservationSchemaDefinition = z.infer<typeof ObservationSchemaDefinitionSchema>;
 export type EventDefinition = z.infer<typeof EventDefinitionSchema>;
 export type SeedEntity = z.infer<typeof SeedEntitySchema>;
