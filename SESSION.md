@@ -5,15 +5,10 @@
 
 ## Current milestone
 
-**PAUSED by product owner (2026-08-31, machine shutdown). Wave 1 nearly
-complete.** All agent processes stopped cleanly; every worktree committed
-and clean; Postgres container stopped. TO RESUME: relaunch OIW-107 (Codex)
-in ../oiw-core per docs/tasks/OIW-107.md — use `codex exec ... </dev/null`
-(first launch stalled waiting on stdin). Then: merge OIW-107 → resume
-OIW-105 on its branch → Wave 1 exit review → cut Wave 2 vertical-slice
-packets. Merged in Wave 1 so far: contracts v1.1, DB/persistence,
-validator/registry, app shell, schema-bound packs (validate:packs = 3
-loaded / 0 invalid).
+**Wave 1 (Platform Skeleton) — final task in flight.** Resumed 2026-08-31
+after pause. OIW-107 relaunched successfully (stdin fix confirmed). Next:
+merge OIW-107 → resume OIW-105 on its branch → Wave 1 exit review → cut
+Wave 2 vertical-slice packets.
 
 ## Merged tasks
 
@@ -43,7 +38,7 @@ loaded / 0 invalid).
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | NOT RUNNING — first launch stalled on stdin and was killed before doing any work; worktree reset clean to latest main; relaunch on resume |
+| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | running |
 | OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | parked | BLOCKED on OIW-107 (blocker detail: agent-run + PR #9) |
 
 Remaining merge order: OIW-107 → OIW-105 (resume on its existing branch
@@ -74,6 +69,8 @@ Resolved incidents (kept for takeover context):
 - Headless launches: always set `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`
   for `claude -p` agent runs, and instruct agents to work sequentially, not
   via detached background sub-agents.
+- `codex exec` launches must redirect stdin (`</dev/null`) or codex may
+  block forever "reading additional input from stdin".
 - Lockfile: one owner per batch (OIW-101 held it this batch); other tasks
   edit only their own package.json; integrator verifies frozen install
   after every merge involving the lockfile.
