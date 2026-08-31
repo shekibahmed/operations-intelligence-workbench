@@ -1,0 +1,26 @@
+[
+  {
+    "id": "example-smoke-002",
+    "artifactType": "plain-text",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/example-smoke-001.txt",
+    "sourceMetadata": {
+      "synthetic": true,
+      "sequence": 2
+    },
+    "sha256": "f1ae3a39f883646023f52f4391e5c3255edff8beae246d670cbcedafb2e06b0e",
+    "expectedExtraction": "extractions/example-smoke-001.json"
+  },
+  {
+    "id": "example-smoke-001",
+    "artifactType": "plain-text",
+    "mimeType": "text/plain",
+    "contentPath": "content/example-smoke-001.txt",
+    "sourceMetadata": {
+      "synthetic": true,
+      "sequence": 1
+    },
+    "sha256": "f1ae3a39f883646023f52f4391e5c3255edff8beae246d670cbcedafb2e06b0e",
+    "expectedExtraction": "extractions/example-smoke-001.json"
+  }
+]

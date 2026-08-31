@@ -48,6 +48,33 @@ registry.get("asset-reliability", "1.0.0"); // LoadedScenarioPack | undefined
 registry.list(); // all loaded packs, in stable (sorted directory name) order
 ```
 
+## Loading a fixture set
+
+```ts
+import { loadFixtureSet } from "@oiw/scenario-sdk";
+
+const result = await loadFixtureSet(loadedPack, "demo");
+
+if (result.status === "loaded") {
+  // Stable artifact-id order. Each item contains the validated index fields,
+  // exact artifact bytes, and its validated ExtractionResult.
+  result.fixtureSet.artifacts;
+  result.warnings;
+} else {
+  // Invalid index, unsafe/missing paths, checksum mismatches and invalid
+  // expected extractions are returned as path-annotated PackIssues.
+  result.errors;
+}
+```
+
+`loadFixtureSet` accepts the manifest names `smoke`, `demo` and `edge-cases`.
+The SDK owns index parsing, safe path resolution, artifact reads, SHA-256
+verification and expected-extraction validation. Callers do not read the pack
+filesystem themselves. A pack with no directory for the requested set returns
+a typed empty artifact list and a warning. The loader supports the normalized
+OIW-004b `artifacts/` layout while retaining compatibility with its
+narrative-authored `content/` index paths.
+
 `scripts/validate-packs.ts` (`pnpm validate:packs`) runs the registry over
 `scenario-packs/`, prints a per-pack `OK` / `FAIL` / `SKIP` line, and exits
 non-zero only if any pack is `invalid`.

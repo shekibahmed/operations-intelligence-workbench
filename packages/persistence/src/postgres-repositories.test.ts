@@ -444,4 +444,112 @@ describe.sequential("Postgres persistence repositories", () => {
     `;
     expect(unscopedTables).toEqual([]);
   });
+
+  it("finds workspaces by slug and lists only TTL-expired workspaces in stable order", async () => {
+    const firstExpired = createRecordSet("expired-first").workspace;
+    const secondExpired = createRecordSet("expired-second").workspace;
+    const active = createRecordSet("not-expired").workspace;
+    const withoutExpiry = createRecordSet("without-expiry").workspace;
+
+    await repositories.workspaces.insert({
+      ...firstExpired,
+      expiresAt: "2026-08-31T09:00:00.000Z",
+    });
+    await repositories.workspaces.insert({
+      ...secondExpired,
+      expiresAt: "2026-08-31T09:30:00.000Z",
+    });
+    await repositories.workspaces.insert({
+      ...active,
+      expiresAt: "2026-08-31T11:00:00.000Z",
+    });
+    await repositories.workspaces.insert(withoutExpiry);
+
+    expect(await repositories.workspaces.findBySlug(secondExpired.slug)).toEqual({
+      ...secondExpired,
+      expiresAt: "2026-08-31T09:30:00.000Z",
+    });
+    expect(await repositories.workspaces.findBySlug("missing-workspace")).toBeNull();
+    expect(
+      (await repositories.workspaces.listExpired("2026-08-31T10:00:00.000Z")).map(
+        (workspace) => workspace.slug,
+      ),
+    ).toEqual(["expired-first", "expired-second"]);
+  });
+
+  it("clears one workspace atomically for reset while preserving audit history and isolation", async () => {
+    const records = createRecordSet("reset-target");
+    const other = createRecordSet("reset-neighbour");
+    await insertRecordSet(records);
+    await insertRecordSet(other);
+    const resetAudit: AuditEntry = {
+      ...records.auditEntry,
+      id: randomUUID(),
+      action: "workspace-reset",
+      subject: { type: "workspace", id: records.workspace.id },
+      cause: "Deterministic fixture reset",
+      entryHash: "d".repeat(64),
+    };
+
+    expect(
+      await repositories.workspaces.clearForReset(records.workspace.id, resetAudit),
+    ).toBe(true);
+    expect(await repositories.sources.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.artifacts.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.artifactSegments.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.entities.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.observations.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.operationalEvents.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.signals.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.cases.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.actionItems.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.decisions.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.approvals.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.auditEntries.list(records.workspace.id)).toEqual(
+      expect.arrayContaining([records.auditEntry, resetAudit]),
+    );
+    expect(await repositories.auditEntries.list(records.workspace.id)).toHaveLength(2);
+
+    expect(await repositories.artifacts.findById(other.workspace.id, other.artifact.id)).toEqual(
+      other.artifact,
+    );
+    expect(await repositories.auditEntries.list(other.workspace.id)).toEqual([other.auditEntry]);
+  });
+
+  it("rolls back a reset clear when its audit append fails", async () => {
+    const records = createRecordSet("reset-rollback");
+    await insertRecordSet(records);
+
+    await expect(
+      repositories.workspaces.clearForReset(records.workspace.id, {
+        ...records.auditEntry,
+        action: "workspace-reset",
+        subject: { type: "workspace", id: records.workspace.id },
+      }),
+    ).rejects.toThrow("Failed query");
+    expect(
+      await repositories.artifacts.findById(records.workspace.id, records.artifact.id),
+    ).toEqual(records.artifact);
+    expect(await repositories.auditEntries.list(records.workspace.id)).toEqual([
+      records.auditEntry,
+    ]);
+  });
+
+  it("deletes a whole workspace including audit rows without touching another workspace", async () => {
+    const records = createRecordSet("delete-target");
+    const other = createRecordSet("delete-neighbour");
+    await insertRecordSet(records);
+    await insertRecordSet(other);
+
+    expect(await repositories.workspaces.delete(records.workspace.id)).toBe(true);
+    expect(await repositories.workspaces.findById(records.workspace.id)).toBeNull();
+    expect(await repositories.auditEntries.list(records.workspace.id)).toEqual([]);
+    expect(await repositories.workspaces.delete(records.workspace.id)).toBe(false);
+
+    expect(await repositories.workspaces.findById(other.workspace.id)).toEqual(other.workspace);
+    expect(await repositories.artifacts.findById(other.workspace.id, other.artifact.id)).toEqual(
+      other.artifact,
+    );
+    expect(await repositories.auditEntries.list(other.workspace.id)).toEqual([other.auditEntry]);
+  });
 });

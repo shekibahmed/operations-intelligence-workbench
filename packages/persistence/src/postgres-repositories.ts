@@ -11,6 +11,7 @@ import {
   OperationalEventSchema,
   SignalSchema,
   SourceSchema,
+  TimestampSchema,
   WorkspaceSchema,
 } from "@oiw/contracts";
 import type {
@@ -29,7 +30,7 @@ import type {
   Workspace,
 } from "@oiw/contracts";
 import { randomUUID } from "node:crypto";
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, lte, sql } from "drizzle-orm";
 
 import type { PersistenceDatabase } from "./database.js";
 import type { PersistenceRepositories, ScopedRepository } from "./repositories.js";
@@ -112,6 +113,26 @@ export function createPostgresRepositories(database: PersistenceDatabase): Persi
       .limit(1);
     const row = first(rows);
     return row === null ? null : validate(WorkspaceSchema, row);
+  }
+
+  async function findWorkspaceBySlug(slug: string): Promise<Workspace | null> {
+    const rows = await database
+      .select()
+      .from(workspaces)
+      .where(eq(workspaces.slug, slug))
+      .limit(1);
+    const row = first(rows);
+    return row === null ? null : validate(WorkspaceSchema, row);
+  }
+
+  async function listExpiredWorkspaces(before: string): Promise<Workspace[]> {
+    const cutoff = TimestampSchema.parse(before);
+    const rows = await database
+      .select()
+      .from(workspaces)
+      .where(lte(workspaces.expiresAt, cutoff))
+      .orderBy(asc(workspaces.expiresAt), asc(workspaces.id));
+    return rows.map((row) => validate(WorkspaceSchema, row));
   }
 
   async function findSource(workspaceId: string, id: string): Promise<Source | null> {
@@ -454,6 +475,8 @@ export function createPostgresRepositories(database: PersistenceDatabase): Persi
         return (await findWorkspace(value.id))!;
       },
       findById: findWorkspace,
+      findBySlug: findWorkspaceBySlug,
+      listExpired: listExpiredWorkspaces,
       async update(workspaceId, input) {
         const value = validate(WorkspaceSchema, input);
         requireIdentity(workspaceId, value);
@@ -469,6 +492,53 @@ export function createPostgresRepositories(database: PersistenceDatabase): Persi
           })
           .where(eq(workspaces.id, workspaceId));
         return findWorkspace(workspaceId);
+      },
+      async delete(workspaceId) {
+        return database.transaction(async (transaction) => {
+          const existing = await transaction
+            .select({ id: workspaces.id })
+            .from(workspaces)
+            .where(eq(workspaces.id, workspaceId))
+            .limit(1);
+          if (existing.length === 0) return false;
+
+          // Whole-workspace guest cleanup is the one lifecycle operation allowed
+          // to remove Audit Entries. The exclusive table lock held by ALTER TABLE
+          // prevents another session from observing a trigger-disabled window,
+          // and rollback restores the trigger if the transaction fails.
+          await transaction.execute(
+            sql.raw("ALTER TABLE audit_entries DISABLE TRIGGER audit_entries_append_only"),
+          );
+          await transaction.delete(workspaces).where(eq(workspaces.id, workspaceId));
+          await transaction.execute(
+            sql.raw("ALTER TABLE audit_entries ENABLE TRIGGER audit_entries_append_only"),
+          );
+          return true;
+        });
+      },
+      async clearForReset(workspaceId, auditInput) {
+        const auditEntry = validate(AuditEntrySchema, auditInput);
+        requireWorkspace(workspaceId, auditEntry);
+
+        return database.transaction(async (transaction) => {
+          const existing = await transaction
+            .select({ id: workspaces.id })
+            .from(workspaces)
+            .where(eq(workspaces.id, workspaceId))
+            .limit(1);
+          if (existing.length === 0) return false;
+
+          await transaction.delete(cases).where(eq(cases.workspaceId, workspaceId));
+          await transaction.delete(signals).where(eq(signals.workspaceId, workspaceId));
+          await transaction
+            .delete(operationalEvents)
+            .where(eq(operationalEvents.workspaceId, workspaceId));
+          await transaction.delete(observations).where(eq(observations.workspaceId, workspaceId));
+          await transaction.delete(entities).where(eq(entities.workspaceId, workspaceId));
+          await transaction.delete(sources).where(eq(sources.workspaceId, workspaceId));
+          await transaction.insert(auditEntries).values(auditEntry);
+          return true;
+        });
       },
     },
     sources: sourceRepository,

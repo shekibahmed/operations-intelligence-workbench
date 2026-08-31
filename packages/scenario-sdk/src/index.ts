@@ -11,4 +11,16 @@ export type { LoadedScenarioPack, PackLoadResult } from "./loader.js";
 export { buildPackRegistry } from "./registry.js";
 export type { InvalidPackEntry, PackRegistry, PackRegistryEntry, SkippedPackEntry } from "./registry.js";
 export { collectEventTypeReferences, RuleFileSchema, validateRuleEventTypes } from "./rules.js";
-export { validateFixtureSet } from "./fixtures.js";
+export {
+  FixtureArtifactIndexEntrySchema,
+  FixtureSetIndexSchema,
+  loadFixtureSet,
+  validateFixtureSet,
+} from "./fixtures.js";
+export type {
+  FixtureArtifactIndexEntry,
+  FixtureSetLoadResult,
+  FixtureSetName,
+  LoadedFixtureArtifact,
+  LoadedFixtureSet,
+} from "./fixtures.js";

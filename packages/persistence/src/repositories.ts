@@ -23,7 +23,11 @@ export interface ScopedRepository<T> {
 export interface WorkspaceRepository {
   insert(value: Workspace): Promise<Workspace>;
   findById(workspaceId: string): Promise<Workspace | null>;
+  findBySlug(slug: string): Promise<Workspace | null>;
+  listExpired(before: string): Promise<Workspace[]>;
   update(workspaceId: string, value: Workspace): Promise<Workspace | null>;
+  delete(workspaceId: string): Promise<boolean>;
+  clearForReset(workspaceId: string, auditEntry: AuditEntry): Promise<boolean>;
 }
 
 export type SourceRepository = ScopedRepository<Source>;

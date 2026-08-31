@@ -42,7 +42,26 @@ Repository methods require `workspaceId` for every read and write; detail
 lookups return `null` when an ID belongs to a different workspace.
 
 The Workspace repository uses the requested Workspace ID itself as its scope.
-There is intentionally no unscoped workspace-list operation.
+Its lifecycle API additionally exposes:
+
+- `findBySlug(slug)` for CLI and server-side session lookup;
+- `listExpired(before)` for deterministic TTL cleanup, ordered by expiry then
+  Workspace ID;
+- `clearForReset(workspaceId, auditEntry)` for an atomic, Workspace-scoped
+  clear of all operational records followed by the required reset Audit Entry;
+- `delete(workspaceId)` for whole guest-workspace cleanup, including its Audit
+  Entries.
+
+There is intentionally no general unscoped workspace-list operation.
+
+`clearForReset` preserves prior Audit Entries and rejects an Audit Entry whose
+`workspaceId` differs from the target. Its FK-safe delete order clears Cases,
+Signals, Events, Observations, Entities and Sources (with dependent records
+cascading) without affecting another Workspace. Full Workspace deletion is the
+explicit exception to append-only audit retention permitted by ADR-007. It
+runs in one transaction under an exclusive lock while the audit delete trigger
+is disabled, so no other session can observe a trigger-disabled window; a
+rollback restores the trigger automatically.
 
 ## Validation and invariants
 
