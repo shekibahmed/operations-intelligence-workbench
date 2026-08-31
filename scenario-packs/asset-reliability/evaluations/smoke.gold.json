@@ -193,6 +193,11 @@
         "schemaKey": "current-operating-status",
         "status": "extracted",
         "value": "operational"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
       }
     ],
     "expectedEntities": [
@@ -274,6 +279,11 @@
         "schemaKey": "service-status",
         "status": "extracted",
         "value": "Completed"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "compressor system"
       }
     ],
     "expectedEntities": [

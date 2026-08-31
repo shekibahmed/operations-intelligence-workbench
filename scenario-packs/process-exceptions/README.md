@@ -78,6 +78,13 @@ linkage, and expected Decision/approval requirement. Edge-case entries
 exercise `negated` (`edge-004`), `alternativeCandidates` (`edge-003`),
 and conflicting/insufficient review state (`edge-001`, `edge-007`).
 
+## Event matching semantics
+
+Shift reports require a batch and detection time, while routine handovers use
+the reporter and detection time. Production summaries require batch and line
+context; inventory exceptions retain their time-based criterion. These keys
+keep routine reporting definitions distinguishable without core process logic.
+
 ## Deviations / contract notes (see `docs/agent-runs/OIW-004b.md`)
 
 - **No `tours/`.** Tours are an explicit OIW-004b non-goal, deferred to

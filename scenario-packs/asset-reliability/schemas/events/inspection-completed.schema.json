@@ -4,7 +4,8 @@
   "description": "A formal inspection report completed against an asset, with findings and any recommendation.",
   "requiredObservations": [
     "asset-identifier",
-    "inspection-finding"
+    "inspection-finding",
+    "inspector"
   ],
   "optionalObservations": ["date-reported"],
   "occurredAt": {

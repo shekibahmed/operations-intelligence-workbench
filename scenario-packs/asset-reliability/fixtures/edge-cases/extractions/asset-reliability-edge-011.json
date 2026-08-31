@@ -85,6 +85,23 @@
           "excerpt": "Closed"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.9,
+      "value": "oil and filter",
+      "normalisedValue": "oil and filter",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Routine oil/filter service completed per maintenance plan"
+        }
+      ]
     }
   ],
   "warnings": [],

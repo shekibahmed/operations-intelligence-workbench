@@ -81,6 +81,15 @@ exercise `negated` (`edge-004`), `alternativeCandidates` (`edge-003`),
 and conflicting/insufficient review state (`edge-001`, `edge-002`,
 `edge-007`).
 
+## Event matching semantics
+
+Clarification threads, routine reviewer sign-offs and logged correspondence
+share the `review-status` Observation key, so their definitions constrain its
+authored value: `resolved`/`unresolved`, `no-escalation-needed`, and
+`not-accepted`, respectively. Cross-engagement corrections use their explicit
+conflicting-provision and responsible-party facts. Contract execution also
+requires a responsible party, distinguishing it from policy publication.
+
 ## Deviations / contract notes (see `docs/agent-runs/OIW-004b.md`)
 
 - **`schemas/observations/checklist-status.schema.json` added.** The

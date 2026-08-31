@@ -42,6 +42,15 @@ Entity; it never causes a fabricated match. The SDK verifies that mapped and
 composed schema keys exist and that a primary-Entity Observation declares an
 `entityType` hint.
 
+Contracts v1.4 add the optional `requiredObservationValues` map. A key in this
+map must also be a required Observation schema key, and its non-empty array is
+the finite set of accepted normalised (or, when absent, original) values for
+that Observation. This narrow discriminator is used only when honest
+Observation-key presence cannot distinguish two semantic Event types. The SDK
+includes these constraints in its matching-criteria comparison and rejects
+definitions whose required keys, value constraints and required primary-Entity
+mapping are indistinguishable. Existing v1.3 definitions remain valid.
+
 `LoadedScenarioPack.eventDefinitions` is a read-only event-type-keyed
 catalogue. The SDK validates ID and display-label agreement with the manifest
 and rejects duplicate definitions. The three shipped packs are mechanically
@@ -78,5 +87,8 @@ the same prepared seed plan after the atomic workspace clear.
 - Pack Event files are no longer arbitrary JSON: unknown Observation keys,
   mapping errors, duplicate definitions and manifest mismatches fail pack
   validation.
+- Indistinguishable Event definitions fail pack validation before manifest
+  activation; value constraints provide a declarative escape hatch when the
+  same Observation key intentionally carries different event semantics.
 - Case-definition contracts and Event/rule execution remain out of scope for
   this decision and are assigned to later tasks.

@@ -85,6 +85,23 @@
           "excerpt": "Completed"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.95,
+      "value": "horn",
+      "normalisedValue": "horn",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Investigated reported horn issue and replaced blown fuse"
+        }
+      ]
     }
   ],
   "warnings": [],

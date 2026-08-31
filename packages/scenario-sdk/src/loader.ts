@@ -16,9 +16,11 @@ import {
 
 import { DashboardDefinitionSchema, type DashboardDefinition } from "./dashboards.js";
 import { issueError, type PackIssue } from "./errors.js";
+import { validateEventDefinitionAmbiguity } from "./events.js";
 import { validateFixtureSet } from "./fixtures.js";
 import { readAndValidateJsonFile, readJsonFile } from "./json-files.js";
 import { loadManifest, MANIFEST_FILE_NAME } from "./manifest.js";
+import { validateObservationValue } from "./observations.js";
 import { RuleFileSchema, validateRuleEventTypes } from "./rules.js";
 
 export interface LoadedScenarioPack {
@@ -147,6 +149,7 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
   }
 
   const eventDefinitions = new Map<string, EventDefinition>();
+  const eventDefinitionSources: Array<{ definition: EventDefinition; path: string }> = [];
   for (const eventType of manifest.eventTypes) {
     const result = await readAndValidateJsonFile(
       resolve(packDirectory, eventType.schema),
@@ -198,6 +201,24 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
         );
       }
     }
+    for (const [schemaKey, values] of Object.entries(
+      definition.requiredObservationValues ?? {},
+    )) {
+      const observationSchema = observationSchemas.get(schemaKey);
+      if (observationSchema === undefined) continue;
+      values.forEach((value, index) => {
+        const validation = validateObservationValue(observationSchema, value);
+        for (const issue of validation.issues) {
+          const nestedPath = issue.path.length > 0 ? `.${issue.path.join(".")}` : "";
+          errors.push(
+            issueError(
+              `${eventType.schema}#requiredObservationValues.${schemaKey}.${index}${nestedPath}`,
+              `Invalid required Observation value: ${issue.message}`,
+            ),
+          );
+        }
+      });
+    }
     const primaryEntityKey = definition.primaryEntity?.observationSchemaKey;
     if (
       primaryEntityKey !== undefined &&
@@ -211,7 +232,9 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       );
     }
     eventDefinitions.set(definition.eventType, definition);
+    eventDefinitionSources.push({ definition, path: eventType.schema });
   }
+  errors.push(...validateEventDefinitionAmbiguity(eventDefinitionSources));
 
   const seedEntities: SeedEntity[] = [];
   if (manifest.seedEntities !== undefined) {

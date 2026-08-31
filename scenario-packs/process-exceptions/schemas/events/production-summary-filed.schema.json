@@ -2,8 +2,8 @@
   "eventType": "production-summary-filed",
   "displayName": "Production Summary Filed",
   "description": "A daily or weekly production summary was filed for a line, optionally carrying a yield-loss or exposure trend.",
-  "requiredObservations": ["time-detected"],
-  "optionalObservations": ["line-identifier"],
+  "requiredObservations": ["batch-identifier", "line-identifier"],
+  "optionalObservations": ["time-detected"],
   "occurredAt": {
     "observationSchemaKey": "time-detected",
     "fallback": "artifact-received-at"

@@ -19,7 +19,7 @@ const eventDefinition = {
   primaryEntity: { observationSchemaKey: "record-id" },
 } as const;
 
-describe("EventDefinition contract v1.3", () => {
+describe("EventDefinition contract v1.4", () => {
   it("accepts explicit composition, time fallback and Entity mapping", () => {
     expect(EventDefinitionSchema.parse(eventDefinition)).toEqual(eventDefinition);
   });
@@ -33,6 +33,29 @@ describe("EventDefinition contract v1.3", () => {
         primaryEntity: null,
       }).success,
     ).toBe(true);
+  });
+
+  it("accepts value constraints on required observations", () => {
+    expect(
+      EventDefinitionSchema.parse({
+        ...eventDefinition,
+        requiredObservationValues: { "record-id": ["REC-123", "REC-124"] },
+      }).requiredObservationValues,
+    ).toEqual({ "record-id": ["REC-123", "REC-124"] });
+  });
+
+  it("rejects value constraints on observations that are not required", () => {
+    const result = EventDefinitionSchema.safeParse({
+      ...eventDefinition,
+      requiredObservationValues: { "recorded-date": ["2026-01-01"] },
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0]?.path).toEqual([
+        "requiredObservationValues",
+        "recorded-date",
+      ]);
+    }
   });
 
   it("rejects duplicate, overlapping and uncomposed mapping keys", () => {

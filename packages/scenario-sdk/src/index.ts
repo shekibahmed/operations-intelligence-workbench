@@ -8,7 +8,8 @@ export { MANIFEST_FILE_NAME, loadManifest } from "./manifest.js";
 export type { ManifestLoadResult } from "./manifest.js";
 export { loadPackFromDirectory } from "./loader.js";
 export type { LoadedScenarioPack, PackLoadResult } from "./loader.js";
-export { getEventDefinition } from "./events.js";
+export { getEventDefinition, validateEventDefinitionAmbiguity } from "./events.js";
+export type { EventDefinitionSource } from "./events.js";
 export { getObservationSchema, validateObservationValue } from "./observations.js";
 export type {
   ObservationValueValidationIssue,

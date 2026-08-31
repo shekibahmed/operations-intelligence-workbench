@@ -102,6 +102,23 @@
           "excerpt": "Completed (temporary measure)"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.9,
+      "value": "refrigerant system",
+      "normalisedValue": "refrigerant system",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Checked refrigerant pressure, found slightly low, topped up charge"
+        }
+      ]
     }
   ],
   "warnings": [],

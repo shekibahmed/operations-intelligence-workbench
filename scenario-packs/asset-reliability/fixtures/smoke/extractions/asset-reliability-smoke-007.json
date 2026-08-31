@@ -85,6 +85,23 @@
           "excerpt": "Completed"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "value": "compressor system",
+      "normalisedValue": "compressor system",
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Scheduled compressor maintenance per PM plan"
+        }
+      ]
     }
   ],
   "warnings": [],

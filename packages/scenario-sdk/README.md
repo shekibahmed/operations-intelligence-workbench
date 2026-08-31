@@ -72,12 +72,14 @@ mechanical edits to the three shipped packs. `confidenceThreshold`, when
 present, must be between zero and one and is exposed unchanged for the
 application-layer abstention policy.
 
-## Event and seed Entity catalogues (contracts v1.3)
+## Event and seed Entity catalogues (contracts v1.4)
 
 Every manifest-declared Event file is validated as an `EventDefinition`. The
 definition identifies required and optional Observation schema keys, the
 Observation used for `occurredAt` (plus the deterministic Artifact-received
 fallback), and the Observation that supplies the primary Entity reference.
+When key presence alone cannot encode the distinction, a definition may
+constrain a required key to a finite set of `requiredObservationValues`.
 Consumers use the public catalogue rather than importing pack files:
 
 ```ts
@@ -87,9 +89,11 @@ const fault = getEventDefinition(loadedPack, "fault-reported");
 loadedPack.eventDefinitions.get("fault-reported"); // equivalent
 ```
 
-The loader rejects duplicate Event definitions, manifest ID/label mismatches,
-unknown Observation schema keys, and primary-Entity mappings to Observations
-without an `entityType` hint.
+The loader rejects duplicate or indistinguishable Event definitions, manifest
+ID/label mismatches, unknown Observation schema keys, and primary-Entity
+mappings to Observations without an `entityType` hint. Ambiguity comparison is
+order-independent and includes required keys, their value constraints, and any
+required primary-Entity match.
 
 Packs may declare `seedEntities` in their manifest. That JSON catalogue is
 validated with `SeedEntityCatalogueSchema`, checked for duplicate stable IDs
@@ -156,10 +160,11 @@ Per PRD §11.3 and the amendments in `docs/PLAN_AMENDMENTS.md`:
   reference must conform to `ObservationSchemaDefinitionSchema`; duplicate
   `schemaKey` values fail load, and valid definitions populate the public
   schema-keyed catalogue.
-- **Event definitions (contracts v1.3)** — every `eventTypes[].schema`
+- **Event definitions (contracts v1.4)** — every `eventTypes[].schema`
   reference must conform to `EventDefinitionSchema`, match its manifest ID and
-  label, and reference only known Observation schema keys. Valid definitions
-  populate the public event-type-keyed catalogue.
+  label, reference only known Observation schema keys, and have matching
+  criteria distinguishable from every other Event in the pack. Valid
+  definitions populate the public event-type-keyed catalogue.
 - **Seed Entities (contracts v1.3)** — an optional manifest `seedEntities`
   catalogue must conform to `SeedEntityCatalogueSchema`; stable IDs are unique
   and every `entityType` is declared by the manifest.

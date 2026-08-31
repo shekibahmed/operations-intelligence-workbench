@@ -85,6 +85,40 @@
           "excerpt": "A-520 is OPERATIONAL, returned to full service"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.9,
+      "value": "discharge-line fitting",
+      "normalisedValue": "discharge-line fitting",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 160,
+            "end": 189
+          },
+          "excerpt": "replaced the corroded fitting"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.9,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 549,
+            "end": 579
+          },
+          "excerpt": "This looks like the actual fix"
+        }
+      ]
     }
   ],
   "warnings": [],

@@ -93,6 +93,75 @@ describe("Event definition and seed Entity catalogues", () => {
     ).toBe(true);
   });
 
+  it("rejects a fixture pack with indistinguishable Event definitions", async () => {
+    const directory = await temporaryPack();
+    const manifestPath = resolve(directory, "manifest.yaml");
+    const manifest = await readFile(manifestPath, "utf8");
+    await writeFile(
+      manifestPath,
+      manifest.replace(
+        "observationSchemas:",
+        [
+          "  - id: record-indexed",
+          "    displayName: Record indexed",
+          "    schema: ./schemas/events/record-indexed.json",
+          "observationSchemas:",
+        ].join("\n"),
+      ),
+      "utf8",
+    );
+
+    const existing = JSON.parse(
+      await readFile(resolve(directory, "schemas/events/record-received.json"), "utf8"),
+    ) as Record<string, unknown>;
+    await writeFile(
+      resolve(directory, "schemas/events/record-indexed.json"),
+      JSON.stringify({
+        ...existing,
+        eventType: "record-indexed",
+        displayName: "Record indexed",
+      }),
+      "utf8",
+    );
+
+    const result = await loadPackFromDirectory(directory);
+    expect(result.status).toBe("invalid");
+    if (result.status !== "invalid") throw new Error("expected invalid pack");
+    expect(
+      result.errors.some(
+        (issue) =>
+          issue.path === "./schemas/events/record-indexed.json#requiredObservations" &&
+          issue.message.includes('indistinguishable from "record-received"'),
+      ),
+    ).toBe(true);
+  });
+
+  it("rejects a required Observation value outside its schema", async () => {
+    const directory = await temporaryPack();
+    const eventPath = resolve(directory, "schemas/events/record-received.json");
+    const event = JSON.parse(await readFile(eventPath, "utf8")) as Record<string, unknown>;
+    await writeFile(
+      eventPath,
+      JSON.stringify({
+        ...event,
+        requiredObservationValues: { "record-id": [42] },
+      }),
+      "utf8",
+    );
+
+    const result = await loadPackFromDirectory(directory);
+    expect(result.status).toBe("invalid");
+    if (result.status !== "invalid") throw new Error("expected invalid pack");
+    expect(
+      result.errors.some(
+        (issue) =>
+          issue.path ===
+            "./schemas/events/record-received.json#requiredObservationValues.record-id.0" &&
+          issue.message.includes("Expected a string"),
+      ),
+    ).toBe(true);
+  });
+
   it("rejects duplicate seed ids and undeclared seed Entity types", async () => {
     const directory = await temporaryPack();
     const manifestPath = resolve(directory, "manifest.yaml");

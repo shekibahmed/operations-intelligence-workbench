@@ -85,6 +85,23 @@
           "excerpt": "Scheduled"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.95,
+      "value": "full hydraulic lift cylinder replacement",
+      "normalisedValue": "full hydraulic lift cylinder replacement",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Scheduled full hydraulic lift cylinder replacement"
+        }
+      ]
     }
   ],
   "warnings": [],

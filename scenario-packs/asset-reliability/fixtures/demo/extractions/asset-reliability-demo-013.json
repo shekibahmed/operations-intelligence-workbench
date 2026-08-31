@@ -102,6 +102,23 @@
           "excerpt": "This is a temporary measure, not a real fix"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.9,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 454,
+            "end": 497
+          },
+          "excerpt": "This is a temporary measure, not a real fix"
+        }
+      ]
     }
   ],
   "warnings": [],

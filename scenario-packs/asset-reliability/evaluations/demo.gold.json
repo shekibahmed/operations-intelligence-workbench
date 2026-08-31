@@ -551,6 +551,11 @@
         "schemaKey": "requested-action",
         "status": "extracted",
         "value": "flagging for inspection follow-up, temporary patch not a real fix"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
       }
     ],
     "expectedEntities": [
@@ -643,6 +648,11 @@
         "schemaKey": "service-status",
         "status": "extracted",
         "value": "Scheduled"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "full hydraulic lift cylinder replacement"
       }
     ],
     "expectedEntities": [
@@ -719,6 +729,16 @@
         "schemaKey": "recommendation",
         "status": "extracted",
         "value": "resolved after coolant top-up, monitor at next monthly test"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "coolant system"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
       }
     ],
     "expectedEntities": [
@@ -882,6 +902,11 @@
         "schemaKey": "service-status",
         "status": "extracted",
         "value": "Completed"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "refrigerant system"
       }
     ],
     "expectedEntities": [
@@ -1009,6 +1034,16 @@
         "schemaKey": "current-operating-status",
         "status": "extracted",
         "value": "operational"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "discharge-line fitting"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
       }
     ],
     "expectedEntities": [

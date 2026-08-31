@@ -85,6 +85,23 @@
           "excerpt": "Unit cycled normally after the filter swap"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 369,
+            "end": 411
+          },
+          "excerpt": "Unit cycled normally after the filter swap"
+        }
+      ]
     }
   ],
   "warnings": [],

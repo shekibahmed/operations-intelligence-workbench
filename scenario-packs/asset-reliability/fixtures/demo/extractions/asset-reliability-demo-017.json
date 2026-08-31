@@ -85,6 +85,40 @@
           "excerpt": "Issue resolved. Asset status updated back to operational"
         }
       ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.9,
+      "value": "coolant system",
+      "normalisedValue": "coolant system",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 192,
+            "end": 224
+          },
+          "excerpt": "Coolant level was noticeably low"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.9,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 551,
+            "end": 607
+          },
+          "excerpt": "Issue resolved. Asset status updated back to operational"
+        }
+      ]
     }
   ],
   "warnings": [],

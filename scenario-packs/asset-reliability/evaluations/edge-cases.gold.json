@@ -47,6 +47,11 @@
         "schemaKey": "service-status",
         "status": "extracted",
         "value": "Completed"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "horn"
       }
     ],
     "expectedEntities": [
@@ -343,6 +348,11 @@
         "schemaKey": "service-status",
         "status": "extracted",
         "value": "Closed"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "oil and filter"
       }
     ],
     "expectedEntities": [

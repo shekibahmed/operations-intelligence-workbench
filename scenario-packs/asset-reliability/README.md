@@ -96,6 +96,15 @@ approval requirement. Edge-case entries exercise `negated`
 (`edge-004`), `alternativeCandidates` (`edge-003`), and conflicting
 review state (`edge-010`, and `demo-017`/`demo-018` in the demo set).
 
+## Event matching semantics
+
+Completed maintenance requires an asset, the serviced component and an
+explicit completion status; scheduled repairs instead require the requested
+action and named service provider. Formal inspections require a named
+inspector, while provider diagnostics require a named service provider. These
+criteria preserve the narrative distinctions for smoke-004/005, demo-011/015
+and demo-023 without artifact-type or pack-specific engine inference.
+
 ## Deviations / contract notes (see `docs/agent-runs/OIW-004b.md`)
 
 - **No `tours/`.** Tours are an explicit OIW-004b non-goal, deferred to

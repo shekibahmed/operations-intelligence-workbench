@@ -347,10 +347,14 @@ const EventPrimaryEntityMappingSchema = z
   })
   .strict();
 
+const RequiredObservationValuesSchema = z.record(SlugSchema, z.array(JsonValueSchema).min(1));
+
 /**
- * Contract v1.3 for one pack-owned event-definition file. Required and
+ * Contract v1.4 for one pack-owned event-definition file. Required and
  * optional observations compose the Event attributes under their schema keys;
- * mappings select the Event time and primary Entity without core pack logic.
+ * optional value constraints distinguish definitions whose semantic event is
+ * encoded by a required Observation's value rather than by a separate key.
+ * Mappings select the Event time and primary Entity without core pack logic.
  */
 export const EventDefinitionSchema = z
   .object({
@@ -358,6 +362,7 @@ export const EventDefinitionSchema = z
     displayName: z.string().min(1).max(200),
     description: z.string().min(1),
     requiredObservations: z.array(SlugSchema).min(1),
+    requiredObservationValues: RequiredObservationValuesSchema.optional(),
     optionalObservations: z.array(SlugSchema).default([]),
     occurredAt: EventOccurredAtMappingSchema,
     primaryEntity: EventPrimaryEntityMappingSchema.nullable(),
@@ -371,6 +376,16 @@ export const EventDefinitionSchema = z
         message: "requiredObservations must be unique",
         path: ["requiredObservations"],
       });
+    }
+
+    for (const schemaKey of Object.keys(definition.requiredObservationValues ?? {})) {
+      if (!required.has(schemaKey)) {
+        context.addIssue({
+          code: "custom",
+          message: "requiredObservationValues may constrain only required observations",
+          path: ["requiredObservationValues", schemaKey],
+        });
+      }
     }
 
     const optional = new Set(definition.optionalObservations);

@@ -4,7 +4,8 @@
   "description": "A diagnostic or root-cause investigation completed against an asset, typically by a service provider.",
   "requiredObservations": [
     "asset-identifier",
-    "inspection-finding"
+    "inspection-finding",
+    "service-provider-reference"
   ],
   "optionalObservations": ["date-reported"],
   "occurredAt": {
