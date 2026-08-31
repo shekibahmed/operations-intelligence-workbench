@@ -3,7 +3,7 @@
     "id": "document-assurance-edge-001",
     "artifactType": "compliance-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-edge-001.md",
+    "contentPath": "artifacts/document-assurance-edge-001.md",
     "sourceMetadata": {
       "narrativeSource": "quarterly compliance report",
       "sourceFormat": "pdf-text-layer"
@@ -15,7 +15,7 @@
     "id": "document-assurance-edge-002",
     "artifactType": "audit-checklist",
     "mimeType": "text/csv",
-    "contentPath": "content/document-assurance-edge-002.csv",
+    "contentPath": "artifacts/document-assurance-edge-002.csv",
     "sourceMetadata": {
       "narrativeSource": "internal audit checklist"
     },
@@ -26,7 +26,7 @@
     "id": "document-assurance-edge-003",
     "artifactType": "clarification-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-edge-003.txt",
+    "contentPath": "artifacts/document-assurance-edge-003.txt",
     "sourceMetadata": {
       "narrativeSource": "email thread",
       "channel": "email"
@@ -38,7 +38,7 @@
     "id": "document-assurance-edge-004",
     "artifactType": "reviewer-note",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-edge-004.txt",
+    "contentPath": "artifacts/document-assurance-edge-004.txt",
     "sourceMetadata": {
       "narrativeSource": "reviewer correction note"
     },
@@ -49,7 +49,7 @@
     "id": "document-assurance-edge-005",
     "artifactType": "compliance-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-edge-005.md",
+    "contentPath": "artifacts/document-assurance-edge-005.md",
     "sourceMetadata": {
       "narrativeSource": "quarterly compliance report",
       "sourceFormat": "pdf-text-layer",
@@ -62,7 +62,7 @@
     "id": "document-assurance-edge-006",
     "artifactType": "clarification-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-edge-006.txt",
+    "contentPath": "artifacts/document-assurance-edge-006.txt",
     "sourceMetadata": {
       "narrativeSource": "email thread",
       "channel": "email"
@@ -74,7 +74,7 @@
     "id": "document-assurance-edge-007",
     "artifactType": "reviewer-note",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-edge-007.txt",
+    "contentPath": "artifacts/document-assurance-edge-007.txt",
     "sourceMetadata": {
       "narrativeSource": "exception proposal reviewer note"
     },

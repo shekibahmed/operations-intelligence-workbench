@@ -3,7 +3,7 @@
     "id": "asset-reliability-demo-001",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-001.txt",
+    "contentPath": "artifacts/asset-reliability-demo-001.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#zone-c-shipping"
@@ -15,7 +15,7 @@
     "id": "asset-reliability-demo-002",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-demo-002.csv",
+    "contentPath": "artifacts/asset-reliability-demo-002.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -26,7 +26,7 @@
     "id": "asset-reliability-demo-003",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-demo-003.md",
+    "contentPath": "artifacts/asset-reliability-demo-003.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -38,7 +38,7 @@
     "id": "asset-reliability-demo-004",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-004.txt",
+    "contentPath": "artifacts/asset-reliability-demo-004.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#yard"
@@ -50,7 +50,7 @@
     "id": "asset-reliability-demo-005",
     "artifactType": "escalation-email",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-005.txt",
+    "contentPath": "artifacts/asset-reliability-demo-005.txt",
     "sourceMetadata": {
       "narrativeSource": "supervisor email",
       "channel": "email"
@@ -62,7 +62,7 @@
     "id": "asset-reliability-demo-006",
     "artifactType": "repair-update",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-006.txt",
+    "contentPath": "artifacts/asset-reliability-demo-006.txt",
     "sourceMetadata": {
       "narrativeSource": "manual repair-update log"
     },
@@ -73,7 +73,7 @@
     "id": "asset-reliability-demo-007",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-007.txt",
+    "contentPath": "artifacts/asset-reliability-demo-007.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#zone-b-highbay"
@@ -85,7 +85,7 @@
     "id": "asset-reliability-demo-008",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-demo-008.csv",
+    "contentPath": "artifacts/asset-reliability-demo-008.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -96,7 +96,7 @@
     "id": "asset-reliability-demo-009",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-demo-009.md",
+    "contentPath": "artifacts/asset-reliability-demo-009.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -108,7 +108,7 @@
     "id": "asset-reliability-demo-010",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-010.txt",
+    "contentPath": "artifacts/asset-reliability-demo-010.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#zone-b-highbay"
@@ -120,7 +120,7 @@
     "id": "asset-reliability-demo-011",
     "artifactType": "service-quote-email",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-011.txt",
+    "contentPath": "artifacts/asset-reliability-demo-011.txt",
     "sourceMetadata": {
       "narrativeSource": "vendor email",
       "channel": "email"
@@ -132,7 +132,7 @@
     "id": "asset-reliability-demo-012",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-012.txt",
+    "contentPath": "artifacts/asset-reliability-demo-012.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#zone-a-receiving"
@@ -144,7 +144,7 @@
     "id": "asset-reliability-demo-013",
     "artifactType": "repair-update",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-013.txt",
+    "contentPath": "artifacts/asset-reliability-demo-013.txt",
     "sourceMetadata": {
       "narrativeSource": "manual repair-update log"
     },
@@ -155,7 +155,7 @@
     "id": "asset-reliability-demo-014",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-demo-014.md",
+    "contentPath": "artifacts/asset-reliability-demo-014.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -167,7 +167,7 @@
     "id": "asset-reliability-demo-015",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-demo-015.csv",
+    "contentPath": "artifacts/asset-reliability-demo-015.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -178,7 +178,7 @@
     "id": "asset-reliability-demo-016",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-016.txt",
+    "contentPath": "artifacts/asset-reliability-demo-016.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#yard"
@@ -190,7 +190,7 @@
     "id": "asset-reliability-demo-017",
     "artifactType": "repair-update",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-017.txt",
+    "contentPath": "artifacts/asset-reliability-demo-017.txt",
     "sourceMetadata": {
       "narrativeSource": "manual repair-update log"
     },
@@ -201,7 +201,7 @@
     "id": "asset-reliability-demo-018",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-demo-018.md",
+    "contentPath": "artifacts/asset-reliability-demo-018.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -213,7 +213,7 @@
     "id": "asset-reliability-demo-019",
     "artifactType": "escalation-email",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-019.txt",
+    "contentPath": "artifacts/asset-reliability-demo-019.txt",
     "sourceMetadata": {
       "narrativeSource": "supervisor email",
       "channel": "email"
@@ -225,7 +225,7 @@
     "id": "asset-reliability-demo-020",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-020.txt",
+    "contentPath": "artifacts/asset-reliability-demo-020.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#maintenance-bay"
@@ -237,7 +237,7 @@
     "id": "asset-reliability-demo-021",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-demo-021.csv",
+    "contentPath": "artifacts/asset-reliability-demo-021.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -248,7 +248,7 @@
     "id": "asset-reliability-demo-022",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-demo-022.md",
+    "contentPath": "artifacts/asset-reliability-demo-022.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -260,7 +260,7 @@
     "id": "asset-reliability-demo-023",
     "artifactType": "diagnostic-email",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-023.txt",
+    "contentPath": "artifacts/asset-reliability-demo-023.txt",
     "sourceMetadata": {
       "narrativeSource": "vendor email",
       "channel": "email"
@@ -272,7 +272,7 @@
     "id": "asset-reliability-demo-024",
     "artifactType": "repair-update",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-demo-024.txt",
+    "contentPath": "artifacts/asset-reliability-demo-024.txt",
     "sourceMetadata": {
       "narrativeSource": "manual repair-update log"
     },
@@ -283,7 +283,7 @@
     "id": "asset-reliability-demo-025",
     "artifactType": "fleet-rollup",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-demo-025.csv",
+    "contentPath": "artifacts/asset-reliability-demo-025.csv",
     "sourceMetadata": {
       "narrativeSource": "fleet reliability rollup export"
     },

@@ -3,7 +3,7 @@
     "id": "document-assurance-demo-001",
     "artifactType": "master-services-agreement",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-demo-001.md",
+    "contentPath": "artifacts/document-assurance-demo-001.md",
     "sourceMetadata": {
       "narrativeSource": "executed contract",
       "sourceFormat": "pdf-text-layer"
@@ -15,7 +15,7 @@
     "id": "document-assurance-demo-002",
     "artifactType": "internal-policy",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-demo-002.md",
+    "contentPath": "artifacts/document-assurance-demo-002.md",
     "sourceMetadata": {
       "narrativeSource": "internal policy document",
       "sourceFormat": "pdf-text-layer"
@@ -27,7 +27,7 @@
     "id": "document-assurance-demo-003",
     "artifactType": "onboarding-checklist",
     "mimeType": "text/csv",
-    "contentPath": "content/document-assurance-demo-003.csv",
+    "contentPath": "artifacts/document-assurance-demo-003.csv",
     "sourceMetadata": {
       "narrativeSource": "Project Falcon onboarding checklist"
     },
@@ -38,7 +38,7 @@
     "id": "document-assurance-demo-004",
     "artifactType": "clarification-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-demo-004.txt",
+    "contentPath": "artifacts/document-assurance-demo-004.txt",
     "sourceMetadata": {
       "narrativeSource": "email thread",
       "channel": "email"
@@ -50,7 +50,7 @@
     "id": "document-assurance-demo-005",
     "artifactType": "compliance-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-demo-005.md",
+    "contentPath": "artifacts/document-assurance-demo-005.md",
     "sourceMetadata": {
       "narrativeSource": "quarterly compliance report",
       "sourceFormat": "pdf-text-layer"
@@ -62,7 +62,7 @@
     "id": "document-assurance-demo-006",
     "artifactType": "reviewer-note",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-demo-006.txt",
+    "contentPath": "artifacts/document-assurance-demo-006.txt",
     "sourceMetadata": {
       "narrativeSource": "reviewer note"
     },
@@ -73,7 +73,7 @@
     "id": "document-assurance-demo-007",
     "artifactType": "clarification-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-demo-007.txt",
+    "contentPath": "artifacts/document-assurance-demo-007.txt",
     "sourceMetadata": {
       "narrativeSource": "email thread",
       "channel": "email"
@@ -85,7 +85,7 @@
     "id": "document-assurance-demo-008",
     "artifactType": "contract-amendment",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-demo-008.md",
+    "contentPath": "artifacts/document-assurance-demo-008.md",
     "sourceMetadata": {
       "narrativeSource": "executed amendment",
       "sourceFormat": "pdf-text-layer"
@@ -97,7 +97,7 @@
     "id": "document-assurance-demo-009",
     "artifactType": "onboarding-checklist",
     "mimeType": "text/csv",
-    "contentPath": "content/document-assurance-demo-009.csv",
+    "contentPath": "artifacts/document-assurance-demo-009.csv",
     "sourceMetadata": {
       "narrativeSource": "post-amendment Project Falcon checklist"
     },
@@ -108,7 +108,7 @@
     "id": "document-assurance-demo-010",
     "artifactType": "compliance-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-demo-010.md",
+    "contentPath": "artifacts/document-assurance-demo-010.md",
     "sourceMetadata": {
       "narrativeSource": "quarterly compliance report",
       "sourceFormat": "pdf-text-layer"
@@ -120,7 +120,7 @@
     "id": "document-assurance-demo-011",
     "artifactType": "reviewer-note",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-demo-011.txt",
+    "contentPath": "artifacts/document-assurance-demo-011.txt",
     "sourceMetadata": {
       "narrativeSource": "formal exception proposal reviewer note"
     },
@@ -131,7 +131,7 @@
     "id": "document-assurance-demo-012",
     "artifactType": "approval-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-demo-012.txt",
+    "contentPath": "artifacts/document-assurance-demo-012.txt",
     "sourceMetadata": {
       "narrativeSource": "internal approval thread",
       "channel": "email"

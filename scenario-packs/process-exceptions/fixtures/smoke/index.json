@@ -3,7 +3,7 @@
     "id": "process-exceptions-smoke-001",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-001.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-001.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 Shift A shift report"
     },
@@ -14,7 +14,7 @@
     "id": "process-exceptions-smoke-002",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-smoke-002.csv",
+    "contentPath": "artifacts/process-exceptions-smoke-002.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2101"
     },
@@ -25,7 +25,7 @@
     "id": "process-exceptions-smoke-003",
     "artifactType": "operator-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-003.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-003.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 2 filler calibration operator note"
     },
@@ -36,7 +36,7 @@
     "id": "process-exceptions-smoke-004",
     "artifactType": "inventory-exception-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-004.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-004.txt",
     "sourceMetadata": {
       "narrativeSource": "raw material warehouse inventory exception note"
     },
@@ -47,7 +47,7 @@
     "id": "process-exceptions-smoke-005",
     "artifactType": "production-summary",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-005.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-005.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 3 weekly production summary"
     },
@@ -58,7 +58,7 @@
     "id": "process-exceptions-smoke-006",
     "artifactType": "supervisor-email",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-006.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-006.txt",
     "sourceMetadata": {
       "narrativeSource": "routine shift handover email"
     },
@@ -69,7 +69,7 @@
     "id": "process-exceptions-smoke-007",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-smoke-007.csv",
+    "contentPath": "artifacts/process-exceptions-smoke-007.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2110"
     },
@@ -80,7 +80,7 @@
     "id": "process-exceptions-smoke-008",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-smoke-008.txt",
+    "contentPath": "artifacts/process-exceptions-smoke-008.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 2 Shift B shift report"
     },
@@ -91,7 +91,7 @@
     "id": "process-exceptions-smoke-009",
     "artifactType": "analyzer-reading",
     "mimeType": "application/json",
-    "contentPath": "content/process-exceptions-smoke-009.json",
+    "contentPath": "artifacts/process-exceptions-smoke-009.json",
     "sourceMetadata": {
       "narrativeSource": "Line 3 in-line analyzer automated JSON export"
     },

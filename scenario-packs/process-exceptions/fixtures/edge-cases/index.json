@@ -3,7 +3,7 @@
     "id": "process-exceptions-edge-001",
     "artifactType": "operator-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-edge-001.txt",
+    "contentPath": "artifacts/process-exceptions-edge-001.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 3 operator note, elevated reject rate, missing batch id"
     },
@@ -14,7 +14,7 @@
     "id": "process-exceptions-edge-002",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-edge-002.csv",
+    "contentPath": "artifacts/process-exceptions-edge-002.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2101, internally conflicting dates"
     },
@@ -25,7 +25,7 @@
     "id": "process-exceptions-edge-003",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-edge-003.txt",
+    "contentPath": "artifacts/process-exceptions-edge-003.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 2 shift report, ambiguous Line 2 / Line 2B reference"
     },
@@ -36,7 +36,7 @@
     "id": "process-exceptions-edge-004",
     "artifactType": "supervisor-email",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-edge-004.txt",
+    "contentPath": "artifacts/process-exceptions-edge-004.txt",
     "sourceMetadata": {
       "narrativeSource": "supervisor email, B-2190 root-cause closure, negates supplier-lot link"
     },
@@ -47,7 +47,7 @@
     "id": "process-exceptions-edge-005",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-edge-005.txt",
+    "contentPath": "artifacts/process-exceptions-edge-005.txt",
     "sourceMetadata": {
       "narrativeSource": "exact duplicate resubmission of process-exceptions-smoke-001"
     },
@@ -58,7 +58,7 @@
     "id": "process-exceptions-edge-006",
     "artifactType": "inventory-exception-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-edge-006.txt",
+    "contentPath": "artifacts/process-exceptions-edge-006.txt",
     "sourceMetadata": {
       "narrativeSource": "quarantine/hold staging area note with embedded prompt-injection-style text"
     },
@@ -69,7 +69,7 @@
     "id": "process-exceptions-edge-007",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-edge-007.csv",
+    "contentPath": "artifacts/process-exceptions-edge-007.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2101, interrupted inspection with blank observed_value"
     },

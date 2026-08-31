@@ -3,7 +3,7 @@
     "id": "process-exceptions-demo-001",
     "artifactType": "operator-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-001.txt",
+    "contentPath": "artifacts/process-exceptions-demo-001.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 operator note, B-2205 early viscosity trend"
     },
@@ -14,7 +14,7 @@
     "id": "process-exceptions-demo-002",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-demo-002.csv",
+    "contentPath": "artifacts/process-exceptions-demo-002.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2205 confirmed deviation"
     },
@@ -25,7 +25,7 @@
     "id": "process-exceptions-demo-003",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-003.txt",
+    "contentPath": "artifacts/process-exceptions-demo-003.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 Shift A handover report, B-2205 escalation"
     },
@@ -36,7 +36,7 @@
     "id": "process-exceptions-demo-004",
     "artifactType": "supervisor-email",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-004.txt",
+    "contentPath": "artifacts/process-exceptions-demo-004.txt",
     "sourceMetadata": {
       "narrativeSource": "supervisor email, root-cause request for B-2205 with B-2190 hypothesis"
     },
@@ -47,7 +47,7 @@
     "id": "process-exceptions-demo-005",
     "artifactType": "operator-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-005.txt",
+    "contentPath": "artifacts/process-exceptions-demo-005.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 operator note, B-2210 early viscosity trend"
     },
@@ -58,7 +58,7 @@
     "id": "process-exceptions-demo-006",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-demo-006.csv",
+    "contentPath": "artifacts/process-exceptions-demo-006.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2210 confirmed deviation"
     },
@@ -69,7 +69,7 @@
     "id": "process-exceptions-demo-007",
     "artifactType": "inventory-exception-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-007.txt",
+    "contentPath": "artifacts/process-exceptions-demo-007.txt",
     "sourceMetadata": {
       "narrativeSource": "quarantine/hold staging area aging exception note"
     },
@@ -80,7 +80,7 @@
     "id": "process-exceptions-demo-008",
     "artifactType": "production-summary",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-008.txt",
+    "contentPath": "artifacts/process-exceptions-demo-008.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 weekly production summary, yield-loss trend"
     },
@@ -91,7 +91,7 @@
     "id": "process-exceptions-demo-009",
     "artifactType": "supervisor-email",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-009.txt",
+    "contentPath": "artifacts/process-exceptions-demo-009.txt",
     "sourceMetadata": {
       "narrativeSource": "supervisor email, formal KM-LOT-448 hold request"
     },
@@ -102,7 +102,7 @@
     "id": "process-exceptions-demo-010",
     "artifactType": "operator-note",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-010.txt",
+    "contentPath": "artifacts/process-exceptions-demo-010.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 2 operator note, minor B-2211 fill-weight deviation"
     },
@@ -113,7 +113,7 @@
     "id": "process-exceptions-demo-011",
     "artifactType": "quality-control-record",
     "mimeType": "text/csv",
-    "contentPath": "content/process-exceptions-demo-011.csv",
+    "contentPath": "artifacts/process-exceptions-demo-011.csv",
     "sourceMetadata": {
       "narrativeSource": "QC CSV export, batch B-2211 within tolerance after adjustment"
     },
@@ -124,7 +124,7 @@
     "id": "process-exceptions-demo-012",
     "artifactType": "shift-report",
     "mimeType": "text/plain",
-    "contentPath": "content/process-exceptions-demo-012.txt",
+    "contentPath": "artifacts/process-exceptions-demo-012.txt",
     "sourceMetadata": {
       "narrativeSource": "Line 1 closing shift report, KM-LOT-448 status summary"
     },

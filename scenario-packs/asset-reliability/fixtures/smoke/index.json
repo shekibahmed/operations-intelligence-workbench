@@ -3,7 +3,7 @@
     "id": "asset-reliability-smoke-001",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-smoke-001.txt",
+    "contentPath": "artifacts/asset-reliability-smoke-001.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#zone-a-receiving"
@@ -15,7 +15,7 @@
     "id": "asset-reliability-smoke-002",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-smoke-002.csv",
+    "contentPath": "artifacts/asset-reliability-smoke-002.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -26,7 +26,7 @@
     "id": "asset-reliability-smoke-003",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-smoke-003.md",
+    "contentPath": "artifacts/asset-reliability-smoke-003.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -38,7 +38,7 @@
     "id": "asset-reliability-smoke-004",
     "artifactType": "service-confirmation-email",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-smoke-004.txt",
+    "contentPath": "artifacts/asset-reliability-smoke-004.txt",
     "sourceMetadata": {
       "narrativeSource": "vendor email",
       "channel": "email"
@@ -50,7 +50,7 @@
     "id": "asset-reliability-smoke-005",
     "artifactType": "repair-update",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-smoke-005.txt",
+    "contentPath": "artifacts/asset-reliability-smoke-005.txt",
     "sourceMetadata": {
       "narrativeSource": "manual repair-update log"
     },
@@ -61,7 +61,7 @@
     "id": "asset-reliability-smoke-006",
     "artifactType": "fault-message",
     "mimeType": "text/plain",
-    "contentPath": "content/asset-reliability-smoke-006.txt",
+    "contentPath": "artifacts/asset-reliability-smoke-006.txt",
     "sourceMetadata": {
       "narrativeSource": "team chat",
       "channel": "#yard"
@@ -73,7 +73,7 @@
     "id": "asset-reliability-smoke-007",
     "artifactType": "maintenance-log",
     "mimeType": "text/csv",
-    "contentPath": "content/asset-reliability-smoke-007.csv",
+    "contentPath": "artifacts/asset-reliability-smoke-007.csv",
     "sourceMetadata": {
       "narrativeSource": "maintenance CSV import"
     },
@@ -84,7 +84,7 @@
     "id": "asset-reliability-smoke-008",
     "artifactType": "inspection-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/asset-reliability-smoke-008.md",
+    "contentPath": "artifacts/asset-reliability-smoke-008.md",
     "sourceMetadata": {
       "narrativeSource": "inspection report",
       "sourceFormat": "pdf-text-layer"
@@ -96,7 +96,7 @@
     "id": "asset-reliability-smoke-009",
     "artifactType": "sensor-reading",
     "mimeType": "application/json",
-    "contentPath": "content/asset-reliability-smoke-009.json",
+    "contentPath": "artifacts/asset-reliability-smoke-009.json",
     "sourceMetadata": {
       "narrativeSource": "BMS sensor gateway",
       "gatewayId": "BMS-NG-07"

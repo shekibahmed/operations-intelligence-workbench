@@ -3,7 +3,7 @@
     "id": "document-assurance-smoke-001",
     "artifactType": "mutual-nda",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-smoke-001.md",
+    "contentPath": "artifacts/document-assurance-smoke-001.md",
     "sourceMetadata": {
       "narrativeSource": "executed contract",
       "sourceFormat": "pdf-text-layer"
@@ -15,7 +15,7 @@
     "id": "document-assurance-smoke-002",
     "artifactType": "internal-policy",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-smoke-002.md",
+    "contentPath": "artifacts/document-assurance-smoke-002.md",
     "sourceMetadata": {
       "narrativeSource": "internal policy document",
       "sourceFormat": "pdf-text-layer"
@@ -27,7 +27,7 @@
     "id": "document-assurance-smoke-003",
     "artifactType": "vendor-checklist",
     "mimeType": "text/csv",
-    "contentPath": "content/document-assurance-smoke-003.csv",
+    "contentPath": "artifacts/document-assurance-smoke-003.csv",
     "sourceMetadata": {
       "narrativeSource": "vendor onboarding checklist"
     },
@@ -38,7 +38,7 @@
     "id": "document-assurance-smoke-004",
     "artifactType": "compliance-report",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-smoke-004.md",
+    "contentPath": "artifacts/document-assurance-smoke-004.md",
     "sourceMetadata": {
       "narrativeSource": "quarterly compliance report",
       "sourceFormat": "pdf-text-layer"
@@ -50,7 +50,7 @@
     "id": "document-assurance-smoke-005",
     "artifactType": "clarification-email",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-smoke-005.txt",
+    "contentPath": "artifacts/document-assurance-smoke-005.txt",
     "sourceMetadata": {
       "narrativeSource": "email thread",
       "channel": "email"
@@ -62,7 +62,7 @@
     "id": "document-assurance-smoke-006",
     "artifactType": "reviewer-note",
     "mimeType": "text/plain",
-    "contentPath": "content/document-assurance-smoke-006.txt",
+    "contentPath": "artifacts/document-assurance-smoke-006.txt",
     "sourceMetadata": {
       "narrativeSource": "reviewer note"
     },
@@ -73,7 +73,7 @@
     "id": "document-assurance-smoke-007",
     "artifactType": "service-order",
     "mimeType": "application/pdf",
-    "contentPath": "content/document-assurance-smoke-007.md",
+    "contentPath": "artifacts/document-assurance-smoke-007.md",
     "sourceMetadata": {
       "narrativeSource": "executed service order",
       "sourceFormat": "pdf-text-layer"
@@ -85,7 +85,7 @@
     "id": "document-assurance-smoke-008",
     "artifactType": "vendor-checklist",
     "mimeType": "text/csv",
-    "contentPath": "content/document-assurance-smoke-008.csv",
+    "contentPath": "artifacts/document-assurance-smoke-008.csv",
     "sourceMetadata": {
       "narrativeSource": "vendor requalification checklist"
     },
@@ -96,7 +96,7 @@
     "id": "document-assurance-smoke-009",
     "artifactType": "obligation-status-export",
     "mimeType": "application/json",
-    "contentPath": "content/document-assurance-smoke-009.json",
+    "contentPath": "artifacts/document-assurance-smoke-009.json",
     "sourceMetadata": {
       "narrativeSource": "Compliance Tracker automated export"
     },

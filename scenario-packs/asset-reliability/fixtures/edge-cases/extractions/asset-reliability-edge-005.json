@@ -1,5 +1,5 @@
 {
-  "artifactChecksum": "a69ecf9d1393668b0a9f31234ffd09fde9d1edd247d4334ab867508f191b7fee",
+  "artifactChecksum": "3600e161c47d04d432d5e8aae640da71f2f4ae7902eed1d6e0f2b175e537e33b",
   "observations": [
     {
       "status": "extracted",
@@ -15,6 +15,23 @@
             "end": 123
           },
           "excerpt": "A-142's brakes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.82,
+      "value": "brake assembly",
+      "normalisedValue": "brakes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 117,
+            "end": 129
+          },
+          "excerpt": "brakes today"
         }
       ]
     },
@@ -71,18 +88,18 @@
     },
     {
       "status": "extracted",
-      "schemaKey": "recommendation",
-      "confidence": 0.8,
-      "value": "resend of prior report to ensure it was logged",
-      "normalisedValue": "resend of prior report to ensure it was logged",
+      "schemaKey": "previous-repair-reference",
+      "confidence": 0.7,
+      "value": "brake work done in spring",
+      "normalisedValue": "brake work done in spring",
       "evidence": [
         {
           "locator": {
             "kind": "text-range",
-            "start": 683,
-            "end": 753
+            "start": 455,
+            "end": 496
           },
-          "excerpt": "resending this from yesterday, not sure it went through the first time"
+          "excerpt": "it had brake work done back in the spring"
         }
       ]
     }
