@@ -88,6 +88,26 @@ only then updates the Decision to `approved`, `rejected` or
 approved Decision with no matching Approval. Both the Decision and its Case
 receive append-only outcome audits.
 
+## Metric evaluation
+
+`MetricEvaluationService.evaluateMetrics(workspaceId, pack, metricIds?)`
+evaluates the pack's validated v1.5 Metric catalogue through Workspace-scoped
+repository ports. The only operational aggregation kinds are `count`,
+`count-where`, `count-by-field`, `trend-over-time` and `sla-derived`.
+Definitions select a canonical record type and may use only its allow-listed
+status, severity or type fields plus absolute time windows. Packs cannot
+provide SQL, expressions or executable predicates.
+
+Results retain the Metric's `classification` and `format` and use a typed
+value discriminator: `number`, `breakdown`, `time-series` or `table`.
+SLA-derived rows always use the stable `overdue`, `at-risk`, `on-track` and
+`unscheduled` buckets relative to the service's injected clock.
+
+`hypothetical` definitions return a separate `hypothetical` result containing
+only their validated illustrative assumptions and a null value. The service
+does not call any operational repository for those definitions, preventing an
+impact hypothesis from being presented as a measured result.
+
 ## Local commands
 
 With Docker PostgreSQL running and migrations applied:

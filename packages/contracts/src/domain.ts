@@ -296,7 +296,239 @@ export const ApprovalSchema = z
   })
   .strict();
 
-export const MetricDefinitionSchema = z
+export const MetricRecordTypeSchema = z.enum([
+  "cases",
+  "signals",
+  "decisions",
+  "action-items",
+  "events",
+  "artifacts",
+]);
+
+export const MetricFieldSchema = z.enum([
+  "caseType",
+  "status",
+  "priority",
+  "severity",
+  "owner",
+  "reEvaluationStatus",
+  "signalType",
+  "decisionType",
+  "riskLevel",
+  "approvalPolicyId",
+  "actionType",
+  "assignee",
+  "eventType",
+  "artifactType",
+  "mimeType",
+  "processingStatus",
+]);
+
+export const MetricTimestampFieldSchema = z.enum([
+  "createdAt",
+  "updatedAt",
+  "dueAt",
+  "decidedAt",
+  "completedAt",
+  "occurredAt",
+  "recordedAt",
+  "receivedAt",
+]);
+
+const METRIC_FIELDS_BY_RECORD_TYPE = {
+  cases: ["caseType", "status", "priority", "severity", "owner", "reEvaluationStatus"],
+  signals: ["signalType", "severity"],
+  decisions: ["decisionType", "status", "riskLevel", "approvalPolicyId"],
+  "action-items": ["actionType", "status", "assignee"],
+  events: ["eventType", "reEvaluationStatus"],
+  artifacts: ["artifactType", "mimeType", "processingStatus"],
+} as const;
+
+const METRIC_TIMESTAMPS_BY_RECORD_TYPE = {
+  cases: ["createdAt", "updatedAt", "dueAt"],
+  signals: ["createdAt"],
+  decisions: ["createdAt", "decidedAt"],
+  "action-items": ["createdAt", "dueAt", "completedAt"],
+  events: ["occurredAt", "recordedAt"],
+  artifacts: ["receivedAt", "occurredAt"],
+} as const;
+
+export const MetricFilterSchema = z.discriminatedUnion("operator", [
+  z
+    .object({
+      field: MetricFieldSchema,
+      operator: z.literal("equals"),
+      value: z.string().min(1),
+    })
+    .strict(),
+  z
+    .object({
+      field: MetricFieldSchema,
+      operator: z.enum(["in", "not-in"]),
+      values: z.array(z.string().min(1)).min(1),
+    })
+    .strict(),
+]);
+
+export const MetricTimeWindowSchema = z
+  .object({
+    field: MetricTimestampFieldSchema,
+    from: TimestampSchema.optional(),
+    to: TimestampSchema.optional(),
+  })
+  .strict()
+  .refine((value) => value.from !== undefined || value.to !== undefined, {
+    message: "A metric time window requires from or to",
+  })
+  .refine(
+    (value) =>
+      value.from === undefined || value.to === undefined || Date.parse(value.from) <= Date.parse(value.to),
+    { message: "Metric time-window from must not be after to", path: ["from"] },
+  );
+
+export const MetricIllustrativeParametersSchema = z
+  .object({
+    summary: z.string().min(1),
+    assumptions: z
+      .record(z.string(), JsonValueSchema)
+      .refine((value) => Object.keys(value).length > 0, "At least one illustrative assumption is required"),
+  })
+  .strict();
+
+const MetricParameterBaseSchema = z.object({
+  recordType: MetricRecordTypeSchema,
+  timeWindow: MetricTimeWindowSchema.optional(),
+  illustrative: MetricIllustrativeParametersSchema.optional(),
+});
+
+const CountMetricDefinitionSchema = z
+  .object({
+    aggregation: z.literal("count"),
+    parameters: MetricParameterBaseSchema.strict(),
+  })
+  .strict();
+
+const CountWhereMetricDefinitionSchema = z
+  .object({
+    aggregation: z.literal("count-where"),
+    parameters: MetricParameterBaseSchema.extend({ filters: z.array(MetricFilterSchema).min(1) }).strict(),
+  })
+  .strict();
+
+const CountByFieldMetricDefinitionSchema = z
+  .object({
+    aggregation: z.literal("count-by-field"),
+    parameters: MetricParameterBaseSchema.extend({
+      field: MetricFieldSchema,
+      filters: z.array(MetricFilterSchema).optional(),
+    }).strict(),
+  })
+  .strict();
+
+const TrendOverTimeMetricDefinitionSchema = z
+  .object({
+    aggregation: z.literal("trend-over-time"),
+    parameters: MetricParameterBaseSchema.extend({
+      timestampField: MetricTimestampFieldSchema,
+      bucket: z.enum(["day", "week", "month"]),
+      filters: z.array(MetricFilterSchema).optional(),
+    }).strict(),
+  })
+  .strict();
+
+const SlaDerivedMetricDefinitionSchema = z
+  .object({
+    aggregation: z.literal("sla-derived"),
+    parameters: MetricParameterBaseSchema.extend({
+      recordType: z.enum(["cases", "action-items"]),
+      atRiskWithinHours: z.number().nonnegative().finite(),
+      filters: z.array(MetricFilterSchema).optional(),
+    }).strict(),
+  })
+  .strict();
+
+const MetricAggregationDefinitionSchema = z.discriminatedUnion("aggregation", [
+  CountMetricDefinitionSchema,
+  CountWhereMetricDefinitionSchema,
+  CountByFieldMetricDefinitionSchema,
+  TrendOverTimeMetricDefinitionSchema,
+  SlaDerivedMetricDefinitionSchema,
+]);
+
+const MetricDefinitionBaseSchema = z.object({
+  id: SlugSchema,
+  name: z.string().min(1).max(200),
+  description: z.string().min(1),
+  classification: z.enum(["observed", "calculated", "estimated", "hypothetical"]),
+  format: z.enum(["number", "percentage", "duration", "currency", "text"]),
+});
+
+export const MetricDefinitionV15Schema = z
+  .intersection(MetricDefinitionBaseSchema, MetricAggregationDefinitionSchema)
+  .superRefine((definition, context) => {
+    const parameters = definition.parameters;
+    const allowedFields = new Set<string>(METRIC_FIELDS_BY_RECORD_TYPE[parameters.recordType]);
+    const allowedTimestamps = new Set<string>(
+      METRIC_TIMESTAMPS_BY_RECORD_TYPE[parameters.recordType],
+    );
+    const filters = "filters" in parameters ? parameters.filters ?? [] : [];
+    filters.forEach((filter, index) => {
+      if (!allowedFields.has(filter.field)) {
+        context.addIssue({
+          code: "custom",
+          message: `Field ${filter.field} cannot filter ${parameters.recordType}`,
+          path: ["parameters", "filters", index, "field"],
+        });
+      }
+    });
+    if ("field" in parameters && !allowedFields.has(parameters.field)) {
+      context.addIssue({
+        code: "custom",
+        message: `Field ${parameters.field} cannot group ${parameters.recordType}`,
+        path: ["parameters", "field"],
+      });
+    }
+    if (
+      "timestampField" in parameters &&
+      !allowedTimestamps.has(parameters.timestampField)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: `Timestamp ${parameters.timestampField} cannot bucket ${parameters.recordType}`,
+        path: ["parameters", "timestampField"],
+      });
+    }
+    if (
+      parameters.timeWindow !== undefined &&
+      !allowedTimestamps.has(parameters.timeWindow.field)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: `Timestamp ${parameters.timeWindow.field} cannot window ${parameters.recordType}`,
+        path: ["parameters", "timeWindow", "field"],
+      });
+    }
+    if (definition.classification === "hypothetical" && parameters.illustrative === undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "Hypothetical metrics require illustrative assumptions",
+        path: ["parameters", "illustrative"],
+      });
+    }
+    if (definition.classification !== "hypothetical" && parameters.illustrative !== undefined) {
+      context.addIssue({
+        code: "custom",
+        message: "Only hypothetical metrics may declare illustrative assumptions",
+        path: ["parameters", "illustrative"],
+      });
+    }
+  });
+
+/**
+ * Compatibility shape for pre-v1.5 in-process consumers. Scenario Pack loading
+ * and metric evaluation accept only MetricDefinitionV15Schema.
+ */
+const LegacyMetricDefinitionSchema = z
   .object({
     id: SlugSchema,
     name: z.string().min(1).max(200),
@@ -315,6 +547,11 @@ export const MetricDefinitionSchema = z
     format: z.enum(["number", "percentage", "duration", "currency", "text"]),
   })
   .strict();
+
+export const MetricDefinitionSchema = z.union([
+  MetricDefinitionV15Schema,
+  LegacyMetricDefinitionSchema,
+]);
 
 export const AuditEntrySchema = z
   .object({
@@ -353,5 +590,12 @@ export type Case = z.infer<typeof CaseSchema>;
 export type ActionItem = z.infer<typeof ActionItemSchema>;
 export type Decision = z.infer<typeof DecisionSchema>;
 export type Approval = z.infer<typeof ApprovalSchema>;
+export type MetricRecordType = z.infer<typeof MetricRecordTypeSchema>;
+export type MetricField = z.infer<typeof MetricFieldSchema>;
+export type MetricTimestampField = z.infer<typeof MetricTimestampFieldSchema>;
+export type MetricFilter = z.infer<typeof MetricFilterSchema>;
+export type MetricTimeWindow = z.infer<typeof MetricTimeWindowSchema>;
+export type MetricIllustrativeParameters = z.infer<typeof MetricIllustrativeParametersSchema>;
+export type MetricDefinitionV15 = z.infer<typeof MetricDefinitionV15Schema>;
 export type MetricDefinition = z.infer<typeof MetricDefinitionSchema>;
 export type AuditEntry = z.infer<typeof AuditEntrySchema>;

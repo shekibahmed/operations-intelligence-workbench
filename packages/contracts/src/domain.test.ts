@@ -230,8 +230,11 @@ const validContracts = [
       name: "Open records",
       description: "Count of records in an open state.",
       classification: "observed",
-      aggregation: "count-records",
-      parameters: { status: "open" },
+      aggregation: "count-where",
+      parameters: {
+        recordType: "cases",
+        filters: [{ field: "status", operator: "equals", value: "open" }],
+      },
       format: "number",
     },
   ],

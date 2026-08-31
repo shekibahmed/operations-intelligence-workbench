@@ -1,3 +1,5 @@
+import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { resolve } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -21,6 +23,7 @@ describe("loadPackFromDirectory", () => {
     expect(result.pack.manifest.version).toBe("1.0.0");
     expect(result.pack.workflows.default?.id).toBe("default");
     expect(result.pack.rules).toHaveLength(1);
+    expect(result.pack.metricDefinitions.get("open-cases")?.aggregation).toBe("count-where");
     expect(result.pack.dashboards.leadership.widgets[0]?.type).toBe("stat-card");
     expect(result.pack.labels).toMatchObject({ entitySingular: "Record" });
     expect(result.warnings.map((warning) => warning.path)).toEqual(
@@ -76,6 +79,49 @@ describe("loadPackFromDirectory", () => {
       throw new Error("expected pack to be invalid");
     }
     expect(result.errors.some((issue) => issue.path.startsWith("./dashboards/leadership.json"))).toBe(true);
+  });
+
+  it("fails a dashboard widget whose metricId does not resolve", async () => {
+    const temporaryPack = await mkdtemp(resolve(tmpdir(), "oiw-metric-reference-"));
+    try {
+      await cp(fixture("valid"), temporaryPack, { recursive: true });
+      const dashboardPath = resolve(temporaryPack, "dashboards/leadership.json");
+      const dashboard = JSON.parse(await readFile(dashboardPath, "utf8"));
+      dashboard.widgets[0].parameters.metricId = "unknown-metric";
+      await writeFile(dashboardPath, `${JSON.stringify(dashboard, null, 2)}\n`);
+      const result = await loadPackFromDirectory(temporaryPack);
+      expect(result.status).toBe("invalid");
+      if (result.status !== "invalid") throw new Error("expected pack to be invalid");
+      expect(
+        result.errors.some(
+          ({ path, message }) =>
+            path.endsWith("parameters.metricId") && message.includes("unknown-metric"),
+        ),
+      ).toBe(true);
+    } finally {
+      await rm(temporaryPack, { recursive: true, force: true });
+    }
+  });
+
+  it("fails a Metric aggregation outside the v1.5 closed vocabulary", async () => {
+    const temporaryPack = await mkdtemp(resolve(tmpdir(), "oiw-metric-aggregation-"));
+    try {
+      await cp(fixture("valid"), temporaryPack, { recursive: true });
+      const metricPath = resolve(temporaryPack, "metrics/default.metrics.json");
+      const metrics = JSON.parse(await readFile(metricPath, "utf8"));
+      metrics[0].aggregation = "arbitrary-query";
+      await writeFile(metricPath, `${JSON.stringify(metrics, null, 2)}\n`);
+      const result = await loadPackFromDirectory(temporaryPack);
+      expect(result.status).toBe("invalid");
+      if (result.status !== "invalid") throw new Error("expected pack to be invalid");
+      expect(
+        result.errors.some(
+          ({ path }) => path === "./metrics/default.metrics.json#0.aggregation",
+        ),
+      ).toBe(true);
+    } finally {
+      await rm(temporaryPack, { recursive: true, force: true });
+    }
   });
 
   it("fails a fixture artifact with no matching expected extraction", async () => {

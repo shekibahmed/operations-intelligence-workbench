@@ -101,6 +101,25 @@ and undeclared Entity types, and exposed as `loadedPack.seedEntities`.
 `loadFixtureSet` also returns the same validated list as
 `fixtureSet.entities`, so application seeding needs no pack filesystem access.
 
+## Metric catalogue (contracts v1.5)
+
+Every manifest-referenced Metric file is parsed as a non-empty array of
+`MetricDefinitionSchema` values. Loaded definitions populate the
+`loadedPack.metricDefinitions` map and can be retrieved with
+`getMetricDefinition(loadedPack, metricId)`. Duplicate Metric IDs fail pack
+loading.
+
+The v1.5 aggregation vocabulary is closed to `count`, `count-where`,
+`count-by-field`, `trend-over-time` and `sla-derived`. Each parameter shape
+names a canonical record type; filters, grouping fields and timestamps are
+checked against record-specific allowlists. Hypothetical Metrics must carry
+illustrative assumptions, while non-hypothetical Metrics cannot carry them.
+
+After the three dashboard files load, every widget must provide a string
+`parameters.metricId` that resolves against this catalogue. Missing and
+unknown references are path-annotated pack errors rather than runtime UI
+failures.
+
 ## Registry
 
 ```ts
@@ -177,7 +196,12 @@ Per PRD §11.3 and the amendments in `docs/PLAN_AMENDMENTS.md`:
   schema validation. Additionally, every `eventType` referenced by an
   `event-field` or `aggregate` fact must match a declared `eventTypes[].id`.
 - **Dashboard widgets (A5)** — each `dashboards[*]` file's widgets must use
-  one of the eight fixed widget types (`DashboardWidgetTypeSchema`).
+  one of the eight fixed widget types (`DashboardWidgetTypeSchema`), provide a
+  `metricId`, and resolve it against the validated v1.5 Metric catalogue.
+- **Metric definitions (A5 / contracts v1.5)** — every `metrics[]` reference
+  contains only closed aggregation definitions, record-specific fields and
+  time windows; IDs are unique and hypothetical definitions carry explicit
+  illustrative assumptions.
 - **Fixture/extraction cross-check (A1)** — for each fixture set
   (`smoke`/`demo`/`edgeCases`) that exists on disk, every file under
   `<set>/artifacts/` must have a matching `<set>/extractions/<artifact-id>.json`

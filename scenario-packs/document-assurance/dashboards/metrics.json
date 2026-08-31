@@ -4,8 +4,14 @@
     "name": "Open Review Cases",
     "description": "The count of review cases that are not yet in a terminal (closed) workflow state.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "caseType": "review-case", "statusNotIn": ["closed"] },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "review-case" },
+        { "field": "status", "operator": "not-in", "values": ["closed"] }
+      ]
+    },
     "format": "number"
   },
   {
@@ -14,7 +20,14 @@
     "description": "The distribution of open review cases grouped by severity level.",
     "classification": "calculated",
     "aggregation": "count-by-field",
-    "parameters": { "caseType": "review-case", "field": "severity" },
+    "parameters": {
+      "recordType": "cases",
+      "field": "severity",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "review-case" },
+        { "field": "status", "operator": "not-in", "values": ["closed"] }
+      ]
+    },
     "format": "number"
   },
   {
@@ -22,8 +35,13 @@
     "name": "Missing Supporting Evidence",
     "description": "The count of currently open missing-supporting-evidence signals across tracked obligations.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "signalType": "missing-supporting-evidence" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "signals",
+      "filters": [
+        { "field": "signalType", "operator": "equals", "value": "missing-supporting-evidence" }
+      ]
+    },
     "format": "number"
   },
   {
@@ -31,8 +49,13 @@
     "name": "Missed Deadline Trend",
     "description": "The count of missed-deadline signals raised per period over time, used to visualise persistence of overdue obligations.",
     "classification": "calculated",
-    "aggregation": "time-series-count",
-    "parameters": { "signalType": "missed-deadline", "bucket": "month" },
+    "aggregation": "trend-over-time",
+    "parameters": {
+      "recordType": "signals",
+      "timestampField": "createdAt",
+      "bucket": "month",
+      "filters": [{ "field": "signalType", "operator": "equals", "value": "missed-deadline" }]
+    },
     "format": "number"
   },
   {
@@ -40,8 +63,12 @@
     "name": "Outstanding Obligations",
     "description": "The count of open action items tracking obligation follow-up whose due date has passed or is at risk of being missed.",
     "classification": "calculated",
-    "aggregation": "due-date-risk",
-    "parameters": { "actionStatusIn": ["open", "in-progress"] },
+    "aggregation": "sla-derived",
+    "parameters": {
+      "recordType": "action-items",
+      "atRiskWithinHours": 24,
+      "filters": [{ "field": "status", "operator": "in", "values": ["open", "in-progress"] }]
+    },
     "format": "number"
   },
   {
@@ -49,8 +76,14 @@
     "name": "Exceptions Awaiting Approval",
     "description": "The count of proposed accept-exception decisions awaiting human approval.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "decisionType": "accept-exception", "status": "awaiting-approval" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "decisions",
+      "filters": [
+        { "field": "decisionType", "operator": "equals", "value": "accept-exception" },
+        { "field": "status", "operator": "equals", "value": "awaiting-approval" }
+      ]
+    },
     "format": "number"
   },
   {
@@ -58,8 +91,17 @@
     "name": "Liability Exposure Outlook",
     "description": "A hypothetical estimate of aggregate liability exposure at risk across engagements currently carrying an open conflicting-provisions signal, derived from the financial-threshold observations on record. This is a forward-looking estimate, never an observed measurement, and must not be presented as fact.",
     "classification": "hypothetical",
-    "aggregation": "ratio",
-    "parameters": { "numerator": "financial-threshold-on-flagged-engagements", "denominator": "total-tracked-engagements" },
+    "aggregation": "count",
+    "parameters": {
+      "recordType": "cases",
+      "illustrative": {
+        "summary": "Illustrative liability exposure; no operational rows are evaluated.",
+        "assumptions": {
+          "numerator": "financial-threshold-on-flagged-engagements",
+          "denominator": "total-tracked-engagements"
+        }
+      }
+    },
     "format": "currency"
   },
   {
@@ -67,8 +109,11 @@
     "name": "Critical Signals",
     "description": "The count of currently open signals at critical severity across tracked engagements.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "severity": "critical" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "signals",
+      "filters": [{ "field": "severity", "operator": "equals", "value": "critical" }]
+    },
     "format": "number"
   },
   {
@@ -76,8 +121,17 @@
     "name": "Pending Decisions",
     "description": "The count of proposed decisions across tracked engagements that have not yet reached a final approved or rejected outcome.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "statusIn": ["proposed", "awaiting-approval", "more-information-required"] },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "decisions",
+      "filters": [
+        {
+          "field": "status",
+          "operator": "in",
+          "values": ["proposed", "awaiting-approval", "more-information-required"]
+        }
+      ]
+    },
     "format": "number"
   },
   {
@@ -85,8 +139,12 @@
     "name": "Recent Review Activity",
     "description": "A rolling feed of the most recent operational events, signals, and case updates across tracked engagements.",
     "classification": "observed",
-    "aggregation": "recent-activity",
-    "parameters": { "limit": 15 },
+    "aggregation": "trend-over-time",
+    "parameters": {
+      "recordType": "events",
+      "timestampField": "occurredAt",
+      "bucket": "day"
+    },
     "format": "text"
   }
 ]

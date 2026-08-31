@@ -1,6 +1,10 @@
 export const scenarioSdkPackageBoundary = "@oiw/scenario-sdk" as const;
 
-export { DashboardDefinitionSchema, DashboardWidgetSchema } from "./dashboards.js";
+export {
+  DashboardDefinitionSchema,
+  DashboardWidgetSchema,
+  validateDashboardMetricReferences,
+} from "./dashboards.js";
 export type { DashboardDefinition, DashboardWidget } from "./dashboards.js";
 export { formatIssue, issueError, issueWarning } from "./errors.js";
 export type { PackIssue, PackIssueSeverity } from "./errors.js";
@@ -16,6 +20,8 @@ export type {
   ObservationValueValidationIssue,
   ObservationValueValidationResult,
 } from "./observations.js";
+export { MetricDefinitionCatalogueSchema, getMetricDefinition } from "./metrics.js";
+export type { MetricDefinitionCatalogue } from "./metrics.js";
 export { buildPackRegistry } from "./registry.js";
 export type { InvalidPackEntry, PackRegistry, PackRegistryEntry, SkippedPackEntry } from "./registry.js";
 export { collectEventTypeReferences, RuleFileSchema, validateRuleEventTypes } from "./rules.js";

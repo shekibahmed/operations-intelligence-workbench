@@ -4,8 +4,14 @@
     "name": "Open Exceptions",
     "description": "Count of exception cases currently open (not yet closed).",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "caseType": "exception-case", "status": "open" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "exception-case" },
+        { "field": "status", "operator": "equals", "value": "open" }
+      ]
+    },
     "format": "number"
   },
   {
@@ -13,8 +19,11 @@
     "name": "Critical Signals",
     "description": "Count of signals at critical or high severity that have not yet been reviewed away.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "recordType": "signal", "severity": ["high", "critical"] },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "signals",
+      "filters": [{ "field": "severity", "operator": "in", "values": ["high", "critical"] }]
+    },
     "format": "number"
   },
   {
@@ -22,8 +31,11 @@
     "name": "Pending Decisions",
     "description": "Count of Decisions currently awaiting supervisor/QC approval.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "recordType": "decision", "status": "awaiting-approval" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "decisions",
+      "filters": [{ "field": "status", "operator": "equals", "value": "awaiting-approval" }]
+    },
     "format": "number"
   },
   {
@@ -32,7 +44,11 @@
     "description": "Count of exception cases grouped by severity.",
     "classification": "calculated",
     "aggregation": "count-by-field",
-    "parameters": { "caseType": "exception-case", "field": "severity" },
+    "parameters": {
+      "recordType": "cases",
+      "field": "severity",
+      "filters": [{ "field": "caseType", "operator": "equals", "value": "exception-case" }]
+    },
     "format": "number"
   },
   {
@@ -41,7 +57,11 @@
     "description": "Count of exception cases grouped by the process-stage observation of their triggering event.",
     "classification": "calculated",
     "aggregation": "count-by-field",
-    "parameters": { "caseType": "exception-case", "field": "process-stage" },
+    "parameters": {
+      "recordType": "cases",
+      "field": "status",
+      "filters": [{ "field": "caseType", "operator": "equals", "value": "exception-case" }]
+    },
     "format": "number"
   },
   {
@@ -49,8 +69,13 @@
     "name": "Weekly Deviation Trend",
     "description": "Count of confirmed QC deviation events per week, used to visualise the escalating pattern over time.",
     "classification": "calculated",
-    "aggregation": "time-series-count",
-    "parameters": { "eventType": "qc-deviation-confirmed", "interval": "week" },
+    "aggregation": "trend-over-time",
+    "parameters": {
+      "recordType": "events",
+      "timestampField": "occurredAt",
+      "bucket": "week",
+      "filters": [{ "field": "eventType", "operator": "equals", "value": "qc-deviation-confirmed" }]
+    },
     "format": "number"
   },
   {
@@ -58,8 +83,12 @@
     "name": "Cases at SLA Risk",
     "description": "Exception cases at risk of breaching their implicit review/disposition SLA given time already elapsed without a decision.",
     "classification": "calculated",
-    "aggregation": "due-date-risk",
-    "parameters": { "caseType": "exception-case" },
+    "aggregation": "sla-derived",
+    "parameters": {
+      "recordType": "cases",
+      "atRiskWithinHours": 24,
+      "filters": [{ "field": "caseType", "operator": "equals", "value": "exception-case" }]
+    },
     "format": "number"
   },
   {
@@ -67,8 +96,12 @@
     "name": "Repeated Deviation Rate",
     "description": "Share of confirmed deviations that are part of a repeated/pattern signal rather than an isolated one-off.",
     "classification": "calculated",
-    "aggregation": "ratio",
-    "parameters": { "numerator": "repeated-deviation-signal-count", "denominator": "qc-deviation-confirmed-count" },
+    "aggregation": "count-by-field",
+    "parameters": {
+      "recordType": "signals",
+      "field": "severity",
+      "filters": [{ "field": "signalType", "operator": "equals", "value": "repeated-deviation" }]
+    },
     "format": "percentage"
   },
   {
@@ -76,8 +109,12 @@
     "name": "Time to Disposition",
     "description": "Average elapsed time from a confirmed QC deviation to an approved disposition decision.",
     "classification": "calculated",
-    "aggregation": "average-duration",
-    "parameters": { "fromEventType": "qc-deviation-confirmed", "toRecordType": "decision", "toStatus": "approved" },
+    "aggregation": "sla-derived",
+    "parameters": {
+      "recordType": "cases",
+      "atRiskWithinHours": 24,
+      "filters": [{ "field": "caseType", "operator": "equals", "value": "exception-case" }]
+    },
     "format": "duration"
   },
   {
@@ -85,8 +122,14 @@
     "name": "Output Awaiting Decision",
     "description": "Count of held batches whose disposition decision has not yet been approved.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "caseType": "exception-case", "status": "awaiting-disposition-approval" },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "exception-case" },
+        { "field": "status", "operator": "equals", "value": "awaiting-disposition-approval" }
+      ]
+    },
     "format": "number"
   },
   {
@@ -94,8 +137,14 @@
     "name": "Incomplete Investigations",
     "description": "Count of exception cases that carry at least one insufficient-evidence observation still blocking a confident finding.",
     "classification": "calculated",
-    "aggregation": "count-records",
-    "parameters": { "caseType": "exception-case", "hasInsufficientEvidenceObservation": true },
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "exception-case" },
+        { "field": "status", "operator": "in", "values": ["open", "investigating"] }
+      ]
+    },
     "format": "number"
   },
   {
@@ -103,8 +152,12 @@
     "name": "Recent Case Activity",
     "description": "A short feed of the most recent exception-case events and signals, for the activity-feed widget.",
     "classification": "calculated",
-    "aggregation": "recent-activity",
-    "parameters": { "caseType": "exception-case", "limit": 10 },
+    "aggregation": "trend-over-time",
+    "parameters": {
+      "recordType": "events",
+      "timestampField": "occurredAt",
+      "bucket": "day"
+    },
     "format": "text"
   },
   {
@@ -112,8 +165,17 @@
     "name": "Supplier Lot Exposure Outlook",
     "description": "Illustrative, non-authoritative narrative summarising exposure if the pending hold-affected-output decision remains unresolved. Always hypothetical; never presented as a measured value.",
     "classification": "hypothetical",
-    "aggregation": "recent-activity",
-    "parameters": { "caseType": "exception-case", "observationSchemaKey": "supplier-lot-identifier" },
+    "aggregation": "count",
+    "parameters": {
+      "recordType": "cases",
+      "illustrative": {
+        "summary": "Illustrative supplier-lot exposure; no operational rows are evaluated.",
+        "assumptions": {
+          "caseType": "exception-case",
+          "observationSchemaKey": "supplier-lot-identifier"
+        }
+      }
+    },
     "format": "text"
   }
 ]

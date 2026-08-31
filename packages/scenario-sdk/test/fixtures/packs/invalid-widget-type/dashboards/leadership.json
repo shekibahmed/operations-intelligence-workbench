@@ -6,7 +6,7 @@
       "id": "weird-widget",
       "type": "chart-3d",
       "title": "3D Chart",
-      "parameters": {}
+      "parameters": { "metricId": "open-cases" }
     }
   ]
 }

@@ -26,6 +26,7 @@ import { ActionItemService } from "../src/action-items.js";
 import { ApprovalService, DecisionService } from "../src/decisions.js";
 import { prepareOperationalAudit } from "../src/operational-audit.js";
 import { deterministicUuid } from "../src/records.js";
+import { MetricEvaluationService } from "../src/metric-evaluation.js";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
 const migrationsDirectory = resolve(repositoryRoot, "db/migrations");
@@ -343,6 +344,27 @@ describe("OIW-501 operational advancement", () => {
       status: "awaiting-approval",
     });
     expect(await repositories.approvals.list(workspace.id)).toHaveLength(0);
+
+    const metricResults = await new MetricEvaluationService(
+      repositories,
+      () => new Date(timestamp),
+    ).evaluateMetrics(workspace.id, pack, [
+      "open-reliability-cases",
+      "critical-signal-count",
+      "pending-decision-count",
+    ]);
+    expect(
+      Object.fromEntries(
+        metricResults.map(({ id, result }) => [
+          id,
+          result.type === "number" ? result.value : null,
+        ]),
+      ),
+    ).toEqual({
+      "open-reliability-cases": 1,
+      "critical-signal-count": 2,
+      "pending-decision-count": 1,
+    });
 
     const audits = await repositories.auditEntries.list(workspace.id);
     expect(audits.some(({ action }) => action === "rule-action-pending")).toBe(false);

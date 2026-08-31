@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import {
   CaseDefinitionSchema,
   EventDefinitionSchema,
+  type MetricDefinitionV15,
   ObservationSchemaDefinitionSchema,
   SeedEntityCatalogueSchema,
   WorkflowDefinitionSchema,
@@ -16,12 +17,17 @@ import {
   type WorkflowDefinition,
 } from "@oiw/contracts";
 
-import { DashboardDefinitionSchema, type DashboardDefinition } from "./dashboards.js";
+import {
+  DashboardDefinitionSchema,
+  validateDashboardMetricReferences,
+  type DashboardDefinition,
+} from "./dashboards.js";
 import { issueError, type PackIssue } from "./errors.js";
 import { validateEventDefinitionAmbiguity } from "./events.js";
 import { validateFixtureSet } from "./fixtures.js";
 import { readAndValidateJsonFile, readJsonFile } from "./json-files.js";
 import { loadManifest, MANIFEST_FILE_NAME } from "./manifest.js";
+import { MetricDefinitionCatalogueSchema } from "./metrics.js";
 import { validateObservationValue } from "./observations.js";
 import { RuleFileSchema, validateRuleEventTypes } from "./rules.js";
 
@@ -35,6 +41,7 @@ export interface LoadedScenarioPack {
   seedEntities: readonly SeedEntity[];
   workflows: Record<string, WorkflowDefinition>;
   rules: RuleDefinition[];
+  metricDefinitions: ReadonlyMap<string, MetricDefinitionV15>;
   dashboards: {
     leadership: DashboardDefinition;
     operations: DashboardDefinition;
@@ -371,6 +378,31 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
   }
 
   const dashboards: Partial<Record<DashboardLens, DashboardDefinition>> = {};
+  const metricDefinitions = new Map<string, MetricDefinitionV15>();
+  for (const relativePath of manifest.metrics) {
+    const result = await readAndValidateJsonFile(
+      resolve(packDirectory, relativePath),
+      relativePath,
+      MetricDefinitionCatalogueSchema,
+    );
+    if (!result.ok) {
+      errors.push(...result.issues);
+      continue;
+    }
+    result.value.forEach((definition, index) => {
+      if (metricDefinitions.has(definition.id)) {
+        errors.push(
+          issueError(
+            `${relativePath}#${index}.id`,
+            `Duplicate Metric definition "${definition.id}"`,
+          ),
+        );
+      } else {
+        metricDefinitions.set(definition.id, definition);
+      }
+    });
+  }
+
   for (const lens of DASHBOARD_LENSES) {
     const relativePath = manifest.dashboards[lens];
     const result = await readAndValidateJsonFile(
@@ -380,6 +412,13 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
     );
     if (result.ok) {
       dashboards[lens] = result.value;
+      errors.push(
+        ...validateDashboardMetricReferences(
+          relativePath,
+          result.value,
+          new Set(metricDefinitions.keys()),
+        ),
+      );
     } else {
       errors.push(...result.issues);
     }
@@ -411,6 +450,7 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       seedEntities,
       workflows,
       rules,
+      metricDefinitions,
       dashboards: dashboards as LoadedScenarioPack["dashboards"],
     },
   };

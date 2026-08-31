@@ -6,7 +6,7 @@
       "id": "open-cases",
       "type": "stat-card",
       "title": "Open Cases",
-      "parameters": {}
+      "parameters": { "metricId": "open-cases" }
     }
   ]
 }
