@@ -29,17 +29,22 @@ board clears.
   review PASS)
 - OIW-201 — App shell, lens switcher, navigation (PR #8; ux-accessibility
   reviewer PASS; screenshots committed under apps/web/e2e/screenshots/)
+- OIW-004b — Schema-bound scenario pack content (PR #10; remediation run
+  after headless-ceiling failure; two mechanical integration fixes by lead
+  (dashboard widget shape, fixture dir layout) + tours made optional in
+  contracts (A7); final validate:packs = 3 loaded / 0 invalid / 0 warnings
+  with checksum-verified extractions; v1.1 negated/candidates exercised in
+  edge-003/004)
 
 ## Active tasks
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-004b | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004b-scenario-packs` | `../oiw-quality` | running (remediation run; see Known blockers history) |
 | OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | running (unblocks OIW-105) |
 | OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | parked | BLOCKED on OIW-107 (blocker detail: agent-run + PR #9) |
 
-Remaining merge order: OIW-004b → OIW-107 → OIW-105 (resume on its
-existing branch after 107 merges).
+Remaining merge order: OIW-107 → OIW-105 (resume on its existing branch
+after 107 merges).
 
 ## Frozen contracts
 
@@ -86,7 +91,7 @@ Resolved incidents (kept for takeover context):
 ## Commands currently expected to pass
 
 `pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`,
-`pnpm architecture:check`, `pnpm validate:packs`, `pnpm db:migrate` /
+`pnpm architecture:check`, `pnpm validate:packs` (loads all three real packs), `pnpm db:migrate` /
 `pnpm db:reset` (docker Postgres via `docker compose up -d`). CI runs the
 suite incl. persistence integration tests on every PR. `pnpm eval` remains
 a stub until the evaluation runner task.
