@@ -5,32 +5,31 @@
 
 ## Current milestone
 
-**M0 — Bootstrap + Contract Freeze (Wave 0)**
-
-Bootstrap (OIW-000) complete: repository initialized, PRD at `docs/PRD.md`
-(generation artifacts cleaned), coordination files and Wave 0 task packets
-committed, reviewer subagents defined.
+**M0 — Contract Freeze (Wave 0): 3 of 4 tasks merged.** Contracts are FROZEN
+as of PR #3. OIW-004a (narrative fixtures) still in progress.
 
 ## Merged tasks
 
 - OIW-000 — Repository bootstrap and coordination layer (lead thread)
+- OIW-001 — Monorepo scaffold and contract freeze (PR #3, Codex; both
+  reviewer subagents PASS; all required commands verified by the lead thread)
+- OIW-003 — UX specification and demonstration narrative (PR #2)
+- OIW-005 — Evaluation, threat-model and quality plan (PR #1)
 
-## Active tasks (Wave 0 — all four run in parallel, zero shared paths)
+## Active tasks
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-001 | Codex (GPT-5.2-Codex, high) | `agent/codex/OIW-001-contracts` | `../oiw-core` | ready to launch |
-| OIW-003 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-003-ux-spec` | `../oiw-ux` | ready to launch |
-| OIW-004a | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004a-narrative-fixtures` | `../oiw-packs` | ready to launch |
-| OIW-005 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-005-quality-plan` | `../oiw-quality` | ready to launch |
+| OIW-004a | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004a-narrative-fixtures` | `../oiw-packs` | running |
 
 ## Frozen contracts
 
-None yet. The Wave 0 freeze lands with OIW-001: canonical domain Zod
-contracts, pack manifest schema, workflow-definition schema, rule schema +
-fact catalogue v1, fixture expected-extraction contract (amendment A1).
-After OIW-001 merges, `packages/contracts/` changes require a dedicated
-contract-change task.
+Frozen at PR #3 (`packages/contracts/`): canonical domain Zod schemas for the
+14 neutral objects, pack manifest schema, workflow-definition schema, rule
+schema + closed fact catalogue v1, checksum-keyed fixture expected-extraction
+contract, `IntelligenceProvider` interface. Changes now require a dedicated
+contract-change task merged before dependents rebase. ADRs 001–007 in
+`docs/decisions/`.
 
 ## Known blockers
 
@@ -50,17 +49,19 @@ None.
 
 ## Next integration sequence
 
-1. Merge OIW-001 (everything downstream depends on it)
-2. Merge OIW-003
-3. Merge OIW-005
-4. Merge OIW-004a
-5. Lead thread cuts OIW-004b + Wave 1 task packets (see `docs/PRD.md` §26–27
+1. Review + merge OIW-004a when its agent completes (evaluation-reviewer
+   subagent pass; reconcile its contract-needs notes against the frozen
+   contracts)
+2. Lead thread reconciles contract-needs flagged in agent-runs OIW-003/004a/005
+   (contract-change task only if needed)
+3. Lead thread cuts OIW-004b + Wave 1 task packets (see `docs/PRD.md` §26–27
    and `docs/PLAN_AMENDMENTS.md` A6–A8)
 
 ## Commands currently expected to pass
 
-None yet — the toolchain lands with OIW-001. After it merges:
-`pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`.
+`pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`,
+`pnpm architecture:check` (CI runs these on every PR). `pnpm eval` and
+`pnpm validate:packs` are placeholder stubs until Wave 1.
 
 ## Ownership rules in force
 
