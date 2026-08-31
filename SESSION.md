@@ -45,7 +45,8 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | `../oiw-core` | running (batch B backend) |
+| OIW-109 | Codex (high) | `agent/codex/OIW-109-event-defs-seed-entities` | `../oiw-core` | running (unblocks OIW-501; contracts v1.3 + seed entities) |
+| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED on OIW-109 (PR #15 holds blocker record: no event-definition contract, no occurredAt mapping, no seeded entities) |
 | OIW-406 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-406-review-queue` | `../oiw-ux` | running (batch B UI: Process action, review queue, corrections) |
 
 Merged this batch: OIW-210 (PR #14, security PASS), OIW-108 (PR #13, contracts v1.2), OIW-301 (PR #12, test-reviewer PASS on all 9 criteria incl. smoke parity + injection inertness). Merge order for batch B: by completion (no shared paths). After batch B: batch C = case/action/decision/approval engines (Codex, executes the pending rule outcomes via the ActionExecutor seam) ∥ case+decision UI, then dashboards wiring + north-star e2e (M1).
