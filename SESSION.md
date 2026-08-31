@@ -45,6 +45,7 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
+| OIW-408 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-408-review-completion` | `../oiw-ux` | running (closes review-actions tracked delta) |
 | OIW-110 | Codex (high) | `agent/codex/OIW-110-event-reconciliation` | `../oiw-core` | running (pack event-definition reconciliation + ambiguity validator; unblocks OIW-501 final parity) |
 | OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED 2nd time — implementation COMPLETE and green, only pack data blocks 9/9 gold parity (7/9 exact; see PR #15 agent-run "problems") |
 
