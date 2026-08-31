@@ -13,13 +13,15 @@ artifact processing → evidence-backed review → entity/event/rules/signal →
 critical case → hold-from-service decision → human approval → real
 dashboards → audit trail — with real state assertions, green in CI.
 
-**Wave 3 / M2 STARTED (2026-09-01) on product-owner request**: guided
-tours wanted for all three packs → prerequisite is the pack-neutral
-lifecycle proof. Sequence: OIW-701 (common lifecycle test + pack-data
-fixes for packs two/three, Codex, running) → OIW-702 (click-through tours
-for both packs + Playwright journeys, Claude m900x). M1 remains green
-(north-star in CI); post-M1 hotfixes: stale-dist dev script, hydration-safe
-nav section prop (b03ac6d).
+**Wave 3 / M2 in progress.** OIW-701 (common lifecycle proof) BLOCKED
+with a real engine find: event assembler ignores requiredObservationValues
+(ADR-010 discriminators; unexercised by asset-reliability, required by
+document-assurance). OIW-703 (bounded assembler fix, Codex, running) →
+resume OIW-701 (also fixes pack-data defects it inventoried: duplicate
+extraction conflicts in both packs' edge-005 + others listed in its
+agent-run, draft PR #24) → OIW-702 (tours for packs two/three, staged).
+M1 remains green; post-M1 hotfixes: dev-script prebuild, hydration-safe
+nav (b03ac6d).
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
