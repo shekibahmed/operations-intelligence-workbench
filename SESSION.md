@@ -45,11 +45,10 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-506 | Codex (high) | `agent/codex/OIW-506-case-decision-engines` | `../oiw-core` | running (batch C engines; pre-authorized CaseDefinition v1.4) |
 | OIW-509 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-509-case-decision-ui` | `../oiw-ux` | running (batch C UI; integration points if 506 unmerged at branch time) |
 
 
-Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). Batch C running. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
+Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). OIW-506 merged (PR #20): backend vertical slice COMPLETE source→approval; contracts v1.4 (CaseDefinition, ADR-011); adversarial approval-bypass fails at service+DB layers. OIW-509 (UI) still running. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
 
 ## Frozen contracts
 
