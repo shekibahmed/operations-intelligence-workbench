@@ -12,6 +12,22 @@ jobs:
   quality:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: oiw
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oiw"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/oiw
 
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +43,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm db:migrate
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test

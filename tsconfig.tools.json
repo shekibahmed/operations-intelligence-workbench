@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true,
+    "paths": {
+      "@oiw/contracts": ["packages/contracts/src/index.ts"]
+    }
+  },
+  "include": [
+    "drizzle.config.ts",
+    "scripts/**/*.ts",
+    "packages/persistence/scripts/**/*.ts"
+  ]
+}
