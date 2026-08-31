@@ -45,7 +45,6 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-408 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-408-review-completion` | `../oiw-ux` | running (closes review-actions tracked delta) |
 | OIW-110 | Codex (high) | `agent/codex/OIW-110-event-reconciliation` | `../oiw-core` | running (pack event-definition reconciliation + ambiguity validator; unblocks OIW-501 final parity) |
 | OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED 2nd time — implementation COMPLETE and green, only pack data blocks 9/9 gold parity (7/9 exact; see PR #15 agent-run "problems") |
 
@@ -65,9 +64,6 @@ OIW-107 is pre-authorized for an additive v1.2 seed-bundle schema if needed.
 
 ## Tracked spec deltas (lead staging debt)
 
-- Review queue: Link entity / Create entity / Add reviewer note actions
-  (UX_SPEC §5.6, PRD §20.4) deferred from OIW-406 → fold into batch C
-  review-completion UI once OIW-109/501 land entity infrastructure.
 - Review queue tablet collapsible drawer (UX_SPEC §5.6) → Wave 4
   responsive pass.
 
