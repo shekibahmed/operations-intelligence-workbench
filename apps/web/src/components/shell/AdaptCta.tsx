@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
  */
 export function AdaptCta({ scenario, variant = "secondary" }: { scenario: string; variant?: "primary" | "secondary" }) {
   return (
-    <Button variant={variant} type="button" className="whitespace-nowrap">
+    <Button data-tour="tour-adapt-cta" variant={variant} type="button" className="whitespace-nowrap">
       <a href={`/adapt?scenario=${encodeURIComponent(scenario)}`}>Adapt this workflow</a>
     </Button>
   );

@@ -32,6 +32,39 @@ Decisions do exist. About-pack's rules/metrics/dashboard sections remain on
 in-repo stub data (out of this task's scope) and keep a visible
 "Demo preview" notice.
 
+OIW-506 (case/action/decision engines) has since merged, so the
+"usually-empty" caveat above no longer applies: processing the demo fixture
+set's related artifacts produces real Cases, Action items and Decisions, and
+Case List/Decision Centre show them.
+
+**OIW-602 — dashboard wiring and guided tour.** `src/lib/server/metrics.ts`
+is a clearly marked ADAPTER MODULE: OIW-601 (the real metric evaluation
+service in `@oiw/application`) had not merged at this branch's cut, so this
+file re-implements the same A5 closed aggregation vocabulary
+(`count-records`/`count-by-field`/`average-duration`/`time-series-count`/
+`due-date-risk`/`recent-activity`/`ratio`) directly against
+`@oiw/persistence` repositories, reading each pack's real
+`dashboards/metrics.json`. `src/components/widgets/DashboardGrid.tsx`
+generically renders any pack's `dashboards/{leadership,operations,technical}.json`
+against the evaluated values — no widget type or pack ID is hard-coded. The
+Leadership/Operations/Technical Overview dashboards (`/w/[workspace]/overview`)
+now render real values for whichever lens is active; when OIW-601 merges,
+the lead swaps `evaluateMetrics`'s implementation for a call into the real
+service — every caller only depends on the exported `MetricValue`/
+`evaluateMetrics` shape.
+
+The guided tour (`src/lib/tour/steps.ts` + `src/components/tour/TourOverlay.tsx`,
+mounted in `WorkspaceShell`) is a lightweight, dependency-free overlay
+(UX_SPEC §4) scoped to the Asset Reliability pack only (amendment A7/L1-L2 —
+packs two/three get no tour in P0). It reads a typed step list (target
+element, title, body, action hint, how to advance) and spotlights a real
+`data-tour="..."` element already present on the real screen; `sessionStorage`
+carries progress across the full-page navigations between steps (a hard
+reload intentionally exits the tour, per UX_SPEC §4), and pathname-based
+reconciliation lets it resume correctly even when a visitor navigates by
+clicking a real product link (e.g. into a Case Detail whose ID isn't known
+ahead of time) instead of the tour's own Next button.
+
 ## Local run
 
 ```bash
@@ -137,6 +170,14 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
   already present) and audits the outcome. Requires a non-empty comment for
   a high/critical-risk Decision server-side too, not only via the client's
   confirmation dialogue (PRD §22.4).
+- `src/app/w/[workspace]/inbox/actions.ts` (OIW-602) — `processFixtureArtifacts`:
+  the guided tour's one convenience action. Runs the exact same
+  `processArtifactForWorkspace`/`tryAdvanceArtifact` path a manual Process
+  click would use, for a small list of known fixture ids (matched via
+  `lib/fixture-artifact.ts`'s stable `rawReference` suffix, not content
+  sniffing), so the tour doesn't ask a visitor to hunt through a 25-row inbox
+  five times to build the repeat-fault pattern the rest of the tour walks
+  through. Idempotent — already-processed fixtures are skipped.
 
 ## What's real vs. stub-marked
 
@@ -148,12 +189,13 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
 | Technical artifact inspector | Real raw content, metadata, checksum, segments, proposed observations (value, confidence, evidence, review status, extractor), a processing trace derived from the real audit trail, and (OIW-509) real entity-resolution outcomes — resolved Entity links and ambiguous/`conflicting` candidates, both real absence/presence, never fabricated |
 | Technical rule trace (OIW-509) | Real: built from the workspace's persisted `rule-evaluated` Audit Entries (OIW-501) — fact evaluation, condition tree, outcome and linked audit entries are all derived from that one real record, not reconstructed or guessed. A rule id with no evaluation yet 404s (UX_SPEC §5.12: "a trace only exists for an executed rule") |
 | Entities, Entity detail (OIW-509) | Real: seeded + resolved Entities, event history, related artifacts (via Observations), open/closed Cases, repeated-pattern Signals (a Signal referencing more than one of the Entity's Events) and related Entities (sharing an Event). An Entity with no Events yet honestly shows "No event history yet" |
-| Cases, Case detail (OIW-509) | Real, but usually empty against the seeded packs today: `@oiw/persistence`'s `CaseRepository`/`DecisionRepository`/etc. are fully wired, but the rule engine's `create-case`/`create-action`/`propose-decision` actions only persist a pending `rule-action-pending` Audit Entry — no executor exists yet (batch-C case/decision engine, OIW-506). This is a marked integration point: the screens, queries and Approve/Reject actions are real and ready, they simply have nothing to show until OIW-506 supplies real Case/Decision rows |
-| Decisions (OIW-509) | Real: same integration-point caveat as Cases (usually empty today). Approve/Reject/Request-more-information write a real Approval + Decision status change directly against `@oiw/persistence`, independent of OIW-506 |
-| Overview | Real artifact/source counts, real (zero, pending OIW-506) case/decision counts, real audit-derived activity feed; severity breakdown, SLA table, trend line and pattern/impact cards remain stub-marked (dashboard wiring is a separate task) |
+| Cases, Case detail (OIW-509, engine merged OIW-506) | Real: `@oiw/persistence`'s `CaseRepository`/`DecisionRepository`/etc. are fully wired, and the rule engine's `create-case`/`create-action`/`propose-decision` actions execute for real (OIW-506's case/action/decision engine) — processing the demo fixture set's related artifacts produces real Cases, Action items and Decisions |
+| Decisions (OIW-509, engine merged OIW-506) | Real: real proposed Decisions, real triggering-rule links (`lib/rule-trace.ts` correlates `create-case`/`create-action`/`propose-decision` to their own real Audit Entries). Approve/Reject/Request-more-information write a real Approval + Decision status change directly against `@oiw/persistence` |
+| Overview (OIW-602) | Real: renders the active pack's own `dashboards/{leadership,operations,technical}.json` for whichever lens is active, via the generic `DashboardGrid` and the `lib/server/metrics.ts` adapter (see above) — all eight A5 widget types, real provenance badges, a real zero-state before any processing |
 | Pack labels (top bar, breadcrumbs, nav, About this pack's entity/event/workflow sections) | Real, from the loaded pack's registry entry |
-| Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*`/`rule-evaluated`/`signal-created`/`decision-*` etc.) |
-| About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — out of this task's scope (dashboard wiring follows) |
+| Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*`/`rule-evaluated`/`signal-created`/`case-created`/`action-item-created`/`decision-*` etc.) |
+| About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — out of this task's scope |
+| Guided tour (OIW-602) | Real: asset-reliability only, spotlights real `data-tour` elements on real screens; never fabricates a value not reachable by the same route/state without the tour running |
 
 `?state=empty|loading|error` remains supported on About this pack's
 stub-marked sections only, to demonstrate those states without a live

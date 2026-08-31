@@ -52,7 +52,11 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
   }
 
   return (
-    <article aria-labelledby={`decision-${current.id}`} className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4">
+    <article
+      data-tour="tour-decision-card"
+      aria-labelledby={`decision-${current.id}`}
+      className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4"
+    >
       <h3 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
         {proposalLabel}
       </h3>

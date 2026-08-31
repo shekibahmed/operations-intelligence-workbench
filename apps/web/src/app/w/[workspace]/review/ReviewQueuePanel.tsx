@@ -235,7 +235,7 @@ export function ReviewQueuePanel({
   const rawText = selected.rawText ?? "";
 
   return (
-    <div className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_1fr_20rem]">
+    <div data-tour="tour-review-panel" className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_1fr_20rem]">
       <nav aria-label="Review queue" className="rounded-lg border border-border bg-surface p-2">
         <ul className="flex flex-col gap-1">
           {queue.map((entry, index) => (

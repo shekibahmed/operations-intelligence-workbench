@@ -201,14 +201,59 @@ export interface RuleTraceOutcome {
 /**
  * Correlates each fired action back to the real Audit Entry its executor
  * persisted (`@oiw/application`'s `rule-execution.ts`): `create-signal` and
- * `flag-review` executed for real in OIW-501; `create-case`/`create-action`/
- * `propose-decision` remain a persisted `rule-action-pending` placeholder
- * until the batch-C case/decision engine (OIW-506) supplies a real executor
- * — surfaced here as an explicit integration point rather than a fabricated
- * outcome.
+ * `flag-review` executed for real since OIW-501; `create-case`/`create-action`/
+ * `propose-decision` execute for real since OIW-506's case/action/decision
+ * engine merged, each correlated below to its own `case-created`/
+ * `action-item-created`/`decision-proposed` Audit Entry.
  */
 export function resolveOutcomes(view: RuleTraceView, entries: readonly AuditEntry[]): RuleTraceOutcome[] {
   return view.firedActions.map((action) => {
+    if (action.type === "create-case") {
+      const match = entries.find(
+        (entry) => entry.action === "case-created" && entry.data["ruleId"] === view.ruleId && entry.data["eventId"] === view.eventId,
+      );
+      return {
+        actionType: action.type,
+        definitionId: action.definitionId,
+        description:
+          match !== undefined
+            ? `Case created — "${match.data["caseType"]}" (${match.subject.id}).`
+            : "This Case already existed for the related Entity — the rule's outcome reconciled it rather than creating a new one.",
+        stateTransition: match !== undefined ? "No Case → open Case." : "Existing Case reconciled with this Event's Signal(s).",
+        auditEntryId: match?.id ?? null,
+        integrationPoint: false,
+      };
+    }
+    if (action.type === "create-action") {
+      const match = entries.find(
+        (entry) => entry.action === "action-item-created" && entry.data["ruleId"] === view.ruleId && entry.data["eventId"] === view.eventId,
+      );
+      return {
+        actionType: action.type,
+        definitionId: action.definitionId,
+        description:
+          match !== undefined
+            ? `Action item created — "${match.data["actionType"]}" on Case ${match.data["caseId"]}.`
+            : "Action item already existed for this Case (idempotent replay).",
+        stateTransition: "No Action item → open Action item.",
+        auditEntryId: match?.id ?? null,
+        integrationPoint: false,
+      };
+    }
+    if (action.type === "propose-decision") {
+      const match = entries.find((entry) => entry.action === "decision-proposed" && entry.data["ruleId"] === view.ruleId);
+      return {
+        actionType: action.type,
+        definitionId: action.definitionId,
+        description:
+          match !== undefined
+            ? `Decision proposed — "${match.data["riskLevel"]}" risk, awaiting approval (${match.subject.id}).`
+            : "Decision proposal did not persist (idempotent replay or evaluation without effect).",
+        stateTransition: "No Decision → proposed → awaiting-approval.",
+        auditEntryId: match?.id ?? null,
+        integrationPoint: false,
+      };
+    }
     if (action.type === "create-signal") {
       const match = entries.find(
         (entry) =>
@@ -265,8 +310,8 @@ export function resolveOutcomes(view: RuleTraceView, entries: readonly AuditEntr
     return {
       actionType: action.type,
       definitionId: action.definitionId,
-      description: `Pending — "${action.definitionId}" (${action.type}) is assigned to the case/decision engine, which has not merged yet. This is a marked integration point: no Case, Action item or Decision has been created for this outcome.`,
-      stateTransition: "No transition — awaiting the case/decision engine integration point.",
+      description: `Unrecognized action type "${action.type}" for "${action.definitionId}" — no executor is registered for it in this build.`,
+      stateTransition: "No transition recorded.",
       auditEntryId: match?.id ?? null,
       integrationPoint: true,
     };

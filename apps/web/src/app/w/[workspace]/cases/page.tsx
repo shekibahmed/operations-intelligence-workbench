@@ -72,7 +72,7 @@ export default async function CaseListPage({
           description="Cases are created from the Inbox and Review Queue once an artifact's Events trigger a case-creating rule."
         />
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-border bg-surface p-2">
+        <div data-tour="tour-case-list" className="overflow-x-auto rounded-lg border border-border bg-surface p-2">
           <DataTable
             caption="Cases"
             columns={columns}

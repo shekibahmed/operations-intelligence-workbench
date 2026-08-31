@@ -51,7 +51,9 @@ test("selector -> guided start -> inbox journey creates a real, isolated workspa
     await page.getByRole("dialog").getByRole("button", { name: "Reset demo" }).click();
     await page.waitForURL(`${base}/overview*`);
     await expect(page.getByRole("heading", { name: "Overview" })).toBeVisible();
-    await expect(page.getByText("25 artifacts ingested")).toBeVisible();
+    // Reset cleared every operational record, so the real dashboard's
+    // Critical Signals stat (lib/server/metrics.ts) is a real, honest zero.
+    await expect(page.locator('[aria-labelledby="stat-critical-signals"]')).toContainText("0");
 
     await page.goto(`${base}/inbox`);
     await expect(page.locator("table tbody tr")).toHaveCount(25);
@@ -71,10 +73,10 @@ test("a fresh browser session cannot access another session's workspace (ADR-007
   }
 });
 
-test("case/decision/entity/rule-trace screens are real data end to end (OIW-501 wired; OIW-506's case/decision engine is a marked integration point, not yet merged)", async ({ page }) => {
+test("case/decision/entity/rule-trace screens are real data end to end (OIW-501/OIW-506 wired)", async ({ page }) => {
   const base = await startGuestWorkspace(page);
 
-  await test.step("Cases and Decisions honestly render empty — no create-case/propose-decision executor exists yet", async () => {
+  await test.step("Cases and Decisions honestly render empty on a freshly seeded workspace — nothing has been processed yet", async () => {
     const casesResponse = await page.goto(`${base}/cases`);
     expect(casesResponse?.ok()).toBeTruthy();
     await expect(page.getByText("No cases yet")).toBeVisible();

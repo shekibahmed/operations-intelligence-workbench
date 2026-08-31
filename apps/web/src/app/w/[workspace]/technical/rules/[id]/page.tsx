@@ -98,9 +98,11 @@ export default async function TechnicalRuleTracePage({
               )}
             </SectionCard>
 
-            <SectionCard title="Condition tree">
-              <ConditionTree root={view.condition} />
-            </SectionCard>
+            <div data-tour="tour-condition-tree">
+              <SectionCard title="Condition tree">
+                <ConditionTree root={view.condition} />
+              </SectionCard>
+            </div>
           </div>
 
           <SectionCard title="Outcome">

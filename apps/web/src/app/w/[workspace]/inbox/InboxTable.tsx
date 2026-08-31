@@ -16,7 +16,11 @@ export interface InboxRow {
   reviewRequired: boolean;
   relatedCaseTitle: string | null;
   technicalHref: string;
+  fixtureId: string | null;
 }
+
+/** The guided tour's pinned artifact (UX_SPEC §4; asset-reliability only, DEMO_SCRIPT step 3). */
+export const TOUR_TARGET_FIXTURE_ID = "asset-reliability-demo-001";
 
 const STATUS_LABEL: Record<Artifact["processingStatus"], string> = {
   received: "Received",
@@ -71,7 +75,7 @@ export function InboxTable({ workspace, rows }: { workspace: string; rows: Inbox
   }
 
   return (
-    <table className="w-full border-collapse text-sm">
+    <table data-tour="tour-inbox-table" className="w-full border-collapse text-sm">
       <caption className="sr-only">Artifact inbox</caption>
       <thead>
         <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
@@ -88,12 +92,17 @@ export function InboxTable({ workspace, rows }: { workspace: string; rows: Inbox
       </thead>
       <tbody>
         {rows.map((row) => {
-          const { artifact, sourceName, linkedEntity, observationsFound, reviewRequired, relatedCaseTitle, technicalHref } = row;
+          const { artifact, sourceName, linkedEntity, observationsFound, reviewRequired, relatedCaseTitle, technicalHref, fixtureId } = row;
           const status = statusOverrides[artifact.id] ?? artifact.processingStatus;
           const isProcessing = processingIds.has(artifact.id);
           const error = errors[artifact.id];
+          const isTourTarget = fixtureId === TOUR_TARGET_FIXTURE_ID;
           return (
-            <tr key={artifact.id} className="border-b border-border last:border-0">
+            <tr
+              key={artifact.id}
+              data-tour={isTourTarget ? "tour-inbox-target-row" : undefined}
+              className="border-b border-border last:border-0"
+            >
               <td className="px-2 py-2">
                 <a href={technicalHref} className="font-medium text-[var(--color-accent)] underline-offset-2 hover:underline">
                   {sourceName}
@@ -121,6 +130,7 @@ export function InboxTable({ workspace, rows }: { workspace: string; rows: Inbox
               <td className="hidden px-2 py-2 xl:table-cell">{relatedCaseTitle ?? "—"}</td>
               <td className="px-2 py-2">
                 <Button
+                  data-tour={isTourTarget ? "tour-process-target" : undefined}
                   variant={status.startsWith("failed") ? "danger" : "secondary"}
                   type="button"
                   disabled={!RETRYABLE_STATUSES.has(status) || isProcessing}

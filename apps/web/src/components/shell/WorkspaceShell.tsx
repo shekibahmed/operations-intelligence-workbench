@@ -5,7 +5,9 @@ import { LensCookieSync } from "@/components/shell/LensCookieSync";
 import { MobileNavDrawer } from "@/components/shell/MobileNavDrawer";
 import { PrimaryNav } from "@/components/shell/PrimaryNav";
 import { TopBar } from "@/components/shell/TopBar";
+import { TourOverlay } from "@/components/tour/TourOverlay";
 import type { Lens } from "@/lib/lens";
+import { workspaceBase } from "@/lib/routes";
 
 export function WorkspaceShell({
   workspace,
@@ -46,6 +48,7 @@ export function WorkspaceShell({
           </main>
         </div>
       </div>
+      <TourOverlay workspace={workspace} base={workspaceBase(workspace)} packId={packId} />
     </div>
   );
 }

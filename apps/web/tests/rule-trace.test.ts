@@ -150,7 +150,7 @@ describe("resolveOutcomes", () => {
     expect(outcomes[0]?.auditEntryId).toBe(signalCreated.id);
   });
 
-  it("marks a pending case/decision-engine action as an integration point", () => {
+  it("describes a real propose-decision outcome via its matching decision-proposed entry", () => {
     const evaluation = auditEntry({
       action: "rule-evaluated",
       subject: { type: "operational-event", id: "event-current" },
@@ -164,22 +164,46 @@ describe("resolveOutcomes", () => {
         referencedEventIds: ["event-current"],
       },
     });
-    const pending = auditEntry({
-      action: "rule-action-pending",
-      subject: { type: "operational-event", id: "event-current" },
+    const proposed = auditEntry({
+      action: "decision-proposed",
+      subject: { type: "decision", id: "decision-1" },
       data: {
+        caseId: "case-1",
         ruleId: "safety-critical-removal-approval",
         ruleVersion: "1.0.0",
-        actionType: "propose-decision",
-        definitionId: "remove-from-service",
+        riskLevel: "critical",
+        approvalPolicyId: "asset-removal-approval",
       },
     });
 
     const view = buildRuleTraceView([evaluation], "safety-critical-removal-approval")!;
-    const outcomes = resolveOutcomes(view, [evaluation, pending]);
+    const outcomes = resolveOutcomes(view, [evaluation, proposed]);
+
+    expect(outcomes[0]?.integrationPoint).toBe(false);
+    expect(outcomes[0]?.description).toContain("critical");
+    expect(outcomes[0]?.auditEntryId).toBe(proposed.id);
+  });
+
+  it("marks a genuinely unrecognized action type as an integration point", () => {
+    const evaluation = auditEntry({
+      action: "rule-evaluated",
+      subject: { type: "operational-event", id: "event-current" },
+      data: {
+        ruleId: "some-future-rule",
+        ruleVersion: "1.0.0",
+        result: true,
+        condition: FIRED_CONDITION,
+        firedActions: [{ type: "some-future-action-type", definitionId: "unknown", parameters: {} }],
+        rationale: "Hypothetical future action",
+        referencedEventIds: ["event-current"],
+      },
+    });
+
+    const view = buildRuleTraceView([evaluation], "some-future-rule")!;
+    const outcomes = resolveOutcomes(view, [evaluation]);
 
     expect(outcomes[0]?.integrationPoint).toBe(true);
-    expect(outcomes[0]?.description).toContain("case/decision engine");
-    expect(outcomes[0]?.auditEntryId).toBe(pending.id);
+    expect(outcomes[0]?.description).toContain("Unrecognized action type");
+    expect(outcomes[0]?.auditEntryId).toBeNull();
   });
 });

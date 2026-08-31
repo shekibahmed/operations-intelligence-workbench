@@ -47,7 +47,7 @@ export default async function AuditExplorerPage({
       ) : entries.length === 0 ? (
         <EmptyState title="No audit entries yet" />
       ) : (
-        <ol className="flex flex-col gap-2">
+        <ol data-tour="tour-audit-list" className="flex flex-col gap-2">
           {entries.map((entry) => (
             <li
               key={entry.id}

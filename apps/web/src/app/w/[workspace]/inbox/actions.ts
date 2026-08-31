@@ -2,9 +2,11 @@
 
 import type { Artifact } from "@oiw/contracts";
 
+import { fixtureArtifactId } from "@/lib/fixture-artifact";
 import { tryAdvanceArtifact } from "@/lib/server/artifact-advancement";
 import { processArtifactForWorkspace } from "@/lib/server/artifact-processing";
 import { toActionErrorMessage } from "@/lib/server/action-error";
+import { getRepositories } from "@/lib/server/db";
 import { requireWorkspace } from "@/lib/server/workspace";
 
 export type ProcessArtifactActionResult =
@@ -32,6 +34,42 @@ export async function processArtifactAction(
       status: result.artifact.processingStatus,
       observationCount: result.observations.length,
     };
+  } catch (error) {
+    return { ok: false, message: toActionErrorMessage(error, "Processing failed unexpectedly.") };
+  }
+}
+
+/**
+ * Guided tour convenience action (UX_SPEC §4; asset-reliability only): the
+ * tour pins one artifact (the informal brake-fault message) for the visitor
+ * to Process by hand, then — real, not fabricated — processes the small set
+ * of other real fixture artifacts about the same asset (by their stable
+ * fixture id, `lib/fixture-artifact.ts`) through the exact same
+ * `processArtifactForWorkspace`/`tryAdvanceArtifact` path a manual click
+ * would use, so the repeat-fault pattern the rest of the tour walks through
+ * is real, real-processed data rather than something only a 25-row manual
+ * hunt-and-click could produce. Idempotent: already-processed fixtures are
+ * skipped.
+ */
+export async function processFixtureArtifacts(
+  slug: string,
+  fixtureIds: readonly string[],
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  try {
+    const workspace = await requireWorkspace(slug);
+    const repositories = getRepositories();
+    const artifacts = await repositories.artifacts.list(workspace.id);
+    const targets = artifacts.filter((artifact) => {
+      const fixtureId = fixtureArtifactId(artifact);
+      return fixtureId !== null && fixtureIds.includes(fixtureId) && artifact.processingStatus === "received";
+    });
+    for (const artifact of targets) {
+      const result = await processArtifactForWorkspace(workspace, artifact.id);
+      if (result.artifact.processingStatus === "processed" || result.artifact.processingStatus === "needs-review") {
+        await tryAdvanceArtifact(workspace, artifact.id);
+      }
+    }
+    return { ok: true };
   } catch (error) {
     return { ok: false, message: toActionErrorMessage(error, "Processing failed unexpectedly.") };
   }

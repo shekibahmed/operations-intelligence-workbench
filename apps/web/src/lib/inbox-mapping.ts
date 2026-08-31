@@ -1,6 +1,7 @@
 import type { Artifact, Observation, Source } from "@oiw/contracts";
 
 import type { InboxRow } from "@/app/w/[workspace]/inbox/InboxTable";
+import { fixtureArtifactId } from "@/lib/fixture-artifact";
 
 /** UX_SPEC §5.5 NFR: paginate/cap large fixture sets — the demo pack ships well under this cap. */
 export const INBOX_ROW_CAP = 200;
@@ -39,6 +40,7 @@ export function mapArtifactsToInboxRows(
       reviewRequired: artifactObservations.some((observation) => REVIEW_REQUIRED_STATUSES.has(observation.reviewStatus)),
       relatedCaseTitle: null,
       technicalHref: `${base}/technical/artifacts/${artifact.id}`,
+      fixtureId: fixtureArtifactId(artifact),
     };
   });
 }

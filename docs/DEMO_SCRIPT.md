@@ -216,3 +216,22 @@ this script names a specific outcome (e.g. "one field came back ambiguous"),
 that is a requirement on the fixture author, not a description of an
 existing fixture — flagged in `docs/agent-runs/OIW-003.md` as a dependency
 for OIW-004b.
+
+## Implementation note (OIW-602)
+
+The demo fixture set's real repeat-fault/safety-critical rule conditions
+(`related-event-count >= 2` for `repeated-fault-escalation`, plus a
+safety-critical indicator for `safety-critical-removal-approval`) need more
+than the single brake-fault message processed in isolation to fire
+deterministically — the pack's real gold sequence (`docs/agent-runs/OIW-506.md`)
+processes four other related artifacts about the same asset
+(`asset-reliability-demo-002` through `-005`) alongside the brake-fault
+message (`-001`). Steps 2–3 above still read as "process the informal
+message" from the visitor's point of view: the guided tour (UX_SPEC §4)
+pins that one artifact for the visitor to Process by hand, then — after the
+visitor accepts the resulting review item — a real, non-fabricated
+convenience action processes the four other related fixtures through the
+same `processArtifact` path a manual click would use, so step 6's rule
+trace and step 7's Case reflect real data without asking the visitor to
+hunt through a 25-row inbox five times. See `apps/web/README.md`'s
+"OIW-602 — dashboard wiring and guided tour" section.

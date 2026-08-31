@@ -51,7 +51,7 @@ export default async function CaseDetailPage({
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
-      <header>
+      <header data-tour="tour-case-summary">
         <p className="text-xs uppercase tracking-wide text-ink-muted">{resolveLabel(labels, "caseTypes", caseRecord.caseType)}</p>
         <h1 className="text-lg font-semibold text-ink">{caseRecord.title}</h1>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -147,8 +147,8 @@ export default async function CaseDetailPage({
             <SectionCard title="Decisions">
               {decisions.length === 0 ? (
                 <p className="text-sm text-ink-muted">
-                  No decisions proposed yet. Decisions are proposed automatically by the rule engine's case/decision
-                  workflow (OIW-506) once it is merged — this is a marked integration point, not a missing feature.
+                  No decisions proposed yet. Decisions are proposed automatically once a rule's outcome requires
+                  human approval.
                 </p>
               ) : (
                 <ul className="flex flex-col gap-2 text-sm">
