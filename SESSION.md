@@ -36,6 +36,14 @@ contract-change task.
 
 None.
 
+## Repository notes
+
+- Remote: `https://github.com/shekibahmed/operations-intelligence-workbench`
+  (private until M3).
+- GitHub branch protection is unavailable on this plan for private repos;
+  until M3, `main` is protected by convention — merges only via PR, performed
+  only by the lead integrator. Enable real protection when the repo goes public.
+
 ## Next integration sequence
 
 1. Merge OIW-001 (everything downstream depends on it)
