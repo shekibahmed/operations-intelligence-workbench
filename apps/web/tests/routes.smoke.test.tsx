@@ -56,6 +56,39 @@ const FAKE_LABELS = vi.hoisted(() => ({
   actionTypes: {},
   decisionTypes: {},
   workflowStates: {},
+  approvalPolicies: {},
+}));
+
+const FAKE_RULE_EVALUATED_ENTRY = vi.hoisted(() => ({
+  id: "audit-rule-evaluated-fixture",
+  workspaceId: "00000000-0000-4000-8000-000000000001",
+  occurredAt: "2026-08-31T09:14:35.000Z",
+  action: "rule-evaluated" as const,
+  actor: { type: "system" as const, id: "rule-engine" },
+  subject: { type: "operational-event", id: "73b0aecc-e45b-548a-bc22-894806103f4f" },
+  cause: "Escalate to a critical repeat-fault signal when a component has a recent related fault.",
+  data: {
+    ruleId: "repeat-fault-safety-hold",
+    ruleVersion: "1.0.0",
+    result: true,
+    condition: {
+      kind: "comparison",
+      result: true,
+      operator: "greater-than-or-equal",
+      expected: 2,
+      fact: {
+        fact: { kind: "aggregate", aggregate: "related-event-count", withinHours: 720 },
+        exists: true,
+        value: 2,
+        relatedEventIds: ["2ec42d1d-7585-5817-a12d-5b336c947ab6"],
+      },
+    },
+    firedActions: [{ type: "create-signal", definitionId: "repeat-fault", parameters: { severity: "critical" } }],
+    rationale: "Escalate to a critical repeat-fault signal when a component has a recent related fault.",
+    referencedEventIds: ["73b0aecc-e45b-548a-bc22-894806103f4f", "2ec42d1d-7585-5817-a12d-5b336c947ab6"],
+  },
+  previousEntryHash: null,
+  entryHash: "fixture-hash",
 }));
 
 vi.mock("@/lib/server/workspace", () => ({
@@ -77,10 +110,20 @@ vi.mock("@/lib/server/db", async () => {
         findById: async (_workspaceId: string, id: string) => stub.stubArtifacts.find((artifact) => artifact.id === id) ?? null,
       },
       sources: { list: async () => stub.stubSources },
-      cases: { list: async () => stub.stubCases },
+      cases: {
+        list: async () => stub.stubCases,
+        findById: async (_workspaceId: string, id: string) => stub.findCaseById(id) ?? null,
+      },
       decisions: { list: async () => stub.stubDecisions },
-      entities: { list: async () => [] },
-      auditEntries: { list: async () => stub.stubAuditEntries },
+      approvals: { list: async () => stub.stubApprovals },
+      entities: {
+        list: async () => stub.stubEntities,
+        findById: async (_workspaceId: string, id: string) => stub.findEntityById(id) ?? null,
+      },
+      operationalEvents: { list: async () => stub.stubEvents },
+      signals: { list: async () => stub.stubSignals },
+      actionItems: { list: async () => stub.stubActionItems },
+      auditEntries: { list: async () => [...stub.stubAuditEntries, FAKE_RULE_EVALUATED_ENTRY] },
       artifactSegments: {
         listByArtifact: async (_workspaceId: string, artifactId: string) =>
           stub.stubArtifactSegments.filter((segment) => segment.artifactId === artifactId),

@@ -1,8 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
-import { caseIds, entityIds } from "../src/lib/stub/ids";
-import { stubRuleTrace } from "../src/lib/stub/rule-trace";
-
 /**
  * Starts a real guest workspace through the guided-start flow (creates +
  * seeds against local Postgres, sets the ADR-007 session cookie on `page`'s
@@ -74,30 +71,47 @@ test("a fresh browser session cannot access another session's workspace (ADR-007
   }
 });
 
-test("stub-marked screens (no upstream data yet) stay reachable and lens-switching keeps the same route", async ({ page }) => {
+test("case/decision/entity/rule-trace screens are real data end to end (OIW-501 wired; OIW-506's case/decision engine is a marked integration point, not yet merged)", async ({ page }) => {
   const base = await startGuestWorkspace(page);
 
-  const STUB_ROUTES: { path: string; heading: string | RegExp }[] = [
-    { path: `${base}/cases`, heading: "Cases" },
-    { path: `${base}/cases/${caseIds.open}`, heading: /Repeat brake-assembly fault/ },
-    { path: `${base}/entities`, heading: "Entities" },
-    { path: `${base}/entities/${entityIds.assetPrimary}`, heading: "AR-1042" },
-    { path: `${base}/decisions`, heading: "Decisions" },
-    { path: `${base}/technical/rules/${stubRuleTrace.ruleId}`, heading: new RegExp(stubRuleTrace.ruleId) },
-    { path: `${base}/audit`, heading: "Audit" },
-    { path: `${base}/about-pack`, heading: "Asset Reliability" },
-  ];
+  await test.step("Cases and Decisions honestly render empty — no create-case/propose-decision executor exists yet", async () => {
+    const casesResponse = await page.goto(`${base}/cases`);
+    expect(casesResponse?.ok()).toBeTruthy();
+    await expect(page.getByText("No cases yet")).toBeVisible();
 
-  for (const route of STUB_ROUTES) {
-    const response = await page.goto(route.path);
+    const decisionsResponse = await page.goto(`${base}/decisions`);
+    expect(decisionsResponse?.ok()).toBeTruthy();
+    await expect(page.getByText("No decisions pending approval")).toBeVisible();
+  });
+
+  await test.step("Entities list shows real seeded Entities and links to a real Entity Detail", async () => {
+    const response = await page.goto(`${base}/entities`);
     expect(response?.ok()).toBeTruthy();
-    await expect(page.getByText(route.heading).first()).toBeVisible();
-  }
+    await expect(page.getByRole("heading", { name: "Entities" })).toBeVisible();
+    const firstRow = page.locator("table tbody tr").first();
+    await expect(firstRow).toBeVisible();
+    const entityName = (await firstRow.locator("a").first().textContent())?.trim();
+    expect(entityName?.length ?? 0).toBeGreaterThan(0);
 
-  await page.goto(`${base}/cases`);
-  await expect(page).toHaveURL(/lens=operations/);
-  await page.getByRole("radio", { name: "Technical" }).click();
-  await expect(page).toHaveURL(new RegExp(`${base}/cases\\?.*lens=technical`));
+    await firstRow.locator("a").first().click();
+    await expect(page.getByRole("heading", { name: entityName! })).toBeVisible();
+  });
+
+  await test.step("A rule trace for a rule that never fired 404s rather than fabricating a trace", async () => {
+    await page.goto(`${base}/technical/rules/definitely-not-a-real-rule`);
+    await expect(page.getByText("This page could not be found.")).toBeVisible();
+  });
+
+  await test.step("Audit explorer is reachable and lens-switching keeps the same route", async () => {
+    const response = await page.goto(`${base}/audit`);
+    expect(response?.ok()).toBeTruthy();
+    await expect(page.getByRole("heading", { name: "Audit" })).toBeVisible();
+
+    await page.goto(`${base}/cases`);
+    await expect(page).toHaveURL(/lens=operations/);
+    await page.getByRole("radio", { name: "Technical" }).click();
+    await expect(page).toHaveURL(new RegExp(`${base}/cases\\?.*lens=technical`));
+  });
 });
 
 test("root and marketing routes render without a session", async ({ page }) => {
@@ -115,7 +129,8 @@ test("screenshots of changed screens", async ({ page }) => {
     { path: `${base}/overview`, name: "overview", heading: "Overview" },
     { path: `${base}/inbox`, name: "inbox", heading: "Inbox" },
     { path: `${base}/review`, name: "review", heading: "Review Queue" },
-    { path: `${base}/cases/${caseIds.open}`, name: "case-detail", heading: /Repeat brake-assembly fault/ },
+    { path: `${base}/cases`, name: "case-list", heading: "Cases" },
+    { path: `${base}/entities`, name: "entity-list", heading: "Entities" },
     { path: `${base}/decisions`, name: "decision-centre", heading: "Decisions" },
   ];
 
@@ -228,5 +243,24 @@ test("processing the brake-fault artifact populates the review queue; linking an
     await page.goto(artifactHref);
     const observationItem = page.locator("li", { hasText: "previous-repair-reference" });
     await expect(observationItem.getByText("Accepted", { exact: true })).toBeVisible();
+  });
+
+  await test.step("walking Entity Detail shows the real Event OIW-501's pipeline just assembled from this artifact", async () => {
+    // This artifact's auto-resolved primary Entity is A-142 (the low-confidence
+    // field manually linked above to A-140 is a non-required field, not the
+    // primary Entity for its Event definition) — real entity resolution, not
+    // the workspace's overall demo narrative.
+    await page.goto(`${base}/entities`);
+    await expect(page.getByRole("heading", { name: "Entities" })).toBeVisible();
+    await page.getByRole("link", { name: "A-142", exact: true }).click();
+    await expect(page.getByRole("heading", { name: "A-142", exact: true })).toBeVisible();
+
+    const eventHistory = page.locator("section", { has: page.getByRole("heading", { name: "Event history" }) });
+    await expect(eventHistory.getByText("Fault Reported")).toBeVisible();
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.screenshot({ path: "e2e/screenshots/entity-detail-desktop.png", fullPage: true });
+    await page.setViewportSize({ width: 800, height: 1000 });
+    await page.screenshot({ path: "e2e/screenshots/entity-detail-tablet.png", fullPage: true });
   });
 });

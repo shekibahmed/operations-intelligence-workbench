@@ -9,10 +9,27 @@ OIW-406, the Inbox's Process action, the Review Queue and the Technical
 Inspector's extraction sections are wired to the real `processArtifact`
 orchestration (`@oiw/application` + `@oiw/ingestion` + `@oiw/intelligence`,
 OIW-301) and the real accept/correct/reject/mark-insufficient-evidence
-review write path. Cases, entities, decisions, rule trace, audit's
-supporting narrative and about-pack's rules/metrics section have no
-upstream engine yet (rules/events/cases land in a parallel batch) and
-remain on in-repo stub data — those screens carry a visible
+review write path.
+
+As of OIW-509, every remaining P0 screen this task owns is wired to real
+data: Cases, Entities, Decisions and the Technical rule-trace inspector all
+read the real `@oiw/persistence` repositories, and the Inbox/Review actions
+now also call `@oiw/application`'s `ArtifactAdvancementService` (OIW-501) —
+entity resolution, Event assembly and fact-catalogue rule evaluation — so
+processing an artifact (or resolving its last pending review item) produces
+real Events, Signals and rule-evaluation Audit Entries, visible immediately
+in Entity Detail's timeline and the Rule trace screen. `create-case`,
+`create-action` and `propose-decision` remain persisted
+`rule-action-pending` Audit Entries rather than real Cases/Decisions — no
+executor exists for them yet (batch-C case/decision engine, OIW-506) — so
+Case List and Decision Centre correctly render their real *empty* state
+against the seeded packs today; this is a marked integration point, not a
+missing feature, and the lead reconciles it once OIW-506 merges. Decision
+Centre's Approve/Reject/Request-more-information write a real, audited
+Approval directly against `@oiw/persistence` (no application-layer service
+needed, same pattern as the Review Queue's write path) for whatever
+Decisions do exist. About-pack's rules/metrics/dashboard sections remain on
+in-repo stub data (out of this task's scope) and keep a visible
 "Demo preview" notice.
 
 ## Local run
@@ -98,24 +115,51 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
   does not mutate the Observation, so the Audit Explorer (an unfiltered,
   already-generic audit list) and a per-observation notes fetch both show it
   with no other code changes needed.
+- `src/lib/server/artifact-advancement.ts` (OIW-509) —
+  `advanceArtifactForWorkspace`/`tryAdvanceArtifact`: wires
+  `@oiw/application`'s `ArtifactAdvancementService` (OIW-501) against the
+  workspace's active pack and `@oiw/rules`' `RuleEngine`. The Inbox's
+  `processArtifactAction` and every Review Queue action that resolves an
+  Observation call `tryAdvanceArtifact` afterwards (best-effort — a failure
+  here must not fail the Process/Review action itself, and re-running it is
+  idempotent) so real Events, Signals and rule-evaluation Audit Entries
+  exist as soon as a workspace's Observations are reviewed.
+- `src/app/w/[workspace]/cases/[caseId]/actions.ts` (OIW-509) —
+  `toggleActionItemAction`, `addCaseNoteAction`/`getCaseNotes`: real,
+  audited Case Detail actions (UX_SPEC §5.8) against `@oiw/persistence`
+  directly — completing/reopening an Action item and adding a free-text
+  Case note, mirroring the Review Queue's note pattern.
+- `src/app/w/[workspace]/decisions/actions.ts` (OIW-509) —
+  `decideOnDecision`: Approve/Reject/Request-more-information (UX_SPEC
+  §5.11). Re-validates the session, inserts a real Approval *before*
+  updating the Decision's status (required — `@oiw/persistence`'s own
+  trigger refuses an `approved` Decision without a matching Approval
+  already present) and audits the outcome. Requires a non-empty comment for
+  a high/critical-risk Decision server-side too, not only via the client's
+  confirmation dialogue (PRD §22.4).
 
 ## What's real vs. stub-marked
 
 | Screen | Data |
 | --- | --- |
 | Guest session, workspace create/seed/reset | Real (`@oiw/application` + `@oiw/persistence`) |
-| Inbox | Real artifacts/sources/observation-counts; the Process action runs real extraction (OIW-301/OIW-406). Linked-entity/related-case columns are genuinely empty (no entity resolution or case engine yet), not fabricated |
-| Review queue | Real: lists Observations with `reviewStatus` pending/conflicting; evidence is highlighted from the real persisted `ArtifactSegment`; Accept/Correct/Reject/Mark insufficient evidence write real, audited, schema-validated corrections. Link entity/Create entity/Add reviewer note (OIW-408) are also real: entities come from the real, workspace-scoped `EntityRepository`; a created entity and a linked Observation are both real persisted rows; notes are real, audited, append-only entries. The Entities screens themselves (see below) remain stub-marked, so an entity created here will not yet appear in `/entities` — a known cross-screen gap, not a fabricated value |
-| Technical artifact inspector | Real raw content, metadata, checksum, segments, proposed observations (value, confidence, evidence, review status, extractor), and a processing trace derived from the real audit trail. Entity-resolution candidates stay "not implemented" — real absence, not a stub value |
-| Overview | Real artifact/source counts, real (zero) case/decision counts, real audit-derived activity feed; severity breakdown, SLA table, trend line and pattern/impact cards remain stub-marked (no signal/case engine yet) |
+| Inbox | Real artifacts/sources/observation-counts; the Process action runs real extraction (OIW-301/OIW-406) and now also real entity resolution/Event assembly/rule evaluation (OIW-501/OIW-509). Linked-entity/related-case columns are genuinely empty (no case engine yet), not fabricated |
+| Review queue | Real: lists Observations with `reviewStatus` pending/conflicting; evidence is highlighted from the real persisted `ArtifactSegment`; Accept/Correct/Reject/Mark insufficient evidence write real, audited, schema-validated corrections, and now also trigger real operational advancement (OIW-509). Link entity/Create entity/Add reviewer note (OIW-408) are also real: entities come from the real, workspace-scoped `EntityRepository`; a created entity and a linked Observation are both real persisted rows; notes are real, audited, append-only entries |
+| Technical artifact inspector | Real raw content, metadata, checksum, segments, proposed observations (value, confidence, evidence, review status, extractor), a processing trace derived from the real audit trail, and (OIW-509) real entity-resolution outcomes — resolved Entity links and ambiguous/`conflicting` candidates, both real absence/presence, never fabricated |
+| Technical rule trace (OIW-509) | Real: built from the workspace's persisted `rule-evaluated` Audit Entries (OIW-501) — fact evaluation, condition tree, outcome and linked audit entries are all derived from that one real record, not reconstructed or guessed. A rule id with no evaluation yet 404s (UX_SPEC §5.12: "a trace only exists for an executed rule") |
+| Entities, Entity detail (OIW-509) | Real: seeded + resolved Entities, event history, related artifacts (via Observations), open/closed Cases, repeated-pattern Signals (a Signal referencing more than one of the Entity's Events) and related Entities (sharing an Event). An Entity with no Events yet honestly shows "No event history yet" |
+| Cases, Case detail (OIW-509) | Real, but usually empty against the seeded packs today: `@oiw/persistence`'s `CaseRepository`/`DecisionRepository`/etc. are fully wired, but the rule engine's `create-case`/`create-action`/`propose-decision` actions only persist a pending `rule-action-pending` Audit Entry — no executor exists yet (batch-C case/decision engine, OIW-506). This is a marked integration point: the screens, queries and Approve/Reject actions are real and ready, they simply have nothing to show until OIW-506 supplies real Case/Decision rows |
+| Decisions (OIW-509) | Real: same integration-point caveat as Cases (usually empty today). Approve/Reject/Request-more-information write a real Approval + Decision status change directly against `@oiw/persistence`, independent of OIW-506 |
+| Overview | Real artifact/source counts, real (zero, pending OIW-506) case/decision counts, real audit-derived activity feed; severity breakdown, SLA table, trend line and pattern/impact cards remain stub-marked (dashboard wiring is a separate task) |
 | Pack labels (top bar, breadcrumbs, nav, About this pack's entity/event/workflow sections) | Real, from the loaded pack's registry entry |
-| Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*` etc.) |
-| Cases, Case detail, Entities, Entity detail, Decisions, Rule trace, About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — no rule/event/case engine yet |
+| Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*`/`rule-evaluated`/`signal-created`/`decision-*` etc.) |
+| About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — out of this task's scope (dashboard wiring follows) |
 
-`?state=empty|loading|error` remains supported on the stub-marked screens
-only, to demonstrate those states without a live backend (unchanged from
-Wave 1). The real-data screens (Overview, Inbox, Review Queue, Technical
-artifact inspector, Audit) get real loading state via Next's `loading.tsx`
+`?state=empty|loading|error` remains supported on About this pack's
+stub-marked sections only, to demonstrate those states without a live
+backend (unchanged from Wave 1). The real-data screens (Overview, Inbox,
+Review Queue, Cases, Entities, Decisions, Technical artifact inspector,
+Technical rule trace, Audit) get real loading state via Next's `loading.tsx`
 file convention (automatic Suspense around the page while the DB fetch is in
 flight) and real error state via `error.tsx` route error boundaries; their
 `?state=` support is limited to `error` (to demonstrate the error boundary

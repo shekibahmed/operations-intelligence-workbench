@@ -50,6 +50,9 @@ importers:
       '@oiw/persistence':
         specifier: workspace:*
         version: link:../../packages/persistence
+      '@oiw/rules':
+        specifier: workspace:*
+        version: link:../../packages/rules
       '@oiw/scenario-sdk':
         specifier: workspace:*
         version: link:../../packages/scenario-sdk

@@ -7,6 +7,7 @@ import type { PersistenceRepositories } from "@oiw/persistence";
 import { validateObservationValue } from "@oiw/scenario-sdk";
 
 import { toActionErrorMessage, UserFacingActionError } from "@/lib/server/action-error";
+import { tryAdvanceArtifact } from "@/lib/server/artifact-advancement";
 import { buildAuditEntry } from "@/lib/server/audit";
 import { getRepositories } from "@/lib/server/db";
 import { findPackEntry } from "@/lib/server/pack-registry";
@@ -97,6 +98,7 @@ async function runReviewAction(
     const result = await repositories.observations.correct(workspace.id, observationId, updated, auditEntry);
     if (result === null) return { ok: false, message: "This observation could not be found." };
     await syncArtifactProcessingStatus(repositories, workspace.id, result.artifactId);
+    await tryAdvanceArtifact(workspace, result.artifactId);
     return { ok: true, observation: result };
   } catch (error) {
     return { ok: false, message: toActionErrorMessage(error, "Could not save this review action.") };
@@ -276,6 +278,7 @@ export async function correctObservation(
     const result = await repositories.observations.correct(workspace.id, observationId, updated, auditEntry);
     if (result === null) return { ok: false, message: "This observation could not be found." };
     await syncArtifactProcessingStatus(repositories, workspace.id, result.artifactId);
+    await tryAdvanceArtifact(workspace, result.artifactId);
     return { ok: true, observation: result };
   } catch (error) {
     return { ok: false, message: toActionErrorMessage(error, "Could not save this correction.") };

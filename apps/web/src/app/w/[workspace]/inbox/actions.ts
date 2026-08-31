@@ -2,6 +2,7 @@
 
 import type { Artifact } from "@oiw/contracts";
 
+import { tryAdvanceArtifact } from "@/lib/server/artifact-advancement";
 import { processArtifactForWorkspace } from "@/lib/server/artifact-processing";
 import { toActionErrorMessage } from "@/lib/server/action-error";
 import { requireWorkspace } from "@/lib/server/workspace";
@@ -23,6 +24,9 @@ export async function processArtifactAction(
   try {
     const workspace = await requireWorkspace(slug);
     const result = await processArtifactForWorkspace(workspace, artifactId);
+    if (result.artifact.processingStatus === "processed" || result.artifact.processingStatus === "needs-review") {
+      await tryAdvanceArtifact(workspace, artifactId);
+    }
     return {
       ok: true,
       status: result.artifact.processingStatus,

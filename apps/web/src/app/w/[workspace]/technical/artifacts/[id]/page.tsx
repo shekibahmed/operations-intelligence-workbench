@@ -80,12 +80,18 @@ export default async function TechnicalArtifactInspectorPage({
   const artifact = await repositories.artifacts.findById(workspace.id, id);
   if (artifact === null) notFound();
 
-  const [segments, observations, auditEntries] = await Promise.all([
+  const [segments, observations, auditEntries, entities] = await Promise.all([
     repositories.artifactSegments.listByArtifact(workspace.id, id),
     repositories.observations.listByArtifact(workspace.id, id),
     repositories.auditEntries.list(workspace.id),
+    repositories.entities.list(workspace.id),
   ]);
   const segmentsById = new Map<string, ArtifactSegment>(segments.map((segment) => [segment.id, segment]));
+  const entitiesById = new Map(entities.map((entity) => [entity.id, entity]));
+  const resolvedObservations = observations.filter((observation) => observation.entityId !== null);
+  const conflictingObservations = observations.filter(
+    (observation) => observation.reviewStatus === "conflicting" && (observation.alternativeCandidates?.length ?? 0) > 0,
+  );
   const trace = processingAuditEntries(auditEntries, id);
   const durationMs = processingDurationMs(trace);
   const providerEntry = observations.find((observation) => observation.extractor !== null)?.extractor ?? null;
@@ -202,9 +208,40 @@ export default async function TechnicalArtifactInspectorPage({
             </SectionCard>
 
             <SectionCard title="Entity-resolution candidates">
-              <p className="text-sm text-ink-muted">
-                Entity resolution is not implemented yet — every Observation&apos;s entity link remains unset.
-              </p>
+              {resolvedObservations.length === 0 && conflictingObservations.length === 0 ? (
+                <p className="text-sm text-ink-muted">No Observation from this Artifact resolved to an Entity.</p>
+              ) : (
+                <ul className="flex flex-col gap-2 text-sm">
+                  {resolvedObservations.map((observation) => {
+                    const entity = entitiesById.get(observation.entityId!);
+                    return (
+                      <li key={observation.id}>
+                        <span className="font-medium text-ink">{observation.schemaKey}</span> resolved to{" "}
+                        {entity !== undefined ? (
+                          <a href={`${base}/entities/${entity.id}`} className="text-[var(--color-accent)] hover:underline">
+                            {entity.displayName}
+                          </a>
+                        ) : (
+                          <span className="text-ink-muted">{observation.entityId}</span>
+                        )}
+                        .
+                      </li>
+                    );
+                  })}
+                  {conflictingObservations.map((observation) => (
+                    <li key={observation.id}>
+                      <span className="font-medium text-ink">{observation.schemaKey}</span> is ambiguous — candidates:{" "}
+                      {observation.alternativeCandidates!.map((candidate, index) => (
+                        <span key={index}>
+                          {index > 0 ? ", " : null}
+                          {String(candidate.value)} ({formatConfidence(candidate.confidence)})
+                        </span>
+                      ))}
+                      .
+                    </li>
+                  ))}
+                </ul>
+              )}
             </SectionCard>
           </div>
 

@@ -1,25 +1,16 @@
 import { notFound } from "next/navigation";
 
 import { Badge } from "@/components/ui/Badge";
-import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { StatCard } from "@/components/widgets/StatCard";
+import { buildEntityDetailView } from "@/lib/entity-detail";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
+import { resolveLabel } from "@/lib/pack-labels";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import {
-  casesForEntity,
-  eventsForEntity,
-  findEntityById,
-  resolveLabel,
-  stubArtifacts,
-  stubEntities,
-  stubObservations,
-  stubSignals,
-} from "@/lib/stub";
+import { getRepositories } from "@/lib/server/db";
 import { getWorkspaceContext } from "@/lib/server/context";
 import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
@@ -38,23 +29,11 @@ export default async function EntityDetailPage({
   const state = resolveScreenState(rawSearchParams.state);
   const { workspace, labels } = await getWorkspaceContext(slug);
 
-  const entity = findEntityById(entityId);
-  if (!entity) notFound();
+  const repositories = getRepositories();
+  const view = await buildEntityDetailView(repositories, workspace.id, entityId);
+  if (view === null) notFound();
 
-  const relatedArtifactIds = new Set(
-    stubObservations.filter((observation) => observation.entityId === entity.id).map((observation) => observation.artifactId),
-  );
-  const relatedArtifacts = stubArtifacts.filter((artifact) => relatedArtifactIds.has(artifact.id));
-  const events = eventsForEntity(entity.id);
-  const openCases = casesForEntity(entity.id, "open");
-  const closedCases = casesForEntity(entity.id, "closed");
-  const patternSignal = stubSignals.find((signal) => signal.eventIds.some((eventId) => events.some((event) => event.id === eventId)));
-  const relatedEntities = stubEntities.filter(
-    (candidate) =>
-      candidate.id !== entity.id &&
-      candidate.attributes.location !== undefined &&
-      candidate.attributes.location === entity.attributes.location,
-  );
+  const { entity, relatedArtifacts, events, openCases, closedCases, patternSignals, relatedEntities } = view;
 
   return (
     <WorkspaceShell
@@ -71,16 +50,9 @@ export default async function EntityDetailPage({
         <p className="text-xs uppercase tracking-wide text-ink-muted">{resolveLabel(labels, "entityTypes", entity.entityType)}</p>
         <h1 className="text-lg font-semibold text-ink">{entity.displayName}</h1>
       </header>
-      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load entity sections." />
-      ) : state === "loading" ? (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {Array.from({ length: 9 }, (_, index) => (
-            <Skeleton key={index} className="h-32" label="Loading entity section" />
-          ))}
-        </div>
       ) : (
         <div className="xl:grid xl:grid-cols-2 xl:grid-rows-5 xl:items-start xl:gap-4">
           <div className="xl:col-start-2 xl:row-start-1">
@@ -92,7 +64,7 @@ export default async function EntityDetailPage({
                   {Object.entries(entity.attributes).map(([key, value]) => (
                     <div key={key} className="flex justify-between gap-2 border-b border-border py-1 last:border-0">
                       <dt className="text-ink-muted">{key}</dt>
-                      <dd className="text-ink">{String(value)}</dd>
+                      <dd className="text-ink">{typeof value === "object" ? JSON.stringify(value) : String(value)}</dd>
                     </div>
                   ))}
                 </dl>
@@ -181,10 +153,19 @@ export default async function EntityDetailPage({
 
           <div className="mt-4 xl:col-start-1 xl:row-start-5 xl:mt-0">
             <SectionCard title="Repeated patterns">
-              {patternSignal ? (
-                <p className="text-sm text-ink-muted">{patternSignal.rationale}</p>
-              ) : (
+              {patternSignals.length === 0 ? (
                 <p className="text-sm text-ink-muted">No repeated patterns detected.</p>
+              ) : (
+                <ul className="flex flex-col gap-2 text-sm">
+                  {patternSignals.map((signal) => (
+                    <li key={signal.id}>
+                      <a href={`${base}/technical/rules/${signal.rule.id}`} className="text-[var(--color-accent)] hover:underline">
+                        {resolveLabel(labels, "signalTypes", signal.signalType)}
+                      </a>
+                      <span className="ml-2 text-xs text-ink-muted">{signal.rationale}</span>
+                    </li>
+                  ))}
+                </ul>
               )}
             </SectionCard>
           </div>

@@ -18,6 +18,7 @@ export interface PackLabels {
   actionTypes: Record<string, string>;
   decisionTypes: Record<string, string>;
   workflowStates: Record<string, string>;
+  approvalPolicies: Record<string, string>;
 }
 
 const GENERIC_FALLBACK: Record<keyof Omit<PackLabels, "packId" | "packName" | "packDescription">, string> = {
@@ -28,6 +29,7 @@ const GENERIC_FALLBACK: Record<keyof Omit<PackLabels, "packId" | "packName" | "p
   actionTypes: "Action",
   decisionTypes: "Decision",
   workflowStates: "State",
+  approvalPolicies: "Approval Policy",
 };
 
 /**

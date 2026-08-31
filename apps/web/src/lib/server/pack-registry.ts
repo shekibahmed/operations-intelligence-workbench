@@ -34,6 +34,7 @@ const FALLBACK_LABELS: PackLabels = {
   actionTypes: {},
   decisionTypes: {},
   workflowStates: {},
+  approvalPolicies: {},
 };
 
 function asLabelMap<T>(raw: Record<string, unknown>, key: string): Record<string, T> {
@@ -56,6 +57,7 @@ function mapPackLabels(entry: PackRegistryEntry): PackLabels {
     actionTypes: asLabelMap(raw, "actionTypes"),
     decisionTypes: asLabelMap(raw, "decisionTypes"),
     workflowStates: asLabelMap(raw, "workflowStates"),
+    approvalPolicies: asLabelMap(raw, "approvalPolicies"),
   };
 }
 

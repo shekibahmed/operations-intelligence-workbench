@@ -41,6 +41,7 @@ const LABELS: PackLabels = {
   actionTypes: {},
   decisionTypes: {},
   workflowStates: {},
+  approvalPolicies: {},
 };
 
 const ENTITY_TYPES = [{ id: "asset", displayName: "Asset" }];

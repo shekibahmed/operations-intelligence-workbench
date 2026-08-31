@@ -1,22 +1,13 @@
-import type { ActionItem, Approval, ArtifactSegment, Case, Decision, OperationalEvent, Signal } from "@oiw/contracts";
-
-import {
-  actionItemsForCase,
-  approvalsForDecision,
-  decisionsForCase,
-  eventsForEntity,
-  findCaseById,
-  findEntityById,
-  findSegmentById,
-  stubObservations,
-  stubSignals,
-} from "@/lib/stub";
-
-export const CLOSURE_REQUIREMENT_LABEL: Record<string, string> = {
-  "inspection-completed": "Inspection completed",
-  "decision-approved": "Decision approved",
-  "observation-reviewed": "All observations reviewed",
-};
+import type {
+  ActionItem,
+  Approval,
+  ArtifactSegment,
+  Case,
+  Decision,
+  OperationalEvent,
+  Signal,
+} from "@oiw/contracts";
+import type { PersistenceRepositories } from "@oiw/persistence";
 
 export interface CaseDetailView {
   caseRecord: Case;
@@ -30,51 +21,87 @@ export interface CaseDetailView {
   closureRequirements: { id: string; label: string; complete: boolean }[];
 }
 
-export function buildCaseDetailView(caseId: string): CaseDetailView | undefined {
-  const caseRecord = findCaseById(caseId);
-  if (!caseRecord) return undefined;
+function humanizeSlug(slug: string): string {
+  return slug
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function intersects(left: readonly string[], right: readonly string[]): boolean {
+  const values = new Set(left);
+  return right.some((value) => values.has(value));
+}
+
+/**
+ * Whether a Case's closure requirement (a pack-defined free-text slug, PRD
+ * §9.10 — there is no contract linking a requirement ID to how it is
+ * satisfied) appears met, using two generic, pack-neutral heuristics rather
+ * than hardcoding any pack's requirement vocabulary: a requirement named
+ * after an Event type is satisfied once that Event type appears in this
+ * Case's timeline; a requirement that mentions "decision" is satisfied once
+ * every Decision on this Case has reached a resolved (non-pending) status.
+ * Anything else defaults to unsatisfied rather than guessing.
+ */
+function isRequirementComplete(
+  requirementId: string,
+  timeline: readonly OperationalEvent[],
+  decisions: readonly Decision[],
+): boolean {
+  if (timeline.some((event) => event.eventType === requirementId)) return true;
+  if (requirementId.includes("decision")) {
+    return decisions.length > 0 && decisions.every((decision) => decision.status === "approved" || decision.status === "rejected");
+  }
+  return false;
+}
+
+/** Builds the Case Detail view (UX_SPEC §5.8 / PRD §20.5) from real, workspace-scoped persistence data. */
+export async function buildCaseDetailView(
+  repositories: PersistenceRepositories,
+  workspaceId: string,
+  caseId: string,
+): Promise<CaseDetailView | null> {
+  const caseRecord = await repositories.cases.findById(workspaceId, caseId);
+  if (caseRecord === null) return null;
+
+  const [entities, events, signals, actionItems, decisions, approvals] = await Promise.all([
+    repositories.entities.list(workspaceId),
+    repositories.operationalEvents.list(workspaceId),
+    repositories.signals.list(workspaceId),
+    repositories.actionItems.list(workspaceId),
+    repositories.decisions.list(workspaceId),
+    repositories.approvals.list(workspaceId),
+  ]);
 
   const relatedEntities = caseRecord.relatedEntityIds
-    .map((id) => {
-      const entity = findEntityById(id);
-      return entity ? { id: entity.id, name: entity.displayName } : null;
-    })
-    .filter((entry): entry is { id: string; name: string } => entry !== null);
+    .map((id) => entities.find((entity) => entity.id === id))
+    .filter((entity): entity is NonNullable<typeof entity> => entity !== undefined)
+    .map((entity) => ({ id: entity.id, name: entity.displayName }));
 
-  const signals = stubSignals.filter((signal) => caseRecord.relatedSignalIds.includes(signal.id));
-  const evidenceIds = new Set<string>([
-    ...signals.flatMap((signal) => signal.evidenceSegmentIds),
-  ]);
-  const evidence = [...evidenceIds]
-    .map((id) => findSegmentById(id))
-    .filter((segment): segment is ArtifactSegment => segment !== undefined);
+  const timeline = events
+    .filter((event) => caseRecord.relatedEventIds.includes(event.id) || intersects(caseRecord.relatedEntityIds, event.entityIds))
+    .sort((a, b) => Date.parse(a.occurredAt) - Date.parse(b.occurredAt));
 
-  const timeline = relatedEntities
-    .flatMap((entity) => eventsForEntity(entity.id))
-    .filter((event, index, all) => all.findIndex((candidate) => candidate.id === event.id) === index)
-    .sort((a, b) => a.occurredAt.localeCompare(b.occurredAt));
+  const caseSignals = signals.filter((signal) => caseRecord.relatedSignalIds.includes(signal.id));
+  const caseActionItems = actionItems.filter((item) => item.caseId === caseId);
+  const caseDecisions = decisions.filter((decision) => decision.caseId === caseId);
+  const decisionIds = new Set(caseDecisions.map((decision) => decision.id));
+  const caseApprovals = approvals.filter((approval) => decisionIds.has(approval.decisionId));
 
-  const actionItems = actionItemsForCase(caseId);
-  const decisions = decisionsForCase(caseId);
-  const approvals = decisions.flatMap((decision) => approvalsForDecision(decision.id));
-
-  const hasInspectionEvent = timeline.some((event) => event.eventType === "inspection-completed");
-  const allDecisionsApproved = decisions.length > 0 && decisions.every((decision) => decision.status === "approved");
-  const caseObservationIds = new Set(timeline.flatMap((event) => event.observationIds));
-  const allObservationsReviewed = ![...caseObservationIds]
-    .map((id) => stubObservations.find((observation) => observation.id === id))
-    .some((observation) => observation?.reviewStatus === "pending");
-
-  const requirementComplete: Record<string, boolean> = {
-    "inspection-completed": hasInspectionEvent,
-    "decision-approved": allDecisionsApproved,
-    "observation-reviewed": allObservationsReviewed,
-  };
+  const evidenceSegmentIds = [
+    ...new Set([
+      ...caseSignals.flatMap((signal) => signal.evidenceSegmentIds),
+      ...caseDecisions.flatMap((decision) => decision.evidenceSegmentIds),
+    ]),
+  ];
+  const evidence = (
+    await Promise.all(evidenceSegmentIds.map((id) => repositories.artifactSegments.findById(workspaceId, id)))
+  ).filter((segment): segment is ArtifactSegment => segment !== null);
 
   const closureRequirements = caseRecord.closureRequirementIds.map((id) => ({
     id,
-    label: CLOSURE_REQUIREMENT_LABEL[id] ?? id,
-    complete: requirementComplete[id] ?? false,
+    label: humanizeSlug(id),
+    complete: isRequirementComplete(id, timeline, caseDecisions),
   }));
 
   return {
@@ -82,10 +109,10 @@ export function buildCaseDetailView(caseId: string): CaseDetailView | undefined 
     relatedEntities,
     evidence,
     timeline,
-    signals,
-    actionItems,
-    decisions,
-    approvals,
+    signals: caseSignals,
+    actionItems: caseActionItems,
+    decisions: caseDecisions,
+    approvals: caseApprovals,
     closureRequirements,
   };
 }

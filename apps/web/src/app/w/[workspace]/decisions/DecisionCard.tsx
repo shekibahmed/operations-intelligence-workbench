@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Decision } from "@oiw/contracts";
 
+import { decideOnDecision } from "@/app/w/[workspace]/decisions/actions";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
@@ -17,34 +18,46 @@ export interface DecisionCardData {
 }
 
 const RISK_TONE = { low: "neutral", medium: "warn", high: "warn", critical: "critical" } as const;
+const STATUS_LABEL: Record<Decision["status"], string> = {
+  proposed: "Proposed",
+  "awaiting-approval": "Awaiting approval",
+  approved: "Approved",
+  rejected: "Rejected",
+  "more-information-required": "More information required",
+};
 
 /**
  * PRD §22.4: a comment is required before Approve/Reject is enabled for a
  * high-risk (or critical) decision, via a focus-managed confirmation dialog
- * rather than `window.confirm()` (UX_SPEC §5.11).
+ * rather than `window.confirm()` (UX_SPEC §5.11). Approve/Reject/Request
+ * more information write a real, session-validated, audited Approval and
+ * Decision status change (`@/app/w/[workspace]/decisions/actions`); a failed
+ * action shows its error on this card only and leaves the Decision pending.
  */
-export function DecisionCard({ data, forcedError = false }: { data: DecisionCardData; forcedError?: boolean }) {
+export function DecisionCard({ workspace, data }: { workspace: string; data: DecisionCardData }) {
   const { decision, proposalLabel, triggeringRule, requiredApprover, potentialConsequence, evidenceLinks } = data;
-  const [status, setStatus] = useState(decision.status);
-  const [error, setError] = useState(forcedError);
-  const highRisk = decision.riskLevel === "high" || decision.riskLevel === "critical";
+  const [current, setCurrent] = useState(decision);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const highRisk = current.riskLevel === "high" || current.riskLevel === "critical";
+  const isPending = current.status === "proposed" || current.status === "awaiting-approval";
 
-  function resolve(outcome: "approved" | "rejected" | "more-information-required") {
-    if (forcedError) {
-      setError(true);
-      return;
-    }
-    setError(false);
-    setStatus(outcome === "approved" ? "approved" : outcome === "rejected" ? "rejected" : "more-information-required");
+  async function resolve(outcome: "approved" | "rejected" | "more-information-required", comment: string) {
+    setPending(true);
+    setError(null);
+    const result = await decideOnDecision(workspace, current.id, outcome, comment);
+    setPending(false);
+    if (result.ok) setCurrent(result.decision);
+    else setError(result.message);
   }
 
   return (
-    <article aria-labelledby={`decision-${decision.id}`} className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4">
-      <h3 id={`decision-${decision.id}`} className="text-sm font-semibold text-ink">
+    <article aria-labelledby={`decision-${current.id}`} className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4">
+      <h3 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
         {proposalLabel}
       </h3>
-      <Badge tone={RISK_TONE[decision.riskLevel]}>Risk: {decision.riskLevel}</Badge>
-      <p className="text-sm text-ink-muted">{decision.rationale}</p>
+      <Badge tone={RISK_TONE[current.riskLevel]}>Risk: {current.riskLevel}</Badge>
+      <p className="text-sm text-ink-muted">{current.rationale}</p>
       {evidenceLinks.length > 0 ? (
         <p className="text-sm">
           Evidence:{" "}
@@ -58,56 +71,66 @@ export function DecisionCard({ data, forcedError = false }: { data: DecisionCard
           ))}
         </p>
       ) : null}
-      {triggeringRule ? (
-        <p className="text-sm">
-          Triggering rule:{" "}
+      <p className="text-sm">
+        Triggering rule:{" "}
+        {triggeringRule !== null ? (
           <a href={triggeringRule.href} className="text-[var(--color-accent)] hover:underline">
             {triggeringRule.label}
           </a>
-        </p>
-      ) : null}
+        ) : (
+          <span className="text-ink-muted">Not recorded</span>
+        )}
+      </p>
       <p className="text-sm text-ink-muted">Potential consequence: {potentialConsequence}</p>
       <p className="text-sm text-ink-muted">Required approver: {requiredApprover}</p>
 
-      {error ? (
+      {error !== null ? (
         <p role="alert" className="rounded-md border border-[var(--color-critical-ink)] bg-[var(--color-critical-surface)] p-2 text-xs text-[var(--color-critical-ink)]">
-          Could not save this decision. It remains pending.
+          {error}
         </p>
       ) : null}
 
-      {status === "awaiting-approval" || status === "proposed" ? (
+      {isPending ? (
         <div className="mt-2 flex flex-wrap gap-2">
           {highRisk ? (
             <>
               <ConfirmDialog
-                trigger={<Button type="button">Approve</Button>}
+                trigger={<Button type="button" disabled={pending}>Approve</Button>}
                 title="Approve this decision?"
                 description="This is a high-risk decision. A comment is required before approving."
                 confirmLabel="Approve"
                 requireComment
-                onConfirm={() => resolve("approved")}
+                onConfirm={(comment) => void resolve("approved", comment)}
               />
               <ConfirmDialog
-                trigger={<Button type="button" variant="danger">Reject</Button>}
+                trigger={<Button type="button" variant="danger" disabled={pending}>Reject</Button>}
                 title="Reject this decision?"
                 description="This is a high-risk decision. A comment is required before rejecting."
                 confirmLabel="Reject"
                 requireComment
-                onConfirm={() => resolve("rejected")}
+                onConfirm={(comment) => void resolve("rejected", comment)}
               />
             </>
           ) : (
             <>
-              <Button type="button" onClick={() => resolve("approved")}>Approve</Button>
-              <Button type="button" variant="danger" onClick={() => resolve("rejected")}>Reject</Button>
+              <Button type="button" disabled={pending} onClick={() => void resolve("approved", "")}>
+                Approve
+              </Button>
+              <Button type="button" variant="danger" disabled={pending} onClick={() => void resolve("rejected", "")}>
+                Reject
+              </Button>
             </>
           )}
-          <Button type="button" variant="secondary" onClick={() => resolve("more-information-required")}>
-            Request more information
-          </Button>
+          <ConfirmDialog
+            trigger={<Button type="button" variant="secondary" disabled={pending}>Request more information</Button>}
+            title="Request more information?"
+            description="Add an optional comment describing what is needed before this decision can be approved or rejected."
+            confirmLabel="Request more information"
+            onConfirm={(comment) => void resolve("more-information-required", comment)}
+          />
         </div>
       ) : (
-        <p className="mt-2 text-sm font-medium text-ink">Status: {status.replace(/-/g, " ")}</p>
+        <p className="mt-2 text-sm font-medium text-ink">Status: {STATUS_LABEL[current.status]}</p>
       )}
     </article>
   );

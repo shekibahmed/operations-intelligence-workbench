@@ -1,17 +1,18 @@
 import { notFound } from "next/navigation";
 
 import { ActionItemChecklist } from "@/app/w/[workspace]/cases/[caseId]/ActionItemChecklist";
+import { CaseNotes } from "@/app/w/[workspace]/cases/[caseId]/CaseNotes";
+import { getCaseNotes } from "@/app/w/[workspace]/cases/[caseId]/actions";
 import { Badge } from "@/components/ui/Badge";
-import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { buildCaseDetailView } from "@/lib/case-detail";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
+import { resolveLabel } from "@/lib/pack-labels";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { resolveLabel } from "@/lib/stub";
+import { getRepositories } from "@/lib/server/db";
 import { getWorkspaceContext } from "@/lib/server/context";
 import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
@@ -30,8 +31,12 @@ export default async function CaseDetailPage({
   const state = resolveScreenState(rawSearchParams.state);
   const { workspace, labels } = await getWorkspaceContext(slug);
 
-  const view = buildCaseDetailView(caseId);
-  if (!view) notFound();
+  const repositories = getRepositories();
+  const [view, notes] = await Promise.all([
+    buildCaseDetailView(repositories, workspace.id, caseId),
+    getCaseNotes(slug, caseId),
+  ]);
+  if (view === null) notFound();
 
   const { caseRecord, relatedEntities, evidence, timeline, signals, actionItems, decisions, approvals, closureRequirements } = view;
 
@@ -52,22 +57,18 @@ export default async function CaseDetailPage({
         <div className="mt-2 flex flex-wrap gap-2">
           <Badge>{resolveLabel(labels, "workflowStates", caseRecord.status)}</Badge>
           <Badge tone={caseRecord.priority === "urgent" ? "critical" : "neutral"}>Priority: {caseRecord.priority}</Badge>
+          <Badge tone={caseRecord.severity === "critical" || caseRecord.severity === "high" ? "critical" : "neutral"}>
+            Severity: {caseRecord.severity}
+          </Badge>
           <Badge>{caseRecord.owner ?? "Unassigned"}</Badge>
           <Badge tone={caseRecord.dueAt ? "warn" : "neutral"}>
             SLA: {caseRecord.dueAt ? new Date(caseRecord.dueAt).toLocaleDateString() : "No due date"}
           </Badge>
         </div>
       </header>
-      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load case sections." />
-      ) : state === "loading" ? (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {Array.from({ length: 8 }, (_, index) => (
-            <Skeleton key={index} className="h-40" label="Loading case section" />
-          ))}
-        </div>
       ) : (
         <div className="xl:grid xl:grid-cols-2 xl:gap-4">
           <div className="flex flex-col gap-4">
@@ -140,18 +141,21 @@ export default async function CaseDetailPage({
 
           <div className="mt-4 flex flex-col gap-4 xl:mt-0">
             <SectionCard title="Action items">
-              <ActionItemChecklist items={actionItems} />
+              <ActionItemChecklist workspace={slug} items={actionItems} />
             </SectionCard>
 
             <SectionCard title="Decisions">
               {decisions.length === 0 ? (
-                <p className="text-sm text-ink-muted">No decisions proposed yet.</p>
+                <p className="text-sm text-ink-muted">
+                  No decisions proposed yet. Decisions are proposed automatically by the rule engine's case/decision
+                  workflow (OIW-506) once it is merged — this is a marked integration point, not a missing feature.
+                </p>
               ) : (
                 <ul className="flex flex-col gap-2 text-sm">
                   {decisions.map((decision) => (
                     <li key={decision.id}>
                       <a href={`${base}/decisions`} className="text-[var(--color-accent)] hover:underline">
-                        {decision.proposal}
+                        {resolveLabel(labels, "decisionTypes", decision.decisionType)}: {decision.proposal}
                       </a>
                       <span className="ml-2 text-xs text-ink-muted">{decision.status}</span>
                     </li>
@@ -176,14 +180,22 @@ export default async function CaseDetailPage({
             </SectionCard>
 
             <SectionCard title="Closure requirements">
-              <ul className="flex flex-col gap-1 text-sm">
-                {closureRequirements.map((requirement) => (
-                  <li key={requirement.id} className="flex items-center gap-2">
-                    <input type="checkbox" checked={requirement.complete} readOnly aria-label={requirement.label} />
-                    <span>{requirement.label}</span>
-                  </li>
-                ))}
-              </ul>
+              {closureRequirements.length === 0 ? (
+                <p className="text-sm text-ink-muted">No closure requirements defined.</p>
+              ) : (
+                <ul className="flex flex-col gap-1 text-sm">
+                  {closureRequirements.map((requirement) => (
+                    <li key={requirement.id} className="flex items-center gap-2">
+                      <input type="checkbox" checked={requirement.complete} readOnly aria-label={requirement.label} />
+                      <span>{requirement.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </SectionCard>
+
+            <SectionCard title="Case notes">
+              <CaseNotes workspace={slug} caseId={caseId} notes={notes} />
             </SectionCard>
           </div>
         </div>
@@ -191,12 +203,16 @@ export default async function CaseDetailPage({
 
       <details open={lens === "technical"} className="mt-4 border-t border-border pt-4">
         <summary className="cursor-pointer text-sm font-medium text-ink">Technical trace</summary>
-        <a
-          href={`${base}/technical/rules/${signals[0]?.rule.id ?? DEFAULT_RULE_ID}`}
-          className="mt-2 inline-block text-sm font-medium text-[var(--color-accent)] hover:underline"
-        >
-          View technical trace
-        </a>
+        {signals[0] !== undefined ? (
+          <a
+            href={`${base}/technical/rules/${signals[0].rule.id}`}
+            className="mt-2 inline-block text-sm font-medium text-[var(--color-accent)] hover:underline"
+          >
+            View technical trace
+          </a>
+        ) : (
+          <p className="mt-2 text-sm text-ink-muted">No rule has fired for this case yet.</p>
+        )}
       </details>
     </WorkspaceShell>
   );

@@ -1,18 +1,17 @@
 import { notFound } from "next/navigation";
 
 import { ConditionTree } from "@/components/widgets/ConditionTree";
-import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { InspectorTabs } from "@/components/ui/InspectorTabs";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { Skeleton } from "@/components/ui/Skeleton";
-import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
+import { buildRuleTraceView, resolveOutcomes } from "@/lib/rule-trace";
 import { workspaceBase } from "@/lib/routes";
-import { stubRuleTrace } from "@/lib/stub/rule-trace";
+import { getRepositories } from "@/lib/server/db";
 import { getWorkspaceContext } from "@/lib/server/context";
 import { minutesRemaining } from "@/lib/session-time";
+import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function TechnicalRuleTracePage({
@@ -29,7 +28,16 @@ export default async function TechnicalRuleTracePage({
   const state = resolveScreenState(rawSearchParams.state);
   const { workspace, labels } = await getWorkspaceContext(slug);
 
-  if (id !== stubRuleTrace.ruleId) notFound();
+  const rawEventParam = rawSearchParams.event;
+  const eventId = Array.isArray(rawEventParam) ? rawEventParam[0] : rawEventParam;
+
+  const repositories = getRepositories();
+  const auditEntries = await repositories.auditEntries.list(workspace.id);
+  const view = buildRuleTraceView(auditEntries, id, eventId);
+  if (view === null) notFound();
+
+  const outcomes = resolveOutcomes(view, auditEntries);
+  const linkedAuditEntryIds = [...new Set([view.evaluation.id, ...outcomes.map((outcome) => outcome.auditEntryId).filter((entryId): entryId is string => entryId !== null)])];
 
   return (
     <WorkspaceShell
@@ -38,79 +46,97 @@ export default async function TechnicalRuleTracePage({
       packId={labels.packId}
       lens={lens}
       sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
-      itemLabel={stubRuleTrace.ruleId}
+      itemLabel={view.ruleId}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <InspectorTabs
         active="rule"
         artifactHref={`${base}/technical/artifacts/${DEFAULT_ARTIFACT_ID}`}
-        ruleHref={`${base}/technical/rules/${stubRuleTrace.ruleId}`}
+        ruleHref={`${base}/technical/rules/${view.ruleId}`}
       />
-      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load this rule trace." />
-      ) : state === "loading" ? (
-        <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-          {Array.from({ length: 4 }, (_, index) => (
-            <Skeleton key={index} className="h-40" label="Loading rule trace" />
-          ))}
-        </div>
       ) : (
         <>
           <SectionCard title="Rule identity">
             <p className="text-sm text-ink">
-              {stubRuleTrace.ruleId} · v{stubRuleTrace.ruleVersion}
+              {view.ruleId} · v{view.ruleVersion}
             </p>
-            <p className="mt-1 text-sm text-ink-muted">{stubRuleTrace.description}</p>
+            <p className="mt-1 text-sm text-ink-muted">{view.description}</p>
+            <p className="mt-1 text-xs text-ink-muted">
+              Evaluated {new Date(view.occurredAt).toLocaleString()} against event <code>{view.eventId}</code> —{" "}
+              {view.result ? "condition matched" : "condition did not match"}.
+            </p>
           </SectionCard>
 
           <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
             <SectionCard title="Fact evaluation">
-              <table className="w-full text-sm">
-                <caption className="sr-only">Fact evaluation</caption>
-                <thead>
-                  <tr className="text-left text-xs uppercase tracking-wide text-ink-muted">
-                    <th scope="col" className="py-1">Fact</th>
-                    <th scope="col" className="py-1">Resolved value</th>
-                    <th scope="col" className="py-1">Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {stubRuleTrace.facts.map((fact) => (
-                    <tr key={fact.fact} className="border-t border-border">
-                      <td className="py-1">{fact.fact}</td>
-                      <td className="py-1">{fact.resolvedValue}</td>
-                      <td className="py-1 text-ink-muted">{fact.source}</td>
+              {view.facts.length === 0 ? (
+                <p className="text-sm text-ink-muted">This rule's condition references no facts.</p>
+              ) : (
+                <table className="w-full text-sm">
+                  <caption className="sr-only">Fact evaluation</caption>
+                  <thead>
+                    <tr className="text-left text-xs uppercase tracking-wide text-ink-muted">
+                      <th scope="col" className="py-1">Fact</th>
+                      <th scope="col" className="py-1">Resolved value</th>
+                      <th scope="col" className="py-1">Source</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {view.facts.map((fact) => (
+                      <tr key={fact.label} className="border-t border-border">
+                        <td className="py-1">{fact.label}</td>
+                        <td className="py-1">{fact.resolvedValue}</td>
+                        <td className="py-1 text-ink-muted">{fact.source}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </SectionCard>
 
             <SectionCard title="Condition tree">
-              <ConditionTree root={stubRuleTrace.condition} />
+              <ConditionTree root={view.condition} />
             </SectionCard>
           </div>
 
           <SectionCard title="Outcome">
-            <p className="text-sm text-ink">{stubRuleTrace.outcome}</p>
+            {!view.result ? (
+              <p className="text-sm text-ink">Condition did not match — no actions fired.</p>
+            ) : outcomes.length === 0 ? (
+              <p className="text-sm text-ink-muted">No actions fired.</p>
+            ) : (
+              <ul className="flex flex-col gap-2 text-sm">
+                {outcomes.map((outcome, index) => (
+                  <li key={index} className={outcome.integrationPoint ? "rounded-md border border-dashed border-border p-2" : undefined}>
+                    <p className="font-medium text-ink">{outcome.definitionId} ({outcome.actionType})</p>
+                    <p className="text-ink-muted">{outcome.description}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </SectionCard>
 
           <SectionCard title="State-transition trace">
-            <ol className="list-decimal pl-5 text-sm text-ink">
-              {stubRuleTrace.stateTransitions.map((transition) => (
-                <li key={transition}>{transition}</li>
-              ))}
-            </ol>
+            {!view.result || outcomes.length === 0 ? (
+              <p className="text-sm text-ink-muted">No actions fired — no state transition.</p>
+            ) : (
+              <ol className="list-decimal pl-5 text-sm text-ink">
+                {outcomes.map((outcome, index) => (
+                  <li key={index}>{outcome.stateTransition}</li>
+                ))}
+              </ol>
+            )}
           </SectionCard>
 
           <SectionCard title="Linked audit entries">
             <ul className="flex flex-col gap-1 text-sm">
-              {stubRuleTrace.auditEntryIds.map((entryId) => (
+              {linkedAuditEntryIds.map((entryId) => (
                 <li key={entryId}>
-                  <a href={`${base}/audit?entry=${entryId}`} className="text-[var(--color-accent)] hover:underline">
+                  <a href={`${base}/audit?entry=${entryId}#${entryId}`} className="text-[var(--color-accent)] hover:underline">
                     {entryId}
                   </a>
                 </li>

@@ -1,18 +1,18 @@
+import type { Case } from "@oiw/contracts";
+
 import { Badge } from "@/components/ui/Badge";
 import { DataTable } from "@/components/ui/DataTable";
 import type { DataTableColumn } from "@/components/ui/DataTable";
-import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
-import { Skeleton } from "@/components/ui/Skeleton";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
+import { resolveLabel } from "@/lib/pack-labels";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { resolveLabel, stubCases } from "@/lib/stub";
+import { getRepositories } from "@/lib/server/db";
 import { getWorkspaceContext } from "@/lib/server/context";
 import { minutesRemaining } from "@/lib/session-time";
-import type { Case } from "@oiw/contracts";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function CaseListPage({
@@ -29,7 +29,9 @@ export default async function CaseListPage({
   const state = resolveScreenState(rawSearchParams.state);
   const { workspace, labels } = await getWorkspaceContext(slug);
 
-  const rows = [...stubCases].sort((a, b) => (a.dueAt ?? "9999").localeCompare(b.dueAt ?? "9999"));
+  const repositories = getRepositories();
+  const cases = await repositories.cases.list(workspace.id);
+  const rows = [...cases].sort((a, b) => (a.dueAt ?? "9999").localeCompare(b.dueAt ?? "9999"));
 
   const columns: DataTableColumn<Case>[] = [
     { key: "title", header: "Case", render: (row) => row.title },
@@ -61,14 +63,14 @@ export default async function CaseListPage({
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <h1 className="text-lg font-semibold text-ink">Cases</h1>
-      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load cases." />
-      ) : state === "loading" ? (
-        <Skeleton className="h-64" label="Loading cases" />
-      ) : state === "empty" || rows.length === 0 ? (
-        <EmptyState title="No cases yet" description="Cases are created from the Inbox and Review Queue." />
+      ) : rows.length === 0 ? (
+        <EmptyState
+          title="No cases yet"
+          description="Cases are created from the Inbox and Review Queue once an artifact's Events trigger a case-creating rule."
+        />
       ) : (
         <div className="overflow-x-auto rounded-lg border border-border bg-surface p-2">
           <DataTable
