@@ -1,4 +1,5 @@
 export * from "./ports.js";
+export * from "./artifact-processing.js";
 export * from "./seed-service.js";
 export * from "./session-token.js";
 export * from "./workspace-service.js";

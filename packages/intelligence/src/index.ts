@@ -1,14 +1,3 @@
-import type {
-  ClassificationRequest,
-  ClassificationResult,
-  ExtractionRequest,
-  ExtractionResult,
-  SummaryRequest,
-  SummaryResult,
-} from "@oiw/contracts";
-
-export interface IntelligenceProvider {
-  extract(request: ExtractionRequest): Promise<ExtractionResult>;
-  classify(request: ClassificationRequest): Promise<ClassificationResult>;
-  summarise(request: SummaryRequest): Promise<SummaryResult>;
-}
+export * from "./fixture-provider.js";
+export * from "./provider.js";
+export * from "./validation.js";

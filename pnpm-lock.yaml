@@ -103,7 +103,11 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@24.13.3)(jiti@2.7.0)(jsdom@30.0.1)(lightningcss@1.33.0)(supports-color@7.2.0)(tsx@4.23.13)(yaml@2.9.0)
 
-  packages/application: {}
+  packages/application:
+    dependencies:
+      '@oiw/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/audit: {}
 
@@ -121,13 +125,20 @@ importers:
 
   packages/evals: {}
 
-  packages/ingestion: {}
+  packages/ingestion:
+    dependencies:
+      '@oiw/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/intelligence:
     dependencies:
       '@oiw/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@oiw/scenario-sdk':
+        specifier: workspace:*
+        version: link:../scenario-sdk
 
   packages/persistence:
     dependencies:
