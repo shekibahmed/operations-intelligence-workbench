@@ -23,9 +23,9 @@ amendments surfaced by fixture authoring (see `docs/tasks/OIW-002.md`).
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-201 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-201-app-shell` | `../oiw-ux` | running |
 | OIW-004b | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004b-scenario-packs` | `../oiw-quality` | running (remediation: first session hit headless background-wait ceiling; relaunched with CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0 and sequential-work instruction over intact partial output) |
-| OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | `../oiw-core` | running |
+| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | running (unblocks OIW-105) |
+| OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | parked | BLOCKED on OIW-107 (see agent-run + PR #9) |
 
 Merged this wave so far: OIW-002 (PR #5, contracts v1.1 + ADR-008),
 OIW-101 (PR #7, DB schema/persistence — six DB-boundary guarantee tests
@@ -33,7 +33,7 @@ verified incl. approval guard), OIW-103 (PR #6, validator/registry — A8
 core-track review PASS). Lockfile reconciliation at merges: integrator
 verified frozen install after each.
 
-Remaining merge order: OIW-201 → OIW-004b → OIW-105.
+Merged additionally: OIW-201 (PR #8; ux-accessibility reviewer PASS on all dimensions). Remaining merge order: OIW-004b → OIW-107 → OIW-105-resume.
 Headless-launch rule (learned from OIW-004b failure): always set
 CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0 for `claude -p` agent launches, and
 instruct agents to work sequentially rather than spawning detached
