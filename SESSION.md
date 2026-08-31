@@ -13,9 +13,13 @@ artifact processing → evidence-backed review → entity/event/rules/signal →
 critical case → hold-from-service decision → human approval → real
 dashboards → audit trail — with real state assertions, green in CI.
 
-**PAUSED at milestone boundary awaiting product-owner check-in before
-Wave 3** (Process Exception + Document Assurance lifecycle proof, PRD §26
-Wave 3 / M2). No agents running.
+**Wave 3 / M2 STARTED (2026-09-01) on product-owner request**: guided
+tours wanted for all three packs → prerequisite is the pack-neutral
+lifecycle proof. Sequence: OIW-701 (common lifecycle test + pack-data
+fixes for packs two/three, Codex, running) → OIW-702 (click-through tours
+for both packs + Playwright journeys, Claude m900x). M1 remains green
+(north-star in CI); post-M1 hotfixes: stale-dist dev script, hydration-safe
+nav section prop (b03ac6d).
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
