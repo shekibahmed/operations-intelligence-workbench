@@ -5,10 +5,14 @@
 
 ## Current milestone
 
-**Wave 1 (Platform Skeleton) — final task in flight.** Resumed 2026-08-31
-after pause. OIW-107 relaunched successfully (stdin fix confirmed). Next:
-merge OIW-107 → resume OIW-105 on its branch → Wave 1 exit review → cut
-Wave 2 vertical-slice packets.
+**Wave 2 (Asset Reliability vertical slice) — batch A in flight.**
+Wave 1 COMPLETE and exit-reviewed against PRD §26: three packs load, seed +
+reset live-verified (25 artifacts), all routes render, core neutral. Carried
+gap: selector UI still stub-wired → first item of Wave 2 batch A (OIW-210).
+Batch A: OIW-301 (ingestion+adapters+fixture provider, Codex) ∥ OIW-210
+(web wiring to real services, Claude m900x). Batch B after A: entity/event/
+rules/signals engines + review-queue UI. Batch C: case/action/decision
+engines + case/decision UI + north-star e2e.
 
 ## Merged tasks
 
@@ -27,6 +31,9 @@ Wave 2 vertical-slice packets.
   review PASS)
 - OIW-201 — App shell, lens switcher, navigation (PR #8; ux-accessibility
   reviewer PASS; screenshots committed under apps/web/e2e/screenshots/)
+- OIW-107 — Seed/reset API extensions (PR #11; zero breaking changes)
+- OIW-105 — Guest workspace lifecycle, seed and reset (PR #9; BLOCKED→
+  COMPLETE; demo:seed/demo:reset live-verified by lead)
 - OIW-004b — Schema-bound scenario pack content (PR #10; remediation run
   after headless-ceiling failure; two mechanical integration fixes by lead
   (dashboard widget shape, fixture dir layout) + tours made optional in
@@ -38,11 +45,11 @@ Wave 2 vertical-slice packets.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-107 | Codex (high) | `agent/codex/OIW-107-seed-reset-apis` | `../oiw-core` | running |
-| OIW-105 | Codex (high) | `agent/codex/OIW-105-workspace-seed-reset` | parked | BLOCKED on OIW-107 (blocker detail: agent-run + PR #9) |
+| OIW-301 | Codex (high) | `agent/codex/OIW-301-ingestion-intelligence` | `../oiw-core` | running |
+| OIW-210 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-210-web-wiring` | `../oiw-ux` | running |
 
-Remaining merge order: OIW-107 → OIW-105 (resume on its existing branch
-after 107 merges).
+Merge order: OIW-301 → OIW-210 (no shared paths; either may verify first,
+merge in that order for lockfile sanity).
 
 ## Frozen contracts
 
@@ -56,10 +63,13 @@ OIW-107 is pre-authorized for an additive v1.2 seed-bundle schema if needed.
 
 ## Known blockers
 
-- OIW-105 BLOCKED on missing upstream public APIs; OIW-107 (running) is the
-  owning-track fix. Resume OIW-105 on its branch once 107 merges.
+None.
 
 Resolved incidents (kept for takeover context):
+- OIW-105 BLOCKED→COMPLETE cycle: blocked on missing upstream APIs,
+  unblocked by OIW-107 (PR #11), resumed and merged (PR #9). Both merged.
+- OIW-107 first launch stalled on stdin (fix: `</dev/null`, now an
+  operating rule).
 - OIW-004b first session terminated by the headless 600s background-wait
   ceiling while its detached sub-agents were authoring. Remediation run is
   in progress over the intact partial worktree output.
