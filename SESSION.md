@@ -23,13 +23,18 @@ amendments surfaced by fixture authoring (see `docs/tasks/OIW-002.md`).
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-002 | Codex (high) | `agent/codex/OIW-002-contract-amendments` | `../oiw-core` | running |
 | OIW-103 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-103-pack-validator-registry` | `../oiw-packs` | running |
 | OIW-201 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-201-app-shell` | `../oiw-ux` | running |
+| OIW-101 | Codex (high) | `agent/codex/OIW-101-db-schema` | `../oiw-core` | running |
+| OIW-004b | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004b-scenario-packs` | `../oiw-quality` | running |
 
-Wave 1 lockfile rule: each task edits only its own package's `package.json`
-and may run `pnpm install` locally; the integrator regenerates
-`pnpm-lock.yaml` at each merge. Merge order: OIW-002 → OIW-103 → OIW-201.
+Wave 1 lockfile rule: OIW-101 is this batch's lockfile/root-config owner.
+Other tasks edit only their own package's `package.json` and may run
+`pnpm install` locally; the integrator regenerates `pnpm-lock.yaml` at each
+merge. Merge order: OIW-101 → OIW-103 → OIW-201 → OIW-004b.
+
+Contracts v1.1 merged (OIW-002, PR #5): negated observation status,
+alternativeCandidates, conflicting review state; ADR-008.
 
 ## Frozen contracts
 
