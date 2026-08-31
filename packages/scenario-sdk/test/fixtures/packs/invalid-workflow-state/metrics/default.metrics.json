@@ -1,0 +1,9 @@
+{
+  "metrics": [
+    {
+      "id": "open-cases",
+      "label": "Open Cases",
+      "query": "open-case-count"
+    }
+  ]
+}

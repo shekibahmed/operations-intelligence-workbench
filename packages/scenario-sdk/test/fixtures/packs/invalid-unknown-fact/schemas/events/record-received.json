@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "recordId": {
+      "type": "string"
+    },
+    "occurredAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "recordId",
+    "occurredAt"
+  ]
+}

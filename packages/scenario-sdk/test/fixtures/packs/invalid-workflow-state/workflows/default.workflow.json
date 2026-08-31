@@ -1,0 +1,31 @@
+{
+  "id": "default",
+  "version": "1.0.0",
+  "initialState": "open",
+  "states": [
+    {
+      "id": "open",
+      "label": "Open",
+      "terminal": false
+    },
+    {
+      "id": "closed",
+      "label": "Closed",
+      "terminal": true
+    }
+  ],
+  "transitions": [
+    {
+      "id": "archive",
+      "from": "closed",
+      "to": "archived"
+    }
+  ],
+  "closureRequirements": [
+    {
+      "id": "evidence-present",
+      "type": "evidence-present",
+      "description": "Evidence must be attached before closure."
+    }
+  ]
+}

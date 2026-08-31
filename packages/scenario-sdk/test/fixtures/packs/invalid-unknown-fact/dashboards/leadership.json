@@ -1,0 +1,12 @@
+{
+  "id": "leadership-overview",
+  "title": "Leadership Overview",
+  "widgets": [
+    {
+      "id": "open-cases",
+      "type": "stat-card",
+      "title": "Open Cases",
+      "parameters": {}
+    }
+  ]
+}

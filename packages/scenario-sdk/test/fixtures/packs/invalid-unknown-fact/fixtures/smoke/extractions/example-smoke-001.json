@@ -1,0 +1,41 @@
+{
+  "artifactChecksum": "f1ae3a39f883646023f52f4391e5c3255edff8beae246d670cbcedafb2e06b0e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "record-id",
+      "value": "REC-123",
+      "normalisedValue": "REC-123",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 7,
+            "end": 15
+          },
+          "excerpt": "REC-123"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:01Z",
+    "durationMs": 1000,
+    "steps": [
+      {
+        "name": "extract",
+        "status": "completed",
+        "detail": "Extracted record id from text."
+      }
+    ]
+  }
+}

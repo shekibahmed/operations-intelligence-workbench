@@ -1,0 +1,26 @@
+[
+  {
+    "id": "flag-record-received",
+    "version": "1.0.0",
+    "description": "Flag review when a record-received event is observed.",
+    "when": {
+      "all": [
+        {
+          "fact": {
+            "kind": "event-field",
+            "field": "eventType"
+          },
+          "operator": "equals",
+          "value": "record-received"
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "flag-review",
+        "definitionId": "needs-triage",
+        "parameters": {}
+      }
+    ]
+  }
+]

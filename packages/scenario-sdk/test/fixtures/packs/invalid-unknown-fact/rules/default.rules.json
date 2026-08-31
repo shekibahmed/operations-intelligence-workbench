@@ -1,0 +1,26 @@
+[
+  {
+    "id": "flag-unknown-fact",
+    "version": "1.0.0",
+    "description": "References a fact kind outside the closed catalogue (A2).",
+    "when": {
+      "all": [
+        {
+          "fact": {
+            "kind": "phantom-kind",
+            "field": "eventType"
+          },
+          "operator": "equals",
+          "value": "record-received"
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "flag-review",
+        "definitionId": "needs-triage",
+        "parameters": {}
+      }
+    ]
+  }
+]

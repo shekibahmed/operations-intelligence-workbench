@@ -1,0 +1,1 @@
+Record REC-123 received from Node A at 08:00.

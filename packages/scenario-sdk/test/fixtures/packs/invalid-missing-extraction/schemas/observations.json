@@ -1,0 +1,8 @@
+{
+  "type": "object",
+  "properties": {
+    "record-id": {
+      "type": "string"
+    }
+  }
+}

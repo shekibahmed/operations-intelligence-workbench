@@ -1,0 +1,26 @@
+[
+  {
+    "id": "flag-phantom-event",
+    "version": "1.0.0",
+    "description": "References an event type the manifest never declares.",
+    "when": {
+      "all": [
+        {
+          "fact": {
+            "kind": "event-field",
+            "field": "eventType"
+          },
+          "operator": "equals",
+          "value": "phantom-event"
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "flag-review",
+        "definitionId": "needs-triage",
+        "parameters": {}
+      }
+    ]
+  }
+]

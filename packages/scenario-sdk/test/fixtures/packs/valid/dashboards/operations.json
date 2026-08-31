@@ -1,0 +1,12 @@
+{
+  "id": "operations-overview",
+  "title": "Operations Overview",
+  "widgets": [
+    {
+      "id": "open-cases",
+      "type": "stat-card",
+      "title": "Open Cases",
+      "parameters": {}
+    }
+  ]
+}

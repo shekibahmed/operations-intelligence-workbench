@@ -1,0 +1,38 @@
+schemaVersion: "1.0"
+id: example-pack-unknown-event-type
+version: 1.0.0
+name: Example Pack
+description: A neutral fixture pack used to exercise the scenario pack validator.
+labels: ./labels.json
+entityTypes:
+  - id: record
+    displayName: Record
+    schema: ./schemas/entities/record.json
+eventTypes:
+  - id: record-received
+    displayName: Record received
+    schema: ./schemas/events/record-received.json
+observationSchemas:
+  - ./schemas/observations.json
+caseDefinitions:
+  - ./schemas/cases.json
+workflows:
+  default: ./workflows/default.workflow.json
+rules:
+  - ./rules/default.rules.json
+metrics:
+  - ./metrics/default.metrics.json
+dashboards:
+  leadership: ./dashboards/leadership.json
+  operations: ./dashboards/operations.json
+  technical: ./dashboards/technical.json
+fixtures:
+  smoke: ./fixtures/smoke
+  demo: ./fixtures/demo
+  edgeCases: ./fixtures/edge-cases
+evaluationSets:
+  - ./evaluations/gold-observations.json
+tours:
+  leadership: ./tours/leadership.json
+defaultLens: leadership
+defaultFixtureSet: smoke
