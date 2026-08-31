@@ -92,3 +92,12 @@ the same prepared seed plan after the atomic workspace clear.
   same Observation key intentionally carries different event semantics.
 - Case-definition contracts and Event/rule execution remain out of scope for
   this decision and are assigned to later tasks.
+
+## Implementation note
+
+As of OIW-703, the Event assembler enforces `requiredObservationValues` using
+the accepted Observation's normalised value when present and its original
+value otherwise. Values use deterministic JSON equality, so object key order
+does not affect matching; candidates that fail a constraint are skipped in the
+existing deterministic definition order, and no match retains the audited
+abstention path.

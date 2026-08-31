@@ -7,7 +7,7 @@ import type {
   OperationalEvent,
 } from "@oiw/contracts";
 
-import { deterministicUuid } from "./records.js";
+import { deterministicUuid, stableJson } from "./records.js";
 import {
   appendOperationalAuditOnce,
   type OperationalAuditRepository,
@@ -46,6 +46,28 @@ function selectedValue(observation: Observation): JsonValue | null {
   return observation.normalisedValue ?? observation.value;
 }
 
+function satisfiesRequiredObservationValues(
+  definition: EventDefinition,
+  observations: readonly Observation[],
+): boolean {
+  return Object.entries(definition.requiredObservationValues ?? {}).every(
+    ([schemaKey, acceptedValues]) => {
+      const constrained = observations.filter(
+        (observation) => observation.schemaKey === schemaKey,
+      );
+      return (
+        constrained.length > 0 &&
+        constrained.every((observation) =>
+          acceptedValues.some(
+            (acceptedValue) =>
+              stableJson(selectedValue(observation)) === stableJson(acceptedValue),
+          ),
+        )
+      );
+    },
+  );
+}
+
 function attributesFor(
   definition: EventDefinition,
   observations: readonly Observation[],
@@ -77,6 +99,7 @@ function matchingDefinition(
     ) {
       continue;
     }
+    if (!satisfiesRequiredObservationValues(definition, eligible)) continue;
     const composedKeys = new Set([
       ...definition.requiredObservations,
       ...definition.optionalObservations,
@@ -141,7 +164,8 @@ export class EventAssemblyService {
         action: "event-assembly-deferred",
         actorId: "event-assembler",
         subject: { type: "artifact", id: artifact.id },
-        cause: "No Event definition had all required reviewed Observations and a resolved primary Entity",
+        cause:
+          "No Event definition satisfied required reviewed Observations, value constraints and primary Entity resolution",
         data: { observationIds: observations.map(({ id }) => id) },
         idempotencyKey: `event-deferred:${artifact.id}:${observations.map(({ id, reviewStatus, entityId }) => `${id}:${reviewStatus}:${entityId ?? "none"}`).join("|")}`,
       });
