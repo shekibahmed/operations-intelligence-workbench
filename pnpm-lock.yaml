@@ -158,7 +158,11 @@ importers:
         specifier: ^3.4.7
         version: 3.4.9
 
-  packages/rules: {}
+  packages/rules:
+    dependencies:
+      '@oiw/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/scenario-sdk:
     dependencies:

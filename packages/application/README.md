@@ -42,6 +42,21 @@ Historical Audit Entries remain append-only, while every seed-managed
 operational row after reset is identical to its original post-seed value.
 Another Workspace is never read or mutated.
 
+## Operational advancement
+
+`ArtifactAdvancementService.advanceArtifact(workspaceId, artifactId)` runs the
+reviewed half of the synchronous pipeline: exact/alias Entity resolution,
+validated Event-definition assembly, fact-catalogue rule evaluation and action
+execution. Ambiguous Entity candidates become `conflicting` Observations and
+cannot silently form an Event. Event, Signal and action IDs are deterministic,
+and every rule evaluation is persisted as a hash-linked Audit Entry.
+
+The service supplies `create-signal` and `flag-review` executors. Until the
+batch-C operational engines land, `create-case`, `create-action` and
+`propose-decision` persist idempotent `rule-action-pending` outcomes. Callers
+may provide same-type executor overrides to activate those outcomes later
+without changing the rule engine or orchestration.
+
 ## Local commands
 
 With Docker PostgreSQL running and migrations applied:
