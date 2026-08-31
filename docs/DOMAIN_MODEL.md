@@ -64,7 +64,14 @@ derivation, confidence, extractor ID/version and review history fields.
 Machine-derived Observations must include extractor metadata and confidence.
 A supported machine-derived value must cite an Artifact Segment. When evidence
 is insufficient, the value is `null`, a reason is mandatory and review can be
-requested. This is an explicit state, not a fabricated value.
+requested. A negated finding is also explicit: it records that cited source
+evidence rules out the fact rather than merely failing to support it.
+
+Extracted and persisted Observations may retain alternative value candidates,
+each with its own confidence, so ambiguous matches can enter review without
+discarding plausible interpretations. The `conflicting` review status holds
+contradictory live Observations for human resolution instead of applying an
+implicit first-wins or last-wins policy.
 
 ### OperationalEvent
 
@@ -118,7 +125,7 @@ and authorisation enforce append-only behaviour in later tasks.
 Workspace selects validated ScenarioPack
   -> Source receives immutable Artifact
   -> ArtifactSegment identifies evidence
-  -> extraction proposes supported or insufficient Observations
+  -> extraction proposes supported, negated or insufficient Observations
   -> human review accepts, corrects or rejects when required
   -> reviewed Observations resolve to Entities
   -> OperationalEvent is assembled
@@ -151,7 +158,9 @@ state.
 - Entity adds aliases and timestamps for the approved exact/alias resolution path.
 - Observation groups extractor ID/version as `extractor`, adds `derivation`,
   `evidenceStatus`, `insufficiencyReason` and `createdAt` to make provenance and
-  abstention enforceable at runtime.
+  abstention enforceable at runtime. Contract version 1.1 adds explicit negated
+  findings, alternative candidates with per-candidate confidence and a
+  `conflicting` review state.
 - Operational Event adds workspace scope, record time, Observation/Entity links,
   assembler provenance and re-evaluation status.
 - Signal adds workspace scope, Event/evidence links, rule identity, rationale and

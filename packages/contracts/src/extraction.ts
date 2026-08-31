@@ -23,6 +23,16 @@ const ExtractedValueSchema = z
     value: JsonValueSchema,
     normalisedValue: JsonValueSchema.nullable(),
     confidence: z.number().min(0).max(1),
+    alternativeCandidates: z
+      .array(
+        z
+          .object({
+            value: JsonValueSchema,
+            confidence: z.number().min(0).max(1),
+          })
+          .strict(),
+      )
+      .optional(),
     evidence: z.array(ExtractionEvidenceSchema).min(1),
   })
   .strict();
@@ -39,9 +49,22 @@ const InsufficientEvidenceSchema = z
   })
   .strict();
 
+const NegatedValueSchema = z
+  .object({
+    status: z.literal("negated"),
+    schemaKey: SlugSchema,
+    value: z.null(),
+    normalisedValue: z.null(),
+    confidence: z.number().min(0).max(1),
+    evidence: z.array(ExtractionEvidenceSchema).min(1),
+    reason: z.string().min(1),
+  })
+  .strict();
+
 export const ProposedObservationSchema = z.discriminatedUnion("status", [
   ExtractedValueSchema,
   InsufficientEvidenceSchema,
+  NegatedValueSchema,
 ]);
 
 export const ProviderMetadataSchema = z

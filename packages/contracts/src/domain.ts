@@ -139,13 +139,30 @@ export const ObservationSchema = z
     schemaKey: SlugSchema,
     value: JsonValueSchema.nullable(),
     normalisedValue: JsonValueSchema.nullable(),
+    alternativeCandidates: z
+      .array(
+        z
+          .object({
+            value: JsonValueSchema,
+            confidence: z.number().min(0).max(1),
+          })
+          .strict(),
+      )
+      .optional(),
     derivation: z.enum(["machine", "rule", "human"]),
-    evidenceStatus: z.enum(["supported", "insufficient-evidence"]),
+    evidenceStatus: z.enum(["supported", "insufficient-evidence", "negated"]),
     evidenceSegmentId: IdSchema.nullable(),
     confidence: z.number().min(0).max(1).nullable(),
     extractor: ExtractorReferenceSchema.nullable(),
     insufficiencyReason: z.string().min(1).nullable(),
-    reviewStatus: z.enum(["not-required", "pending", "accepted", "corrected", "rejected"]),
+    reviewStatus: z.enum([
+      "not-required",
+      "pending",
+      "accepted",
+      "corrected",
+      "rejected",
+      "conflicting",
+    ]),
     reviewedBy: z.string().min(1).nullable(),
     reviewedAt: TimestampSchema.nullable(),
     createdAt: TimestampSchema,

@@ -52,3 +52,75 @@ describe("ExtractionResult contract", () => {
     expect(result.success).toBe(false);
   });
 });
+
+describe("ProposedObservation amendments", () => {
+  it("accepts a negated finding with evidence, confidence and a reason", () => {
+    const result = ExtractionResultSchema.safeParse({
+      ...extractionResult,
+      observations: [
+        {
+          status: "negated",
+          schemaKey: "configured-condition",
+          value: null,
+          normalisedValue: null,
+          confidence: 0.97,
+          evidence: [
+            {
+              locator: { kind: "text-range", start: 0, end: 19 },
+              excerpt: "Condition ruled out",
+            },
+          ],
+          reason: "The source explicitly rules out the configured condition.",
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a negated finding without evidence", () => {
+    const result = ExtractionResultSchema.safeParse({
+      ...extractionResult,
+      observations: [
+        {
+          status: "negated",
+          schemaKey: "configured-condition",
+          value: null,
+          normalisedValue: null,
+          confidence: 0.97,
+          evidence: [],
+          reason: "The source explicitly rules out the configured condition.",
+        },
+      ],
+    });
+    expect(result.success).toBe(false);
+  });
+
+  it("accepts alternative candidates on an extracted finding", () => {
+    const result = ExtractionResultSchema.safeParse({
+      ...extractionResult,
+      observations: [
+        {
+          ...extractionResult.observations[0],
+          alternativeCandidates: [
+            { value: "REF-3", confidence: 0.61 },
+            { value: { reference: "REF-4" }, confidence: 0.34 },
+          ],
+        },
+      ],
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects an alternative candidate confidence outside zero to one", () => {
+    const result = ExtractionResultSchema.safeParse({
+      ...extractionResult,
+      observations: [
+        {
+          ...extractionResult.observations[0],
+          alternativeCandidates: [{ value: "REF-3", confidence: 1.01 }],
+        },
+      ],
+    });
+    expect(result.success).toBe(false);
+  });
+});

@@ -288,4 +288,49 @@ describe("Observation provenance", () => {
       }).success,
     ).toBe(true);
   });
+
+  it("accepts a persisted negated observation", () => {
+    const validObservation = validContracts.find(([name]) => name === "Observation")?.[2];
+    expect(
+      ObservationSchema.safeParse({
+        ...validObservation,
+        value: null,
+        normalisedValue: null,
+        evidenceStatus: "negated",
+      }).success,
+    ).toBe(true);
+  });
+
+  it("accepts alternative candidates for an ambiguous observation", () => {
+    const validObservation = validContracts.find(([name]) => name === "Observation")?.[2];
+    expect(
+      ObservationSchema.safeParse({
+        ...validObservation,
+        alternativeCandidates: [
+          { value: "REF-2", confidence: 0.72 },
+          { value: "REF-3", confidence: 0.48 },
+        ],
+      }).success,
+    ).toBe(true);
+  });
+
+  it("rejects an invalid alternative candidate confidence", () => {
+    const validObservation = validContracts.find(([name]) => name === "Observation")?.[2];
+    expect(
+      ObservationSchema.safeParse({
+        ...validObservation,
+        alternativeCandidates: [{ value: "REF-2", confidence: -0.01 }],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("accepts the conflicting review state and rejects unknown states", () => {
+    const validObservation = validContracts.find(([name]) => name === "Observation")?.[2];
+    expect(
+      ObservationSchema.safeParse({ ...validObservation, reviewStatus: "conflicting" }).success,
+    ).toBe(true);
+    expect(
+      ObservationSchema.safeParse({ ...validObservation, reviewStatus: "unresolved-conflict" }).success,
+    ).toBe(false);
+  });
 });
