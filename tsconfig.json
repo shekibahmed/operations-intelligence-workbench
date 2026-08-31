@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "include": ["scripts/**/*.ts", "vitest.config.ts"],
+  "references": [
+    { "path": "./packages/contracts" },
+    { "path": "./packages/domain" },
+    { "path": "./packages/application" },
+    { "path": "./packages/persistence" },
+    { "path": "./packages/intelligence" },
+    { "path": "./packages/ingestion" },
+    { "path": "./packages/rules" },
+    { "path": "./packages/scenario-sdk" },
+    { "path": "./packages/audit" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/evals" },
+    { "path": "./packages/test-support" }
+  ]
+}

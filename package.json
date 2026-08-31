@@ -1,0 +1,31 @@
+{
+  "name": "operations-intelligence-workbench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "build": "pnpm --recursive --if-present run build",
+    "eval": "tsx scripts/eval.ts",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "test:contracts": "vitest run packages/contracts",
+    "typecheck": "pnpm --recursive --if-present run typecheck",
+    "validate:packs": "tsx scripts/validate-packs.ts",
+    "architecture:check": "tsx scripts/architecture-check.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.34.0",
+    "@types/node": "^24.3.0",
+    "eslint": "^9.34.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.41.0",
+    "vitest": "^3.2.4"
+  }
+}
