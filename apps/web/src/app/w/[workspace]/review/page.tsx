@@ -32,10 +32,15 @@ export default async function ReviewQueuePage({
   const { workspace, labels } = await getWorkspaceContext(slug);
 
   const repositories = getRepositories();
-  const [allObservations, packEntry] = await Promise.all([
+  const [allObservations, packEntry, entities] = await Promise.all([
     repositories.observations.list(workspace.id),
     workspace.activePackId !== null ? findPackEntry(workspace.activePackId) : Promise.resolve(undefined),
+    repositories.entities.list(workspace.id),
   ]);
+  const entityTypes = (packEntry?.pack.manifest.entityTypes ?? []).map((entityType) => ({
+    id: entityType.id,
+    displayName: entityType.displayName,
+  }));
   const pending = allObservations
     .filter((observation) => QUEUE_STATUSES.has(observation.reviewStatus))
     .sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
@@ -83,7 +88,7 @@ export default async function ReviewQueuePage({
       ) : entries.length === 0 ? (
         <EmptyState title="Review queue is clear" description="There is nothing pending review right now." />
       ) : (
-        <ReviewQueuePanel workspace={slug} entries={entries} />
+        <ReviewQueuePanel workspace={slug} entries={entries} entities={entities} entityTypes={entityTypes} labels={labels} />
       )}
     </WorkspaceShell>
   );

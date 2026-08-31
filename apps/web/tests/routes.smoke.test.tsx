@@ -79,6 +79,7 @@ vi.mock("@/lib/server/db", async () => {
       sources: { list: async () => stub.stubSources },
       cases: { list: async () => stub.stubCases },
       decisions: { list: async () => stub.stubDecisions },
+      entities: { list: async () => [] },
       auditEntries: { list: async () => stub.stubAuditEntries },
       artifactSegments: {
         listByArtifact: async (_workspaceId: string, artifactId: string) =>

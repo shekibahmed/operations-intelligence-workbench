@@ -1,21 +1,28 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { JsonValue, Observation } from "@oiw/contracts";
+import type { AuditEntry, Entity, JsonValue, Observation } from "@oiw/contracts";
 
 import {
   acceptObservation,
+  addReviewerNote,
   correctObservation,
+  createEntityAction,
+  getObservationNotes,
   getObservationRevisions,
+  linkEntityAction,
   markInsufficientEvidence,
   rejectObservation,
   type ReviewActionResult,
 } from "@/app/w/[workspace]/review/actions";
+import { CreateEntityDialog, LinkEntityDialog } from "@/app/w/[workspace]/review/EntityActions";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { highlightRanges } from "@/lib/highlight-text";
 import { formatConfidence, REVIEW_STATUS_LABEL, REVIEW_STATUS_TONE } from "@/lib/observation-display";
+import type { PackLabels } from "@/lib/pack-labels";
+import { resolveLabel } from "@/lib/pack-labels";
 
 export interface ReviewQueueEntry {
   observation: Observation;
@@ -41,7 +48,19 @@ function valueLabel(value: JsonValue | null): string {
  * item's heading (UX_SPEC accessibility requirement); a failed action keeps
  * the item selected with its draft input intact rather than discarding it.
  */
-export function ReviewQueuePanel({ workspace, entries }: { workspace: string; entries: ReviewQueueEntry[] }) {
+export function ReviewQueuePanel({
+  workspace,
+  entries,
+  entities: initialEntities,
+  entityTypes,
+  labels,
+}: {
+  workspace: string;
+  entries: ReviewQueueEntry[];
+  entities: Entity[];
+  entityTypes: { id: string; displayName: string }[];
+  labels: PackLabels;
+}) {
   const [queue, setQueue] = useState(entries);
   const [selectedId, setSelectedId] = useState<string | null>(entries[0]?.observation.id ?? null);
   const [pending, setPending] = useState(false);
@@ -50,9 +69,15 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
   const [correctionDraft, setCorrectionDraft] = useState("");
   const [showInsufficient, setShowInsufficient] = useState(false);
   const [insufficientReason, setInsufficientReason] = useState("");
+  const [showNoteForm, setShowNoteForm] = useState(false);
+  const [noteDraft, setNoteDraft] = useState("");
   const [history, setHistory] = useState<Observation[] | null>(null);
+  const [notes, setNotes] = useState<AuditEntry[] | null>(null);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [entities, setEntities] = useState(initialEntities);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const entityById = new Map(entities.map((entity) => [entity.id, entity]));
+  const entityTypeLabel = (entityType: string) => resolveLabel(labels, "entityTypes", entityType);
 
   const selected = queue.find((entry) => entry.observation.id === selectedId) ?? null;
 
@@ -62,7 +87,14 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
     setCorrectionDraft("");
     setShowInsufficient(false);
     setInsufficientReason("");
+    setShowNoteForm(false);
+    setNoteDraft("");
     setHistory(null);
+    setNotes(null);
+  }
+
+  function updateSelectedObservation(observation: Observation) {
+    setQueue((prev) => prev.map((entry) => (entry.observation.id === observation.id ? { ...entry, observation } : entry)));
   }
 
   function selectItem(id: string) {
@@ -122,15 +154,75 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
     if (selected === null) return;
     if (history !== null) {
       setHistory(null);
+      setNotes(null);
       return;
     }
     setHistoryLoading(true);
     try {
-      setHistory(await getObservationRevisions(workspace, selected.observation.id));
+      const [revisions, observationNotes] = await Promise.all([
+        getObservationRevisions(workspace, selected.observation.id),
+        getObservationNotes(workspace, selected.observation.id),
+      ]);
+      setHistory(revisions);
+      setNotes(observationNotes);
     } catch {
       setActionError("Could not load revision history.");
     } finally {
       setHistoryLoading(false);
+    }
+  }
+
+  /**
+   * Link/Create entity and Add reviewer note do not change `reviewStatus`
+   * (only Accept/Correct/Reject/Mark insufficient evidence resolve an item),
+   * so — unlike `runAction` — they keep the item selected rather than
+   * advancing the queue.
+   */
+  async function handleLinkEntity(entityId: string) {
+    if (selected === null) return { ok: false, message: "No observation selected." };
+    setPending(true);
+    setActionError(null);
+    const result = await linkEntityAction(workspace, selected.observation.id, entityId);
+    setPending(false);
+    if (result.ok) {
+      updateSelectedObservation(result.observation);
+      return { ok: true };
+    }
+    setActionError(result.message);
+    return { ok: false, message: result.message };
+  }
+
+  async function handleCreateEntity(input: { entityType: string; displayName: string; externalReference: string }) {
+    if (selected === null) return { ok: false, message: "No observation selected." };
+    setPending(true);
+    setActionError(null);
+    const result = await createEntityAction(workspace, selected.observation.id, input);
+    setPending(false);
+    if (result.ok) {
+      updateSelectedObservation(result.observation);
+      setEntities((prev) => [...prev, result.entity]);
+      return { ok: true };
+    }
+    setActionError(result.message);
+    return { ok: false, message: result.message };
+  }
+
+  async function handleAddNote() {
+    if (selected === null) return;
+    if (noteDraft.trim().length === 0) {
+      setActionError("Enter a note before saving.");
+      return;
+    }
+    setPending(true);
+    setActionError(null);
+    const result = await addReviewerNote(workspace, selected.observation.id, noteDraft.trim());
+    setPending(false);
+    if (result.ok) {
+      setNoteDraft("");
+      setShowNoteForm(false);
+      setNotes((prev) => (prev === null ? null : [...prev, result.note]));
+    } else {
+      setActionError(result.message);
     }
   }
 
@@ -206,6 +298,17 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
               </dd>
             </>
           ) : null}
+          <dt className="mt-2 font-medium text-ink-muted">Linked entity</dt>
+          <dd className="text-ink">
+            {observation.entityId === null
+              ? "None"
+              : (() => {
+                  const entity = entityById.get(observation.entityId);
+                  return entity === undefined
+                    ? observation.entityId
+                    : `${entity.displayName} (${entityTypeLabel(entity.entityType)})`;
+                })()}
+          </dd>
         </dl>
 
         {observation.alternativeCandidates !== undefined && observation.alternativeCandidates.length > 0 ? (
@@ -274,6 +377,20 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
           >
             Mark insufficient evidence
           </Button>
+          <LinkEntityDialog entities={entities} entityTypeLabel={entityTypeLabel} disabled={pending} onLink={handleLinkEntity} />
+          <CreateEntityDialog entityTypes={entityTypes} disabled={pending} onCreate={handleCreateEntity} />
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={pending}
+            onClick={() => {
+              setShowNoteForm((prev) => !prev);
+              setShowCorrection(false);
+              setShowInsufficient(false);
+            }}
+          >
+            Add reviewer note
+          </Button>
         </div>
 
         {showCorrection ? (
@@ -306,23 +423,57 @@ export function ReviewQueuePanel({ workspace, entries }: { workspace: string; en
           </label>
         ) : null}
 
+        {showNoteForm ? (
+          <label className="text-sm">
+            <span className="font-medium text-ink">Reviewer note</span>
+            <textarea
+              className="mt-1 w-full rounded-md border border-border p-2 text-sm"
+              rows={2}
+              value={noteDraft}
+              onChange={(event) => setNoteDraft(event.target.value)}
+            />
+            <Button type="button" className="mt-2" disabled={pending} onClick={() => void handleAddNote()}>
+              Save note
+            </Button>
+          </label>
+        ) : null}
+
         <div>
           <Button type="button" variant="secondary" disabled={historyLoading} onClick={() => void toggleHistory()}>
-            {history === null ? "View revision history" : "Hide revision history"}
+            {history === null ? "View history" : "Hide history"}
           </Button>
           {history !== null ? (
-            history.length === 0 ? (
-              <p className="mt-2 text-xs text-ink-muted">No prior revisions — this is the original extracted value.</p>
-            ) : (
-              <ol className="mt-2 flex flex-col gap-1 text-xs text-ink-muted">
-                {history.map((revision, index) => (
-                  <li key={index}>
-                    {valueLabel(revision.value)} — {REVIEW_STATUS_LABEL[revision.reviewStatus]}
-                    {revision.reviewedAt !== null ? ` (${new Date(revision.reviewedAt).toLocaleString()})` : ""}
-                  </li>
-                ))}
-              </ol>
-            )
+            <div className="mt-2 flex flex-col gap-3">
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Revisions</h3>
+                {history.length === 0 ? (
+                  <p className="mt-1 text-xs text-ink-muted">No prior revisions — this is the original extracted value.</p>
+                ) : (
+                  <ol className="mt-1 flex flex-col gap-1 text-xs text-ink-muted">
+                    {history.map((revision, index) => (
+                      <li key={index}>
+                        {valueLabel(revision.value)} — {REVIEW_STATUS_LABEL[revision.reviewStatus]}
+                        {revision.reviewedAt !== null ? ` (${new Date(revision.reviewedAt).toLocaleString()})` : ""}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
+              <div>
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-ink-muted">Notes</h3>
+                {notes === null || notes.length === 0 ? (
+                  <p className="mt-1 text-xs text-ink-muted">No notes yet.</p>
+                ) : (
+                  <ol className="mt-1 flex flex-col gap-1 text-xs text-ink-muted">
+                    {notes.map((note) => (
+                      <li key={note.id}>
+                        {note.cause} ({note.actor.id}, {new Date(note.occurredAt).toLocaleString()})
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
+            </div>
           ) : null}
         </div>
       </div>

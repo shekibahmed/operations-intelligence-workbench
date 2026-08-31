@@ -1,6 +1,8 @@
 "use server";
 
-import type { JsonValue, Observation, ObservationSchemaDefinition } from "@oiw/contracts";
+import { randomUUID } from "node:crypto";
+
+import type { AuditEntry, Entity, JsonValue, Observation, ObservationSchemaDefinition } from "@oiw/contracts";
 import type { PersistenceRepositories } from "@oiw/persistence";
 import { validateObservationValue } from "@oiw/scenario-sdk";
 
@@ -14,6 +16,12 @@ import { requireWorkspace } from "@/lib/server/workspace";
 export type ReviewActionResult =
   | { ok: true; observation: Observation }
   | { ok: false; message: string };
+
+export type CreateEntityActionResult =
+  | { ok: true; observation: Observation; entity: Entity }
+  | { ok: false; message: string };
+
+export type NoteActionResult = { ok: true; note: AuditEntry } | { ok: false; message: string };
 
 async function currentReviewerId(): Promise<string> {
   const payload = await readSessionPayload();
@@ -272,4 +280,174 @@ export async function correctObservation(
   } catch (error) {
     return { ok: false, message: toActionErrorMessage(error, "Could not save this correction.") };
   }
+}
+
+/**
+ * Link entity sets an Observation's `entityId` to an existing, workspace-scoped
+ * Entity (UX_SPEC §5.6/PRD §20.4). Unlike Accept/Correct/Reject/Mark
+ * insufficient evidence, linking does not change `reviewStatus` — it does not
+ * resolve the review decision, so the item is not removed from the queue.
+ */
+export async function linkEntityAction(slug: string, observationId: string, entityId: string): Promise<ReviewActionResult> {
+  try {
+    const workspace = await requireWorkspace(slug);
+    const reviewerId = await currentReviewerId();
+    const repositories = getRepositories();
+
+    const [current, entity] = await Promise.all([
+      repositories.observations.findById(workspace.id, observationId),
+      repositories.entities.findById(workspace.id, entityId),
+    ]);
+    if (current === null) return { ok: false, message: "This observation could not be found." };
+    if (entity === null) return { ok: false, message: "This entity could not be found." };
+
+    const occurredAt = new Date().toISOString();
+    const updated: Observation = { ...current, entityId: entity.id };
+    const auditEntry = await buildAuditEntry(repositories, {
+      workspaceId: workspace.id,
+      occurredAt,
+      action: "observation-entity-linked",
+      actor: { type: "human", id: reviewerId },
+      subject: { type: "observation", id: observationId },
+      cause: `Reviewer linked this observation to "${entity.displayName}"`,
+      data: { schemaKey: current.schemaKey, previousEntityId: current.entityId, entityId: entity.id },
+    });
+
+    const result = await repositories.observations.correct(workspace.id, observationId, updated, auditEntry);
+    if (result === null) return { ok: false, message: "This observation could not be found." };
+    return { ok: true, observation: result };
+  } catch (error) {
+    return { ok: false, message: toActionErrorMessage(error, "Could not link this entity.") };
+  }
+}
+
+/**
+ * Create entity inserts a new workspace-scoped Entity (typed from the pack's
+ * manifest `entityTypes`) and links it to the Observation in one action,
+ * auditing both the creation and the link separately (functional requirement
+ * 2). `status` defaults to a pack-neutral "active" — packs may use richer
+ * domain-specific statuses (e.g. seeded fixtures use "operational"), but core
+ * code must not invent or assume pack vocabulary (AGENTS.md Product Rule).
+ */
+export async function createEntityAction(
+  slug: string,
+  observationId: string,
+  input: { entityType: string; displayName: string; externalReference: string },
+): Promise<CreateEntityActionResult> {
+  try {
+    const workspace = await requireWorkspace(slug);
+    const reviewerId = await currentReviewerId();
+    if (workspace.activePackId === null) {
+      return { ok: false, message: "This workspace has no active Scenario Pack." };
+    }
+
+    const displayName = input.displayName.trim();
+    if (displayName.length === 0) {
+      return { ok: false, message: "Enter a display name for the new entity." };
+    }
+
+    const packEntry = await findPackEntry(workspace.activePackId);
+    const validEntityTypes = new Set((packEntry?.pack.manifest.entityTypes ?? []).map((entityType) => entityType.id));
+    if (!validEntityTypes.has(input.entityType)) {
+      return { ok: false, message: "Choose a valid entity type." };
+    }
+
+    const repositories = getRepositories();
+    const current = await repositories.observations.findById(workspace.id, observationId);
+    if (current === null) return { ok: false, message: "This observation could not be found." };
+
+    const externalReference = input.externalReference.trim();
+    const createdAt = new Date().toISOString();
+    const entity = await repositories.entities.insert(workspace.id, {
+      id: randomUUID(),
+      workspaceId: workspace.id,
+      entityType: input.entityType,
+      displayName,
+      externalReference: externalReference.length > 0 ? externalReference : null,
+      aliases: [],
+      attributes: {},
+      status: "active",
+      createdAt,
+      updatedAt: createdAt,
+    });
+
+    const entityAuditEntry = await buildAuditEntry(repositories, {
+      workspaceId: workspace.id,
+      occurredAt: createdAt,
+      action: "entity-created",
+      actor: { type: "human", id: reviewerId },
+      subject: { type: "entity", id: entity.id },
+      cause: `Reviewer created "${entity.displayName}" while reviewing an observation`,
+      data: { entityType: entity.entityType, displayName: entity.displayName, externalReference: entity.externalReference },
+    });
+    await repositories.auditEntries.insert(workspace.id, entityAuditEntry);
+
+    const linkedAt = new Date().toISOString();
+    const updated: Observation = { ...current, entityId: entity.id };
+    const linkAuditEntry = await buildAuditEntry(repositories, {
+      workspaceId: workspace.id,
+      occurredAt: linkedAt,
+      action: "observation-entity-linked",
+      actor: { type: "human", id: reviewerId },
+      subject: { type: "observation", id: observationId },
+      cause: `Reviewer linked this observation to the newly created entity "${entity.displayName}"`,
+      data: { schemaKey: current.schemaKey, previousEntityId: current.entityId, entityId: entity.id },
+    });
+
+    const result = await repositories.observations.correct(workspace.id, observationId, updated, linkAuditEntry);
+    if (result === null) return { ok: false, message: "This observation could not be found." };
+    return { ok: true, observation: result, entity };
+  } catch (error) {
+    return { ok: false, message: toActionErrorMessage(error, "Could not create and link this entity.") };
+  }
+}
+
+/**
+ * Add reviewer note persists free text as an append-only Audit Entry
+ * attached to the Observation (functional requirement 3) — it does not
+ * mutate the Observation itself, so it never touches `reviewStatus` and
+ * never removes the item from the queue.
+ */
+export async function addReviewerNote(slug: string, observationId: string, note: string): Promise<NoteActionResult> {
+  const trimmed = note.trim();
+  if (trimmed.length === 0) {
+    return { ok: false, message: "Enter a note before saving." };
+  }
+  try {
+    const workspace = await requireWorkspace(slug);
+    const reviewerId = await currentReviewerId();
+    const repositories = getRepositories();
+
+    const current = await repositories.observations.findById(workspace.id, observationId);
+    if (current === null) return { ok: false, message: "This observation could not be found." };
+
+    const occurredAt = new Date().toISOString();
+    const auditEntry = await buildAuditEntry(repositories, {
+      workspaceId: workspace.id,
+      occurredAt,
+      action: "observation-note-added",
+      actor: { type: "human", id: reviewerId },
+      subject: { type: "observation", id: observationId },
+      cause: trimmed,
+      data: { schemaKey: current.schemaKey, note: trimmed },
+    });
+
+    const inserted = await repositories.auditEntries.insert(workspace.id, auditEntry);
+    return { ok: true, note: inserted };
+  } catch (error) {
+    return { ok: false, message: toActionErrorMessage(error, "Could not save this note.") };
+  }
+}
+
+/** Read-only: every reviewer note recorded against this Observation, oldest first (visible in the history panel and the Audit Explorer). */
+export async function getObservationNotes(slug: string, observationId: string): Promise<AuditEntry[]> {
+  const workspace = await requireWorkspace(slug);
+  const repositories = getRepositories();
+  const entries = await repositories.auditEntries.list(workspace.id);
+  return entries
+    .filter(
+      (entry) =>
+        entry.action === "observation-note-added" && entry.subject.type === "observation" && entry.subject.id === observationId,
+    )
+    .sort((a, b) => Date.parse(a.occurredAt) - Date.parse(b.occurredAt));
 }

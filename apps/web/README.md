@@ -84,7 +84,20 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
   snapshot + downstream Event/Case re-evaluation marking) in one transaction.
   Once an artifact's last pending/conflicting Observation is resolved, these
   also flip its `processingStatus` back from `needs-review` to `processed` (no
-  other public API recomputes this after processing finishes).
+  other public API recomputes this after processing finishes). The same file
+  adds `linkEntityAction`, `createEntityAction`, `addReviewerNote` and
+  `getObservationNotes` (OIW-408, UX_SPEC §5.6's remaining three Review Queue
+  actions): Link/Create entity set an Observation's `entityId` through the
+  same `ObservationRepository.correct` path but — unlike Accept/Correct/
+  Reject/Mark insufficient evidence — never touch `reviewStatus`, so linking
+  does not resolve the item or remove it from the queue; Create entity also
+  inserts a new workspace-scoped `Entity` (typed from the pack manifest's
+  `entityTypes`) and audits the creation and the link as two entries. Add
+  reviewer note writes a plain Audit Entry (`observation-note-added`,
+  `subject: { type: "observation", id }`) with the note text as `cause` — it
+  does not mutate the Observation, so the Audit Explorer (an unfiltered,
+  already-generic audit list) and a per-observation notes fetch both show it
+  with no other code changes needed.
 
 ## What's real vs. stub-marked
 
@@ -92,7 +105,7 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
 | --- | --- |
 | Guest session, workspace create/seed/reset | Real (`@oiw/application` + `@oiw/persistence`) |
 | Inbox | Real artifacts/sources/observation-counts; the Process action runs real extraction (OIW-301/OIW-406). Linked-entity/related-case columns are genuinely empty (no entity resolution or case engine yet), not fabricated |
-| Review queue | Real: lists Observations with `reviewStatus` pending/conflicting; evidence is highlighted from the real persisted `ArtifactSegment`; Accept/Correct/Reject/Mark insufficient evidence write real, audited, schema-validated corrections |
+| Review queue | Real: lists Observations with `reviewStatus` pending/conflicting; evidence is highlighted from the real persisted `ArtifactSegment`; Accept/Correct/Reject/Mark insufficient evidence write real, audited, schema-validated corrections. Link entity/Create entity/Add reviewer note (OIW-408) are also real: entities come from the real, workspace-scoped `EntityRepository`; a created entity and a linked Observation are both real persisted rows; notes are real, audited, append-only entries. The Entities screens themselves (see below) remain stub-marked, so an entity created here will not yet appear in `/entities` — a known cross-screen gap, not a fabricated value |
 | Technical artifact inspector | Real raw content, metadata, checksum, segments, proposed observations (value, confidence, evidence, review status, extractor), and a processing trace derived from the real audit trail. Entity-resolution candidates stay "not implemented" — real absence, not a stub value |
 | Overview | Real artifact/source counts, real (zero) case/decision counts, real audit-derived activity feed; severity breakdown, SLA table, trend line and pattern/impact cards remain stub-marked (no signal/case engine yet) |
 | Pack labels (top bar, breadcrumbs, nav, About this pack's entity/event/workflow sections) | Real, from the loaded pack's registry entry |

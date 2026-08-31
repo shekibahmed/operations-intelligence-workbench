@@ -168,7 +168,7 @@ async function findBrakeFaultRow(page: Page, base: string): Promise<{ href: stri
   throw new Error("Could not locate the informal brake-fault artifact in the inbox");
 }
 
-test("processing the brake-fault artifact populates the review queue; accepting it resolves the review and the inbox status (OIW-406 journey)", async ({
+test("processing the brake-fault artifact populates the review queue; linking an entity, adding a note and accepting it resolves the review and syncs the inbox status (OIW-406/OIW-408 journey)", async ({
   page,
 }) => {
   const base = await startGuestWorkspace(page);
@@ -189,6 +189,33 @@ test("processing the brake-fault artifact populates the review queue; accepting 
     await page.setViewportSize({ width: 800, height: 1000 });
     await page.screenshot({ path: "e2e/screenshots/review-populated-tablet.png", fullPage: true });
     await page.setViewportSize({ width: 1280, height: 900 });
+  });
+
+  await test.step("linking the observation to entity A-140 via the picker keeps it in the queue and records the link", async () => {
+    await page.getByRole("button", { name: "Link entity" }).click();
+    const dialog = page.getByRole("dialog");
+    await dialog.getByLabel("Search entities").fill("A-140");
+    await page.screenshot({ path: "e2e/screenshots/review-link-entity-dialog.png", fullPage: true });
+    await dialog.getByRole("radio", { name: "A-140 — Asset (A-140)" }).click();
+    await dialog.getByRole("button", { name: "Link" }).click();
+    await expect(dialog).toBeHidden();
+
+    await expect(page.getByText("A-140 (Asset)")).toBeVisible();
+    await expect(page.getByRole("button", { name: /previous-repair-reference/ })).toBeVisible();
+  });
+
+  await test.step("adding a reviewer note persists it as an audit entry, visible in the history panel and the audit explorer", async () => {
+    await page.getByRole("button", { name: "Add reviewer note" }).click();
+    await page.getByLabel("Reviewer note").fill("Confirmed with the site lead — logging against A-140.");
+    await page.getByRole("button", { name: "Save note" }).click();
+
+    await page.getByRole("button", { name: "View history" }).click();
+    await expect(page.getByText("Confirmed with the site lead — logging against A-140.")).toBeVisible();
+    await page.screenshot({ path: "e2e/screenshots/review-linked-and-noted-desktop.png", fullPage: true });
+
+    await page.goto(`${base}/audit`);
+    await expect(page.getByText("Confirmed with the site lead — logging against A-140.")).toBeVisible();
+    await page.goto(`${base}/review`);
   });
 
   await test.step("accepting the observation clears the queue, audits the reviewer and syncs the inbox status", async () => {
