@@ -1,0 +1,8 @@
+{
+  "schemaKey": "review-status",
+  "displayName": "Review Status",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "The narrative/content-level review state expressed by the artifact itself (e.g. no-escalation-needed, unresolved, resolved, escalated-for-approval, approved, not-accepted, negated), distinct from the persisted Observation's own reviewStatus field.",
+  "jsonSchema": { "type": "string" }
+}

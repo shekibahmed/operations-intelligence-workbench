@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "da543135d71e09596006207595ef842a8e2d19f04fa3def391c272c4063b41c3",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "checklist-status",
+      "confidence": 0.94,
+      "value": "outstanding",
+      "normalisedValue": "outstanding",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 3,
+            "column": "status"
+          },
+          "excerpt": "outstanding"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "checklist-status",
+      "confidence": 0.94,
+      "value": "outstanding",
+      "normalisedValue": "outstanding",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 5,
+            "column": "status"
+          },
+          "excerpt": "outstanding"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.85,
+      "value": "VLP-FAL-2026-0142-A1",
+      "normalisedValue": "VLP-FAL-2026-0142-A1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 1,
+            "column": "checklist_item"
+          },
+          "excerpt": "Amendment No. 1 executed (ref VLP-FAL-2026-0142-A1)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.8,
+      "value": "2026-05-01",
+      "normalisedValue": "2026-05-01",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 3,
+            "column": "notes"
+          },
+          "excerpt": "Amended due date May 1 2026 has passed - item overdue as of checklist date May 20 2026"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

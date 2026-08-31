@@ -1,0 +1,75 @@
+{
+  "artifactChecksum": "50746b1324bcdeb4d3bbae77e35c4ee0390480864ed1e6448c399621fe081f24",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 15,
+            "end": 74
+          },
+          "excerpt": "Reviewer: Tomas Reyes, Internal Reviewer, Review Operations"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.92,
+      "value": "no-escalation-needed",
+      "normalisedValue": "no-escalation-needed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 501,
+            "end": 557
+          },
+          "excerpt": "No escalation needed. Filing this as a routine sign-off."
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.88,
+      "value": "MCS-NDA-2026-0007",
+      "normalisedValue": "MCS-NDA-2026-0007",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 250,
+            "end": 272
+          },
+          "excerpt": "ref. MCS-NDA-2026-0007"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

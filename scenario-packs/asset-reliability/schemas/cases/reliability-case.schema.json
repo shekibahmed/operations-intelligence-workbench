@@ -1,0 +1,25 @@
+{
+  "caseType": "reliability-case",
+  "displayName": {
+    "singular": "Reliability Case",
+    "plural": "Reliability Cases"
+  },
+  "description": "Tracks investigation and resolution of an asset reliability issue from first report through repair confirmation or a hold-from-service decision, preserving evidence and history across every artifact that touches the asset.",
+  "workflowId": "default",
+  "defaultPriority": "normal",
+  "defaultSeverity": "medium",
+  "closureRequirements": [
+    "inspection-completed",
+    "decision-resolved"
+  ],
+  "triggeredByRules": [
+    "safety-critical-fault-severity",
+    "conflicting-status-signal",
+    "repeated-fault-escalation",
+    "missing-inspection-escalation",
+    "overdue-repair-escalation",
+    "high-downtime-escalation",
+    "safety-critical-removal-approval",
+    "structural-integrity-removal-approval"
+  ]
+}

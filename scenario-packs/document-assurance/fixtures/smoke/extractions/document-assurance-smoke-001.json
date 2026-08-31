@@ -1,0 +1,88 @@
+{
+  "artifactChecksum": "6136f47b74580596f6a7c2d44e01287ace8b304163245c832d8c9d408b854e0b",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.97,
+      "value": "MCS-NDA-2026-0007",
+      "normalisedValue": "MCS-NDA-2026-0007",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference No. MCS-NDA-2026-0007"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "effective-date",
+      "confidence": 0.95,
+      "value": "2026-01-10",
+      "normalisedValue": "2026-01-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "entered into as of\nJanuary 10, 2026"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.85,
+      "value": "confidentiality",
+      "normalisedValue": "confidentiality",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "2. OBLIGATION OF CONFIDENTIALITY"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.9,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "Name: Tomas Reyes"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

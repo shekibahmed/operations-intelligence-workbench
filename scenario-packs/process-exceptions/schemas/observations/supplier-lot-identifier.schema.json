@@ -1,0 +1,8 @@
+{
+  "schemaKey": "supplier-lot-identifier",
+  "displayName": "Supplier Lot Identifier",
+  "entityType": "supplier-lot",
+  "valueType": "string",
+  "description": "The supplier lot code referenced by the source, e.g. KM-LOT-448.",
+  "jsonSchema": { "type": "string" }
+}

@@ -1,0 +1,78 @@
+{
+  "id": "leadership",
+  "title": "Process Exceptions \u2014 Leadership Overview",
+  "widgets": [
+    {
+      "id": "open-exceptions",
+      "type": "stat-card",
+      "title": "Open Exceptions",
+      "parameters": {
+        "metricId": "open-exceptions"
+      }
+    },
+    {
+      "id": "critical-signals",
+      "type": "stat-card",
+      "title": "Critical Signals",
+      "parameters": {
+        "metricId": "critical-signals-open"
+      }
+    },
+    {
+      "id": "pending-decisions-card",
+      "type": "stat-card",
+      "title": "Pending Decisions",
+      "parameters": {
+        "metricId": "pending-decisions"
+      }
+    },
+    {
+      "id": "severity-mix",
+      "type": "severity-breakdown",
+      "title": "Exceptions by Severity",
+      "parameters": {
+        "metricId": "exceptions-by-severity"
+      }
+    },
+    {
+      "id": "sla-risk-table",
+      "type": "sla-table",
+      "title": "Cases at SLA Risk",
+      "parameters": {
+        "metricId": "cases-at-sla-risk"
+      }
+    },
+    {
+      "id": "deviation-trend",
+      "type": "trend-line",
+      "title": "Weekly Deviation Trend",
+      "parameters": {
+        "metricId": "weekly-deviation-trend"
+      }
+    },
+    {
+      "id": "pending-approvals-card",
+      "type": "pending-approvals",
+      "title": "Decisions Awaiting Approval",
+      "parameters": {
+        "metricId": "pending-decisions"
+      }
+    },
+    {
+      "id": "recent-activity",
+      "type": "activity-feed",
+      "title": "Recent Case Activity",
+      "parameters": {
+        "metricId": "recent-case-activity"
+      }
+    },
+    {
+      "id": "exposure-outlook",
+      "type": "text-impact",
+      "title": "Illustrative Exposure Outlook",
+      "parameters": {
+        "metricId": "supplier-lot-exposure-outlook"
+      }
+    }
+  ]
+}

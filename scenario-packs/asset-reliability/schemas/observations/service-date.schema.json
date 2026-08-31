@@ -1,0 +1,11 @@
+{
+  "schemaKey": "service-date",
+  "displayName": "Service Date",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The date the maintenance, repair or service action occurred or is scheduled.",
+  "jsonSchema": {
+    "type": "string",
+    "format": "date"
+  }
+}

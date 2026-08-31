@@ -1,0 +1,479 @@
+[
+  {
+    "fixtureId": "document-assurance-demo-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-02-01"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "quarterly-compliance-reporting"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-04-30"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "insurance-maintenance"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-03-01"
+      },
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 2000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "contract-executed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Governing Project Falcon MSA; anchors the case. Conflict not yet visible without demo-002."
+  },
+  {
+    "fixtureId": "document-assurance-demo-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "POL-DH-009"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-01-01"
+      },
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 5000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "liability-cap"
+      }
+    ],
+    "expectedEntities": [
+      "POL-DH-009"
+    ],
+    "expectedEventType": "policy-published",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Supplies one half of the conflicting-provisions signal (the other half is MSA Clause 8.2 from demo-001)."
+  },
+  {
+    "fixtureId": "document-assurance-demo-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      },
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "outstanding"
+      },
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "outstanding"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "checklist-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Two items left open: insurance certificate (not yet due) and the liability cross-check."
+  },
+  {
+    "fixtureId": "document-assurance-demo-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "insufficient-evidence",
+        "value": null
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "unresolved"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "clarification-requested",
+    "expectedSignals": [
+      "ambiguous-response-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Genuinely non-committal reply; does not resolve cleanly, unlike smoke-005."
+  },
+  {
+    "fixtureId": "document-assurance-demo-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporting-period",
+        "status": "extracted",
+        "value": "2026-Q1"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
+        "schemaKey": "required-evidence",
+        "status": "extracted",
+        "value": "missing"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "insurance-maintenance"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "compliance-report-filed",
+    "expectedSignals": [
+      "missing-evidence-severity"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "First quarterly report, insurance certificate flagged missing (documentation gap, not yet an exception request)."
+  },
+  {
+    "fixtureId": "document-assurance-demo-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      },
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 2000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 5000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "conflicting-provision",
+        "status": "extracted",
+        "value": {
+          "provisionA": "MSA Clause 8.2",
+          "provisionB": "POL-DH-009 Section 4.1",
+          "claimType": "security-incident-liability-cap"
+        }
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "unresolved"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142",
+      "POL-DH-009"
+    ],
+    "expectedEventType": "conflicting-provision-identified",
+    "expectedSignals": [
+      "conflicting-provisions-signal"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Canonical trigger artifact for the conflicting-provisions signal; explicitly flagged unresolved pending outreach."
+  },
+  {
+    "fixtureId": "document-assurance-demo-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 2000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "financial-threshold",
+        "status": "extracted",
+        "value": {
+          "amount": 5000000,
+          "currency": "USD"
+        }
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "unresolved"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Priya Deshmukh"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "clarification-requested",
+    "expectedSignals": [
+      "conflicting-provisions-signal",
+      "ambiguous-response-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "\"The contract governs\" does not confirm the specific figure; Nadia's direct follow-up goes unanswered in this thread."
+  },
+  {
+    "fixtureId": "document-assurance-demo-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142-A1"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-05-12"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-05-01"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "insurance-maintenance"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142-A1"
+    ],
+    "expectedEventType": "contract-amended",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Legitimate amendment moving the insurance due date; Clause 8.2/12.1 explicitly untouched. Must not itself trigger a conflicting-dates signal."
+  },
+  {
+    "fixtureId": "document-assurance-demo-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "outstanding"
+      },
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "outstanding"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142-A1"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-05-01"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "checklist-filed",
+    "expectedSignals": [
+      "missing-evidence-severity"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Insurance item now overdue against the amended date; liability cross-check still outstanding."
+  },
+  {
+    "fixtureId": "document-assurance-demo-010",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporting-period",
+        "status": "extracted",
+        "value": "2026-Q2"
+      },
+      {
+        "schemaKey": "required-evidence",
+        "status": "extracted",
+        "value": "missing"
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "unresolved"
+      },
+      {
+        "schemaKey": "exception",
+        "status": "extracted",
+        "value": "recommended"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "compliance-report-filed",
+    "expectedSignals": [
+      "missing-evidence-severity",
+      "missed-deadline-escalation",
+      "conflicting-provisions-signal"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Second report; recommends an accept-exception pathway for the liability cap only, explicitly excluding the insurance item. Origin of the demo-011 Decision, not itself a Decision."
+  },
+  {
+    "fixtureId": "document-assurance-demo-011",
+    "expectedObservations": [
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Nadia Okonkwo"
+      },
+      {
+        "schemaKey": "exception",
+        "status": "extracted",
+        "value": "proposed"
+      },
+      {
+        "schemaKey": "conflicting-provision",
+        "status": "extracted",
+        "value": {
+          "provisionA": "MSA Clause 8.2",
+          "provisionB": "POL-DH-009 Section 4.1",
+          "claimType": "security-incident-liability-cap"
+        }
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "escalated-for-approval"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142",
+      "POL-DH-009"
+    ],
+    "expectedEventType": "exception-proposed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": {
+      "ruleId": "accept-exception-approval",
+      "approvalRequired": true,
+      "riskLevel": "high"
+    },
+    "notes": "Formal exception proposal with three explicit conditions; drives the pack's primary Decision."
+  },
+  {
+    "fixtureId": "document-assurance-demo-012",
+    "expectedObservations": [
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Marcus Ibori"
+      },
+      {
+        "schemaKey": "exception",
+        "status": "extracted",
+        "value": "approved"
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "approved"
+      }
+    ],
+    "expectedEntities": [
+      "VLP-FAL-2026-0142"
+    ],
+    "expectedEventType": "exception-approved",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": {
+      "ruleId": "accept-exception-approval",
+      "approvalRequired": true,
+      "riskLevel": "high"
+    },
+    "notes": "Marcus Ibori approves on the stated conditions; Project Harbor aside correctly excluded from the Decision record."
+  }
+]

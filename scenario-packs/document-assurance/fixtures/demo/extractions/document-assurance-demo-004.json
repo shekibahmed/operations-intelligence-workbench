@@ -1,0 +1,76 @@
+{
+  "artifactChecksum": "5a7a1763af8b2ea2b688e96b3f719aa250b7855c92df5596cc107c0992ffa301",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.85,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 280,
+            "end": 357
+          },
+          "excerpt": "Clause 6.2\nof the MSA has the initial insurance certificate due March 1, 2026"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "due-date",
+      "confidence": 0.3,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 952,
+            "end": 1030
+          },
+          "excerpt": "might land right around the\n1st or could slip a little into the following week"
+        }
+      ],
+      "reason": "Priya's reply gives no locked date, only a range/uncertainty (\"right around the 1st or could slip a little\"); the exact renewal date is explicitly not extractable from this artifact."
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.85,
+      "value": "unresolved",
+      "normalisedValue": "unresolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1084,
+            "end": 1126
+          },
+          "excerpt": "I don't have a locked date to give\nyou yet"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "entityTypes": {
+    "process": { "singular": "Process", "plural": "Processes" },
+    "line": { "singular": "Line", "plural": "Lines" },
+    "batch": { "singular": "Batch", "plural": "Batches" },
+    "product": { "singular": "Product", "plural": "Products" },
+    "shift": { "singular": "Shift", "plural": "Shifts" },
+    "supplier": { "singular": "Supplier", "plural": "Suppliers" },
+    "supplier-lot": { "singular": "Supplier Lot", "plural": "Supplier Lots" },
+    "person": { "singular": "Person", "plural": "People" }
+  },
+  "eventTypes": {
+    "shift-report-filed": "Shift Report Filed",
+    "production-summary-filed": "Production Summary Filed",
+    "routine-handover-sent": "Routine Handover Sent",
+    "routine-calibration-performed": "Routine Calibration Performed",
+    "qc-check-passed": "QC Check Passed",
+    "qc-deviation-confirmed": "QC Deviation Confirmed",
+    "qc-inspection-incomplete": "QC Inspection Incomplete",
+    "process-deviation-observed": "Process Deviation Observed",
+    "inventory-exception-logged": "Inventory Exception Logged",
+    "held-output-aging-flagged": "Held Output Aging Flagged",
+    "root-cause-investigation-requested": "Root-Cause Investigation Requested",
+    "root-cause-closed": "Root-Cause Closed",
+    "formal-hold-requested": "Formal Hold Requested",
+    "analyzer-reading-logged": "Analyzer Reading Logged"
+  },
+  "caseTypes": {
+    "exception-case": { "singular": "Exception Case", "plural": "Exception Cases" }
+  },
+  "workflowStates": {
+    "open": "Open",
+    "investigating": "Investigating",
+    "awaiting-disposition-approval": "Awaiting Disposition Approval",
+    "closed": "Closed"
+  },
+  "severity": {
+    "info": "Info",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "priority": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "signalTypes": {
+    "threshold-breach": "Threshold Breach",
+    "repeated-deviation": "Repeated Deviation",
+    "missing-evidence": "Missing Evidence",
+    "unexplained-yield-loss": "Unexplained Yield Loss",
+    "supplier-linked-pattern": "Supplier-Linked Pattern",
+    "escalating-backlog": "Escalating Backlog",
+    "data-integrity-flag": "Data Integrity Flag"
+  },
+  "actionTypes": {
+    "root-cause-investigation": "Root-Cause Investigation"
+  },
+  "decisionTypes": {
+    "hold-affected-output": "Hold Affected Output"
+  },
+  "approvalPolicies": {
+    "supervisor-qc-hold-approval": "Supervisor / QC Hold Approval"
+  },
+  "lenses": {
+    "leadership": "Leadership",
+    "operations": "Operations",
+    "technical": "Technical"
+  },
+  "reviewReasons": {
+    "missing-batch-identifier": "Missing Batch Identifier",
+    "incomplete-inspection-review": "Incomplete Inspection Review",
+    "line-disambiguation": "Line Disambiguation Needed",
+    "date-inconsistency-review": "Date Inconsistency Review"
+  }
+}

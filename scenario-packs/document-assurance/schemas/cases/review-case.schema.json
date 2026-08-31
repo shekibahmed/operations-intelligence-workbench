@@ -1,0 +1,22 @@
+{
+  "caseType": "review-case",
+  "displayName": { "singular": "Review Case", "plural": "Review Cases" },
+  "description": "Tracks a document/obligation review thread from first tracked obligation or discrepancy through investigation to a recorded exception decision or routine closure, preserving evidence and correspondence history across every artifact that touches the engagement, e.g. the Project Falcon liability-cap conflict.",
+  "workflowId": "default",
+  "defaultPriority": "normal",
+  "defaultSeverity": "medium",
+  "closureRequirements": [
+    "decision-resolved",
+    "evidence-present"
+  ],
+  "triggeredByRules": [
+    "conflicting-provisions-signal",
+    "missing-evidence-severity",
+    "missing-identifier-review",
+    "ambiguous-reference-review",
+    "date-conflict-escalation",
+    "missed-deadline-escalation",
+    "ambiguous-response-escalation",
+    "accept-exception-approval"
+  ]
+}

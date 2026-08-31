@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "570f07332cd0dfdfce861a013fab56a6d073746310a6c02c45495b22bfd80c9e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.96,
+      "value": "A-501",
+      "normalisedValue": "A-501",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 146,
+            "end": 187
+          },
+          "excerpt": "A-501 backup generator - flagging as risk"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.95,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "Priya Nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 6,
+            "end": 57
+          },
+          "excerpt": "Priya Nandakumar <p.nandakumar@northgatedc.example>"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-05-04",
+      "normalisedValue": "2026-05-04",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 212,
+            "end": 228
+          },
+          "excerpt": "Date: 2026-05-04"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.9,
+      "value": "prioritize radiator repair and cooling pressure test before facility audit",
+      "normalisedValue": "prioritize radiator repair and cooling pressure test before facility audit",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1050,
+            "end": 1147
+          },
+          "excerpt": "Requesting this get prioritized for the radiator repair and a proper\ncooling system pressure test"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

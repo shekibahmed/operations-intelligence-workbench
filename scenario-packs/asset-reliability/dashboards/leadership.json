@@ -1,0 +1,80 @@
+{
+  "id": "leadership",
+  "title": "Asset Reliability \u2014 Leadership Overview",
+  "widgets": [
+    {
+      "id": "critical-signals",
+      "type": "stat-card",
+      "title": "Critical Signals",
+      "parameters": {
+        "metricId": "critical-signal-count"
+      }
+    },
+    {
+      "id": "open-cases",
+      "type": "stat-card",
+      "title": "Open Reliability Cases",
+      "parameters": {
+        "metricId": "open-reliability-cases"
+      }
+    },
+    {
+      "id": "pending-decisions",
+      "type": "stat-card",
+      "title": "Pending Decisions",
+      "parameters": {
+        "metricId": "pending-decision-count"
+      }
+    },
+    {
+      "id": "severity-mix",
+      "type": "severity-breakdown",
+      "title": "Cases by Severity",
+      "parameters": {
+        "metricId": "cases-by-severity"
+      }
+    },
+    {
+      "id": "repeat-fault-trend",
+      "type": "trend-line",
+      "title": "Repeat Fault Trend (Weekly)",
+      "parameters": {
+        "metricId": "repeat-fault-trend",
+        "periods": 26
+      }
+    },
+    {
+      "id": "overdue-actions-table",
+      "type": "sla-table",
+      "title": "Overdue and At-Risk Actions",
+      "parameters": {
+        "metricId": "overdue-actions"
+      }
+    },
+    {
+      "id": "pending-approvals-card",
+      "type": "pending-approvals",
+      "title": "Assets Awaiting Approval",
+      "parameters": {
+        "metricId": "assets-awaiting-approval"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Fleet Activity",
+      "parameters": {
+        "metricId": "recent-reliability-activity"
+      }
+    },
+    {
+      "id": "downtime-exposure",
+      "type": "text-impact",
+      "title": "Estimated Downtime Exposure",
+      "parameters": {
+        "metricId": "estimated-downtime-exposure",
+        "caveat": "Hypothetical estimate, not an observed measurement."
+      }
+    }
+  ]
+}

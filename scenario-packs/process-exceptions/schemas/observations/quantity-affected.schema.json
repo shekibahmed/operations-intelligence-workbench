@@ -1,0 +1,8 @@
+{
+  "schemaKey": "quantity-affected",
+  "displayName": "Quantity Affected",
+  "entityType": "batch",
+  "valueType": "number",
+  "description": "The number of units affected by a confirmed deviation or held pending disposition.",
+  "jsonSchema": { "type": "number" }
+}

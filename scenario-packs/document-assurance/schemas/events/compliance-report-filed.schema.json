@@ -1,0 +1,6 @@
+{
+  "id": "compliance-report-filed",
+  "displayName": "Compliance Report Filed",
+  "description": "A periodic compliance report was filed for a vendor or engagement, with zero or more open findings.",
+  "requiredObservations": ["reporting-period"]
+}

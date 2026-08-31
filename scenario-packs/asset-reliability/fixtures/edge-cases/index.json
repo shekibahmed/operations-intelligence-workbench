@@ -1,0 +1,136 @@
+[
+  {
+    "id": "asset-reliability-edge-001",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-a-receiving"
+    },
+    "sha256": "e93d6038678d73f1d559f0a3e8c2c6c54d6e2a7d0ea3880b7beaff0ef976b6fb",
+    "expectedExtraction": "extractions/asset-reliability-edge-001.json"
+  },
+  {
+    "id": "asset-reliability-edge-002",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-edge-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import",
+      "sourceFormat": "conflicting-dates"
+    },
+    "sha256": "213e11b382eb7248caf2b7a4fb5cca85a18a3e51493aeb63e927437b3014e3e0",
+    "expectedExtraction": "extractions/asset-reliability-edge-002.json"
+  },
+  {
+    "id": "asset-reliability-edge-003",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-003.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-b-highbay"
+    },
+    "sha256": "b20c1e4035a0ec4c4c2fbd92276eb4cbf9e98f147c42a0e2f69263e071e9c96f",
+    "expectedExtraction": "extractions/asset-reliability-edge-003.json"
+  },
+  {
+    "id": "asset-reliability-edge-004",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-edge-004.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "1edea128a47bc938526845b22d549400fc41b465167f59a814b1d1619cb650bb",
+    "expectedExtraction": "extractions/asset-reliability-edge-004.json"
+  },
+  {
+    "id": "asset-reliability-edge-005",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-c-shipping"
+    },
+    "sha256": "a69ecf9d1393668b0a9f31234ffd09fde9d1edd247d4334ab867508f191b7fee",
+    "expectedExtraction": "extractions/asset-reliability-edge-005.json"
+  },
+  {
+    "id": "asset-reliability-edge-006",
+    "artifactType": "status-update-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-c-shipping"
+    },
+    "sha256": "fe9fae4aec1eb8b33f00028433ec9b6a4c9e67575809b9fc87a5afa141eb7dbb",
+    "expectedExtraction": "extractions/asset-reliability-edge-006.json"
+  },
+  {
+    "id": "asset-reliability-edge-007",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-edge-007.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "061dffe0940d74e3a95e07d54c867f8b61745f0563f10b4413076bcea4ca5930",
+    "expectedExtraction": "extractions/asset-reliability-edge-007.json"
+  },
+  {
+    "id": "asset-reliability-edge-008",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-008.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-b-highbay",
+      "contentLanguage": "es"
+    },
+    "sha256": "8b4aeb2978c9e9e4ea66d1018b849dc9ae87b22653a6bb4976995a8a7103f690",
+    "expectedExtraction": "extractions/asset-reliability-edge-008.json"
+  },
+  {
+    "id": "asset-reliability-edge-009",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-edge-009.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer",
+      "documentQuality": "degraded-ocr"
+    },
+    "sha256": "180e54e7b164d268b787f152538abdd130262ac32957a8114f81d0b043e7a22e",
+    "expectedExtraction": "extractions/asset-reliability-edge-009.json"
+  },
+  {
+    "id": "asset-reliability-edge-010",
+    "artifactType": "status-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-edge-010.txt",
+    "sourceMetadata": {
+      "narrativeSource": "compiled shift-log note",
+      "channel": "shift-log"
+    },
+    "sha256": "8d10d9bdc3ac93c3c1c33b5e575e206ab079386646ab935ff697b4b51b46ffa2",
+    "expectedExtraction": "extractions/asset-reliability-edge-010.json"
+  },
+  {
+    "id": "asset-reliability-edge-011",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-edge-011.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import",
+      "sourceFormat": "near-duplicate"
+    },
+    "sha256": "afe9e016619786a9c8ef494005609f9a035c5075c4beb919ecba077805740a68",
+    "expectedExtraction": "extractions/asset-reliability-edge-011.json"
+  }
+]

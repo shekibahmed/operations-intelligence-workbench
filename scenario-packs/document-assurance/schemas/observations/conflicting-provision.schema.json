@@ -1,0 +1,17 @@
+{
+  "schemaKey": "conflicting-provision",
+  "displayName": "Conflicting Provision",
+  "entityType": "obligation",
+  "valueType": "object",
+  "description": "A named discrepancy between two provisions (e.g. a contract clause and an internal policy section) stating incompatible terms for the same kind of claim.",
+  "jsonSchema": {
+    "type": "object",
+    "properties": {
+      "provisionA": { "type": "string" },
+      "provisionB": { "type": "string" },
+      "claimType": { "type": "string" }
+    },
+    "required": ["provisionA", "provisionB", "claimType"],
+    "additionalProperties": false
+  }
+}

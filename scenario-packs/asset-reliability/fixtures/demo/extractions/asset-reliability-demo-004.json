@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "a47023c48901deee5d39e2013dfc58f4dea0584420891a8c0337f92e4c319473",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 119,
+            "end": 150
+          },
+          "excerpt": "bringing A-142 up the yard ramp"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.88,
+      "value": "brakes",
+      "normalisedValue": "brakes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 167,
+            "end": 190
+          },
+          "excerpt": "the brakes did not hold"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.92,
+      "value": "brakes did not hold on an incline under load, unit rolled backward",
+      "normalisedValue": "brakes did not hold on an incline under load, unit rolled backward",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 167,
+            "end": 219
+          },
+          "excerpt": "the brakes did not hold, it started rolling backward"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "severity-indicator",
+      "confidence": 0.85,
+      "value": "safety-critical",
+      "normalisedValue": "safety-critical",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 226,
+            "end": 267
+          },
+          "excerpt": "nearly rolled into the rack at the bottom"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.95,
+      "value": "Owen Vasquez",
+      "normalisedValue": "Owen Vasquez",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 49,
+            "end": 79
+          },
+          "excerpt": "Owen Vasquez, 2026-06-02 14:37"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-06-02",
+      "normalisedValue": "2026-06-02",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 63,
+            "end": 79
+          },
+          "excerpt": "2026-06-02 14:37"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

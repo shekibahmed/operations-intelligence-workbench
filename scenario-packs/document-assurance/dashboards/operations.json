@@ -1,0 +1,38 @@
+{
+  "id": "operations",
+  "title": "Document Assurance \u2014 Operations View",
+  "widgets": [
+    {
+      "id": "open-cases-list",
+      "type": "list-card",
+      "title": "Open Review Cases",
+      "parameters": {
+        "metricId": "open-review-cases"
+      }
+    },
+    {
+      "id": "missing-evidence-stat",
+      "type": "stat-card",
+      "title": "Missing Supporting Evidence",
+      "parameters": {
+        "metricId": "missing-evidence-count"
+      }
+    },
+    {
+      "id": "outstanding-obligations-table",
+      "type": "sla-table",
+      "title": "Outstanding and At-Risk Obligations",
+      "parameters": {
+        "metricId": "outstanding-obligations"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Activity",
+      "parameters": {
+        "metricId": "recent-review-activity"
+      }
+    }
+  ]
+}

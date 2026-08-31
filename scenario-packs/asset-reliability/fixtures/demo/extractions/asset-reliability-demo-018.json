@@ -1,0 +1,120 @@
+{
+  "artifactChecksum": "c4c477d8506175dca8e9c978f30b6d54f180868fdf7bc29ff04374b88bb76109",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-501",
+      "normalisedValue": "A-501",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-501 (Sterling GEN-150 diesel backup generator)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "confidence": 0.96,
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-04-29",
+      "normalisedValue": "2026-04-29",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-04-29"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.9,
+      "value": "coolant low again, radiator fins bent and blocked; contradicts prior resolved status",
+      "normalisedValue": "coolant low again, radiator fins bent and blocked; contradicts prior resolved status",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "several fins along the lower left section are bent and partially blocked"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.87,
+      "value": "not-operational",
+      "normalisedValue": "conflicting",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "This finding directly contradicts the prior repair note that logged this\nissue as resolved and returned the unit to full operational status"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.87,
+      "value": "radiator fin cleaning/straightening and cooling-system pressure test before next backup-power test",
+      "normalisedValue": "radiator fin cleaning/straightening and cooling-system pressure test before next backup-power test",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "Recommend radiator fin cleaning and\nstraightening, and a pressure test of the cooling system"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

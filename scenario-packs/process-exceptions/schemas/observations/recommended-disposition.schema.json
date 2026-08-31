@@ -1,0 +1,8 @@
+{
+  "schemaKey": "recommended-disposition",
+  "displayName": "Recommended Disposition",
+  "entityType": "batch",
+  "valueType": "string",
+  "description": "A provisional/recommended disposition attached to an incomplete or unconfirmed inspection, distinct from a confirmed disposition-status.",
+  "jsonSchema": { "type": "string" }
+}

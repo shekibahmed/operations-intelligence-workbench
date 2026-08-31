@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "213e11b382eb7248caf2b7a4fb5cca85a18a3e51493aeb63e927437b3014e3e0",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.98,
+      "value": "A-118",
+      "normalisedValue": "A-118",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-118"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "confidence": 0.97,
+      "value": "NG-WO-10499",
+      "normalisedValue": "NG-WO-10499",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "NG-WO-10499"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-01-30",
+      "normalisedValue": "2026-01-30",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date_reported"
+          },
+          "excerpt": "2026-01-30"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "confidence": 0.95,
+      "value": "2026-01-28",
+      "normalisedValue": "2026-01-28",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "service_date"
+          },
+          "excerpt": "2026-01-28"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.95,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Completed"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

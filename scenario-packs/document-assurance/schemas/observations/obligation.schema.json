@@ -1,0 +1,8 @@
+{
+  "schemaKey": "obligation",
+  "displayName": "Obligation",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "The obligation described by the source document (e.g. quarterly-compliance-reporting, insurance-maintenance, liability-cap, confidentiality, delivery-deadline).",
+  "jsonSchema": { "type": "string" }
+}

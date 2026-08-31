@@ -1,0 +1,8 @@
+{
+  "schemaKey": "disposition-status",
+  "displayName": "Disposition Status",
+  "entityType": "batch",
+  "valueType": "string",
+  "description": "The confirmed disposition of a batch: released, hold, or reject.",
+  "jsonSchema": { "type": "string", "enum": ["released", "hold", "reject"] }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "default",
+  "version": "1.0.0",
+  "initialState": "open",
+  "states": [
+    { "id": "open", "label": "Open", "terminal": false },
+    { "id": "investigating", "label": "Investigating", "terminal": false },
+    { "id": "awaiting-disposition-approval", "label": "Awaiting Disposition Approval", "terminal": false },
+    { "id": "closed", "label": "Closed", "terminal": true }
+  ],
+  "transitions": [
+    { "id": "begin-investigation", "from": "open", "to": "investigating" },
+    { "id": "propose-hold-disposition", "from": "investigating", "to": "awaiting-disposition-approval" },
+    {
+      "id": "close-case",
+      "from": "awaiting-disposition-approval",
+      "to": "closed",
+      "requiresApprovalPolicyId": "supervisor-qc-hold-approval"
+    },
+    { "id": "resolve-minor-exception", "from": "open", "to": "closed" },
+    { "id": "resolve-after-investigation", "from": "investigating", "to": "closed" }
+  ],
+  "closureRequirements": [
+    {
+      "id": "disposition-recorded",
+      "type": "decision-approved",
+      "definitionId": "hold-affected-output",
+      "description": "A hold-affected-output disposition decision must be approved before a case involving held output can close."
+    },
+    {
+      "id": "investigation-evidence-present",
+      "type": "evidence-present",
+      "definitionId": "root-cause-investigation",
+      "description": "Evidence supporting the root-cause investigation must be present before this case can close."
+    }
+  ]
+}

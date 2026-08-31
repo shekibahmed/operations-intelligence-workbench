@@ -1,0 +1,194 @@
+{
+  "artifactChecksum": "fb5853138c35919efe73732eb380a0700bf9529057bc6368eb80c62dad8dfbf2",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.99,
+      "value": "B-2211",
+      "normalisedValue": "B-2211",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "batch_id"
+          },
+          "excerpt": "B-2211"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.97,
+      "value": "Line 2",
+      "normalisedValue": "Line 2",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "line"
+          },
+          "excerpt": "Line 2"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "confidence": 0.97,
+      "value": "filling",
+      "normalisedValue": "filling",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "process_stage"
+          },
+          "excerpt": "filling"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.96,
+      "value": "DR-LOT-220",
+      "normalisedValue": "DR-LOT-220",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "supplier_lot"
+          },
+          "excerpt": "DR-LOT-220"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "confidence": 0.98,
+      "value": 500,
+      "normalisedValue": 500,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "expected_value"
+          },
+          "excerpt": "500"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "confidence": 0.98,
+      "value": 497,
+      "normalisedValue": 497,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "observed_value"
+          },
+          "excerpt": "497"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "confidence": 0.98,
+      "value": -0.6,
+      "normalisedValue": -0.6,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "deviation_pct"
+          },
+          "excerpt": "-0.6"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.9,
+      "value": "minor filler dosing drift - adjusted 2026-02-16",
+      "normalisedValue": "minor filler dosing drift - adjusted 2026-02-16",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "reported_cause"
+          },
+          "excerpt": "minor filler dosing drift - adjusted 2026-02-16"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "confidence": 0.98,
+      "value": "released",
+      "normalisedValue": "released",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "disposition"
+          },
+          "excerpt": "released"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.96,
+      "value": "2026-02-17",
+      "normalisedValue": "2026-02-17",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date"
+          },
+          "excerpt": "2026-02-17"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

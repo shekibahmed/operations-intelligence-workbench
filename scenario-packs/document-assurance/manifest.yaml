@@ -1,0 +1,119 @@
+schemaVersion: "1.0"
+id: document-assurance
+version: "1.0.0"
+name: "Document Assurance"
+description: >
+  Converts contracts, policies, checklists, compliance reports and
+  correspondence into evidence-backed obligation tracking, surfacing
+  conflicting provisions, missing evidence and missed deadlines, and
+  gating any exception to a tracked obligation behind an explicit human
+  approval.
+labels: labels.json
+entityTypes:
+  - id: document
+    displayName: "Document"
+    schema: schemas/entities/document.schema.json
+  - id: jurisdiction
+    displayName: "Jurisdiction"
+    schema: schemas/entities/jurisdiction.schema.json
+  - id: obligation
+    displayName: "Obligation"
+    schema: schemas/entities/obligation.schema.json
+  - id: party
+    displayName: "Party"
+    schema: schemas/entities/party.schema.json
+  - id: party-contact
+    displayName: "Party Contact"
+    schema: schemas/entities/party-contact.schema.json
+  - id: project
+    displayName: "Project"
+    schema: schemas/entities/project.schema.json
+  - id: review-owner
+    displayName: "Review Owner"
+    schema: schemas/entities/review-owner.schema.json
+eventTypes:
+  - id: checklist-filed
+    displayName: "Checklist Filed"
+    schema: schemas/events/checklist-filed.schema.json
+  - id: clarification-requested
+    displayName: "Clarification Requested"
+    schema: schemas/events/clarification-requested.schema.json
+  - id: compliance-report-filed
+    displayName: "Compliance Report Filed"
+    schema: schemas/events/compliance-report-filed.schema.json
+  - id: conflicting-provision-identified
+    displayName: "Conflicting Provision Identified"
+    schema: schemas/events/conflicting-provision-identified.schema.json
+  - id: contract-amended
+    displayName: "Contract Amended"
+    schema: schemas/events/contract-amended.schema.json
+  - id: contract-executed
+    displayName: "Contract Executed"
+    schema: schemas/events/contract-executed.schema.json
+  - id: correspondence-logged
+    displayName: "Correspondence Logged"
+    schema: schemas/events/correspondence-logged.schema.json
+  - id: cross-engagement-flag-corrected
+    displayName: "Cross-Engagement Flag Corrected"
+    schema: schemas/events/cross-engagement-flag-corrected.schema.json
+  - id: date-conflict-detected
+    displayName: "Date Conflict Detected"
+    schema: schemas/events/date-conflict-detected.schema.json
+  - id: exception-approved
+    displayName: "Exception Approved"
+    schema: schemas/events/exception-approved.schema.json
+  - id: exception-proposed
+    displayName: "Exception Proposed"
+    schema: schemas/events/exception-proposed.schema.json
+  - id: obligation-status-confirmed
+    displayName: "Obligation Status Confirmed"
+    schema: schemas/events/obligation-status-confirmed.schema.json
+  - id: policy-published
+    displayName: "Policy Published"
+    schema: schemas/events/policy-published.schema.json
+  - id: reviewer-signoff-recorded
+    displayName: "Reviewer Sign-off Recorded"
+    schema: schemas/events/reviewer-signoff-recorded.schema.json
+observationSchemas:
+  - schemas/observations/checklist-status.schema.json
+  - schemas/observations/conflicting-provision.schema.json
+  - schemas/observations/document-reference.schema.json
+  - schemas/observations/due-date.schema.json
+  - schemas/observations/effective-date.schema.json
+  - schemas/observations/exception.schema.json
+  - schemas/observations/financial-threshold.schema.json
+  - schemas/observations/obligation.schema.json
+  - schemas/observations/reporting-period.schema.json
+  - schemas/observations/required-evidence.schema.json
+  - schemas/observations/responsible-party.schema.json
+  - schemas/observations/review-status.schema.json
+caseDefinitions:
+  - schemas/cases/review-case.schema.json
+workflows:
+  default: workflows/default.workflow.json
+rules:
+  - rules/severity.rules.json
+  - rules/escalation.rules.json
+  - rules/approval.rules.json
+metrics:
+  - dashboards/metrics.json
+dashboards:
+  leadership: dashboards/leadership.json
+  operations: dashboards/operations.json
+  technical: dashboards/technical.json
+fixtures:
+  smoke: fixtures/smoke
+  demo: fixtures/demo
+  edgeCases: fixtures/edge-cases
+evaluationSets:
+  - evaluations/smoke.gold.json
+  - evaluations/demo.gold.json
+  - evaluations/edge-cases.gold.json
+# NOTE(OIW-004b): contracts v1.1 ScenarioPackManifestSchema requires a `tours`
+# field (tours.leadership mandatory). Tours are an explicit OIW-004b non-goal
+# (deferred to the tour framework task), so this field is intentionally
+# omitted; manifest.yaml will fail strict schema validation on this field
+# until contracts/OIW-103 make `tours` optional or a follow-up task adds
+# tour content. See docs/agent-runs/OIW-004b.md.
+defaultLens: leadership
+defaultFixtureSet: demo

@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "9e45437e4fbf0d17c9e93697c056572e7679417fe8fc347f9cc5d4620b7017db",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-22",
+      "normalisedValue": "2026-01-22",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 88,
+            "end": 98
+          },
+          "excerpt": "2026-01-22"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "value": "Line 2 (Filling)",
+      "normalisedValue": "line-2",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 48,
+            "end": 64
+          },
+          "excerpt": "Line 2 (Filling)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2109 and B-2110",
+      "normalisedValue": "B-2109,B-2110",
+      "confidence": 0.92,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 174,
+            "end": 191
+          },
+          "excerpt": "B-2109 and B-2110"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "value": "released to the warehouse after checkweigher sign-off",
+      "normalisedValue": "released",
+      "confidence": 0.93,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 193,
+            "end": 251
+          },
+          "excerpt": "both released to the warehouse after checkweigher sign-off"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

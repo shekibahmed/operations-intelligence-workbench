@@ -1,0 +1,10 @@
+{
+  "schemaKey": "related-asset-reference",
+  "displayName": "Related Asset Reference",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "A cross-reference to a sibling or related asset mentioned in the source (e.g. shared install batch).",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

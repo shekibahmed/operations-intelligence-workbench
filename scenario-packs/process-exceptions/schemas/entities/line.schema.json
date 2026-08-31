@@ -1,0 +1,11 @@
+{
+  "id": "line",
+  "displayName": "Line",
+  "description": "A physical production line at Rivermill Processing Plant, e.g. Line 1 (Mixing), Line 2 (Filling), Line 2B, or Line 3 (Packaging).",
+  "attributes": [
+    { "key": "lineLabel", "type": "string", "description": "Human-readable line label, e.g. 'Line 1 (Mixing)'." },
+    { "key": "primaryProcessStage", "type": "string", "description": "The process stage this line primarily performs." },
+    { "key": "sharesCrewWith", "type": "string", "description": "Optional reference to a sub-line or sibling line sharing supervision/crew (e.g. Line 2 and Line 2B)." },
+    { "key": "status", "type": "string", "description": "Operational status of the line." }
+  ]
+}

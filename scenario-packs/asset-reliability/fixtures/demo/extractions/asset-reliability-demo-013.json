@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "d6d8402e0b8f42bf3e2d13c11e1e7533216b8bb931f7772504b138789d2cbcc0",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-301",
+      "normalisedValue": "A-301",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 32,
+            "end": 83
+          },
+          "excerpt": "Asset: A-301 (Corvale DL-15 hydraulic dock leveler)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.95,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 101,
+            "end": 122
+          },
+          "excerpt": "Logged by: Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.94,
+      "value": "2026-02-06",
+      "normalisedValue": "2026-02-06",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 84,
+            "end": 100
+          },
+          "excerpt": "Date: 2026-02-06"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.85,
+      "value": "hydraulic lift cylinder seal",
+      "normalisedValue": "hydraulic lift cylinder seal",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 209,
+            "end": 269
+          },
+          "excerpt": "a small weep at the seal on the main hydraulic lift\ncylinder"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.8,
+      "value": "in-service",
+      "normalisedValue": "in-service",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 821,
+            "end": 845
+          },
+          "excerpt": "A-301 remains in service"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.85,
+      "value": "flagging for inspection follow-up, temporary patch not a real fix",
+      "normalisedValue": "flagging for inspection follow-up, temporary patch not a real fix",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 454,
+            "end": 497
+          },
+          "excerpt": "This is a temporary measure, not a real fix"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

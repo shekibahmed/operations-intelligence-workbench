@@ -1,0 +1,77 @@
+{
+  "entityTypes": {
+    "document": { "singular": "Document", "plural": "Documents" },
+    "jurisdiction": { "singular": "Jurisdiction", "plural": "Jurisdictions" },
+    "obligation": { "singular": "Obligation", "plural": "Obligations" },
+    "party": { "singular": "Party", "plural": "Parties" },
+    "party-contact": { "singular": "Party Contact", "plural": "Party Contacts" },
+    "project": { "singular": "Project", "plural": "Projects" },
+    "review-owner": { "singular": "Review Owner", "plural": "Review Owners" }
+  },
+  "eventTypes": {
+    "checklist-filed": "Checklist Filed",
+    "clarification-requested": "Clarification Requested",
+    "compliance-report-filed": "Compliance Report Filed",
+    "conflicting-provision-identified": "Conflicting Provision Identified",
+    "contract-amended": "Contract Amended",
+    "contract-executed": "Contract Executed",
+    "correspondence-logged": "Correspondence Logged",
+    "cross-engagement-flag-corrected": "Cross-Engagement Flag Corrected",
+    "date-conflict-detected": "Date Conflict Detected",
+    "exception-approved": "Exception Approved",
+    "exception-proposed": "Exception Proposed",
+    "obligation-status-confirmed": "Obligation Status Confirmed",
+    "policy-published": "Policy Published",
+    "reviewer-signoff-recorded": "Reviewer Sign-off Recorded"
+  },
+  "caseTypes": {
+    "review-case": { "singular": "Review Case", "plural": "Review Cases" }
+  },
+  "workflowStates": {
+    "open": "Open",
+    "under-review": "Under Review",
+    "awaiting-approval": "Awaiting Approval",
+    "closed": "Closed"
+  },
+  "severity": {
+    "info": "Info",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "priority": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "signalTypes": {
+    "conflicting-provisions": "Conflicting Provisions",
+    "missing-supporting-evidence": "Missing Supporting Evidence",
+    "missing-identifier": "Missing Identifier",
+    "ambiguous-entity-reference": "Ambiguous Entity Reference",
+    "conflicting-dates": "Conflicting Dates",
+    "missed-deadline": "Missed Deadline",
+    "ambiguous-response": "Ambiguous Response"
+  },
+  "actionTypes": {
+    "obligation-follow-up": "Obligation Follow-Up"
+  },
+  "decisionTypes": {
+    "accept-exception": "Accept Exception"
+  },
+  "approvalPolicies": {
+    "authorised-reviewer-approval": "Authorised Reviewer Approval"
+  },
+  "lenses": {
+    "leadership": "Leadership",
+    "operations": "Operations",
+    "technical": "Technical"
+  },
+  "reviewReasons": {
+    "missing-document-identifier": "Missing Document Identifier",
+    "document-disambiguation": "Document Disambiguation Needed",
+    "date-inconsistency-review": "Date Inconsistency Review"
+  }
+}

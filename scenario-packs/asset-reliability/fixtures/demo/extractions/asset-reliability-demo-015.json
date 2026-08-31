@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "186aaf98cb0fd33cc7cc34bd065ae5013ee4c30ea528d41de2e38bbc8e05d1cf",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.98,
+      "value": "A-301",
+      "normalisedValue": "A-301",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-301"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "confidence": 0.97,
+      "value": "NG-WO-10651",
+      "normalisedValue": "NG-WO-10651",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "NG-WO-10651"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "confidence": 0.95,
+      "value": "2026-03-10",
+      "normalisedValue": "2026-03-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "service_date"
+          },
+          "excerpt": "2026-03-10"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "confidence": 0.9,
+      "value": "Ferrow Industrial Services",
+      "normalisedValue": "Ferrow Industrial Services",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "technician"
+          },
+          "excerpt": "Ferrow Industrial Services (Tobias Krantz)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.97,
+      "value": "Scheduled",
+      "normalisedValue": "Scheduled",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Scheduled"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

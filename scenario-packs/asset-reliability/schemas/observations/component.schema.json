@@ -1,0 +1,10 @@
+{
+  "schemaKey": "component",
+  "displayName": "Component",
+  "entityType": "component",
+  "valueType": "string",
+  "description": "The specific component implicated by the fault or finding (e.g. brake assembly).",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "artifactChecksum": "c87b22b8200ba0900e1cf2ac53f5fdd5e3d29649ada078e8562ee40507c8f7e3",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.94,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "priya-nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 22
+          },
+          "excerpt": "From: Priya Nandakumar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.93,
+      "value": "2026-01-15",
+      "normalisedValue": "2026-01-15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 58
+          },
+          "excerpt": "Date: 2026-01-15"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.93,
+      "value": "B-2190",
+      "normalisedValue": "B-2190",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 145,
+            "end": 185
+          },
+          "excerpt": "the viscosity deviation we saw on B-2190"
+        }
+      ]
+    },
+    {
+      "status": "negated",
+      "schemaKey": "reported-cause",
+      "confidence": 0.88,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 663,
+            "end": 730
+          },
+          "excerpt": "this specific deviation on B-2190 was ruled out as supplier-related"
+        }
+      ],
+      "reason": "Explicitly rules out a supplier-lot cause: the actual cause was a mixer 1 temperature probe drift, recalibrated and verified. Must not be carried forward as evidence against KM-LOT-448."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

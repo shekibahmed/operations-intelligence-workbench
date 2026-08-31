@@ -1,0 +1,37 @@
+{
+  "id": "asset",
+  "displayName": "Asset",
+  "description": "A physical piece of equipment tracked for reliability and maintenance history.",
+  "attributes": [
+    {
+      "key": "manufacturer",
+      "type": "string",
+      "description": "The equipment manufacturer (e.g. Talbrook, Meridian, Corvale, BrightAir, Sterling, Arkwell)."
+    },
+    {
+      "key": "model",
+      "type": "string",
+      "description": "The manufacturer model designation (e.g. TF-40, CB-200)."
+    },
+    {
+      "key": "assetCategory",
+      "type": "string",
+      "description": "The general category of asset (e.g. forklift, conveyor, dock-leveler, hvac-unit, generator, compressor)."
+    },
+    {
+      "key": "zone",
+      "type": "string",
+      "description": "The named zone or area where the asset is located."
+    },
+    {
+      "key": "installedDate",
+      "type": "string",
+      "description": "The date the asset was installed or commissioned."
+    },
+    {
+      "key": "installBatch",
+      "type": "string",
+      "description": "The procurement or install batch identifier shared with sibling assets."
+    }
+  ]
+}

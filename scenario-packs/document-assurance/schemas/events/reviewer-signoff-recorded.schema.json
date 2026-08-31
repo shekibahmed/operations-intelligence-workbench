@@ -1,0 +1,6 @@
+{
+  "id": "reviewer-signoff-recorded",
+  "displayName": "Reviewer Sign-off Recorded",
+  "description": "An internal reviewer recorded a routine sign-off note with no escalation required.",
+  "requiredObservations": ["review-status"]
+}

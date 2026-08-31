@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "31f49b944910ce89161d970781019a8d3afdc81b68b8d6c49be77357ae495b26",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.95,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "priya-nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 22
+          },
+          "excerpt": "From: Priya Nandakumar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.93,
+      "value": "2026-02-10",
+      "normalisedValue": "2026-02-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 58
+          },
+          "excerpt": "Date: 2026-02-10"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.95,
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 182,
+            "end": 232
+          },
+          "excerpt": "root-cause check on the B-2205 viscosity deviation"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.9,
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 391,
+            "end": 430
+          },
+          "excerpt": "this is the same binder lot, KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.85,
+      "value": "B-2190",
+      "normalisedValue": "B-2190",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 432,
+            "end": 477
+          },
+          "excerpt": "that was on B-2190 back on the 5th of January"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

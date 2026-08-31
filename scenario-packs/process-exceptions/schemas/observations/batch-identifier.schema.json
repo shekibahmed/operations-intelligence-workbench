@@ -1,0 +1,8 @@
+{
+  "schemaKey": "batch-identifier",
+  "displayName": "Batch Identifier",
+  "entityType": "batch",
+  "valueType": "string",
+  "description": "The identifier of the batch referenced by the source, e.g. B-2205.",
+  "jsonSchema": { "type": "string" }
+}

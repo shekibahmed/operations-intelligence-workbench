@@ -1,0 +1,177 @@
+{
+  "artifactChecksum": "adb3316365d60a012e3fbac41bec13dee21f95b43db0bf2c920159b2d5738927",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2110",
+      "normalisedValue": "B-2110",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "batch_id"
+          },
+          "excerpt": "B-2110"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "value": "Line 3",
+      "normalisedValue": "line-3",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "line"
+          },
+          "excerpt": "Line 3"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "value": "packaging",
+      "normalisedValue": "packaging",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "process_stage"
+          },
+          "excerpt": "packaging"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "value": "DR-LOT-220",
+      "normalisedValue": "DR-LOT-220",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "supplier_lot"
+          },
+          "excerpt": "DR-LOT-220"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "value": 500,
+      "normalisedValue": 500,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "expected_value"
+          },
+          "excerpt": "500"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "value": 503,
+      "normalisedValue": 503,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "observed_value"
+          },
+          "excerpt": "503"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "value": 0.6,
+      "normalisedValue": 0.6,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "deviation_pct"
+          },
+          "excerpt": "0.6"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "value": "released",
+      "normalisedValue": "released",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "disposition"
+          },
+          "excerpt": "released"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-22",
+      "normalisedValue": "2026-01-22",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date"
+          },
+          "excerpt": "2026-01-22"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

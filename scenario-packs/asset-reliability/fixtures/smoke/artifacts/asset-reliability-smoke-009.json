@@ -1,0 +1,14 @@
+{
+  "event_type": "sensor.reading",
+  "source_system": "Northgate BMS Gateway",
+  "gateway_id": "BMS-NG-07",
+  "asset_id": "A-405",
+  "sensor": "filter_differential_pressure",
+  "reading_timestamp": "2026-02-20T06:00:00Z",
+  "value": 0.42,
+  "unit": "inH2O",
+  "threshold_low": 0.10,
+  "threshold_high": 0.60,
+  "status": "normal",
+  "note": "Routine automated reading two days after filter replacement. No anomaly detected."
+}

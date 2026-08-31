@@ -1,0 +1,255 @@
+[
+  {
+    "fixtureId": "document-assurance-smoke-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "MCS-NDA-2026-0007"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-01-10"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "confidentiality"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      }
+    ],
+    "expectedEntities": [
+      "MCS-NDA-2026-0007"
+    ],
+    "expectedEventType": "contract-executed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Simple two-year mutual NDA, no issues."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "POL-RET-014"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-01-01"
+      }
+    ],
+    "expectedEntities": [
+      "POL-RET-014"
+    ],
+    "expectedEventType": "policy-published",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Generic internal retention policy, unrelated to any vendor."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "complete"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "MCS-NDA-2026-0007"
+      }
+    ],
+    "expectedEntities": [
+      "MCS-NDA-2026-0007"
+    ],
+    "expectedEventType": "checklist-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Vendor onboarding checklist, all items complete."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporting-period",
+        "status": "extracted",
+        "value": "2026-Q1"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "MCS-NDA-2026-0007"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      }
+    ],
+    "expectedEntities": [
+      "MCS-NDA-2026-0007"
+    ],
+    "expectedEventType": "compliance-report-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine quarterly report, zero exceptions."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-01-10"
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "resolved"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "clarification-requested",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Positive control: renewal-date question resolved cleanly within the same day."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "review-status",
+        "status": "extracted",
+        "value": "no-escalation-needed"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "MCS-NDA-2026-0007"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "reviewer-signoff-recorded",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine sign-off, no escalation."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "CFU-SO-2026-0033"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-03-20"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Marcus Ellery"
+      }
+    ],
+    "expectedEntities": [
+      "CFU-SO-2026-0033"
+    ],
+    "expectedEventType": "contract-executed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Simple service order, single delivery-deadline obligation."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "checklist-status",
+        "status": "extracted",
+        "value": "complete"
+      },
+      {
+        "schemaKey": "responsible-party",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "CFU-SO-2026-0033"
+      }
+    ],
+    "expectedEntities": [
+      "CFU-SO-2026-0033"
+    ],
+    "expectedEventType": "checklist-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Vendor requalification checklist, complete, no gaps."
+  },
+  {
+    "fixtureId": "document-assurance-smoke-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "smoke-007-service-order"
+      },
+      {
+        "schemaKey": "obligation",
+        "status": "extracted",
+        "value": "delivery_deadline"
+      },
+      {
+        "schemaKey": "due-date",
+        "status": "extracted",
+        "value": "2026-02-10"
+      },
+      {
+        "schemaKey": "required-evidence",
+        "status": "extracted",
+        "value": "on-file"
+      }
+    ],
+    "expectedEntities": [
+      "CFU-SO-2026-0033"
+    ],
+    "expectedEventType": "obligation-status-confirmed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Automated export confirming the smoke-007 obligation was met, evidence on file."
+  }
+]

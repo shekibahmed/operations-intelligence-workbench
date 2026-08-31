@@ -1,0 +1,104 @@
+{
+  "artifactChecksum": "a619054e95188599e7fef3596869ef775c883828e179411ec4a46471b780af31",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "financial-threshold",
+      "confidence": 0.85,
+      "value": {
+        "amount": 2000000,
+        "currency": "USD"
+      },
+      "normalisedValue": {
+        "amount": 2000000,
+        "currency": "USD"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 413,
+            "end": 490
+          },
+          "excerpt": "MSA caps\naggregate liability, including for security incidents, at $2,000,000"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "financial-threshold",
+      "confidence": 0.85,
+      "value": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "normalisedValue": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 317,
+            "end": 374
+          },
+          "excerpt": "sets a liability cap of $5,000,000 for\nsecurity incidents"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.88,
+      "value": "unresolved",
+      "normalisedValue": "unresolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1734,
+            "end": 1829
+          },
+          "excerpt": "I want\nto make sure we're reading \"the contract\" the same way before I close\nthis out on my end"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.85,
+      "value": "Priya Deshmukh",
+      "normalisedValue": "Priya Deshmukh",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 608,
+            "end": 670
+          },
+          "excerpt": "From: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "technical",
+  "title": "Document Assurance \u2014 Technical View",
+  "widgets": [
+    {
+      "id": "critical-signals",
+      "type": "stat-card",
+      "title": "Critical Signals",
+      "parameters": {
+        "metricId": "critical-signal-count"
+      }
+    },
+    {
+      "id": "missing-evidence-list",
+      "type": "list-card",
+      "title": "Missing Supporting Evidence Signals",
+      "parameters": {
+        "metricId": "missing-evidence-count"
+      }
+    },
+    {
+      "id": "outstanding-obligations-table",
+      "type": "sla-table",
+      "title": "Outstanding and At-Risk Obligations",
+      "parameters": {
+        "metricId": "outstanding-obligations"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Extraction and Observation Activity",
+      "parameters": {
+        "metricId": "recent-review-activity"
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "entityTypes": {
+    "asset": { "singular": "Asset", "plural": "Assets" },
+    "component": { "singular": "Component", "plural": "Components" },
+    "location": { "singular": "Location", "plural": "Locations" },
+    "service-provider": { "singular": "Service Provider", "plural": "Service Providers" }
+  },
+  "eventTypes": {
+    "fault-reported": "Fault Reported",
+    "maintenance-completed": "Maintenance Completed",
+    "inspection-completed": "Inspection Completed",
+    "repair-scheduled": "Repair Scheduled",
+    "escalation-raised": "Escalation Raised",
+    "status-changed": "Status Changed",
+    "diagnostic-completed": "Diagnostic Completed",
+    "sensor-reading-logged": "Sensor Reading Logged",
+    "fleet-summary-reported": "Fleet Summary Reported"
+  },
+  "caseTypes": {
+    "reliability-case": { "singular": "Reliability Case", "plural": "Reliability Cases" }
+  },
+  "workflowStates": {
+    "open": "Open",
+    "in-review": "In Review",
+    "awaiting-approval": "Awaiting Approval",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "severity": {
+    "info": "Info",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "priority": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "signalTypes": {
+    "safety-critical-fault": "Safety-Critical Fault",
+    "repeated-fault": "Repeated Fault",
+    "missing-inspection": "Missing Inspection",
+    "overdue-repair": "Overdue Repair",
+    "conflicting-operating-status": "Conflicting Operating Status",
+    "high-downtime": "High Downtime"
+  },
+  "actionTypes": {
+    "completion-inspection": "Completed Inspection",
+    "diagnostic-repair": "Diagnostic Repair",
+    "scheduled-replacement": "Scheduled Replacement",
+    "preventive-check": "Preventive Check"
+  },
+  "decisionTypes": {
+    "remove-from-service": "Remove From Service"
+  },
+  "approvalPolicies": {
+    "asset-removal-approval": "Asset Removal Approval"
+  },
+  "lenses": {
+    "leadership": "Leadership",
+    "operations": "Operations",
+    "technical": "Technical"
+  }
+}

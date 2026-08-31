@@ -1,0 +1,94 @@
+{
+  "artifactChecksum": "3e9e59b307f5468562e6f70d04d08eb418008cd1d9ead1f6774a114ab1e46357",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.96,
+      "value": "POL-DH-009",
+      "normalisedValue": "POL-DH-009",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Policy No. POL-DH-009"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "effective-date",
+      "confidence": 0.94,
+      "value": "2026-01-01",
+      "normalisedValue": "2026-01-01",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Effective Date: January 1, 2026"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "financial-threshold",
+      "confidence": 0.92,
+      "value": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "normalisedValue": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "shall not exceed five million dollars\n($5,000,000)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.85,
+      "value": "liability-cap",
+      "normalisedValue": "liability-cap",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "4. LIABILITY FOR SECURITY INCIDENTS"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

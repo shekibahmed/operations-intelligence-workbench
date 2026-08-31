@@ -1,0 +1,21 @@
+REVIEWER NOTE - EXCEPTION PROPOSAL
+
+Reviewer: Elena Cho, Internal Reviewer, Review Operations
+Date: July 22, 2026
+Subject: Proposed exception - vendor documentation gap
+
+I'd like to propose that we accept an exception for a documentation gap
+that came up during this week's review cycle. It's been outstanding for
+a while now and I think it's reasonable to just accept it and move on
+rather than keep chasing it.
+
+I don't have the specific clause or contract reference in front of me
+right now, and I haven't pulled the underlying evidence for this one -
+I'm going off general recollection from a conversation last week rather
+than anything on file. I believe it's fine to accept, but I'd need to
+go back and confirm exactly what document and provision this relates to
+before anyone signs off.
+
+Requesting approval to accept this exception.
+
+- Elena

@@ -1,0 +1,20 @@
+Repair Update - Zone A / Bay 3
+
+Asset: A-301 (Corvale DL-15 hydraulic dock leveler)
+Date: 2026-02-06
+Logged by: Marcus Ibe
+
+Followed up on Dana's report of fluid under the leveler at bay 3. Found
+the source - a small weep at the seal on the main hydraulic lift
+cylinder, not a hose or fitting like I expected. Cleaned up the spill and
+applied a seal patch/sealant compound to slow the weep since we don't
+have a replacement cylinder in stock right now.
+
+This is a temporary measure, not a real fix. Patched seal should hold for
+a while but I would not consider this resolved - the cylinder itself is
+original to the unit and this kind of weep usually means it's getting
+close to end of useful life. Cycled the leveler a dozen times after the
+patch, no visible leaking during that test, but keeping an eye on it.
+
+Status: A-301 remains in service. Flagging for inspection follow-up to
+assess whether a full cylinder replacement is needed.

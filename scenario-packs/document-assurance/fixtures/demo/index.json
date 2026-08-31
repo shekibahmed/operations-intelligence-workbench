@@ -1,0 +1,142 @@
+[
+  {
+    "id": "document-assurance-demo-001",
+    "artifactType": "master-services-agreement",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-demo-001.md",
+    "sourceMetadata": {
+      "narrativeSource": "executed contract",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "053947ea75e5f769589223a5a692dbb66367b7f31c26e58fe807e13d0423df6f",
+    "expectedExtraction": "extractions/document-assurance-demo-001.json"
+  },
+  {
+    "id": "document-assurance-demo-002",
+    "artifactType": "internal-policy",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-demo-002.md",
+    "sourceMetadata": {
+      "narrativeSource": "internal policy document",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "3e9e59b307f5468562e6f70d04d08eb418008cd1d9ead1f6774a114ab1e46357",
+    "expectedExtraction": "extractions/document-assurance-demo-002.json"
+  },
+  {
+    "id": "document-assurance-demo-003",
+    "artifactType": "onboarding-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "content/document-assurance-demo-003.csv",
+    "sourceMetadata": {
+      "narrativeSource": "Project Falcon onboarding checklist"
+    },
+    "sha256": "75632aa12f1a018afd8182d642d0ce067de729064431e2639b39e699e1fc737e",
+    "expectedExtraction": "extractions/document-assurance-demo-003.json"
+  },
+  {
+    "id": "document-assurance-demo-004",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-demo-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "5a7a1763af8b2ea2b688e96b3f719aa250b7855c92df5596cc107c0992ffa301",
+    "expectedExtraction": "extractions/document-assurance-demo-004.json"
+  },
+  {
+    "id": "document-assurance-demo-005",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-demo-005.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "ab565ab76e3d9f57b4ee664657d719a0d187a9118c1f3c61006df6d95d1417a7",
+    "expectedExtraction": "extractions/document-assurance-demo-005.json"
+  },
+  {
+    "id": "document-assurance-demo-006",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-demo-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "reviewer note"
+    },
+    "sha256": "c81046c829c57f54779e4184066f956220c4b7866a8ec1fcba0c98ad31034af3",
+    "expectedExtraction": "extractions/document-assurance-demo-006.json"
+  },
+  {
+    "id": "document-assurance-demo-007",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-demo-007.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "a619054e95188599e7fef3596869ef775c883828e179411ec4a46471b780af31",
+    "expectedExtraction": "extractions/document-assurance-demo-007.json"
+  },
+  {
+    "id": "document-assurance-demo-008",
+    "artifactType": "contract-amendment",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-demo-008.md",
+    "sourceMetadata": {
+      "narrativeSource": "executed amendment",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "6e9d203f2442e57b35d26756c9cd841c079309717a0ee852e61daa3a558298de",
+    "expectedExtraction": "extractions/document-assurance-demo-008.json"
+  },
+  {
+    "id": "document-assurance-demo-009",
+    "artifactType": "onboarding-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "content/document-assurance-demo-009.csv",
+    "sourceMetadata": {
+      "narrativeSource": "post-amendment Project Falcon checklist"
+    },
+    "sha256": "da543135d71e09596006207595ef842a8e2d19f04fa3def391c272c4063b41c3",
+    "expectedExtraction": "extractions/document-assurance-demo-009.json"
+  },
+  {
+    "id": "document-assurance-demo-010",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-demo-010.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "51ef395f346287704bc216bce614e27c2c6e30c152e83cb6958f2936b50d1f8a",
+    "expectedExtraction": "extractions/document-assurance-demo-010.json"
+  },
+  {
+    "id": "document-assurance-demo-011",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-demo-011.txt",
+    "sourceMetadata": {
+      "narrativeSource": "formal exception proposal reviewer note"
+    },
+    "sha256": "655bc660564aa64b609fd094ee58ada6e845fb098f1fecfd2b0be6adbdef3f39",
+    "expectedExtraction": "extractions/document-assurance-demo-011.json"
+  },
+  {
+    "id": "document-assurance-demo-012",
+    "artifactType": "approval-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-demo-012.txt",
+    "sourceMetadata": {
+      "narrativeSource": "internal approval thread",
+      "channel": "email"
+    },
+    "sha256": "8b249f95b7f87a797d9fc918aec574e733f0324aaa4e63d6146f0b626868c98a",
+    "expectedExtraction": "extractions/document-assurance-demo-012.json"
+  }
+]

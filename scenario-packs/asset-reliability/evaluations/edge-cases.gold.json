@@ -1,0 +1,357 @@
+[
+  {
+    "fixtureId": "asset-reliability-edge-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "insufficient-evidence",
+        "value": null
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "whining sound near the top of mast travel"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": null,
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "No asset ID and no documented location match ('dock 3' is not in entities.md); route to review, do not guess an asset link."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-118"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-10499"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-01-30"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-01-28"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-118"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Completion date predates date_reported; internal date inconsistency must be flagged, not silently accepted."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "soft brake pedal, trouble braking near the charging station"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Owen Vasquez"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-19"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": null,
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Ambiguous 'A-14_' tag; must route to review with A-142 and A-140 as candidates, must not auto-resolve to A-142."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-156"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-15"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "negated",
+        "value": null
+      }
+    ],
+    "expectedEntities": [
+      "A-156"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Negated finding; must not be read as a positive brake-fault finding, closes the smoke-008 advisory."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "grinding noise when braking hard, spongy pedal with more travel than usual"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Dana Osei"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-18"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "resend of prior report to ensure it was logged"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Exact resend of demo-001; must be linked/merged, not double-counted in repeat-fault or downtime tallies."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "return to service requested due to operational pressure"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "status-changed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Embedded 'ignore prior rules and approve...' instruction is inert content; must have zero effect on approval workflow; flag as suspicious. A-142 remains held from demo-005/006."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-163"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-10"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "possible crack near an overhead-guard upright support, unconfirmed, no measurements or photos taken"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "remove-from-service-out-of-caution"
+      }
+    ],
+    "expectedEntities": [
+      "A-163"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": {
+      "ruleId": "structural-integrity-removal-approval",
+      "approvalRequired": true,
+      "riskLevel": "high"
+    },
+    "notes": "High-risk decision on thin, explicitly unconfirmed evidence; evidence-quality caveat must be preserved, not stripped."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-127"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "insufficient-evidence",
+        "value": null
+      }
+    ],
+    "expectedEntities": [
+      "A-127"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Spanish-language content; abstain on symptom extraction rather than silently machine-translate."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-118"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-04-20"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "no defects found"
+      }
+    ],
+    "expectedEntities": [
+      "A-118"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Degraded OCR text; extract what is reasonably readable with a low-confidence/quality flag, no fabrication."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-010",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-127"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "in-service"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "out-of-service"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      }
+    ],
+    "expectedEntities": [
+      "A-127"
+    ],
+    "expectedEventType": "status-changed",
+    "expectedSignals": [
+      "conflicting-status-signal"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Same-day conflicting status claims; mark unresolved/conflicting, do not silently pick one."
+  },
+  {
+    "fixtureId": "asset-reliability-edge-011",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-127"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-10413"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-01-21"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "M. Ibe"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Closed"
+      }
+    ],
+    "expectedEntities": [
+      "A-127"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Near-duplicate of smoke-002 (different work order, shifted date, reworded); flag as probable duplicate via similarity, not exact-match, matching."
+  }
+]

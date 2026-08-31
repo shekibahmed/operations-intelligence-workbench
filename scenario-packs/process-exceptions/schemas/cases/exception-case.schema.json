@@ -1,0 +1,10 @@
+{
+  "caseType": "exception-case",
+  "displayName": { "singular": "Exception Case", "plural": "Exception Cases" },
+  "description": "Tracks a process exception from first symptom through investigation to a disposition decision, e.g. the B-2205/B-2210/KM-LOT-448 escalation.",
+  "workflowId": "default",
+  "defaultPriority": "normal",
+  "defaultSeverity": "medium",
+  "closureRequirements": ["disposition-recorded", "investigation-evidence-present"],
+  "triggeredByRules": ["threshold-breach-severity"]
+}

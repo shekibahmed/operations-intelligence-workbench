@@ -1,0 +1,10 @@
+{
+  "id": "escalation-raised",
+  "displayName": "Escalation Raised",
+  "description": "A formal escalation, typically by a supervisor, requesting a status change or prioritised review.",
+  "requiredObservations": [
+    "asset-identifier",
+    "requested-action",
+    "reporter"
+  ]
+}

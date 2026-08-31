@@ -1,0 +1,8 @@
+{
+  "schemaKey": "checklist-status",
+  "displayName": "Checklist Status",
+  "entityType": "document",
+  "valueType": "string",
+  "description": "The overall completion status of an onboarding, requalification, or audit checklist filing (e.g. complete, outstanding-items, in-progress).",
+  "jsonSchema": { "type": "string" }
+}

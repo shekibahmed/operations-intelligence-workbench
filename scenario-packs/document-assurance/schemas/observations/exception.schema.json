@@ -1,0 +1,8 @@
+{
+  "schemaKey": "exception",
+  "displayName": "Exception",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "The current state of an exception request against an obligation or provision conflict (e.g. none, recommended, proposed, approved, insurance-excluded-from-scope, not-approved-informal-request-refused).",
+  "jsonSchema": { "type": "string" }
+}

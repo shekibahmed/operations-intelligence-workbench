@@ -1,0 +1,6 @@
+{
+  "id": "policy-published",
+  "displayName": "Policy Published",
+  "description": "An internal policy document is confirmed in force, either standing on its own or as background context referenced by an engagement.",
+  "requiredObservations": ["document-reference", "effective-date"]
+}

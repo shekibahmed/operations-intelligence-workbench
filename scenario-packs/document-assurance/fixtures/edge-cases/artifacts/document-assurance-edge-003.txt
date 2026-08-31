@@ -1,0 +1,47 @@
+From: Elena Cho <elena.cho@reviewops.internal>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: Termination notice period - Vantage agreement
+Date: June 15, 2026 13:47
+
+Hi Nadia,
+
+I'm putting together a renewal planning summary and need the
+termination notice period under the Vantage agreement. Can you confirm
+how many days' notice either side needs to give? I want to get this
+into the summary before Friday.
+
+Thanks,
+Elena
+
+---
+
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Elena Cho <elena.cho@reviewops.internal>
+Subject: RE: Termination notice period - Vantage agreement
+Date: June 15, 2026 14:20
+
+Hi Elena,
+
+Quick check first - which Vantage agreement do you mean? We have the
+Project Falcon MSA (ref VLP-FAL-2026-0142) and there's also the older
+mutual NDA with Vantage from before Falcon was set up. They have
+different notice provisions, so I want to make sure the summary lines
+up with the right one.
+
+Nadia
+
+---
+
+From: Elena Cho <elena.cho@reviewops.internal>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: RE: Termination notice period - Vantage agreement
+Date: June 15, 2026 14:38
+
+Good question - honestly I'm not sure. The renewal planning ticket just
+says "Vantage agreement" and doesn't specify. I think it might be about
+the MSA since that's the active engagement, but the person who filed
+the ticket also mentioned something about an older confidentiality
+agreement in the same breath, so now I'm second-guessing myself. Can we
+just note both until I track down whoever filed it?
+
+Elena

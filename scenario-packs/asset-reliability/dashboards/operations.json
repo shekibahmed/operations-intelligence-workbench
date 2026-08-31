@@ -1,0 +1,38 @@
+{
+  "id": "operations",
+  "title": "Asset Reliability \u2014 Operations View",
+  "widgets": [
+    {
+      "id": "open-cases-list",
+      "type": "list-card",
+      "title": "Open Reliability Cases",
+      "parameters": {
+        "metricId": "open-reliability-cases"
+      }
+    },
+    {
+      "id": "triage-time",
+      "type": "stat-card",
+      "title": "Average Time to Triage",
+      "parameters": {
+        "metricId": "average-time-to-triage"
+      }
+    },
+    {
+      "id": "overdue-actions-table",
+      "type": "sla-table",
+      "title": "Overdue and At-Risk Actions",
+      "parameters": {
+        "metricId": "overdue-actions"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Activity",
+      "parameters": {
+        "metricId": "recent-reliability-activity"
+      }
+    }
+  ]
+}

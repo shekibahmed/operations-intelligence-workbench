@@ -1,0 +1,24 @@
+[
+  {
+    "id": "accept-exception-approval",
+    "version": "1.0.0",
+    "description": "Propose the pack's high-risk accept-exception Decision, requiring authorised-reviewer approval, whenever a reviewer formally proposes accepting an exception. This is the rule that drives the Project Falcon liability-cap exception in the primary demo storyline.",
+    "when": {
+      "fact": { "kind": "event-field", "field": "eventType" },
+      "operator": "equals",
+      "value": "exception-proposed"
+    },
+    "then": [
+      {
+        "type": "propose-decision",
+        "definitionId": "accept-exception",
+        "parameters": {
+          "decisionType": "accept-exception",
+          "approvalPolicyId": "authorised-reviewer-approval",
+          "riskLevel": "high",
+          "rationale": "Formally proposed exception against a named conflicting-provisions or documentation-gap issue; requires explicit authorised-reviewer sign-off before it is treated as accepted."
+        }
+      }
+    ]
+  }
+]

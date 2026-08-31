@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "d9256231d50834acde0e93094a243bf2e5b1b7d20fa3bc09301f7d53f51632e1",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-302",
+      "normalisedValue": "A-302",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 305,
+            "end": 323
+          },
+          "excerpt": "dock leveler A-302"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "value": "Coastal Fleet Maintenance",
+      "normalisedValue": "Coastal Fleet Maintenance",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 793,
+            "end": 818
+          },
+          "excerpt": "Coastal Fleet Maintenance"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "value": "Carla Jimenez",
+      "normalisedValue": "Carla Jimenez",
+      "confidence": 0.94,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 758,
+            "end": 791
+          },
+          "excerpt": "Carla Jimenez\nService Coordinator"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "value": "2026-02-02",
+      "normalisedValue": "2026-02-02",
+      "confidence": 0.93,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 167,
+            "end": 183
+          },
+          "excerpt": "Date: 2026-02-02"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "value": "hinge and pivot-point lubrication",
+      "normalisedValue": "hinge/pivot lubrication",
+      "confidence": 0.85,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 268,
+            "end": 301
+          },
+          "excerpt": "hinge and pivot-point lubrication"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 587,
+            "end": 613
+          },
+          "excerpt": "Job closed out on our end."
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

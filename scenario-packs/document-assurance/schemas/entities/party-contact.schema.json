@@ -1,0 +1,11 @@
+{
+  "id": "party-contact",
+  "displayName": "Party Contact",
+  "description": "A named individual acting on behalf of an external Party (e.g. legal counsel, account manager), distinct from internal Review Operations personnel.",
+  "attributes": [
+    { "key": "name", "type": "string", "description": "The contact's full name." },
+    { "key": "title", "type": "string", "description": "The contact's title at the Party organisation." },
+    { "key": "party", "type": "string", "description": "The Party the contact represents." },
+    { "key": "email", "type": "string", "description": "The contact's email address, where known." }
+  ]
+}

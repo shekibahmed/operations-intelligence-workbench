@@ -1,0 +1,194 @@
+{
+  "artifactChecksum": "3a46a0d09a3949746763108dae8ac058cac5e9005f01c56cbf6cecae500288e8",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2101",
+      "normalisedValue": "B-2101",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "batch_id"
+          },
+          "excerpt": "B-2101"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "value": "Line 1",
+      "normalisedValue": "line-1",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "line"
+          },
+          "excerpt": "Line 1"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "value": "mixing",
+      "normalisedValue": "mixing",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "process_stage"
+          },
+          "excerpt": "mixing"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "value": "KM-LOT-401",
+      "normalisedValue": "KM-LOT-401",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "supplier_lot"
+          },
+          "excerpt": "KM-LOT-401"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "value": 600,
+      "normalisedValue": 600,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "expected_value"
+          },
+          "excerpt": "600"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "value": 604,
+      "normalisedValue": 604,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "observed_value"
+          },
+          "excerpt": "604"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "value": 0.7,
+      "normalisedValue": 0.7,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "deviation_pct"
+          },
+          "excerpt": "0.7"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "value": "released",
+      "normalisedValue": "released",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "disposition"
+          },
+          "excerpt": "released"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "value": "Owen Bracewell",
+      "normalisedValue": "owen-bracewell",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "reviewed_by"
+          },
+          "excerpt": "Owen Bracewell"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-19",
+      "normalisedValue": "2026-01-19",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date"
+          },
+          "excerpt": "2026-01-19"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

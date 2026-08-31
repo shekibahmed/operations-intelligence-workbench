@@ -1,0 +1,578 @@
+[
+  {
+    "fixtureId": "process-exceptions-demo-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-09"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205"
+    ],
+    "expectedEventType": "process-deviation-observed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Precursor: viscosity trending upward, not yet a confirmed deviation. Seeds the B-2205 case thread."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 1"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 850
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 920
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 8.2
+      },
+      {
+        "schemaKey": "quantity-affected",
+        "status": "extracted",
+        "value": 4200
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "insufficient-evidence",
+        "value": null
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "hold"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Owen Bracewell"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-09"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205"
+    ],
+    "expectedEventType": "qc-deviation-confirmed",
+    "expectedSignals": [
+      "threshold-breach-severity"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "First confirmed instance in the storyline: 8.2% deviation, 4,200 units, cause under investigation (must not be extracted as a determined cause)."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-09"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 8.2
+      },
+      {
+        "schemaKey": "quantity-affected",
+        "status": "extracted",
+        "value": 4200
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2204"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205"
+    ],
+    "expectedEventType": "shift-report-filed",
+    "expectedSignals": [
+      "threshold-breach-severity"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Corroborating handover, reinforces the KM-LOT-448 deviation signal."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-10"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2190"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205",
+      "B-2190"
+    ],
+    "expectedEventType": "root-cause-investigation-requested",
+    "expectedSignals": [
+      "root-cause-investigation-triggered"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Raises a repeated-deviation/supplier-linked-pattern hypothesis; must be recorded as unverified, not confirmed (see edge-004)."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-10"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2210"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "early viscosity trend resembling B-2205's, not yet a confirmed deviation"
+      }
+    ],
+    "expectedEntities": [
+      "B-2210"
+    ],
+    "expectedEventType": "process-deviation-observed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "First evidence of the KM-LOT-448 pattern recurring on a second, independent batch."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2210"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 1"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 850
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 915
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 7.6
+      },
+      {
+        "schemaKey": "quantity-affected",
+        "status": "extracted",
+        "value": 3800
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "consistent with B-2205 finding; supplier lot KM-LOT-448 suspected"
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "hold"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Owen Bracewell"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-11"
+      }
+    ],
+    "expectedEntities": [
+      "B-2210"
+    ],
+    "expectedEventType": "qc-deviation-confirmed",
+    "expectedSignals": [
+      "threshold-breach-severity",
+      "repeated-deviation-escalation",
+      "supplier-pattern-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Elevates KM-LOT-448 from single-batch to confirmed cross-batch pattern (two consecutive batches, same lot, same failure mode)."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-12"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "quantity-affected",
+        "status": "extracted",
+        "value": 4200
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2210"
+      },
+      {
+        "schemaKey": "hold-scope-description",
+        "status": "extracted",
+        "value": "Quarantine / Hold Staging Area, Line 1 output"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205",
+      "B-2210"
+    ],
+    "expectedEventType": "held-output-aging-flagged",
+    "expectedSignals": [
+      "escalating-backlog-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Undispositioned held inventory aging past a reasonable review window."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 1"
+      },
+      {
+        "schemaKey": "yield-loss-pct",
+        "status": "extracted",
+        "value": 5.1
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205",
+      "B-2210"
+    ],
+    "expectedEventType": "production-summary-filed",
+    "expectedSignals": [
+      "unexplained-yield-loss-severity"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Yield-loss trend explicitly attributed to KM-LOT-448, contrasted against clean output on other lots."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-16"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-448"
+      },
+      {
+        "schemaKey": "hold-scope-description",
+        "status": "extracted",
+        "value": "all remaining output plus unused material on supplier lot KM-LOT-448"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "formal-hold-requested",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": {
+      "ruleId": "hold-affected-output-approval",
+      "approvalRequired": true,
+      "riskLevel": "high"
+    },
+    "notes": "Culmination of the KM-LOT-448 signal; drives the pack's primary Decision, still pending as of demo-012."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-010",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-16"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Ingrid Halvorsen"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2211"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 2"
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "normal filler drift, adjusted filler-head dosing at 10:15"
+      }
+    ],
+    "expectedEntities": [
+      "B-2211"
+    ],
+    "expectedEventType": "process-deviation-observed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Unrelated minor fill-weight deviation on a different line/stage; must not be merged into the KM-LOT-448 signal."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-011",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2211"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 2"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "filling"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "DR-LOT-220"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 500
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 497
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": -0.6
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "minor filler dosing drift - adjusted 2026-02-16"
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "released"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-17"
+      }
+    ],
+    "expectedEntities": [
+      "B-2211"
+    ],
+    "expectedEventType": "qc-check-passed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Within tolerance after adjustment; closes the demo-010 thread."
+  },
+  {
+    "fixtureId": "process-exceptions-demo-012",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-02-18"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2205"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2210"
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "pending"
+      }
+    ],
+    "expectedEntities": [
+      "B-2205",
+      "B-2210"
+    ],
+    "expectedEventType": "shift-report-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Restates open case state; demo-009's approval is explicitly still pending."
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "artifactChecksum": "51c5c340039cad1efa9cfbfb02023a11b5c8cb3a844f776d89211e3363c3723f",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.45,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 663,
+            "end": 699
+          },
+          "excerpt": "which Vantage agreement do you mean?"
+        }
+      ],
+      "alternativeCandidates": [
+        {
+          "value": "vantage-nda-pre-falcon",
+          "confidence": 0.4
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.85,
+      "value": "unresolved",
+      "normalisedValue": "unresolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1484,
+            "end": 1542
+          },
+          "excerpt": "Can we\njust note both until I track down whoever filed it?"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.85,
+      "value": "Elena Cho",
+      "normalisedValue": "Elena Cho",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 46
+          },
+          "excerpt": "From: Elena Cho <elena.cho@reviewops.internal>"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

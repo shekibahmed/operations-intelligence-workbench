@@ -1,0 +1,9 @@
+Rivermill Processing Plant — Shift Report
+Line: Line 2 (Filling)
+Shift: B (Night)
+Date: 2026-01-22
+Operator: night crew, Line 2
+
+Shift ran to plan. Filled and capped batches B-2109 and B-2110, both released to the warehouse after checkweigher sign-off. Filler ran at standard line speed all night, no jams, no short fills.
+
+Drayton Supply Partners cap delivery arrived on schedule at 22:00, staged for tomorrow's run. No safety incidents, no quality exceptions, no equipment issues to hand over to Shift A.

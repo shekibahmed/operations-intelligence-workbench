@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "55b16d3178531386ad65322bb38cdb2b3a882ad8c27e02d111ae73bc96afa024",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-127",
+      "normalisedValue": "A-127",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-127"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "value": "NG-WO-10412",
+      "normalisedValue": "NG-WO-10412",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "NG-WO-10412"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "value": "2026-01-20",
+      "normalisedValue": "2026-01-20",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "service_date"
+          },
+          "excerpt": "2026-01-20"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "technician"
+          },
+          "excerpt": "Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "value": "oil and filter",
+      "normalisedValue": "oil/filter",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Scheduled oil and filter change"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Completed"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

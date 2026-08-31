@@ -1,0 +1,12 @@
+Rivermill Processing Plant — Production Summary
+Line: Line 1 (Mixing)
+Week of: 2026-02-09 to 2026-02-13
+
+Batches run: B-2204, B-2205, B-2206, B-2207, B-2208, B-2209, B-2210
+Total output: 31,600 units
+Units on quality hold: 8,000 (B-2205: 4,200; B-2210: 3,800)
+Yield loss vs. plan: 5.1%, well above the normal 0.5-1% band
+
+The yield-loss trend this week traces directly back to the two held batches, B-2205 and B-2210, both run on Kestrel Materials Co. binder lot KM-LOT-448. Every other batch this week that ran on a different binder lot came in within normal viscosity spec and released without issue. Recommend the disposition review for the held batches also consider whether remaining unused KM-LOT-448 material should be held back from further production until root cause is confirmed.
+
+Compiled by: Priya Nandakumar

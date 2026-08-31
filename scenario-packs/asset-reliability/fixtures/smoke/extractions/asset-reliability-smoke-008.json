@@ -1,0 +1,120 @@
+{
+  "artifactChecksum": "9e35afd530f5a477174676656f7aa178bf5523f3b26b95129c7b2c06edd54e03",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-156",
+      "normalisedValue": "A-156",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-156 (Talbrook TF-40 electric forklift)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "value": "2026-07-01",
+      "normalisedValue": "2026-07-01",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-07-01"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "value": "passed inspection with no defects requiring corrective action",
+      "normalisedValue": "passed-no-defects",
+      "confidence": 0.92,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "Unit passed inspection with no defects requiring corrective action."
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "value": "brake assembly",
+      "normalisedValue": "brake assembly",
+      "confidence": 0.8,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "brake pad thickness is within spec but\non the lower end of the normal range"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "value": "monitor brake pad wear at next scheduled service interval; not a defect at this time",
+      "normalisedValue": "monitor-brake-pad-wear",
+      "confidence": 0.82,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "not a defect at this time, just something to monitor going\nforward."
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

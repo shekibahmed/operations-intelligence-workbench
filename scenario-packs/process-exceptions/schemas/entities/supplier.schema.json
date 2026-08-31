@@ -1,0 +1,9 @@
+{
+  "id": "supplier",
+  "displayName": "Supplier",
+  "description": "An external raw-material or packaging-material supplier to Rivermill Processing Plant.",
+  "attributes": [
+    { "key": "supplierName", "type": "string", "description": "Supplier's name." },
+    { "key": "suppliesMaterialType", "type": "string", "description": "The kind of material this supplier provides, e.g. binder, packaging." }
+  ]
+}

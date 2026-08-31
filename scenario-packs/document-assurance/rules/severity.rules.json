@@ -1,0 +1,55 @@
+[
+  {
+    "id": "conflicting-provisions-signal",
+    "version": "1.0.0",
+    "description": "Flag a conflicting-provisions signal when a reviewer explicitly identifies and names a discrepancy between two provisions stating incompatible figures for the same claim type (e.g. MSA Clause 8.2 vs. Data Handling Policy Section 4.1).",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "conflicting-provision", "field": "value" },
+      "operator": "exists"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "conflicting-provisions", "parameters": { "severity": "high" } }
+    ]
+  },
+  {
+    "id": "missing-evidence-severity",
+    "version": "1.0.0",
+    "description": "Flag missing supporting evidence when an obligation's required-evidence observation is explicitly recorded as missing (e.g. an insurance certificate flagged as outstanding in a compliance report).",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "required-evidence", "field": "value" },
+      "operator": "equals",
+      "value": "missing"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "missing-supporting-evidence", "parameters": { "severity": "medium" } }
+    ]
+  },
+  {
+    "id": "missing-identifier-review",
+    "version": "1.0.0",
+    "description": "Route to review instead of guessing a linkage when a document/contract reference could not be extracted at all.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "document-reference", "field": "evidenceStatus" },
+      "operator": "equals",
+      "value": "insufficient-evidence"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "missing-identifier", "parameters": { "severity": "medium" } },
+      { "type": "flag-review", "definitionId": "missing-document-identifier", "parameters": {} }
+    ]
+  },
+  {
+    "id": "ambiguous-reference-review",
+    "version": "1.0.0",
+    "description": "Route to review for disambiguation instead of silently defaulting when a document reference is genuinely ambiguous between two plausible documents (e.g. \"the Vantage agreement\").",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "document-reference", "field": "reviewStatus" },
+      "operator": "equals",
+      "value": "conflicting"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "ambiguous-entity-reference", "parameters": { "severity": "low" } },
+      { "type": "flag-review", "definitionId": "document-disambiguation", "parameters": {} }
+    ]
+  }
+]

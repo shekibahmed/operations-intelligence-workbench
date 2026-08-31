@@ -1,0 +1,88 @@
+{
+  "artifactChecksum": "7ad609a82116500537ba42aef4e4025b4a3b7d004cfb2c5cdabcb73938186e54",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.97,
+      "value": "smoke-007-service-order",
+      "normalisedValue": "smoke-007-service-order",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.document_reference"
+          },
+          "excerpt": "smoke-007-service-order"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.96,
+      "value": "delivery_deadline",
+      "normalisedValue": "delivery_deadline",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.obligation"
+          },
+          "excerpt": "delivery_deadline"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.96,
+      "value": "2026-02-10",
+      "normalisedValue": "2026-02-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.due_date"
+          },
+          "excerpt": "2026-02-10"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "required-evidence",
+      "confidence": 0.95,
+      "value": "on-file",
+      "normalisedValue": "on-file",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.evidence_on_file"
+          },
+          "excerpt": "true"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

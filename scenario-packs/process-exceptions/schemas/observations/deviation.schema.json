@@ -1,0 +1,8 @@
+{
+  "schemaKey": "deviation",
+  "displayName": "Deviation",
+  "entityType": "batch",
+  "valueType": "number",
+  "description": "The percentage deviation of the observed value from the expected value for a batch-level test parameter.",
+  "jsonSchema": { "type": "number" }
+}

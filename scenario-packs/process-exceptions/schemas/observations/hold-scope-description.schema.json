@@ -1,0 +1,8 @@
+{
+  "schemaKey": "hold-scope-description",
+  "displayName": "Hold Scope Description",
+  "entityType": "supplier-lot",
+  "valueType": "string",
+  "description": "The described scope of a formal hold request (e.g. 'all remaining output and unused material from a supplier lot').",
+  "jsonSchema": { "type": "string" }
+}

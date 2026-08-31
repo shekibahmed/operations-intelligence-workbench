@@ -1,0 +1,105 @@
+schemaVersion: "1.0"
+id: asset-reliability
+version: "1.0.0"
+name: "Asset Reliability"
+description: >
+  Converts fault reports, inspection notes, maintenance records and service
+  updates from the Northgate Distribution Center into evidence-backed
+  reliability cases, tracking recurring faults across time and gating any
+  removal from service behind an explicit human approval.
+labels: labels.json
+entityTypes:
+  - id: asset
+    displayName: "Asset"
+    schema: schemas/entities/asset.schema.json
+  - id: component
+    displayName: "Component"
+    schema: schemas/entities/component.schema.json
+  - id: location
+    displayName: "Location"
+    schema: schemas/entities/location.schema.json
+  - id: service-provider
+    displayName: "Service Provider"
+    schema: schemas/entities/service-provider.schema.json
+eventTypes:
+  - id: fault-reported
+    displayName: "Fault Reported"
+    schema: schemas/events/fault-reported.schema.json
+  - id: maintenance-completed
+    displayName: "Maintenance Completed"
+    schema: schemas/events/maintenance-completed.schema.json
+  - id: inspection-completed
+    displayName: "Inspection Completed"
+    schema: schemas/events/inspection-completed.schema.json
+  - id: repair-scheduled
+    displayName: "Repair Scheduled"
+    schema: schemas/events/repair-scheduled.schema.json
+  - id: escalation-raised
+    displayName: "Escalation Raised"
+    schema: schemas/events/escalation-raised.schema.json
+  - id: status-changed
+    displayName: "Status Changed"
+    schema: schemas/events/status-changed.schema.json
+  - id: diagnostic-completed
+    displayName: "Diagnostic Completed"
+    schema: schemas/events/diagnostic-completed.schema.json
+  - id: sensor-reading-logged
+    displayName: "Sensor Reading Logged"
+    schema: schemas/events/sensor-reading-logged.schema.json
+  - id: fleet-summary-reported
+    displayName: "Fleet Summary Reported"
+    schema: schemas/events/fleet-summary-reported.schema.json
+observationSchemas:
+  - schemas/observations/asset-identifier.schema.json
+  - schemas/observations/symptom.schema.json
+  - schemas/observations/component.schema.json
+  - schemas/observations/severity-indicator.schema.json
+  - schemas/observations/date-reported.schema.json
+  - schemas/observations/reporter.schema.json
+  - schemas/observations/current-operating-status.schema.json
+  - schemas/observations/previous-repair-reference.schema.json
+  - schemas/observations/work-order-reference.schema.json
+  - schemas/observations/service-date.schema.json
+  - schemas/observations/technician.schema.json
+  - schemas/observations/inspector.schema.json
+  - schemas/observations/inspection-finding.schema.json
+  - schemas/observations/recommendation.schema.json
+  - schemas/observations/follow-up-due-date.schema.json
+  - schemas/observations/requested-action.schema.json
+  - schemas/observations/service-provider-reference.schema.json
+  - schemas/observations/related-asset-reference.schema.json
+  - schemas/observations/install-batch.schema.json
+  - schemas/observations/downtime-hours.schema.json
+  - schemas/observations/repeat-fault-count.schema.json
+  - schemas/observations/sensor-reading.schema.json
+  - schemas/observations/service-status.schema.json
+caseDefinitions:
+  - schemas/cases/reliability-case.schema.json
+workflows:
+  default: workflows/default.workflow.json
+rules:
+  - rules/severity.rules.json
+  - rules/escalation.rules.json
+  - rules/approval.rules.json
+metrics:
+  - dashboards/metrics.json
+dashboards:
+  leadership: dashboards/leadership.json
+  operations: dashboards/operations.json
+  technical: dashboards/technical.json
+fixtures:
+  smoke: fixtures/smoke
+  demo: fixtures/demo
+  edgeCases: fixtures/edge-cases
+evaluationSets:
+  - evaluations/smoke.gold.json
+  - evaluations/demo.gold.json
+  - evaluations/edge-cases.gold.json
+# NOTE(OIW-004b): contracts v1.1 ScenarioPackManifestSchema requires a `tours`
+# field (tours.leadership mandatory). Tours are an explicit OIW-004b non-goal
+# (deferred to the tour framework task), so this field is intentionally
+# omitted; manifest.yaml will fail strict schema validation on this field
+# until contracts/OIW-103 make `tours` optional or a follow-up task adds
+# tour content. See docs/agent-runs/OIW-004b.md.
+defaultLens: leadership
+defaultFixtureSet: demo

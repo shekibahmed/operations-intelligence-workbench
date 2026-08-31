@@ -1,0 +1,12 @@
+{
+  "id": "obligation",
+  "displayName": "Obligation",
+  "description": "A tracked obligation, requirement, or term drawn from a governing document (e.g. a clause or policy section).",
+  "attributes": [
+    { "key": "clauseReference", "type": "string", "description": "The clause or section number the obligation derives from." },
+    { "key": "obligationType", "type": "string", "description": "The kind of obligation (compliance-reporting, insurance-maintenance, liability-cap, confidentiality, delivery-deadline)." },
+    { "key": "dueDate", "type": "string", "description": "The obligation's current due date, if any." },
+    { "key": "status", "type": "string", "description": "The obligation's current status (met, outstanding, overdue, conflict-accepted)." },
+    { "key": "responsibleParty", "type": "string", "description": "The party or contact responsible for discharging the obligation." }
+  ]
+}

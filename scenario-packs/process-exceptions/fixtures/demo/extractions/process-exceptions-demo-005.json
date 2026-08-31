@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "7cc33b3600812fef8777535c6a0b6465f6cb96b79d61260a5e708266a99e7000",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.96,
+      "value": "2026-02-10",
+      "normalisedValue": "2026-02-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 80,
+            "end": 96
+          },
+          "excerpt": "Date: 2026-02-10"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.96,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 97,
+            "end": 118
+          },
+          "excerpt": "Operator: Tomas Reyes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.96,
+      "value": "B-2210",
+      "normalisedValue": "B-2210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 120,
+            "end": 153
+          },
+          "excerpt": "Started batch B-2210 this morning"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.88,
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 156,
+            "end": 201
+          },
+          "excerpt": "next batch scheduled on binder lot KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.75,
+      "value": "early viscosity trend resembling B-2205's, not yet a confirmed deviation",
+      "normalisedValue": "early viscosity trend resembling B-2205's, not yet a confirmed deviation",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 412,
+            "end": 469
+          },
+          "excerpt": "the shape of it looks the same as what I saw two days ago"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

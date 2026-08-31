@@ -1,0 +1,8 @@
+{
+  "schemaKey": "required-evidence",
+  "displayName": "Required Evidence",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "Whether the evidence required to close out an obligation is on file, missing, or waived.",
+  "jsonSchema": { "type": "string", "enum": ["missing", "on-file", "waived-not-applicable"] }
+}

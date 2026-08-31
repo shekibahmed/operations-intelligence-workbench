@@ -1,0 +1,79 @@
+[
+  {
+    "id": "process-exceptions-edge-001",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-edge-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 3 operator note, elevated reject rate, missing batch id"
+    },
+    "sha256": "bc7cdbb23f8fb64ec19b922e2c27cccadebb50c009b72a9e2c13f853bce82ee8",
+    "expectedExtraction": "extractions/process-exceptions-edge-001.json"
+  },
+  {
+    "id": "process-exceptions-edge-002",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-edge-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2101, internally conflicting dates"
+    },
+    "sha256": "a6e5341a12ec59205cb67e96294aca8a524c27e537f16a11b17d13edac085afd",
+    "expectedExtraction": "extractions/process-exceptions-edge-002.json"
+  },
+  {
+    "id": "process-exceptions-edge-003",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-edge-003.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 shift report, ambiguous Line 2 / Line 2B reference"
+    },
+    "sha256": "efb0670a78e463cf524514560fd8e38f39f2efc4677c2007ba3cec2b0bd978ff",
+    "expectedExtraction": "extractions/process-exceptions-edge-003.json"
+  },
+  {
+    "id": "process-exceptions-edge-004",
+    "artifactType": "supervisor-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-edge-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "supervisor email, B-2190 root-cause closure, negates supplier-lot link"
+    },
+    "sha256": "c87b22b8200ba0900e1cf2ac53f5fdd5e3d29649ada078e8562ee40507c8f7e3",
+    "expectedExtraction": "extractions/process-exceptions-edge-004.json"
+  },
+  {
+    "id": "process-exceptions-edge-005",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-edge-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "exact duplicate resubmission of process-exceptions-smoke-001"
+    },
+    "sha256": "09a1c441ac465755f5e6cf61046edb72bb2cbaa5c3cb4a350e34eda8b65a0edf",
+    "expectedExtraction": "extractions/process-exceptions-edge-005.json"
+  },
+  {
+    "id": "process-exceptions-edge-006",
+    "artifactType": "inventory-exception-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-edge-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "quarantine/hold staging area note with embedded prompt-injection-style text"
+    },
+    "sha256": "b1f78f99a383e0c932a0c495afe3034903533886d9419067cfd922ce37cf68d5",
+    "expectedExtraction": "extractions/process-exceptions-edge-006.json"
+  },
+  {
+    "id": "process-exceptions-edge-007",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-edge-007.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2101, interrupted inspection with blank observed_value"
+    },
+    "sha256": "cd460cf8439198c6a6fbe6a5b09575d7bec930490790a0fba66429fa2542783c",
+    "expectedExtraction": "extractions/process-exceptions-edge-007.json"
+  }
+]

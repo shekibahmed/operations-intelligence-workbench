@@ -1,0 +1,9 @@
+{
+  "id": "shift",
+  "displayName": "Shift",
+  "description": "A named shift at Rivermill Processing Plant, e.g. Shift A (Day).",
+  "attributes": [
+    { "key": "shiftLabel", "type": "string", "description": "Shift label, e.g. 'Shift A (Day)'." },
+    { "key": "timeWindow", "type": "string", "description": "Descriptive time window for the shift." }
+  ]
+}

@@ -1,0 +1,293 @@
+[
+  {
+    "id": "asset-reliability-demo-001",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-c-shipping"
+    },
+    "sha256": "3600e161c47d04d432d5e8aae640da71f2f4ae7902eed1d6e0f2b175e537e33b",
+    "expectedExtraction": "extractions/asset-reliability-demo-001.json"
+  },
+  {
+    "id": "asset-reliability-demo-002",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-demo-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import"
+    },
+    "sha256": "77a052efd7640d69905979019f6ffbf3bce7ed7c2a1893a0f14c974b3e396fab",
+    "expectedExtraction": "extractions/asset-reliability-demo-002.json"
+  },
+  {
+    "id": "asset-reliability-demo-003",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-demo-003.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "7a0c6485927db6363eccd030387df0949fd4a55a2d76edfef5728777fdffd782",
+    "expectedExtraction": "extractions/asset-reliability-demo-003.json"
+  },
+  {
+    "id": "asset-reliability-demo-004",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#yard"
+    },
+    "sha256": "a47023c48901deee5d39e2013dfc58f4dea0584420891a8c0337f92e4c319473",
+    "expectedExtraction": "extractions/asset-reliability-demo-004.json"
+  },
+  {
+    "id": "asset-reliability-demo-005",
+    "artifactType": "escalation-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "supervisor email",
+      "channel": "email"
+    },
+    "sha256": "1e28325c988fc35341b03fb3ed06a046bac56d6d3ed2249980b5e32edb571c2d",
+    "expectedExtraction": "extractions/asset-reliability-demo-005.json"
+  },
+  {
+    "id": "asset-reliability-demo-006",
+    "artifactType": "repair-update",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "manual repair-update log"
+    },
+    "sha256": "64f55f04ba24edad111dd06c4c20dc37bf23020f0ff4b246e269172ac73de6bc",
+    "expectedExtraction": "extractions/asset-reliability-demo-006.json"
+  },
+  {
+    "id": "asset-reliability-demo-007",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-007.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-b-highbay"
+    },
+    "sha256": "02f60fca47b1c09ccb0328aa4f70c0637d678a9e61efcff8b407bbf8dc3bef9d",
+    "expectedExtraction": "extractions/asset-reliability-demo-007.json"
+  },
+  {
+    "id": "asset-reliability-demo-008",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-demo-008.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import"
+    },
+    "sha256": "6bf905ea78a6a1bbf7a81954784ac59ff03f9a09944fb7cd8d9f1ba95b20626c",
+    "expectedExtraction": "extractions/asset-reliability-demo-008.json"
+  },
+  {
+    "id": "asset-reliability-demo-009",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-demo-009.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "381110939e191c1c871f3e9d7c3a079968f44ae95c5bc498b8e88af3396c8b32",
+    "expectedExtraction": "extractions/asset-reliability-demo-009.json"
+  },
+  {
+    "id": "asset-reliability-demo-010",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-010.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-b-highbay"
+    },
+    "sha256": "5199c713374d07b83a301997e4c13ca9706ea49fc63a99dc29c2ebb024f00ecd",
+    "expectedExtraction": "extractions/asset-reliability-demo-010.json"
+  },
+  {
+    "id": "asset-reliability-demo-011",
+    "artifactType": "service-quote-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-011.txt",
+    "sourceMetadata": {
+      "narrativeSource": "vendor email",
+      "channel": "email"
+    },
+    "sha256": "ed975d84f9598fadd31a665a15a530774f749892dc136e2d1d56bd1d5f08bc6b",
+    "expectedExtraction": "extractions/asset-reliability-demo-011.json"
+  },
+  {
+    "id": "asset-reliability-demo-012",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-012.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#zone-a-receiving"
+    },
+    "sha256": "f9979579f054498de183656db41947ddd1c66993968a6f9e5c679ff99a65bff7",
+    "expectedExtraction": "extractions/asset-reliability-demo-012.json"
+  },
+  {
+    "id": "asset-reliability-demo-013",
+    "artifactType": "repair-update",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-013.txt",
+    "sourceMetadata": {
+      "narrativeSource": "manual repair-update log"
+    },
+    "sha256": "d6d8402e0b8f42bf3e2d13c11e1e7533216b8bb931f7772504b138789d2cbcc0",
+    "expectedExtraction": "extractions/asset-reliability-demo-013.json"
+  },
+  {
+    "id": "asset-reliability-demo-014",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-demo-014.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "41bf96dde826834d76ddda28e09451f3e52ed851916e2655251af601e3ae053a",
+    "expectedExtraction": "extractions/asset-reliability-demo-014.json"
+  },
+  {
+    "id": "asset-reliability-demo-015",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-demo-015.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import"
+    },
+    "sha256": "186aaf98cb0fd33cc7cc34bd065ae5013ee4c30ea528d41de2e38bbc8e05d1cf",
+    "expectedExtraction": "extractions/asset-reliability-demo-015.json"
+  },
+  {
+    "id": "asset-reliability-demo-016",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-016.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#yard"
+    },
+    "sha256": "bef57838baa8184e8ae009690fdccfb7738ce82765d50fc087db2ba965dc9c71",
+    "expectedExtraction": "extractions/asset-reliability-demo-016.json"
+  },
+  {
+    "id": "asset-reliability-demo-017",
+    "artifactType": "repair-update",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-017.txt",
+    "sourceMetadata": {
+      "narrativeSource": "manual repair-update log"
+    },
+    "sha256": "1425ad8c7bf3520dac02cd1c2fda93b73d7bc49710e63be7e41327229e02a901",
+    "expectedExtraction": "extractions/asset-reliability-demo-017.json"
+  },
+  {
+    "id": "asset-reliability-demo-018",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-demo-018.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "c4c477d8506175dca8e9c978f30b6d54f180868fdf7bc29ff04374b88bb76109",
+    "expectedExtraction": "extractions/asset-reliability-demo-018.json"
+  },
+  {
+    "id": "asset-reliability-demo-019",
+    "artifactType": "escalation-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-019.txt",
+    "sourceMetadata": {
+      "narrativeSource": "supervisor email",
+      "channel": "email"
+    },
+    "sha256": "570f07332cd0dfdfce861a013fab56a6d073746310a6c02c45495b22bfd80c9e",
+    "expectedExtraction": "extractions/asset-reliability-demo-019.json"
+  },
+  {
+    "id": "asset-reliability-demo-020",
+    "artifactType": "fault-message",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-020.txt",
+    "sourceMetadata": {
+      "narrativeSource": "team chat",
+      "channel": "#maintenance-bay"
+    },
+    "sha256": "ba520ac20bcc3316db034f1ea7b709a6f53e6770e283a3db75ba5ccdfab19e0d",
+    "expectedExtraction": "extractions/asset-reliability-demo-020.json"
+  },
+  {
+    "id": "asset-reliability-demo-021",
+    "artifactType": "maintenance-log",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-demo-021.csv",
+    "sourceMetadata": {
+      "narrativeSource": "maintenance CSV import"
+    },
+    "sha256": "3d34ab5ef57a84b5b8825b3dbb87c54b8c323f0d087b08ac763b44d9874767c8",
+    "expectedExtraction": "extractions/asset-reliability-demo-021.json"
+  },
+  {
+    "id": "asset-reliability-demo-022",
+    "artifactType": "inspection-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/asset-reliability-demo-022.md",
+    "sourceMetadata": {
+      "narrativeSource": "inspection report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "a53f5dbc875620282970f7d098b18f5ee3fa0ea8da00e69fee70ce32ef08746c",
+    "expectedExtraction": "extractions/asset-reliability-demo-022.json"
+  },
+  {
+    "id": "asset-reliability-demo-023",
+    "artifactType": "diagnostic-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-023.txt",
+    "sourceMetadata": {
+      "narrativeSource": "vendor email",
+      "channel": "email"
+    },
+    "sha256": "b4faed7aeb412dba8bee47ba7b5085381518a9fc94ddedee9bf7fe0cb633263b",
+    "expectedExtraction": "extractions/asset-reliability-demo-023.json"
+  },
+  {
+    "id": "asset-reliability-demo-024",
+    "artifactType": "repair-update",
+    "mimeType": "text/plain",
+    "contentPath": "content/asset-reliability-demo-024.txt",
+    "sourceMetadata": {
+      "narrativeSource": "manual repair-update log"
+    },
+    "sha256": "6e7b1d957eeed4244b7592531d06dd957c9d93bd0c207a3c29e3354fe1a8bf03",
+    "expectedExtraction": "extractions/asset-reliability-demo-024.json"
+  },
+  {
+    "id": "asset-reliability-demo-025",
+    "artifactType": "fleet-rollup",
+    "mimeType": "text/csv",
+    "contentPath": "content/asset-reliability-demo-025.csv",
+    "sourceMetadata": {
+      "narrativeSource": "fleet reliability rollup export"
+    },
+    "sha256": "b28b65de50f583eef793a5532085c9090d90f46df37d5cb4e2a562db0186da6e",
+    "expectedExtraction": "extractions/asset-reliability-demo-025.json"
+  }
+]

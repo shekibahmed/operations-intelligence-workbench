@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "3600e161c47d04d432d5e8aae640da71f2f4ae7902eed1d6e0f2b175e537e33b",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 109,
+            "end": 123
+          },
+          "excerpt": "A-142's brakes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.82,
+      "value": "brake assembly",
+      "normalisedValue": "brakes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 117,
+            "end": 129
+          },
+          "excerpt": "brakes today"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.86,
+      "value": "grinding noise when braking hard, spongy pedal with more travel than usual",
+      "normalisedValue": "grinding noise when braking hard, spongy pedal with more travel than usual",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 131,
+            "end": 201
+          },
+          "excerpt": "getting a grinding noise when I brake hard, and the pedal feels spongy"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.96,
+      "value": "Dana Osei",
+      "normalisedValue": "Dana Osei",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 60,
+            "end": 87
+          },
+          "excerpt": "Dana Osei, 2026-05-18 09:14"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-05-18",
+      "normalisedValue": "2026-05-18",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 71,
+            "end": 87
+          },
+          "excerpt": "2026-05-18 09:14"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "previous-repair-reference",
+      "confidence": 0.7,
+      "value": "brake work done in spring",
+      "normalisedValue": "brake work done in spring",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 455,
+            "end": 496
+          },
+          "excerpt": "it had brake work done back in the spring"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

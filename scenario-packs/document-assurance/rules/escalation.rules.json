@@ -1,0 +1,43 @@
+[
+  {
+    "id": "date-conflict-escalation",
+    "version": "1.0.0",
+    "description": "Surface an internal date inconsistency (a due-date pair that contradicts itself across a checklist and its governing clause) for review rather than silently trusting either date.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "due-date", "field": "reviewStatus" },
+      "operator": "equals",
+      "value": "conflicting"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "conflicting-dates", "parameters": { "severity": "low" } },
+      { "type": "flag-review", "definitionId": "date-inconsistency-review", "parameters": {} }
+    ]
+  },
+  {
+    "id": "missed-deadline-escalation",
+    "version": "1.0.0",
+    "description": "Elevate a missing-supporting-evidence item to a missed-deadline signal once at least two consecutive compliance reports have filed with the same evidence still missing, indicating the gap has persisted across a full reporting cycle rather than being newly discovered.",
+    "when": {
+      "all": [
+        { "fact": { "kind": "observation", "schemaKey": "required-evidence", "field": "value" }, "operator": "equals", "value": "missing" },
+        { "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "compliance-report-filed", "withinHours": 4380 }, "operator": "greater-than-or-equal", "value": 2 }
+      ]
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "missed-deadline", "parameters": { "severity": "high" } }
+    ]
+  },
+  {
+    "id": "ambiguous-response-escalation",
+    "version": "1.0.0",
+    "description": "Flag an ambiguous-response signal when a clarification thread's content-level review status is explicitly recorded as unresolved (a reply that does not confirm the specific fact asked about).",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "review-status", "field": "value" },
+      "operator": "equals",
+      "value": "unresolved"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "ambiguous-response", "parameters": { "severity": "medium" } }
+    ]
+  }
+]

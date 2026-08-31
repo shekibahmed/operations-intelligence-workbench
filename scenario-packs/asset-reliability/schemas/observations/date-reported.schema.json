@@ -1,0 +1,11 @@
+{
+  "schemaKey": "date-reported",
+  "displayName": "Date Reported",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The date the fault, finding or record was reported or received.",
+  "jsonSchema": {
+    "type": "string",
+    "format": "date"
+  }
+}

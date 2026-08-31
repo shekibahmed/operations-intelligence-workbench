@@ -1,0 +1,29 @@
+From: Carla Jimenez <c.jimenez@coastalfleetmaintenance.example>
+To: maintenance@northgatedc.example
+Subject: Quote - A-210 belt replacement
+Date: 2026-03-27
+
+Hi team,
+
+Per your request following the repeat slippage on A-210, here is our
+quote for a full belt replacement rather than another tension
+adjustment.
+
+Based on the wear description from your inspection notes (glazing and
+edge fraying on a belt installed 2021-06-01), a re-tensioning is likely
+to be a short-term fix at best. Recommend replacing the belt outright to
+avoid repeat callouts and unplanned downtime on the induction line.
+
+Quote covers: belt removal and disposal, new belt (matched spec to
+existing Meridian CB-200 line), install and alignment, and a post-install
+load test. Estimated downtime for the line: approximately 4 hours during
+a scheduled maintenance window.
+
+Formal quote number and pricing to follow from our estimating team
+separately - this is just to confirm scope while you're planning the
+maintenance window. Let us know your preferred date and we'll get it on
+our schedule.
+
+Thanks,
+Carla Jimenez
+Service Coordinator, Coastal Fleet Maintenance

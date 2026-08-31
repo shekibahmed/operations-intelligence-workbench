@@ -1,0 +1,10 @@
+{
+  "schemaKey": "service-provider-reference",
+  "displayName": "Service Provider Reference",
+  "entityType": "service-provider",
+  "valueType": "string",
+  "description": "The name of the external service-provider organisation referenced by the source.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

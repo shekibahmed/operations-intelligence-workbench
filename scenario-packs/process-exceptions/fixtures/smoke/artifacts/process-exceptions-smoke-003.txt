@@ -1,0 +1,11 @@
+Rivermill Processing Plant — Operator Note
+Line: Line 2 (Filling)
+Shift: A (Day)
+Date: 2026-01-20
+Operator: Ingrid Halvorsen
+
+Ran the routine weekly calibration check on the Line 2 filler head this morning before startup. Reference weight came in at 499.6 g against the 500 g target, well inside the +/-2% tolerance band, so no adjustment was needed beyond the standard zero-point reset. Logged the calibration certificate number in the maintenance binder.
+
+Filling ran normally the rest of the shift on batch B-2108. No stoppages, no short fills flagged by the checkweigher.
+
+— Ingrid Halvorsen

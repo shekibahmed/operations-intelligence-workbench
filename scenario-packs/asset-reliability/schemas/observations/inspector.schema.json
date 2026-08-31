@@ -1,0 +1,10 @@
+{
+  "schemaKey": "inspector",
+  "displayName": "Inspector",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The name of the inspector who authored an inspection report.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

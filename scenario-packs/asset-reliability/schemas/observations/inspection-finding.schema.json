@@ -1,0 +1,10 @@
+{
+  "schemaKey": "inspection-finding",
+  "displayName": "Inspection Finding",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The summarised finding of an inspection report.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

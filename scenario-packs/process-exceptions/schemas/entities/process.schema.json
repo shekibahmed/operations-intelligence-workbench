@@ -1,0 +1,9 @@
+{
+  "id": "process",
+  "displayName": "Process",
+  "description": "A production process stage carried out at Rivermill Processing Plant (mixing, filling, or packaging), independent of any specific line instance.",
+  "attributes": [
+    { "key": "processStage", "type": "string", "description": "The stage this process represents: mixing, filling, or packaging." },
+    { "key": "description", "type": "string", "description": "Short description of what the process does." }
+  ]
+}

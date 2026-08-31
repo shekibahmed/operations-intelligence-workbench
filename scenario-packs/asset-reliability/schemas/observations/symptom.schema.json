@@ -1,0 +1,10 @@
+{
+  "schemaKey": "symptom",
+  "displayName": "Symptom",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The free-text description of the reported fault or symptom.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

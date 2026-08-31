@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "b4faed7aeb412dba8bee47ba7b5085381518a9fc94ddedee9bf7fe0cb633263b",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.95,
+      "value": "A-520",
+      "normalisedValue": "A-520",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 101,
+            "end": 124
+          },
+          "excerpt": "A-520 leak test results"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "confidence": 0.93,
+      "value": "Ferrow Industrial Services",
+      "normalisedValue": "Ferrow Industrial Services",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 6,
+            "end": 55
+          },
+          "excerpt": "Tobias Krantz <t.krantz@ferrowindustrial.example>"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.92,
+      "value": "2026-07-17",
+      "normalisedValue": "2026-07-17",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 125,
+            "end": 141
+          },
+          "excerpt": "Date: 2026-07-17"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.9,
+      "value": "slow leak at a corroded line fitting on the discharge side",
+      "normalisedValue": "slow leak at a corroded line fitting on the discharge side",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 274,
+            "end": 343
+          },
+          "excerpt": "there's a slow leak at\none of the line fittings on the discharge side"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.85,
+      "value": "replace the fitting, same-week callout available",
+      "normalisedValue": "replace the fitting, same-week callout available",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 695,
+            "end": 756
+          },
+          "excerpt": "Recommend replacing the fitting rather than just resealing it"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "id": "inventory-exception-logged",
+  "displayName": "Inventory Exception Logged",
+  "description": "A count discrepancy, staging/space issue, or other inventory-level exception was logged, whether resolved same-shift or left open.",
+  "requiredObservations": ["time-detected"]
+}

@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "1425ad8c7bf3520dac02cd1c2fda93b73d7bc49710e63be7e41327229e02a901",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-501",
+      "normalisedValue": "A-501",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 22,
+            "end": 77
+          },
+          "excerpt": "Asset: A-501 (Sterling GEN-150 diesel backup generator)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.95,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 95,
+            "end": 116
+          },
+          "excerpt": "Logged by: Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.94,
+      "value": "2026-04-15",
+      "normalisedValue": "2026-04-15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 78,
+            "end": 94
+          },
+          "excerpt": "Date: 2026-04-15"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.9,
+      "value": "operational",
+      "normalisedValue": "operational",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 753,
+            "end": 773
+          },
+          "excerpt": "A-501 is OPERATIONAL"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.83,
+      "value": "resolved after coolant top-up, monitor at next monthly test",
+      "normalisedValue": "resolved after coolant top-up, monitor at next monthly test",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 551,
+            "end": 607
+          },
+          "excerpt": "Issue resolved. Asset status updated back to operational"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

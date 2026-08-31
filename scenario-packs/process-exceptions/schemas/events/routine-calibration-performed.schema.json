@@ -1,0 +1,6 @@
+{
+  "id": "routine-calibration-performed",
+  "displayName": "Routine Calibration Performed",
+  "description": "A routine equipment calibration check was performed and found within tolerance, requiring no exception handling.",
+  "requiredObservations": ["expected-value", "observed-value", "time-detected"]
+}

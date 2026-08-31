@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "6ec457e8529291d0c851448ad7d893c1389dc5ca7f67778940a89f2ebc649bd1",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.95,
+      "value": "2026-02-16",
+      "normalisedValue": "2026-02-16",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 81,
+            "end": 97
+          },
+          "excerpt": "Date: 2026-02-16"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.95,
+      "value": "Ingrid Halvorsen",
+      "normalisedValue": "Ingrid Halvorsen",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 98,
+            "end": 124
+          },
+          "excerpt": "Operator: Ingrid Halvorsen"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.95,
+      "value": "B-2211",
+      "normalisedValue": "B-2211",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 126,
+            "end": 161
+          },
+          "excerpt": "Batch B-2211 came in slightly light"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.93,
+      "value": "Line 2",
+      "normalisedValue": "Line 2",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 43,
+            "end": 65
+          },
+          "excerpt": "Line: Line 2 (Filling)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.8,
+      "value": "normal filler drift, adjusted filler-head dosing at 10:15",
+      "normalisedValue": "normal filler drift, adjusted filler-head dosing at 10:15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 373,
+            "end": 422
+          },
+          "excerpt": "Adjusted the filler head dosing slightly at 10:15"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

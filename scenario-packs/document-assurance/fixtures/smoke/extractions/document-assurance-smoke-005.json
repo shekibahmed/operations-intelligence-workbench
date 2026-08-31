@@ -1,0 +1,75 @@
+{
+  "artifactChecksum": "c50966118fc8c14b25354a9b7770a5c98f92fcbaddf45906d5f25dd41a7c9f88",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.85,
+      "value": "2026-01-10",
+      "normalisedValue": "2026-01-10",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 349,
+            "end": 389
+          },
+          "excerpt": "I have it as January 10, 2028, two years"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.9,
+      "value": "resolved",
+      "normalisedValue": "resolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1056,
+            "end": 1082
+          },
+          "excerpt": "closing this out on my end"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.85,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 50
+          },
+          "excerpt": "From: Tomas Reyes <tomas.reyes@reviewops.internal>"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "artifactChecksum": "77a052efd7640d69905979019f6ffbf3bce7ed7c2a1893a0f14c974b3e396fab",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.98,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-142"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "confidence": 0.97,
+      "value": "FIS-4471",
+      "normalisedValue": "FIS-4471",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "FIS-4471"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "confidence": 0.97,
+      "value": "2026-04-06",
+      "normalisedValue": "2026-04-06",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "service_date"
+          },
+          "excerpt": "2026-04-06"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.95,
+      "value": "Tobias Krantz",
+      "normalisedValue": "Tobias Krantz",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "technician"
+          },
+          "excerpt": "Tobias Krantz"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "confidence": 0.6,
+      "value": "Ferrow Industrial Services",
+      "normalisedValue": "Ferrow Industrial Services",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Bled and adjusted brake lines after install"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.85,
+      "value": "brake pads (front and rear)",
+      "normalisedValue": "brake-pads",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "description"
+          },
+          "excerpt": "Brake pad replacement (front and rear)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.97,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Completed"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

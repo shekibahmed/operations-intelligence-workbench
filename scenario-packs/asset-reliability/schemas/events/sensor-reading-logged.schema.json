@@ -1,0 +1,9 @@
+{
+  "id": "sensor-reading-logged",
+  "displayName": "Sensor Reading Logged",
+  "description": "An automated sensor or telemetry reading logged for an asset.",
+  "requiredObservations": [
+    "asset-identifier",
+    "sensor-reading"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "service-provider",
+  "displayName": "Service Provider",
+  "description": "An internal team or external vendor organisation that performs inspections or repairs.",
+  "attributes": [
+    {
+      "key": "organizationName",
+      "type": "string",
+      "description": "The name of the service-provider organisation."
+    },
+    {
+      "key": "contactName",
+      "type": "string",
+      "description": "The primary named contact at the organisation."
+    },
+    {
+      "key": "contactEmail",
+      "type": "string",
+      "description": "The contact email address, if known."
+    },
+    {
+      "key": "specialty",
+      "type": "string",
+      "description": "The service specialty of the provider (e.g. mobile equipment, dock equipment, refrigeration)."
+    }
+  ]
+}

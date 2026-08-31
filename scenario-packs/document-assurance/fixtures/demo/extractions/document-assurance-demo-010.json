@@ -1,0 +1,104 @@
+{
+  "artifactChecksum": "51ef395f346287704bc216bce614e27c2c6e30c152e83cb6958f2936b50d1f8a",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporting-period",
+      "confidence": 0.96,
+      "value": "2026-Q2",
+      "normalisedValue": "2026-Q2",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reporting Period: Q2 2026 (April 1 - June 30, 2026)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "required-evidence",
+      "confidence": 0.93,
+      "value": "missing",
+      "normalisedValue": "missing",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "remains outstanding as of this report"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.9,
+      "value": "unresolved",
+      "normalisedValue": "unresolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "This conflicting-provisions issue, first\nidentified May 3, 2026, remains unresolved"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "exception",
+      "confidence": 0.87,
+      "value": "recommended",
+      "normalisedValue": "recommended",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "recommends that Review Operations consider an\n\"accept exception\" pathway"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.9,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Prepared by: Nadia Okonkwo, Review Owner, Review Operations"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schemaKey": "referenced-report-date",
+  "displayName": "Referenced Report Date",
+  "entityType": "shift",
+  "valueType": "string",
+  "description": "The date of a separate report that this artifact claims to cross-reference. Compared against time-detected to surface internal date inconsistencies.",
+  "jsonSchema": { "type": "string" }
+}

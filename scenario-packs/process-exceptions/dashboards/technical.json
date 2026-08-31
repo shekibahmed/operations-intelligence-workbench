@@ -1,0 +1,38 @@
+{
+  "id": "technical",
+  "title": "Process Exceptions \u2014 Technical View",
+  "widgets": [
+    {
+      "id": "time-to-disposition-card",
+      "type": "stat-card",
+      "title": "Time to Disposition",
+      "parameters": {
+        "metricId": "time-to-disposition"
+      }
+    },
+    {
+      "id": "output-awaiting-decision-list",
+      "type": "list-card",
+      "title": "Output Awaiting Decision",
+      "parameters": {
+        "metricId": "output-awaiting-decision"
+      }
+    },
+    {
+      "id": "incomplete-investigations-list",
+      "type": "list-card",
+      "title": "Incomplete Investigations",
+      "parameters": {
+        "metricId": "incomplete-investigations"
+      }
+    },
+    {
+      "id": "recent-activity-tech",
+      "type": "activity-feed",
+      "title": "Recent Case Activity",
+      "parameters": {
+        "metricId": "recent-case-activity"
+      }
+    }
+  ]
+}

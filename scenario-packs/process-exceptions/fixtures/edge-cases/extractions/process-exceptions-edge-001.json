@@ -1,0 +1,93 @@
+{
+  "artifactChecksum": "bc7cdbb23f8fb64ec19b922e2c27cccadebb50c009b72a9e2c13f853bce82ee8",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.94,
+      "value": "2026-01-23",
+      "normalisedValue": "2026-01-23",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 83,
+            "end": 99
+          },
+          "excerpt": "Date: 2026-01-23"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.9,
+      "value": "Line 3",
+      "normalisedValue": "Line 3",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 43,
+            "end": 67
+          },
+          "excerpt": "Line: Line 3 (Packaging)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.7,
+      "value": "checkweigher reject rate elevated approximately 1-in-20 for about 40 minutes, cause unknown",
+      "normalisedValue": "checkweigher reject rate elevated approximately 1-in-20 for about 40 minutes, cause unknown",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 456,
+            "end": 539
+          },
+          "excerpt": "reject rate came back down after about 40 minutes and we're not sure what caused it"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.2,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 542,
+            "end": 606
+          },
+          "excerpt": "Didn't get a batch number written down before the shift got busy"
+        }
+      ],
+      "reason": "Author explicitly states no batch number was written down before the shift got busy; must not be guessed from the packaging log alone."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

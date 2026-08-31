@@ -1,0 +1,101 @@
+[
+  {
+    "id": "open-reliability-cases",
+    "name": "Open Reliability Cases",
+    "description": "The count of reliability cases that are not yet in a terminal (closed) workflow state.",
+    "classification": "calculated",
+    "aggregation": "count-records",
+    "parameters": { "caseType": "reliability-case", "statusNotIn": ["closed"] },
+    "format": "number"
+  },
+  {
+    "id": "cases-by-severity",
+    "name": "Cases by Severity",
+    "description": "The distribution of open reliability cases grouped by severity level.",
+    "classification": "calculated",
+    "aggregation": "count-by-field",
+    "parameters": { "caseType": "reliability-case", "field": "severity" },
+    "format": "number"
+  },
+  {
+    "id": "average-time-to-triage",
+    "name": "Average Time to Triage",
+    "description": "The average elapsed time between a fault-reported event and the first inspection-completed or maintenance-completed event addressing it.",
+    "classification": "calculated",
+    "aggregation": "average-duration",
+    "parameters": { "fromEventType": "fault-reported", "toEventType": ["inspection-completed", "maintenance-completed"] },
+    "format": "duration"
+  },
+  {
+    "id": "repeat-fault-count",
+    "name": "Repeat Fault Count",
+    "description": "The count of repeated-fault signals raised across the fleet in the current reporting window.",
+    "classification": "calculated",
+    "aggregation": "count-records",
+    "parameters": { "signalType": "repeated-fault" },
+    "format": "number"
+  },
+  {
+    "id": "repeat-fault-trend",
+    "name": "Repeat Fault Trend",
+    "description": "The count of repeated-fault signals raised per period over time, used to visualise recurrence trends across the fleet.",
+    "classification": "calculated",
+    "aggregation": "time-series-count",
+    "parameters": { "signalType": "repeated-fault", "bucket": "week" },
+    "format": "number"
+  },
+  {
+    "id": "overdue-actions",
+    "name": "Overdue Actions",
+    "description": "The count of open action items whose due date has passed, or that are at risk of missing their due date, per the overdue-repair signal logic.",
+    "classification": "calculated",
+    "aggregation": "due-date-risk",
+    "parameters": { "actionStatusIn": ["open", "in-progress"] },
+    "format": "number"
+  },
+  {
+    "id": "assets-awaiting-approval",
+    "name": "Assets Awaiting Approval",
+    "description": "The count of assets with a proposed remove-from-service decision awaiting human approval.",
+    "classification": "calculated",
+    "aggregation": "count-records",
+    "parameters": { "decisionType": "remove-from-service", "status": "awaiting-approval" },
+    "format": "number"
+  },
+  {
+    "id": "estimated-downtime-exposure",
+    "name": "Estimated Downtime Exposure",
+    "description": "A hypothetical estimate of downtime hours at risk if assets currently carrying open, unresolved reliability signals were to fail outright, derived from historical downtime-hours observations on comparable assets. This is a forward-looking estimate, never an observed measurement, and must not be presented as fact.",
+    "classification": "hypothetical",
+    "aggregation": "ratio",
+    "parameters": { "numerator": "downtime-hours-on-flagged-assets", "denominator": "reporting-period-hours" },
+    "format": "duration"
+  },
+  {
+    "id": "critical-signal-count",
+    "name": "Critical Signals",
+    "description": "The count of currently open signals at critical severity across the fleet.",
+    "classification": "calculated",
+    "aggregation": "count-records",
+    "parameters": { "severity": "critical" },
+    "format": "number"
+  },
+  {
+    "id": "pending-decision-count",
+    "name": "Pending Decisions",
+    "description": "The count of proposed decisions across the fleet that have not yet reached a final approved or rejected outcome.",
+    "classification": "calculated",
+    "aggregation": "count-records",
+    "parameters": { "statusIn": ["proposed", "awaiting-approval", "more-information-required"] },
+    "format": "number"
+  },
+  {
+    "id": "recent-reliability-activity",
+    "name": "Recent Reliability Activity",
+    "description": "A rolling feed of the most recent operational events, signals, and case updates across the fleet.",
+    "classification": "observed",
+    "aggregation": "recent-activity",
+    "parameters": { "limit": 15 },
+    "format": "text"
+  }
+]

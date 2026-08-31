@@ -1,0 +1,152 @@
+{
+  "artifactChecksum": "7a0c6485927db6363eccd030387df0949fd4a55a2d76edfef5728777fdffd782",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-142 (Talbrook TF-40 electric forklift)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "confidence": 0.96,
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-05-21",
+      "normalisedValue": "2026-05-21",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-05-21"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.9,
+      "value": "uneven pad wear and fluid weeping at a brake-line fitting",
+      "normalisedValue": "uneven pad wear and fluid weeping at a brake-line fitting",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "the recently replaced pads are wearing unevenly"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.85,
+      "value": "brake assembly / hydraulic line fitting",
+      "normalisedValue": "brake assembly / hydraulic line fitting",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "fluid weeping visible at a\nfitting on the hydraulic brake line"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "previous-repair-reference",
+      "confidence": 0.85,
+      "value": "FIS-4471, 2026-04-06 brake pad replacement",
+      "normalisedValue": "FIS-4471, 2026-04-06 brake pad replacement",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "work order FIS-4471) following a\nsimilar soft-pedal complaint"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.9,
+      "value": "diagnostic and repair within 5 business days (by 2026-05-26)",
+      "normalisedValue": "diagnostic and repair within 5 business days (by 2026-05-26)",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "scheduled within 5 business\ndays (by 2026-05-26)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "follow-up-due-date",
+      "confidence": 0.88,
+      "value": "2026-05-26",
+      "normalisedValue": "2026-05-26",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "by 2026-05-26"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,2 @@
+batch_id,product,line,process_stage,supplier_lot,test_parameter,expected_value,observed_value,unit,deviation_pct,quantity_affected,reported_cause,recommended_disposition,reviewed_by,date,note
+B-2101,Compound RM-12,Line 1,packaging,KM-LOT-401,visual/foreign particulate inspection,pass - no particulate,,,,,inspection interrupted,reject - recommend rejection pending re-inspection,Owen Bracewell,2026-01-27,"Inspector was called away before completing the reading; observed_value was not recorded and the reject recommendation is provisional pending a repeat inspection."

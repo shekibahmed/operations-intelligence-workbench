@@ -1,0 +1,37 @@
+{
+  "id": "default",
+  "version": "1.0.0",
+  "initialState": "open",
+  "states": [
+    { "id": "open", "label": "Open", "terminal": false },
+    { "id": "under-review", "label": "Under Review", "terminal": false },
+    { "id": "awaiting-approval", "label": "Awaiting Approval", "terminal": false },
+    { "id": "closed", "label": "Closed", "terminal": true }
+  ],
+  "transitions": [
+    { "id": "begin-review", "from": "open", "to": "under-review" },
+    { "id": "propose-exception", "from": "under-review", "to": "awaiting-approval" },
+    { "id": "return-to-review", "from": "awaiting-approval", "to": "under-review" },
+    { "id": "resolve-without-exception", "from": "under-review", "to": "closed" },
+    {
+      "id": "approve-and-close",
+      "from": "awaiting-approval",
+      "to": "closed",
+      "requiresApprovalPolicyId": "authorised-reviewer-approval"
+    }
+  ],
+  "closureRequirements": [
+    {
+      "id": "decision-resolved",
+      "type": "decision-approved",
+      "definitionId": "accept-exception",
+      "description": "Any proposed accept-exception decision on this case must be approved, rejected, or otherwise resolved before the case can close."
+    },
+    {
+      "id": "evidence-present",
+      "type": "evidence-present",
+      "definitionId": "required-evidence",
+      "description": "Required supporting evidence must be on file (or explicitly waived) before this case can close."
+    }
+  ]
+}

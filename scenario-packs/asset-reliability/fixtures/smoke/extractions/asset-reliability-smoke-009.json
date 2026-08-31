@@ -1,0 +1,84 @@
+{
+  "artifactChecksum": "a918733b62634c9d32165028590772941b5f7bc92eef64de7338985273d78c23",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-405",
+      "normalisedValue": "A-405",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.asset_id"
+          },
+          "excerpt": "A-405"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "sensor-reading",
+      "value": {
+        "value": 0.42,
+        "unit": "inH2O",
+        "thresholdLow": 0.1,
+        "thresholdHigh": 0.6,
+        "status": "normal"
+      },
+      "normalisedValue": {
+        "value": 0.42,
+        "unit": "inH2O",
+        "thresholdLow": 0.1,
+        "thresholdHigh": 0.6,
+        "status": "normal"
+      },
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.value"
+          },
+          "excerpt": "0.42"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "value": "2026-02-20",
+      "normalisedValue": "2026-02-20T06:00:00Z",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.reading_timestamp"
+          },
+          "excerpt": "2026-02-20T06:00:00Z"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

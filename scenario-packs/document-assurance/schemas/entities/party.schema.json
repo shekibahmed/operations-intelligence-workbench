@@ -1,0 +1,10 @@
+{
+  "id": "party",
+  "displayName": "Party",
+  "description": "An organisation that is a counterparty to one or more documents (client, vendor, or underwriter).",
+  "attributes": [
+    { "key": "partyName", "type": "string", "description": "The organisation's name." },
+    { "key": "role", "type": "string", "description": "The organisation's role relative to the reviewing organisation (client, vendor)." },
+    { "key": "jurisdiction", "type": "string", "description": "The jurisdiction the party is organised under." }
+  ]
+}

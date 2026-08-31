@@ -1,0 +1,10 @@
+{
+  "id": "review-owner",
+  "displayName": "Review Owner",
+  "description": "An internal Review Operations person who owns, reviews, or authorises decisions about a document, obligation, or exception.",
+  "attributes": [
+    { "key": "name", "type": "string", "description": "The person's full name." },
+    { "key": "role", "type": "string", "description": "The person's role (review-owner, authorised-reviewer, internal-reviewer)." },
+    { "key": "team", "type": "string", "description": "The internal team the person belongs to." }
+  ]
+}

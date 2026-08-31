@@ -1,0 +1,10 @@
+{
+  "id": "project",
+  "displayName": "Project",
+  "description": "An internal engagement name used to group documents and obligations belonging to the same body of work.",
+  "attributes": [
+    { "key": "name", "type": "string", "description": "The project's internal name." },
+    { "key": "status", "type": "string", "description": "The project's current status." },
+    { "key": "governingDocument", "type": "string", "description": "The reference number of the project's governing agreement." }
+  ]
+}

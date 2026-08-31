@@ -1,0 +1,136 @@
+{
+  "artifactChecksum": "381110939e191c1c871f3e9d7c3a079968f44ae95c5bc498b8e88af3396c8b32",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-210",
+      "normalisedValue": "A-210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-210 (Meridian CB-200 belt conveyor)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "confidence": 0.96,
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-03-16",
+      "normalisedValue": "2026-03-16",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-03-16"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.88,
+      "value": "tension holding but belt shows glazing and edge fraying, wear approaching replacement threshold",
+      "normalisedValue": "tension holding but belt shows glazing and edge fraying, wear approaching replacement threshold",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "some glazing along the\nrunning surface and light fraying starting at one edge"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "related-asset-reference",
+      "confidence": 0.85,
+      "value": "A-211",
+      "normalisedValue": "A-211",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "A-211, the adjacent induction line, was installed in the same batch"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "install-batch",
+      "confidence": 0.85,
+      "value": "2021-06-01",
+      "normalisedValue": "2021-06-01",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "installed in the same batch\nas A-210 (2021-06-01)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.87,
+      "value": "preventive belt-wear check on A-211 within the next maintenance cycle",
+      "normalisedValue": "preventive belt-wear check on A-211 within the next maintenance cycle",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "Schedule a preventive belt-wear check on A-211 within the next\nmaintenance cycle"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

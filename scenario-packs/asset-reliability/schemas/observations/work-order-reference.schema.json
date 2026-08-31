@@ -1,0 +1,10 @@
+{
+  "schemaKey": "work-order-reference",
+  "displayName": "Work Order Reference",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The work order number associated with a maintenance or repair record.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

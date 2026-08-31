@@ -1,0 +1,6 @@
+{
+  "id": "cross-engagement-flag-corrected",
+  "displayName": "Cross-Engagement Flag Corrected",
+  "description": "A reviewer corrected an earlier flag that had erroneously conflated one engagement's provision with a different, unrelated engagement.",
+  "requiredObservations": ["review-status"]
+}

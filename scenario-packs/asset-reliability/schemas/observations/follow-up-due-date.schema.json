@@ -1,0 +1,11 @@
+{
+  "schemaKey": "follow-up-due-date",
+  "displayName": "Follow-Up Due Date",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The date by which a recommended follow-up action should be completed.",
+  "jsonSchema": {
+    "type": "string",
+    "format": "date"
+  }
+}

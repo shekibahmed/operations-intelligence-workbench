@@ -1,0 +1,11 @@
+{
+  "id": "supplier-lot",
+  "displayName": "Supplier Lot",
+  "description": "A specific lot of material received from a supplier, e.g. KM-LOT-448, tracked independently of the supplier itself because risk in this pack is lot-specific, not blanket-supplier.",
+  "attributes": [
+    { "key": "lotCode", "type": "string", "description": "The supplier lot code, e.g. KM-LOT-448." },
+    { "key": "supplierId", "type": "string", "description": "The supplier this lot came from." },
+    { "key": "materialType", "type": "string", "description": "Material type carried by this lot, e.g. binder, packaging." },
+    { "key": "status", "type": "string", "description": "Current lot status, e.g. normal, under-investigation." }
+  ]
+}

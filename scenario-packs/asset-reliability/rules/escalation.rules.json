@@ -1,0 +1,98 @@
+[
+  {
+    "id": "repeated-fault-escalation",
+    "version": "1.0.0",
+    "description": "Flag a repeated-fault pattern when at least two related operational events (fault reports, maintenance, or inspections) have occurred on the same asset within the past 60 days, indicating a recurrence rather than an isolated incident.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 1440 },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "repeated-fault",
+        "parameters": { "severity": "medium", "windowHours": 1440 }
+      }
+    ]
+  },
+  {
+    "id": "missing-inspection-escalation",
+    "version": "1.0.0",
+    "description": "Flag a missing-inspection gap when an asset has had at least one fault-reported event but no inspection-completed event within the past 180 days, so a recurring or repeated fault is not left without a formal inspection.",
+    "when": {
+      "all": [
+        {
+          "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "fault-reported", "withinHours": 720 },
+          "operator": "greater-than-or-equal",
+          "value": 1
+        },
+        {
+          "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "inspection-completed", "withinHours": 4320 },
+          "operator": "less-than",
+          "value": 1
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "missing-inspection",
+        "parameters": { "severity": "medium" }
+      },
+      {
+        "type": "create-action",
+        "definitionId": "completion-inspection",
+        "parameters": { "title": "Schedule inspection for recurring fault" }
+      }
+    ]
+  },
+  {
+    "id": "overdue-repair-escalation",
+    "version": "1.0.0",
+    "description": "Flag an overdue repair when an inspection has recommended a follow-up but no maintenance-completed event has closed it out within the recommended 5-business-day (120 hour) window, e.g. the A-142 diagnostic window exceeded before the ramp incident.",
+    "when": {
+      "all": [
+        {
+          "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "inspection-completed", "withinHours": 4320 },
+          "operator": "greater-than-or-equal",
+          "value": 1
+        },
+        {
+          "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "maintenance-completed", "withinHours": 120 },
+          "operator": "less-than",
+          "value": 1
+        },
+        {
+          "fact": { "kind": "aggregate", "aggregate": "open-action-count" },
+          "operator": "greater-than-or-equal",
+          "value": 1
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "overdue-repair",
+        "parameters": { "severity": "high" }
+      }
+    ]
+  },
+  {
+    "id": "high-downtime-escalation",
+    "version": "1.0.0",
+    "description": "Flag high downtime when an asset has accumulated five or more related operational events within a 180-day window, used as a recurrence-based proxy for downtime exposure since the fact catalogue has no direct sum-of-hours aggregate.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 4320 },
+      "operator": "greater-than-or-equal",
+      "value": 5
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "high-downtime",
+        "parameters": { "severity": "high" }
+      }
+    ]
+  }
+]

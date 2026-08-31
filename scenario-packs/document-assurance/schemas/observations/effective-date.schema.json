@@ -1,0 +1,8 @@
+{
+  "schemaKey": "effective-date",
+  "displayName": "Effective Date",
+  "entityType": "document",
+  "valueType": "string",
+  "description": "The execution, effective, or issue date of a document, expressed as an ISO 8601 calendar date.",
+  "jsonSchema": { "type": "string", "format": "date" }
+}

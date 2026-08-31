@@ -1,0 +1,1075 @@
+[
+  {
+    "fixtureId": "asset-reliability-demo-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "brake assembly"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "grinding noise when braking hard, spongy pedal with more travel than usual"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Dana Osei"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-18"
+      },
+      {
+        "schemaKey": "previous-repair-reference",
+        "status": "extracted",
+        "value": "brake work done in spring"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [
+      "repeated-fault-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Repeat-fault candidate, references prior spring brake work."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "FIS-4471"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-04-06"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Tobias Krantz"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Ferrow Industrial Services"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "brake pads (front and rear)"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Historical anchor retrieved when scoring recurrence, not itself a trigger."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-21"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "uneven pad wear and fluid weeping at a brake-line fitting"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "brake assembly / hydraulic line fitting"
+      },
+      {
+        "schemaKey": "previous-repair-reference",
+        "status": "extracted",
+        "value": "FIS-4471, 2026-04-06 brake pad replacement"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "diagnostic and repair within 5 business days (by 2026-05-26)"
+      },
+      {
+        "schemaKey": "follow-up-due-date",
+        "status": "extracted",
+        "value": "2026-05-26"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [
+      "repeated-fault-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Recurrence confirmed, SLA of 5 business days set (by 2026-05-26)."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "brakes"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "brakes did not hold on an incline under load, unit rolled backward"
+      },
+      {
+        "schemaKey": "severity-indicator",
+        "status": "extracted",
+        "value": "safety-critical"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Owen Vasquez"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-06-02"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [
+      "repeated-fault-escalation",
+      "safety-critical-fault-severity",
+      "overdue-repair-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Safety-critical repeat occurrence; SLA from demo-003 exceeded. Precursor to demo-005's decision."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-06-02"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "hold from service pending review"
+      },
+      {
+        "schemaKey": "severity-indicator",
+        "status": "extracted",
+        "value": "safety-critical"
+      },
+      {
+        "schemaKey": "previous-repair-reference",
+        "status": "extracted",
+        "value": "2026-04-06 brake pad replacement by Ferrow Industrial Services"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "escalation-raised",
+    "expectedSignals": [
+      "repeated-fault-escalation",
+      "safety-critical-fault-severity",
+      "overdue-repair-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": {
+      "ruleId": "safety-critical-removal-approval",
+      "approvalRequired": true,
+      "riskLevel": "critical"
+    },
+    "notes": "Formal hold-from-service request; drives the pack's primary Decision."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-06-03"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "out-of-service"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "not to be returned to the floor without sign-off"
+      }
+    ],
+    "expectedEntities": [
+      "A-142"
+    ],
+    "expectedEventType": "status-changed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Confirms out-of-service status; reinforces pending approval gate from demo-005, none recorded in this pack."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "conveyor belt"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "intermittent belt slippage under load"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-03-10"
+      }
+    ],
+    "expectedEntities": [
+      "A-210"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "First occurrence."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-10788"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-03-10"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "drive belt"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-210"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Same-day tension adjustment."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-03-16"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "tension holding but belt shows glazing and edge fraying, wear approaching replacement threshold"
+      },
+      {
+        "schemaKey": "related-asset-reference",
+        "status": "extracted",
+        "value": "A-211"
+      },
+      {
+        "schemaKey": "install-batch",
+        "status": "extracted",
+        "value": "2021-06-01"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "preventive belt-wear check on A-211 within the next maintenance cycle"
+      }
+    ],
+    "expectedEntities": [
+      "A-210",
+      "A-211"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Cross-asset preventive recommendation for A-211 via shared install batch; not a fault on A-211."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-010",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "slipping again, same spot, under load, tension adjustment did not hold"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-03-24"
+      }
+    ],
+    "expectedEntities": [
+      "A-210"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [
+      "repeated-fault-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Second slippage within ~14 days; prior fix did not hold."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-011",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Coastal Fleet Maintenance"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-03-27"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "full belt replacement, estimated downtime approximately 4 hours"
+      }
+    ],
+    "expectedEntities": [
+      "A-210"
+    ],
+    "expectedEventType": "repair-scheduled",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Vendor quote for full belt replacement, not yet a confirmed scheduled work order."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-012",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-301"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "hydraulic lift cylinder"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "fresh hydraulic fluid puddle under the leveler"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Dana Osei"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-02-05"
+      }
+    ],
+    "expectedEntities": [
+      "A-301"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "First report of hydraulic fluid puddle."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-013",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-301"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-02-06"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "hydraulic lift cylinder seal"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "in-service"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "flagging for inspection follow-up, temporary patch not a real fix"
+      }
+    ],
+    "expectedEntities": [
+      "A-301"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Temporary seal patch, explicitly not a resolution."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-014",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-301"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-02-11"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "seal patch holding for now, but original cylinder near end of life"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "full hydraulic cylinder replacement within 30 days (by approximately 2026-03-13)"
+      },
+      {
+        "schemaKey": "follow-up-due-date",
+        "status": "extracted",
+        "value": "2026-03-13"
+      },
+      {
+        "schemaKey": "related-asset-reference",
+        "status": "extracted",
+        "value": "A-302"
+      },
+      {
+        "schemaKey": "install-batch",
+        "status": "extracted",
+        "value": "2020-05-15"
+      }
+    ],
+    "expectedEntities": [
+      "A-301",
+      "A-302"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "30-day replacement SLA set; A-302 flagged for preventive inspection (no fault of its own)."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-015",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-301"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-10651"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-03-10"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Ferrow Industrial Services"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Scheduled"
+      }
+    ],
+    "expectedEntities": [
+      "A-301"
+    ],
+    "expectedEventType": "repair-scheduled",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Satisfies the 30-day SLA from demo-014, well within window."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-016",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "radiator / coolant system"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "overheat alarm shutdown during monthly test run, ~12 minutes in"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-04-14"
+      }
+    ],
+    "expectedEntities": [
+      "A-501"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "First occurrence."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-017",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-04-15"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "operational"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "resolved after coolant top-up, monitor at next monthly test"
+      }
+    ],
+    "expectedEntities": [
+      "A-501"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Claimed resolution; later contradicted by demo-018, must not be read as authoritative on its own."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-018",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-04-29"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "coolant low again, radiator fins bent and blocked; contradicts prior resolved status"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "not-operational"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "radiator fin cleaning/straightening and cooling-system pressure test before next backup-power test"
+      }
+    ],
+    "expectedEntities": [
+      "A-501"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [
+      "conflicting-status-signal"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Directly contradicts demo-017's resolved status; both records must be surfaced, not silently reconciled."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-019",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-05-04"
+      },
+      {
+        "schemaKey": "requested-action",
+        "status": "extracted",
+        "value": "prioritize radiator repair and cooling pressure test before facility audit"
+      }
+    ],
+    "expectedEntities": [
+      "A-501"
+    ],
+    "expectedEventType": "escalation-raised",
+    "expectedSignals": [
+      "conflicting-status-signal"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Formalizes the status contradiction as a leadership-visible audit risk."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-020",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "refrigerant compressor breaker"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "breaker tripping, third time this week"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-06"
+      }
+    ],
+    "expectedEntities": [
+      "A-520"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [
+      "repeated-fault-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Third breaker trip in a week (operator-reported frequency)."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-021",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-11240"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-07-06"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "root cause not yet confirmed, recommend leak diagnostic"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-520"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Temporary measure, tagged as such; must not close the fault signal from demo-020."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-022",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-10"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "refrigerant already low again after four days, suspect slow leak at a fitting"
+      },
+      {
+        "schemaKey": "related-asset-reference",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "install-batch",
+        "status": "extracted",
+        "value": "2021-02-01"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "schedule a proper refrigerant leak test to locate the leak source"
+      }
+    ],
+    "expectedEntities": [
+      "A-520",
+      "A-501"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [
+      "repeated-fault-escalation"
+    ],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Cross-asset install-batch pattern referencing A-501, not merged with A-501's case."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-023",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Ferrow Industrial Services"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-17"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "slow leak at a corroded line fitting on the discharge side"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "replace the fitting, same-week callout available"
+      }
+    ],
+    "expectedEntities": [
+      "A-520"
+    ],
+    "expectedEventType": "diagnostic-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Root cause confirmed: corroded fitting slow leak."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-024",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Ferrow Industrial Services"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-21"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "operational"
+      }
+    ],
+    "expectedEntities": [
+      "A-520"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": true,
+    "expectedDecision": null,
+    "notes": "Repair confirmed by clean post-repair test; closes the A-520 case."
+  },
+  {
+    "fixtureId": "asset-reliability-demo-025",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-142"
+      },
+      {
+        "schemaKey": "repeat-fault-count",
+        "status": "extracted",
+        "value": 3
+      },
+      {
+        "schemaKey": "downtime-hours",
+        "status": "extracted",
+        "value": 146
+      },
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-210"
+      },
+      {
+        "schemaKey": "repeat-fault-count",
+        "status": "extracted",
+        "value": 2
+      },
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-501"
+      },
+      {
+        "schemaKey": "repeat-fault-count",
+        "status": "extracted",
+        "value": 2
+      }
+    ],
+    "expectedEntities": [
+      "A-142",
+      "A-210",
+      "A-501",
+      "A-520",
+      "A-301"
+    ],
+    "expectedEventType": "fleet-summary-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Leadership rollup; should be reproducible from, and not contradict, the underlying per-asset artifacts."
+  }
+]

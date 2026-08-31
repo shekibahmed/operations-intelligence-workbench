@@ -1,0 +1,13 @@
+{
+  "id": "document",
+  "displayName": "Document",
+  "description": "A contract, policy, amendment, checklist, report, or other artifact-level source document tracked by the pack.",
+  "attributes": [
+    { "key": "referenceNumber", "type": "string", "description": "The document's stable reference number (e.g. VLP-FAL-2026-0142)." },
+    { "key": "documentType", "type": "string", "description": "The kind of document (contract, policy, amendment, checklist, compliance-report, correspondence, reviewer-note, system-export)." },
+    { "key": "effectiveDate", "type": "string", "description": "The date the document takes or took effect." },
+    { "key": "executionDate", "type": "string", "description": "The date the document was executed/signed, if applicable." },
+    { "key": "governingJurisdiction", "type": "string", "description": "The jurisdiction governing the document, if stated." },
+    { "key": "relatedProject", "type": "string", "description": "The project the document is associated with, if any." }
+  ]
+}

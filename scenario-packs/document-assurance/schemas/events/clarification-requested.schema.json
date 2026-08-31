@@ -1,0 +1,6 @@
+{
+  "id": "clarification-requested",
+  "displayName": "Clarification Requested",
+  "description": "A reviewer requested clarification from a party contact by correspondence; the thread may resolve cleanly, resolve partially, or remain unresolved.",
+  "requiredObservations": ["review-status"]
+}

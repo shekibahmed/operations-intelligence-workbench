@@ -1,0 +1,10 @@
+{
+  "schemaKey": "requested-action",
+  "displayName": "Requested Action",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "An explicit action request made by a person in the source record (e.g. hold from service, return to service).",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

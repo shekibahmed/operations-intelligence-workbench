@@ -1,0 +1,57 @@
+{
+  "artifactChecksum": "7bb0455f0019822fd1eb88a8fe3a29c3b15b05cf1a7a3f1cd36ad666bc6846e5",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporting-period",
+      "confidence": 0.95,
+      "value": "2026-Q2",
+      "normalisedValue": "2026-Q2",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reporting Period: Q2 2026 (April 1 - June 30, 2026)"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "document-reference",
+      "confidence": 0.15,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "No document name, contract reference number, or project name\nis recorded in the source material"
+        }
+      ],
+      "reason": "No document name, contract reference number, or project name is recorded anywhere in the source text; must not be guessed or auto-linked to any existing case."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

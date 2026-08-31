@@ -1,0 +1,10 @@
+{
+  "schemaKey": "install-batch",
+  "displayName": "Install Batch",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The procurement or install batch identifier for the asset.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

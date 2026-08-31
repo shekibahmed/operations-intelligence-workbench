@@ -1,0 +1,75 @@
+{
+  "artifactChecksum": "d6cba9f5b181b4793fda28bf4867778ac1c2101142fc83c095a83002bc6e92e3",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.93,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "checklist_item"
+          },
+          "excerpt": "Project Falcon MSA on file (ref VLP-FAL-2026-0142)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.85,
+      "value": "2026-04-15",
+      "normalisedValue": "2026-04-15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 1,
+            "column": "notes"
+          },
+          "excerpt": "Checklist records due date as April 15 2026 per internal audit calendar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.9,
+      "value": "Elena Cho",
+      "normalisedValue": "Elena Cho",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "owner"
+          },
+          "excerpt": "Elena Cho"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

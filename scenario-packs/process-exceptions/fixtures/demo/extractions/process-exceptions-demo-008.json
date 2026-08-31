@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "723d40a12268724c739cf66ed695be871a9c9978402d13fa60ac0b7a76e2b73a",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.94,
+      "value": "Line 1",
+      "normalisedValue": "Line 1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 48,
+            "end": 69
+          },
+          "excerpt": "Line: Line 1 (Mixing)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "yield-loss-pct",
+      "confidence": 0.92,
+      "value": 5.1,
+      "normalisedValue": 5.1,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 260,
+            "end": 285
+          },
+          "excerpt": "Yield loss vs. plan: 5.1%"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.85,
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 418,
+            "end": 473
+          },
+          "excerpt": "both run on Kestrel Materials Co. binder lot KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.88,
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 452,
+            "end": 473
+          },
+          "excerpt": "binder lot KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.92,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "Priya Nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 792,
+            "end": 821
+          },
+          "excerpt": "Compiled by: Priya Nandakumar"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

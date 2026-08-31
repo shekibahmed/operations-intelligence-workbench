@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "5199c713374d07b83a301997e4c13ca9706ea49fc63a99dc29c2ebb024f00ecd",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.96,
+      "value": "A-210",
+      "normalisedValue": "A-210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 94,
+            "end": 138
+          },
+          "excerpt": "A-210 is doing the same slipping thing again"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.87,
+      "value": "slipping again, same spot, under load, tension adjustment did not hold",
+      "normalisedValue": "slipping again, same spot, under load, tension adjustment did not hold",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 228,
+            "end": 283
+          },
+          "excerpt": "the tension adjustment a couple weeks back didn't stick"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.9,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "Priya Nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 59,
+            "end": 93
+          },
+          "excerpt": "Priya Nandakumar, 2026-03-24 07:48"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-03-24",
+      "normalisedValue": "2026-03-24",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 77,
+            "end": 93
+          },
+          "excerpt": "2026-03-24 07:48"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

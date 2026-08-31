@@ -1,0 +1,9 @@
+{
+  "id": "diagnostic-completed",
+  "displayName": "Diagnostic Completed",
+  "description": "A diagnostic or root-cause investigation completed against an asset, typically by a service provider.",
+  "requiredObservations": [
+    "asset-identifier",
+    "inspection-finding"
+  ]
+}

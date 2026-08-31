@@ -1,0 +1,16 @@
+{
+  "schemaKey": "financial-threshold",
+  "displayName": "Financial Threshold",
+  "entityType": "obligation",
+  "valueType": "object",
+  "description": "A monetary figure named by a provision (e.g. a liability cap), represented as a typed amount/currency pair rather than a bare number so that two conflicting figures for the same claim type can be compared meaningfully.",
+  "jsonSchema": {
+    "type": "object",
+    "properties": {
+      "amount": { "type": "number" },
+      "currency": { "type": "string" }
+    },
+    "required": ["amount", "currency"],
+    "additionalProperties": false
+  }
+}

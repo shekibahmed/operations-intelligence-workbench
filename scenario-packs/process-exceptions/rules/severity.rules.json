@@ -1,0 +1,85 @@
+[
+  {
+    "id": "threshold-breach-severity",
+    "version": "1.0.0",
+    "description": "Flag a batch as a threshold breach and open an exception case when a confirmed deviation observation exceeds 5%.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "deviation", "field": "value" },
+      "operator": "greater-than",
+      "value": 5
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "threshold-breach", "parameters": { "severity": "high" } },
+      { "type": "create-case", "definitionId": "exception-case", "parameters": { "defaultSeverity": "high" } }
+    ]
+  },
+  {
+    "id": "unexplained-yield-loss-severity",
+    "version": "1.0.0",
+    "description": "Flag a weekly yield-loss trend on a line as requiring investigation once it exceeds the normal 0.5-1% band, whether or not a root cause has already been attributed.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "yield-loss-pct", "field": "value" },
+      "operator": "greater-than",
+      "value": 2
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "unexplained-yield-loss", "parameters": { "severity": "high" } }
+    ]
+  },
+  {
+    "id": "missing-batch-identifier-review",
+    "version": "1.0.0",
+    "description": "Route an artifact to review instead of fabricating a linkage when a batch identifier could not be extracted at all.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "batch-identifier", "field": "evidenceStatus" },
+      "operator": "equals",
+      "value": "insufficient-evidence"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "missing-evidence", "parameters": { "severity": "medium" } },
+      { "type": "flag-review", "definitionId": "missing-batch-identifier", "parameters": {} }
+    ]
+  },
+  {
+    "id": "missing-observed-value-review",
+    "version": "1.0.0",
+    "description": "Abstain from a confident disposition recommendation and route to review when an inspection's observed value is missing (e.g. an interrupted inspection).",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "observed-value", "field": "evidenceStatus" },
+      "operator": "equals",
+      "value": "insufficient-evidence"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "missing-evidence", "parameters": { "severity": "medium" } },
+      { "type": "flag-review", "definitionId": "incomplete-inspection-review", "parameters": {} }
+    ]
+  },
+  {
+    "id": "ambiguous-line-review",
+    "version": "1.0.0",
+    "description": "Route to review for line disambiguation instead of silently defaulting when a line reference is genuinely ambiguous between two plausible lines.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "line-identifier", "field": "reviewStatus" },
+      "operator": "equals",
+      "value": "conflicting"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "data-integrity-flag", "parameters": { "severity": "low" } },
+      { "type": "flag-review", "definitionId": "line-disambiguation", "parameters": {} }
+    ]
+  },
+  {
+    "id": "date-inconsistency-review",
+    "version": "1.0.0",
+    "description": "Surface an internal date inconsistency (a detected/reference date pair that contradicts itself within one artifact) for review rather than silently trusting the record.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "referenced-report-date", "field": "reviewStatus" },
+      "operator": "equals",
+      "value": "conflicting"
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "data-integrity-flag", "parameters": { "severity": "low" } },
+      { "type": "flag-review", "definitionId": "date-inconsistency-review", "parameters": {} }
+    ]
+  }
+]

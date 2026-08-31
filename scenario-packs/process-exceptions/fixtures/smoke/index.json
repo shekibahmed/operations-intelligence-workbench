@@ -1,0 +1,101 @@
+[
+  {
+    "id": "process-exceptions-smoke-001",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 Shift A shift report"
+    },
+    "sha256": "09a1c441ac465755f5e6cf61046edb72bb2cbaa5c3cb4a350e34eda8b65a0edf",
+    "expectedExtraction": "extractions/process-exceptions-smoke-001.json"
+  },
+  {
+    "id": "process-exceptions-smoke-002",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-smoke-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2101"
+    },
+    "sha256": "3a46a0d09a3949746763108dae8ac058cac5e9005f01c56cbf6cecae500288e8",
+    "expectedExtraction": "extractions/process-exceptions-smoke-002.json"
+  },
+  {
+    "id": "process-exceptions-smoke-003",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-003.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 filler calibration operator note"
+    },
+    "sha256": "cd5a2a5700272c81bcdbe27539d85a386c0ae2470e0d5174c7e93ad32dee82ba",
+    "expectedExtraction": "extractions/process-exceptions-smoke-003.json"
+  },
+  {
+    "id": "process-exceptions-smoke-004",
+    "artifactType": "inventory-exception-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "raw material warehouse inventory exception note"
+    },
+    "sha256": "5837375ce7eebe03d9dbd5bf5f96b984df583f02fb29dd3f27f99afe3861497e",
+    "expectedExtraction": "extractions/process-exceptions-smoke-004.json"
+  },
+  {
+    "id": "process-exceptions-smoke-005",
+    "artifactType": "production-summary",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 3 weekly production summary"
+    },
+    "sha256": "ffb86cd2c6646afd4b9665b5f292e1283fbce646d296ccb4b018a348f181d8d0",
+    "expectedExtraction": "extractions/process-exceptions-smoke-005.json"
+  },
+  {
+    "id": "process-exceptions-smoke-006",
+    "artifactType": "supervisor-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "routine shift handover email"
+    },
+    "sha256": "c0927514950389f1ae5fbbdfa5ebfe0bf139e16d8430b45f630ed909c123219c",
+    "expectedExtraction": "extractions/process-exceptions-smoke-006.json"
+  },
+  {
+    "id": "process-exceptions-smoke-007",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-smoke-007.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2110"
+    },
+    "sha256": "adb3316365d60a012e3fbac41bec13dee21f95b43db0bf2c920159b2d5738927",
+    "expectedExtraction": "extractions/process-exceptions-smoke-007.json"
+  },
+  {
+    "id": "process-exceptions-smoke-008",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-smoke-008.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 Shift B shift report"
+    },
+    "sha256": "9e45437e4fbf0d17c9e93697c056572e7679417fe8fc347f9cc5d4620b7017db",
+    "expectedExtraction": "extractions/process-exceptions-smoke-008.json"
+  },
+  {
+    "id": "process-exceptions-smoke-009",
+    "artifactType": "analyzer-reading",
+    "mimeType": "application/json",
+    "contentPath": "content/process-exceptions-smoke-009.json",
+    "sourceMetadata": {
+      "narrativeSource": "Line 3 in-line analyzer automated JSON export"
+    },
+    "sha256": "e38e818035ed8e0ce24328ba736366ead7791d6f6e4972e8aaa63c6870d3211a",
+    "expectedExtraction": "extractions/process-exceptions-smoke-009.json"
+  }
+]

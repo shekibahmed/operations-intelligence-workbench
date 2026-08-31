@@ -1,0 +1,23 @@
+[
+  {
+    "id": "hold-affected-output-approval",
+    "version": "1.0.0",
+    "description": "Propose the pack's high-risk hold-affected-output Decision, requiring supervisor/QC approval, whenever a formal hold request event is recorded for a supplier lot.",
+    "when": {
+      "fact": { "kind": "event-field", "field": "eventType" },
+      "operator": "equals",
+      "value": "formal-hold-requested"
+    },
+    "then": [
+      {
+        "type": "propose-decision",
+        "definitionId": "hold-affected-output",
+        "parameters": {
+          "decisionType": "hold-affected-output",
+          "approvalPolicyId": "supervisor-qc-hold-approval",
+          "riskLevel": "high"
+        }
+      }
+    ]
+  }
+]

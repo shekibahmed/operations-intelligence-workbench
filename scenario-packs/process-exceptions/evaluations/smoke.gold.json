@@ -1,0 +1,372 @@
+[
+  {
+    "fixtureId": "process-exceptions-smoke-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-19"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 1 (Mixing)"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2098"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2099"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "shift-report-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine shift report, no exceptions."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2101"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 1"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "KM-LOT-401"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 600
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 604
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 0.7
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "released"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Owen Bracewell"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-19"
+      }
+    ],
+    "expectedEntities": [
+      "B-2101"
+    ],
+    "expectedEventType": "qc-check-passed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Viscosity within tolerance, 0.7% deviation."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-20"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Ingrid Halvorsen"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 2 (Filling)"
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 499.6
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 500
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2108"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "routine-calibration-performed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine weekly filler calibration, within tolerance."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-20"
+      },
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 47
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "delivery physically staged but not yet posted to the inventory system by the receiving clerk"
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "resolved"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "inventory-exception-logged",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Small overage traced to an unposted receipt, resolved same shift."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-21"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 3 (Packaging)"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "packaging"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2104, B-2105, B-2106"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "production-summary-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Normal weekly pattern, no exceptions."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "reporter-name",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-21"
+      },
+      {
+        "schemaKey": "reported-cause",
+        "status": "extracted",
+        "value": "no quality holds, no safety events"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "routine-handover-sent",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Issue-free handover, references smoke-004 as resolved background context."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2110"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 3"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "packaging"
+      },
+      {
+        "schemaKey": "supplier-lot-identifier",
+        "status": "extracted",
+        "value": "DR-LOT-220"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 500
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 503
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 0.6
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "released"
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-22"
+      }
+    ],
+    "expectedEntities": [
+      "B-2110"
+    ],
+    "expectedEventType": "qc-check-passed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Fill weight within tolerance, 0.6% deviation, different product from B-2101."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-22"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 2 (Filling)"
+      },
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2109 and B-2110"
+      },
+      {
+        "schemaKey": "disposition-status",
+        "status": "extracted",
+        "value": "released to the warehouse after checkweigher sign-off"
+      }
+    ],
+    "expectedEntities": [],
+    "expectedEventType": "shift-report-filed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine night-shift report, no exceptions."
+  },
+  {
+    "fixtureId": "process-exceptions-smoke-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "batch-identifier",
+        "status": "extracted",
+        "value": "B-2115"
+      },
+      {
+        "schemaKey": "line-identifier",
+        "status": "extracted",
+        "value": "Line 3"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "packaging"
+      },
+      {
+        "schemaKey": "expected-value",
+        "status": "extracted",
+        "value": 100
+      },
+      {
+        "schemaKey": "observed-value",
+        "status": "extracted",
+        "value": 99.4
+      },
+      {
+        "schemaKey": "deviation",
+        "status": "extracted",
+        "value": 0.6
+      },
+      {
+        "schemaKey": "time-detected",
+        "status": "extracted",
+        "value": "2026-01-23T10:15:00Z"
+      }
+    ],
+    "expectedEntities": [
+      "B-2115"
+    ],
+    "expectedEventType": "analyzer-reading-logged",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Automated analyzer export, within tolerance."
+  }
+]

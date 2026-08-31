@@ -1,0 +1,41 @@
+[
+  {
+    "id": "safety-critical-fault-severity",
+    "version": "1.0.0",
+    "description": "Flag a fault as safety-critical when the severity-indicator observation for the underlying event is explicitly safety-critical (e.g. a brake failure to hold under load).",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "severity-indicator", "field": "value" },
+      "operator": "equals",
+      "value": "safety-critical"
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "safety-critical-fault",
+        "parameters": { "severity": "critical" }
+      }
+    ]
+  },
+  {
+    "id": "conflicting-status-signal",
+    "version": "1.0.0",
+    "description": "Flag conflicting operating status when two current-operating-status observations on the same asset have been placed under human review as contradictory rather than one being silently preferred over the other.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "current-operating-status", "field": "reviewStatus" },
+      "operator": "equals",
+      "value": "conflicting"
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "conflicting-operating-status",
+        "parameters": { "severity": "high" }
+      },
+      {
+        "type": "flag-review",
+        "definitionId": "conflicting-status-review",
+        "parameters": { "reason": "Two or more current-operating-status observations on this asset contradict one another." }
+      }
+    ]
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "schemaKey": "line-identifier",
+  "displayName": "Line Identifier",
+  "entityType": "line",
+  "valueType": "string",
+  "description": "The line an observation pertains to. May be ambiguous between two plausible lines (e.g. Line 2 vs Line 2B) when the source text itself is unclear.",
+  "jsonSchema": { "type": "string" }
+}

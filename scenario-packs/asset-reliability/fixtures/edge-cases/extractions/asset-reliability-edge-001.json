@@ -1,0 +1,59 @@
+{
+  "artifactChecksum": "e93d6038678d73f1d559f0a3e8c2c6c54d6e2a7d0ea3880b7beaff0ef976b6fb",
+  "observations": [
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.3,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 94,
+            "end": 140
+          },
+          "excerpt": "the forklift by dock 3 is making a weird noise"
+        }
+      ],
+      "reason": "No asset identifier stated; \"the forklift by dock 3\" is not a documented asset location and must not be guessed."
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.75,
+      "value": "whining sound near the top of mast travel",
+      "normalisedValue": "whining sound near the top of mast travel",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 164,
+            "end": 211
+          },
+          "excerpt": "a whining sound near the top of the mast travel"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

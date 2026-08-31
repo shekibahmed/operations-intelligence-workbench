@@ -1,0 +1,54 @@
+[
+  {
+    "id": "repeated-deviation-escalation",
+    "version": "1.0.0",
+    "description": "Flag a repeated-deviation signal when a second confirmed QC deviation event occurs within 72 hours of a related one, indicating the same issue is recurring rather than a one-off.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "qc-deviation-confirmed", "withinHours": 72 },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "repeated-deviation", "parameters": { "severity": "high" } }
+    ]
+  },
+  {
+    "id": "supplier-pattern-escalation",
+    "version": "1.0.0",
+    "description": "Elevate to a supplier-linked-pattern signal once two or more confirmed QC deviation events accumulate within a 30-day window, indicating a cross-batch pattern worth investigating against a shared supplier lot (subject to human confirmation of the shared lot itself).",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "qc-deviation-confirmed", "withinHours": 720 },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "supplier-linked-pattern", "parameters": { "severity": "high" } }
+    ]
+  },
+  {
+    "id": "escalating-backlog-escalation",
+    "version": "1.0.0",
+    "description": "Flag an escalating-backlog signal once two or more exception cases are open at the same time, indicating held/undispositioned output is accumulating rather than clearing.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "open-case-count" },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      { "type": "create-signal", "definitionId": "escalating-backlog", "parameters": { "severity": "medium" } }
+    ]
+  },
+  {
+    "id": "root-cause-investigation-triggered",
+    "version": "1.0.0",
+    "description": "Open a root-cause-investigation action item whenever a supervisor formally requests one.",
+    "when": {
+      "fact": { "kind": "event-field", "field": "eventType" },
+      "operator": "equals",
+      "value": "root-cause-investigation-requested"
+    },
+    "then": [
+      { "type": "create-action", "definitionId": "root-cause-investigation", "parameters": {} }
+    ]
+  }
+]

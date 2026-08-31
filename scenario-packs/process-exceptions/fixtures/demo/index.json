@@ -1,0 +1,134 @@
+[
+  {
+    "id": "process-exceptions-demo-001",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 operator note, B-2205 early viscosity trend"
+    },
+    "sha256": "22873a29d9bfb99c4c6e00973d5733fc794d5d090252404fc31ab5e45c540a8e",
+    "expectedExtraction": "extractions/process-exceptions-demo-001.json"
+  },
+  {
+    "id": "process-exceptions-demo-002",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-demo-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2205 confirmed deviation"
+    },
+    "sha256": "dffb381f9be2fe27b161a536732b61bebd9e86f1238309af013f3add984edcb8",
+    "expectedExtraction": "extractions/process-exceptions-demo-002.json"
+  },
+  {
+    "id": "process-exceptions-demo-003",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-003.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 Shift A handover report, B-2205 escalation"
+    },
+    "sha256": "f77a0599f76c58bf704dc71bbf891df60af2847424b2601f19caf24c59805966",
+    "expectedExtraction": "extractions/process-exceptions-demo-003.json"
+  },
+  {
+    "id": "process-exceptions-demo-004",
+    "artifactType": "supervisor-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "supervisor email, root-cause request for B-2205 with B-2190 hypothesis"
+    },
+    "sha256": "31f49b944910ce89161d970781019a8d3afdc81b68b8d6c49be77357ae495b26",
+    "expectedExtraction": "extractions/process-exceptions-demo-004.json"
+  },
+  {
+    "id": "process-exceptions-demo-005",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 operator note, B-2210 early viscosity trend"
+    },
+    "sha256": "7cc33b3600812fef8777535c6a0b6465f6cb96b79d61260a5e708266a99e7000",
+    "expectedExtraction": "extractions/process-exceptions-demo-005.json"
+  },
+  {
+    "id": "process-exceptions-demo-006",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-demo-006.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2210 confirmed deviation"
+    },
+    "sha256": "af050b5fb3be788a9f51a50ce3b9690a63bfb18432e3326bd9c1ceac440ee990",
+    "expectedExtraction": "extractions/process-exceptions-demo-006.json"
+  },
+  {
+    "id": "process-exceptions-demo-007",
+    "artifactType": "inventory-exception-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-007.txt",
+    "sourceMetadata": {
+      "narrativeSource": "quarantine/hold staging area aging exception note"
+    },
+    "sha256": "92aa8410d9924acb7dcb99214c292448571737363c171282dffcb0818c0cbbe1",
+    "expectedExtraction": "extractions/process-exceptions-demo-007.json"
+  },
+  {
+    "id": "process-exceptions-demo-008",
+    "artifactType": "production-summary",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-008.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 weekly production summary, yield-loss trend"
+    },
+    "sha256": "723d40a12268724c739cf66ed695be871a9c9978402d13fa60ac0b7a76e2b73a",
+    "expectedExtraction": "extractions/process-exceptions-demo-008.json"
+  },
+  {
+    "id": "process-exceptions-demo-009",
+    "artifactType": "supervisor-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-009.txt",
+    "sourceMetadata": {
+      "narrativeSource": "supervisor email, formal KM-LOT-448 hold request"
+    },
+    "sha256": "77ce57f0e15ca24d12f19bb9f95a2a3ea1a57ebf5623a137af7ccf6dab7100c0",
+    "expectedExtraction": "extractions/process-exceptions-demo-009.json"
+  },
+  {
+    "id": "process-exceptions-demo-010",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-010.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 operator note, minor B-2211 fill-weight deviation"
+    },
+    "sha256": "6ec457e8529291d0c851448ad7d893c1389dc5ca7f67778940a89f2ebc649bd1",
+    "expectedExtraction": "extractions/process-exceptions-demo-010.json"
+  },
+  {
+    "id": "process-exceptions-demo-011",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "content/process-exceptions-demo-011.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-2211 within tolerance after adjustment"
+    },
+    "sha256": "fb5853138c35919efe73732eb380a0700bf9529057bc6368eb80c62dad8dfbf2",
+    "expectedExtraction": "extractions/process-exceptions-demo-011.json"
+  },
+  {
+    "id": "process-exceptions-demo-012",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "content/process-exceptions-demo-012.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 closing shift report, KM-LOT-448 status summary"
+    },
+    "sha256": "011851e04ae3b5486d7f03232142a82b3861350bf3d8d6261fc4efc5011a1d25",
+    "expectedExtraction": "extractions/process-exceptions-demo-012.json"
+  }
+]

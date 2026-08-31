@@ -1,0 +1,6 @@
+{
+  "id": "contract-executed",
+  "displayName": "Contract Executed",
+  "description": "A contract, NDA, or service order was signed by both parties, creating one or more obligations.",
+  "requiredObservations": ["document-reference", "effective-date"]
+}

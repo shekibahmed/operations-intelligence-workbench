@@ -1,0 +1,10 @@
+{
+  "schemaKey": "previous-repair-reference",
+  "displayName": "Previous Repair Reference",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "A reference (work order number or narrative pointer) to a prior repair relevant to the current record.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

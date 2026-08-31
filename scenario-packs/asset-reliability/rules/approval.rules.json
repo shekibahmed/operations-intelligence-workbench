@@ -1,0 +1,61 @@
+[
+  {
+    "id": "safety-critical-removal-approval",
+    "version": "1.0.0",
+    "description": "Propose a remove-from-service decision, requiring human approval, when an asset has a safety-critical fault and at least one other related event in the preceding 60 days (a repeat, not a first-time, safety-critical occurrence). This is the rule that drives the A-142 hold-from-service decision in the primary demo storyline.",
+    "when": {
+      "all": [
+        {
+          "fact": { "kind": "observation", "schemaKey": "severity-indicator", "field": "value" },
+          "operator": "equals",
+          "value": "safety-critical"
+        },
+        {
+          "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 1440 },
+          "operator": "greater-than-or-equal",
+          "value": 2
+        }
+      ]
+    },
+    "then": [
+      {
+        "type": "propose-decision",
+        "definitionId": "remove-from-service",
+        "parameters": {
+          "decisionType": "remove-from-service",
+          "approvalPolicyId": "asset-removal-approval",
+          "riskLevel": "critical",
+          "rationale": "Repeat safety-critical fault on a braking or other safety-relevant component; asset must not return to service without explicit human sign-off."
+        }
+      }
+    ]
+  },
+  {
+    "id": "structural-integrity-removal-approval",
+    "version": "1.0.0",
+    "description": "Propose a remove-from-service decision, requiring human approval, when an inspector flags a possible structural defect even without confirmed measurement evidence. The evidence-quality caveat must be preserved on the proposed decision rather than stripped out, since this decision rests on thin evidence by the inspector's own account.",
+    "when": {
+      "fact": { "kind": "observation", "schemaKey": "requested-action", "field": "value" },
+      "operator": "equals",
+      "value": "remove-from-service-out-of-caution"
+    },
+    "then": [
+      {
+        "type": "propose-decision",
+        "definitionId": "remove-from-service",
+        "parameters": {
+          "decisionType": "remove-from-service",
+          "approvalPolicyId": "asset-removal-approval",
+          "riskLevel": "high",
+          "rationale": "Inspector-flagged possible structural defect on the overhead guard, explicitly unconfirmed and without measurement or photo evidence; route to a human decision-maker rather than auto-executing.",
+          "evidenceQuality": "unconfirmed"
+        }
+      },
+      {
+        "type": "flag-review",
+        "definitionId": "thin-evidence-decision-review",
+        "parameters": { "reason": "High-risk decision proposal rests on unconfirmed, unmeasured evidence." }
+      }
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "id": "shift-report-filed",
+  "displayName": "Shift Report Filed",
+  "description": "A shift report or shift handover was filed by an operator, covering routine operations or escalating an open exception. Used for both no-exception reports and exception-carrying handovers (see hasException attribute).",
+  "requiredObservations": ["time-detected", "reporter-name"]
+}

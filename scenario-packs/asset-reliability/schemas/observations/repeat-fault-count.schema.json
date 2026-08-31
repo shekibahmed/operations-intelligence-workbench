@@ -1,0 +1,11 @@
+{
+  "schemaKey": "repeat-fault-count",
+  "displayName": "Repeat Fault Count",
+  "entityType": "asset",
+  "valueType": "number",
+  "description": "The count of repeat fault occurrences attributed to the asset in a reporting record.",
+  "jsonSchema": {
+    "type": "integer",
+    "minimum": 0
+  }
+}

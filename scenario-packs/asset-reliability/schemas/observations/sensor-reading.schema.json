@@ -1,0 +1,32 @@
+{
+  "schemaKey": "sensor-reading",
+  "displayName": "Sensor Reading",
+  "entityType": "asset",
+  "valueType": "object",
+  "description": "A structured automated sensor reading payload.",
+  "jsonSchema": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "number"
+      },
+      "unit": {
+        "type": "string"
+      },
+      "thresholdLow": {
+        "type": "number"
+      },
+      "thresholdHigh": {
+        "type": "number"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "value",
+      "unit",
+      "status"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+Rivermill Processing Plant — Operator Note
+Line: Line 3 (Packaging)
+Shift: A (Day)
+Date: 2026-01-23
+Operator: Line 3 crew
+
+Noticed the checkweigher on station 2 rejecting more cartons than usual through the mid-morning run — maybe one in twenty instead of the usual one in a hundred or so. Pulled a few of the rejects and the fill looked light by eye, a few grams under target. Flagged it to the line lead and we slowed the line down to keep an eye on it; reject rate came back down after about 40 minutes and we're not sure what caused it.
+
+Didn't get a batch number written down before the shift got busy — need to check the packaging log against the timestamp to figure out which batch this was on. Will follow up tomorrow.

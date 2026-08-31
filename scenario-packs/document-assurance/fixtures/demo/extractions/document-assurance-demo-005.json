@@ -1,0 +1,104 @@
+{
+  "artifactChecksum": "ab565ab76e3d9f57b4ee664657d719a0d187a9118c1f3c61006df6d95d1417a7",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporting-period",
+      "confidence": 0.96,
+      "value": "2026-Q1",
+      "normalisedValue": "2026-Q1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reporting Period: Q1 2026 (January 1 - March 31, 2026)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.94,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference: VLP-FAL-2026-0142"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "required-evidence",
+      "confidence": 0.92,
+      "value": "missing",
+      "normalisedValue": "missing",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "This item is flagged as missing supporting evidence"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.87,
+      "value": "insurance-maintenance",
+      "normalisedValue": "insurance-maintenance",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "2.1 Insurance Certificate (Clause 6.2)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.9,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Prepared by: Nadia Okonkwo, Review Owner, Review Operations"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "id": "document-assurance-smoke-001",
+    "artifactType": "mutual-nda",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-smoke-001.md",
+    "sourceMetadata": {
+      "narrativeSource": "executed contract",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "6136f47b74580596f6a7c2d44e01287ace8b304163245c832d8c9d408b854e0b",
+    "expectedExtraction": "extractions/document-assurance-smoke-001.json"
+  },
+  {
+    "id": "document-assurance-smoke-002",
+    "artifactType": "internal-policy",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-smoke-002.md",
+    "sourceMetadata": {
+      "narrativeSource": "internal policy document",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "b31130dd822f6811b599ccd7bcc24b22b0e93d554773c70b86502bba499626b2",
+    "expectedExtraction": "extractions/document-assurance-smoke-002.json"
+  },
+  {
+    "id": "document-assurance-smoke-003",
+    "artifactType": "vendor-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "content/document-assurance-smoke-003.csv",
+    "sourceMetadata": {
+      "narrativeSource": "vendor onboarding checklist"
+    },
+    "sha256": "69d897df3fe42561d6117048594e991b0d547b5c1cc667a461c948d2ef853377",
+    "expectedExtraction": "extractions/document-assurance-smoke-003.json"
+  },
+  {
+    "id": "document-assurance-smoke-004",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-smoke-004.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "4d06d5f41d6087d9acb5930291c00d5704b339413d7ccb904d84a24f197ab7f0",
+    "expectedExtraction": "extractions/document-assurance-smoke-004.json"
+  },
+  {
+    "id": "document-assurance-smoke-005",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-smoke-005.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "c50966118fc8c14b25354a9b7770a5c98f92fcbaddf45906d5f25dd41a7c9f88",
+    "expectedExtraction": "extractions/document-assurance-smoke-005.json"
+  },
+  {
+    "id": "document-assurance-smoke-006",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-smoke-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "reviewer note"
+    },
+    "sha256": "50746b1324bcdeb4d3bbae77e35c4ee0390480864ed1e6448c399621fe081f24",
+    "expectedExtraction": "extractions/document-assurance-smoke-006.json"
+  },
+  {
+    "id": "document-assurance-smoke-007",
+    "artifactType": "service-order",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-smoke-007.md",
+    "sourceMetadata": {
+      "narrativeSource": "executed service order",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "2f02073e3f12c8bc881cc411def3b73d45baa8de8c79e94c88ea752c2e9b8950",
+    "expectedExtraction": "extractions/document-assurance-smoke-007.json"
+  },
+  {
+    "id": "document-assurance-smoke-008",
+    "artifactType": "vendor-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "content/document-assurance-smoke-008.csv",
+    "sourceMetadata": {
+      "narrativeSource": "vendor requalification checklist"
+    },
+    "sha256": "88d6d04eb96402af6c7527439f3d92fe0741ff328f7a224cc8b91fcda03c9c59",
+    "expectedExtraction": "extractions/document-assurance-smoke-008.json"
+  },
+  {
+    "id": "document-assurance-smoke-009",
+    "artifactType": "obligation-status-export",
+    "mimeType": "application/json",
+    "contentPath": "content/document-assurance-smoke-009.json",
+    "sourceMetadata": {
+      "narrativeSource": "Compliance Tracker automated export"
+    },
+    "sha256": "7ad609a82116500537ba42aef4e4025b4a3b7d004cfb2c5cdabcb73938186e54",
+    "expectedExtraction": "extractions/document-assurance-smoke-009.json"
+  }
+]

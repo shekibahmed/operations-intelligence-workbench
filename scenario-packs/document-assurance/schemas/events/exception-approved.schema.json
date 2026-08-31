@@ -1,0 +1,6 @@
+{
+  "id": "exception-approved",
+  "displayName": "Exception Approved",
+  "description": "An authorised reviewer approved a previously proposed exception on the stated conditions.",
+  "requiredObservations": ["exception", "review-status"]
+}

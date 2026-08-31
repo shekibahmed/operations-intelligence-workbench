@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "77ce57f0e15ca24d12f19bb9f95a2a3ea1a57ebf5623a137af7ccf6dab7100c0",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.95,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "priya-nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 22
+          },
+          "excerpt": "From: Priya Nandakumar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.93,
+      "value": "2026-02-16",
+      "normalisedValue": "2026-02-16",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 57,
+            "end": 73
+          },
+          "excerpt": "Date: 2026-02-16"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.93,
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 259,
+            "end": 306
+          },
+          "excerpt": "binder lot KM-LOT-448, plus any unused material"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "hold-scope-description",
+      "confidence": 0.9,
+      "value": "all remaining output plus unused material on supplier lot KM-LOT-448",
+      "normalisedValue": "all remaining output plus unused material on supplier lot KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 173,
+            "end": 280
+          },
+          "excerpt": "Requesting a formal hold on all remaining output produced using Kestrel Materials Co. binder lot KM-LOT-448"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

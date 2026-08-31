@@ -1,0 +1,143 @@
+{
+  "artifactChecksum": "f77a0599f76c58bf704dc71bbf891df60af2847424b2601f19caf24c59805966",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-02-09",
+      "normalisedValue": "2026-02-09",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 85,
+            "end": 95
+          },
+          "excerpt": "2026-02-09"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "value": "Tomas Reyes",
+      "normalisedValue": "tomas-reyes",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 106,
+            "end": 117
+          },
+          "excerpt": "Tomas Reyes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 149,
+            "end": 155
+          },
+          "excerpt": "B-2205"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "value": 8.2,
+      "normalisedValue": 8.2,
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 222,
+            "end": 236
+          },
+          "excerpt": "8.2% deviation"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "quantity-affected",
+      "value": 4200,
+      "normalisedValue": 4200,
+      "confidence": 0.94,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 270,
+            "end": 281
+          },
+          "excerpt": "4,200 units"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 532,
+            "end": 542
+          },
+          "excerpt": "KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2204",
+      "normalisedValue": "B-2204",
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 661,
+            "end": 667
+          },
+          "excerpt": "B-2204"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

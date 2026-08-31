@@ -1,0 +1,10 @@
+{
+  "schemaKey": "asset-identifier",
+  "displayName": "Asset Identifier",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The identifier of the asset referenced by the source (e.g. A-142).",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

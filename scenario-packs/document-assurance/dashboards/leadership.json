@@ -1,0 +1,80 @@
+{
+  "id": "leadership",
+  "title": "Document Assurance \u2014 Leadership Overview",
+  "widgets": [
+    {
+      "id": "critical-signals",
+      "type": "stat-card",
+      "title": "Critical Signals",
+      "parameters": {
+        "metricId": "critical-signal-count"
+      }
+    },
+    {
+      "id": "open-cases",
+      "type": "stat-card",
+      "title": "Open Review Cases",
+      "parameters": {
+        "metricId": "open-review-cases"
+      }
+    },
+    {
+      "id": "pending-decisions",
+      "type": "stat-card",
+      "title": "Pending Decisions",
+      "parameters": {
+        "metricId": "pending-decision-count"
+      }
+    },
+    {
+      "id": "severity-mix",
+      "type": "severity-breakdown",
+      "title": "Cases by Severity",
+      "parameters": {
+        "metricId": "cases-by-severity"
+      }
+    },
+    {
+      "id": "missed-deadline-trend",
+      "type": "trend-line",
+      "title": "Missed Deadline Trend (Monthly)",
+      "parameters": {
+        "metricId": "missed-deadline-trend",
+        "periods": 12
+      }
+    },
+    {
+      "id": "outstanding-obligations-table",
+      "type": "sla-table",
+      "title": "Outstanding and At-Risk Obligations",
+      "parameters": {
+        "metricId": "outstanding-obligations"
+      }
+    },
+    {
+      "id": "pending-approvals-card",
+      "type": "pending-approvals",
+      "title": "Exceptions Awaiting Approval",
+      "parameters": {
+        "metricId": "exceptions-awaiting-approval"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Review Activity",
+      "parameters": {
+        "metricId": "recent-review-activity"
+      }
+    },
+    {
+      "id": "exposure-outlook",
+      "type": "text-impact",
+      "title": "Liability Exposure Outlook",
+      "parameters": {
+        "metricId": "liability-exposure-outlook",
+        "caveat": "Hypothetical estimate, not an observed measurement."
+      }
+    }
+  ]
+}

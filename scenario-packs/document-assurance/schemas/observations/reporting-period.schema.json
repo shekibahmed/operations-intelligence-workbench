@@ -1,0 +1,8 @@
+{
+  "schemaKey": "reporting-period",
+  "displayName": "Reporting Period",
+  "entityType": "document",
+  "valueType": "string",
+  "description": "The calendar period a compliance report covers, expressed as a year-quarter identifier (e.g. 2026-Q1).",
+  "jsonSchema": { "type": "string", "pattern": "^\\d{4}-Q[1-4]$" }
+}

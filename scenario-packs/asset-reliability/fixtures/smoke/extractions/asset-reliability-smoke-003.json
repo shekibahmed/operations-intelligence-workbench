@@ -1,0 +1,104 @@
+{
+  "artifactChecksum": "bb4dda2b4e5b86a202c844a102b28e08bb1983b14bbf465343a5694070147750",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-211",
+      "normalisedValue": "A-211",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-211 (Meridian CB-200 belt conveyor)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "value": "2026-01-25",
+      "normalisedValue": "2026-01-25",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-01-25"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "value": "no defects found",
+      "normalisedValue": "no-defects-found",
+      "confidence": 0.93,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "No defects found. No corrective action required at this time."
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "value": "continue on standard quarterly inspection interval, next inspection due approximately 2026-04-25",
+      "normalisedValue": "next-inspection-2026-04-25",
+      "confidence": 0.85,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "Next\ninspection due approximately 2026-04-25."
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

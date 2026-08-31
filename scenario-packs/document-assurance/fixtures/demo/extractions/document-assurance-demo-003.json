@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "75632aa12f1a018afd8182d642d0ce067de729064431e2639b39e699e1fc737e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "owner"
+          },
+          "excerpt": "Nadia Okonkwo"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "checklist-status",
+      "confidence": 0.94,
+      "value": "outstanding",
+      "normalisedValue": "outstanding",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 3,
+            "column": "status"
+          },
+          "excerpt": "outstanding"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "checklist-status",
+      "confidence": 0.94,
+      "value": "outstanding",
+      "normalisedValue": "outstanding",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 5,
+            "column": "status"
+          },
+          "excerpt": "outstanding"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.85,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "checklist_item"
+          },
+          "excerpt": "Project Falcon MSA fully executed (ref VLP-FAL-2026-0142)"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

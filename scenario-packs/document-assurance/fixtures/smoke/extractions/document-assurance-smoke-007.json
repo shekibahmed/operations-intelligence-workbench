@@ -1,0 +1,72 @@
+{
+  "artifactChecksum": "2f02073e3f12c8bc881cc411def3b73d45baa8de8c79e94c88ea752c2e9b8950",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.96,
+      "value": "CFU-SO-2026-0033",
+      "normalisedValue": "CFU-SO-2026-0033",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference No. CFU-SO-2026-0033"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.93,
+      "value": "2026-03-20",
+      "normalisedValue": "2026-03-20",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "no later than\nMarch 20, 2026"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.85,
+      "value": "Marcus Ellery",
+      "normalisedValue": "Marcus Ellery",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "FOR CONSOLIDATED FREIGHT UNDERWRITERS: Marcus Ellery, Account Manager"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

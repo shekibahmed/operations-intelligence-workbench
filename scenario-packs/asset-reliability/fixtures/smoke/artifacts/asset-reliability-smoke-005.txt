@@ -1,0 +1,14 @@
+Repair Update - Maintenance Bay
+
+Asset: A-405 (BrightAir RTU-9 rooftop HVAC unit)
+Date: 2026-02-18
+Logged by: Marcus Ibe
+
+Replaced the primary intake air filter on A-405, it was overdue and pretty
+well clogged with dust, probably from the last few weeks of dry weather.
+Also gave the coil a quick visual check while the panel was open, looked
+clean, no debris buildup. Unit cycled normally after the filter swap,
+airflow at the Maintenance Bay vents noticeably better.
+
+No other issues noted. Routine service, closing this out. Next filter
+change due per the standard 90-day interval.

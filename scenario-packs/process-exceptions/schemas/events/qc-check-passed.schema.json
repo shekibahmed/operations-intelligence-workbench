@@ -1,0 +1,6 @@
+{
+  "id": "qc-check-passed",
+  "displayName": "QC Check Passed",
+  "description": "A quality-control check on a batch came back within tolerance and the batch was released.",
+  "requiredObservations": ["batch-identifier", "expected-value", "observed-value", "deviation", "disposition-status"]
+}

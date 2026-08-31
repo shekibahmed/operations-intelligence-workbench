@@ -1,0 +1,89 @@
+{
+  "artifactChecksum": "1edea128a47bc938526845b22d549400fc41b465167f59a814b1d1619cb650bb",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-156",
+      "normalisedValue": "A-156",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-156 (Talbrook TF-40 electric forklift)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "confidence": 0.96,
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-07-15",
+      "normalisedValue": "2026-07-15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-07-15"
+        }
+      ]
+    },
+    {
+      "status": "negated",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.88,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "no wear was observed on the brake assembly beyond what is\nexpected for normal use"
+        }
+      ],
+      "reason": "Explicit negation: no wear observed beyond normal use; the prior advisory note should not be read as an active or worsening brake fault."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

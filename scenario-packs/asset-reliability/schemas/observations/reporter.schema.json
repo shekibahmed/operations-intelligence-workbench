@@ -1,0 +1,10 @@
+{
+  "schemaKey": "reporter",
+  "displayName": "Reporter",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The name of the person who reported the fault or filed the record.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

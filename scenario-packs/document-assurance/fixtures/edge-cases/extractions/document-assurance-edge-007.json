@@ -1,0 +1,94 @@
+{
+  "artifactChecksum": "2e5d39087c0873aae4d662bdc04bc267281bac4bffec8357f21cfd3b37247f7d",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.92,
+      "value": "Elena Cho",
+      "normalisedValue": "Elena Cho",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 36,
+            "end": 93
+          },
+          "excerpt": "Reviewer: Elena Cho, Internal Reviewer, Review Operations"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "exception",
+      "confidence": 0.85,
+      "value": "proposed",
+      "normalisedValue": "proposed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 795,
+            "end": 840
+          },
+          "excerpt": "Requesting approval to accept this exception."
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "document-reference",
+      "confidence": 0.15,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 414,
+            "end": 493
+          },
+          "excerpt": "I don't have the specific clause or contract reference in front of me\nright now"
+        }
+      ],
+      "reason": "Reviewer explicitly states she does not have the specific clause or contract reference in front of her."
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "required-evidence",
+      "confidence": 0.15,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 499,
+            "end": 589
+          },
+          "excerpt": "I haven't pulled the underlying evidence for this one -\nI'm going off general recollection"
+        }
+      ],
+      "reason": "Reviewer explicitly states she hasn't pulled the underlying evidence, going off general recollection from a conversation rather than anything on file."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

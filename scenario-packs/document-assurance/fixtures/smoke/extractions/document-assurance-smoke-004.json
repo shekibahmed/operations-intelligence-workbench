@@ -1,0 +1,72 @@
+{
+  "artifactChecksum": "4d06d5f41d6087d9acb5930291c00d5704b339413d7ccb904d84a24f197ab7f0",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "reporting-period",
+      "confidence": 0.96,
+      "value": "2026-Q1",
+      "normalisedValue": "2026-Q1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reporting Period: Q1 2026 (January 1 - March 31, 2026)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.9,
+      "value": "MCS-NDA-2026-0007",
+      "normalisedValue": "MCS-NDA-2026-0007",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "ref. MCS-NDA-2026-0007"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.92,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Prepared by: Tomas Reyes, Internal Reviewer, Review Operations"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

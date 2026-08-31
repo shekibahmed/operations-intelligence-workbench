@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "22873a29d9bfb99c4c6e00973d5733fc794d5d090252404fc31ab5e45c540a8e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-02-09",
+      "normalisedValue": "2026-02-09",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 86,
+            "end": 96
+          },
+          "excerpt": "2026-02-09"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "value": "Tomas Reyes",
+      "normalisedValue": "tomas-reyes",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 107,
+            "end": 118
+          },
+          "excerpt": "Tomas Reyes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 144,
+            "end": 150
+          },
+          "excerpt": "B-2205"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "confidence": 0.93,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 526,
+            "end": 536
+          },
+          "excerpt": "KM-LOT-448"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

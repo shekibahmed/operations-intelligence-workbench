@@ -1,0 +1,8 @@
+{
+  "id": "jurisdiction",
+  "displayName": "Jurisdiction",
+  "description": "The governing jurisdiction referenced by a document or obligation.",
+  "attributes": [
+    { "key": "name", "type": "string", "description": "The jurisdiction's name." }
+  ]
+}

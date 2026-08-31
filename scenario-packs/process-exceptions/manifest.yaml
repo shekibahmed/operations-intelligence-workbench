@@ -1,0 +1,126 @@
+schemaVersion: "1.0"
+id: process-exceptions
+version: "1.0.0"
+name: "Process Exception Management"
+description: >
+  Converts shift reports, quality-control records, operator notes, inventory
+  exception notes, production summaries and supervisor emails from a
+  bulk-materials processing plant into structured exception cases, tracing a
+  deviation from first symptom through confirmed cross-batch pattern to a
+  supervisor-approved hold-affected-output decision.
+labels: labels.json
+entityTypes:
+  - id: process
+    displayName: "Process"
+    schema: schemas/entities/process.schema.json
+  - id: line
+    displayName: "Line"
+    schema: schemas/entities/line.schema.json
+  - id: batch
+    displayName: "Batch"
+    schema: schemas/entities/batch.schema.json
+  - id: product
+    displayName: "Product"
+    schema: schemas/entities/product.schema.json
+  - id: shift
+    displayName: "Shift"
+    schema: schemas/entities/shift.schema.json
+  - id: supplier
+    displayName: "Supplier"
+    schema: schemas/entities/supplier.schema.json
+  - id: supplier-lot
+    displayName: "Supplier Lot"
+    schema: schemas/entities/supplier-lot.schema.json
+  - id: person
+    displayName: "Person"
+    schema: schemas/entities/person.schema.json
+eventTypes:
+  - id: shift-report-filed
+    displayName: "Shift Report Filed"
+    schema: schemas/events/shift-report-filed.schema.json
+  - id: production-summary-filed
+    displayName: "Production Summary Filed"
+    schema: schemas/events/production-summary-filed.schema.json
+  - id: routine-handover-sent
+    displayName: "Routine Handover Sent"
+    schema: schemas/events/routine-handover-sent.schema.json
+  - id: routine-calibration-performed
+    displayName: "Routine Calibration Performed"
+    schema: schemas/events/routine-calibration-performed.schema.json
+  - id: qc-check-passed
+    displayName: "QC Check Passed"
+    schema: schemas/events/qc-check-passed.schema.json
+  - id: qc-deviation-confirmed
+    displayName: "QC Deviation Confirmed"
+    schema: schemas/events/qc-deviation-confirmed.schema.json
+  - id: qc-inspection-incomplete
+    displayName: "QC Inspection Incomplete"
+    schema: schemas/events/qc-inspection-incomplete.schema.json
+  - id: process-deviation-observed
+    displayName: "Process Deviation Observed"
+    schema: schemas/events/process-deviation-observed.schema.json
+  - id: inventory-exception-logged
+    displayName: "Inventory Exception Logged"
+    schema: schemas/events/inventory-exception-logged.schema.json
+  - id: held-output-aging-flagged
+    displayName: "Held Output Aging Flagged"
+    schema: schemas/events/held-output-aging-flagged.schema.json
+  - id: root-cause-investigation-requested
+    displayName: "Root-Cause Investigation Requested"
+    schema: schemas/events/root-cause-investigation-requested.schema.json
+  - id: root-cause-closed
+    displayName: "Root-Cause Closed"
+    schema: schemas/events/root-cause-closed.schema.json
+  - id: formal-hold-requested
+    displayName: "Formal Hold Requested"
+    schema: schemas/events/formal-hold-requested.schema.json
+  - id: analyzer-reading-logged
+    displayName: "Analyzer Reading Logged"
+    schema: schemas/events/analyzer-reading-logged.schema.json
+observationSchemas:
+  - schemas/observations/batch-identifier.schema.json
+  - schemas/observations/expected-value.schema.json
+  - schemas/observations/observed-value.schema.json
+  - schemas/observations/deviation.schema.json
+  - schemas/observations/quantity-affected.schema.json
+  - schemas/observations/process-stage.schema.json
+  - schemas/observations/time-detected.schema.json
+  - schemas/observations/reported-cause.schema.json
+  - schemas/observations/supplier-lot-identifier.schema.json
+  - schemas/observations/disposition-status.schema.json
+  - schemas/observations/line-identifier.schema.json
+  - schemas/observations/referenced-report-date.schema.json
+  - schemas/observations/reporter-name.schema.json
+  - schemas/observations/recommended-disposition.schema.json
+  - schemas/observations/hold-scope-description.schema.json
+  - schemas/observations/yield-loss-pct.schema.json
+caseDefinitions:
+  - schemas/cases/exception-case.schema.json
+workflows:
+  default: workflows/default.workflow.json
+rules:
+  - rules/severity.rules.json
+  - rules/escalation.rules.json
+  - rules/approval.rules.json
+metrics:
+  - dashboards/metrics.json
+dashboards:
+  leadership: dashboards/leadership.json
+  operations: dashboards/operations.json
+  technical: dashboards/technical.json
+fixtures:
+  smoke: fixtures/smoke
+  demo: fixtures/demo
+  edgeCases: fixtures/edge-cases
+evaluationSets:
+  - evaluations/smoke.gold.json
+  - evaluations/demo.gold.json
+  - evaluations/edge-cases.gold.json
+# NOTE(OIW-004b): contracts v1.1 ScenarioPackManifestSchema requires a `tours`
+# field (tours.leadership mandatory). Tours are an explicit OIW-004b non-goal
+# (deferred to the tour framework task), so this field is intentionally
+# omitted; manifest.yaml will fail strict schema validation on this field
+# until contracts/OIW-103 make `tours` optional or a follow-up task adds
+# tour content. See docs/agent-runs/OIW-004b.md.
+defaultLens: leadership
+defaultFixtureSet: demo

@@ -1,0 +1,16 @@
+REVIEWER NOTE
+
+Reviewer: Tomas Reyes, Internal Reviewer, Review Operations
+Date: April 5, 2026
+Subject: Routine sign-off - Meridian Compliance Services Q1 2026 review
+
+I completed the routine quarterly review of the Meridian Compliance
+Services NDA (ref. MCS-NDA-2026-0007) today alongside the Q1 compliance
+report. Everything checks out: no confidentiality incidents reported by
+either side, no changes to scope or term, vendor onboarding checklist
+remains fully complete with no outstanding items.
+
+No escalation needed. Filing this as a routine sign-off. Next check-in
+at the Q2 cycle in line with our standard quarterly cadence.
+
+- Tomas

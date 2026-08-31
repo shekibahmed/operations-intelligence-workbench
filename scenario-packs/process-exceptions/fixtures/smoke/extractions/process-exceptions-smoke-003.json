@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "cd5a2a5700272c81bcdbe27539d85a386c0ae2470e0d5174c7e93ad32dee82ba",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-20",
+      "normalisedValue": "2026-01-20",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 87,
+            "end": 97
+          },
+          "excerpt": "2026-01-20"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "value": "Ingrid Halvorsen",
+      "normalisedValue": "ingrid-halvorsen",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 108,
+            "end": 124
+          },
+          "excerpt": "Ingrid Halvorsen"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "value": "Line 2 (Filling)",
+      "normalisedValue": "line-2",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 49,
+            "end": 65
+          },
+          "excerpt": "Line 2 (Filling)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "value": 499.6,
+      "normalisedValue": 499.6,
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 250,
+            "end": 257
+          },
+          "excerpt": "499.6 g"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "value": 500,
+      "normalisedValue": 500,
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 270,
+            "end": 282
+          },
+          "excerpt": "500 g target"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2108",
+      "normalisedValue": "B-2108",
+      "confidence": 0.94,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 510,
+            "end": 516
+          },
+          "excerpt": "B-2108"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

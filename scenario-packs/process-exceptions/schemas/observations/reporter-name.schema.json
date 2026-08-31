@@ -1,0 +1,8 @@
+{
+  "schemaKey": "reporter-name",
+  "displayName": "Reporter Name",
+  "entityType": "person",
+  "valueType": "string",
+  "description": "The name of the person who authored or is otherwise the source of the artifact (operator, supervisor, QC lead).",
+  "jsonSchema": { "type": "string" }
+}

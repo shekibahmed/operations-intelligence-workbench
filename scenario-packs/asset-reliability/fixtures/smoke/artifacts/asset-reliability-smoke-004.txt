@@ -1,0 +1,22 @@
+From: Carla Jimenez <c.jimenez@coastalfleetmaintenance.example>
+To: maintenance@northgatedc.example
+Subject: Service confirmation - A-302 hinge lubrication - complete
+Date: 2026-02-02
+
+Hi team,
+
+Confirming our tech was on site this morning and completed the scheduled
+hinge and pivot-point lubrication on dock leveler A-302 (bay 4, Zone A).
+This was a routine service call, no issues found with the lip, hinges, or
+hydraulic cylinder during the visit. Leveler was cycled through a full
+range of motion several times after service and operated smoothly with no
+binding or unusual noise.
+
+Job closed out on our end. No follow-up needed unless you notice anything
+between now and the next scheduled visit.
+
+Invoice will follow separately from billing.
+
+Thanks,
+Carla Jimenez
+Service Coordinator, Coastal Fleet Maintenance

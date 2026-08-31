@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "8d10d9bdc3ac93c3c1c33b5e575e206ab079386646ab935ff697b4b51b46ffa2",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.9,
+      "value": "A-127",
+      "normalisedValue": "A-127",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 104,
+            "end": 132
+          },
+          "excerpt": "A-127 is back up and running"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.85,
+      "value": "in-service",
+      "normalisedValue": "in-service",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 104,
+            "end": 182
+          },
+          "excerpt": "A-127 is back up and running, quick fix on the floor, cleared it for use again"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.85,
+      "value": "out-of-service",
+      "normalisedValue": "out-of-service",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 316,
+            "end": 355
+          },
+          "excerpt": "status: Out of Service - awaiting parts"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.85,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 543,
+            "end": 571
+          },
+          "excerpt": "Marcus Ibe, 2026-08-03 17:02"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "ba520ac20bcc3316db034f1ea7b709a6f53e6770e283a3db75ba5ccdfab19e0d",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.96,
+      "value": "A-520",
+      "normalisedValue": "A-520",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 89,
+            "end": 120
+          },
+          "excerpt": "A-520 tripped its breaker again"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.75,
+      "value": "refrigerant compressor breaker",
+      "normalisedValue": "breaker",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 95,
+            "end": 133
+          },
+          "excerpt": "tripped its breaker again this morning"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.88,
+      "value": "breaker tripping, third time this week",
+      "normalisedValue": "breaker tripping, third time this week",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 135,
+            "end": 155
+          },
+          "excerpt": "third time this week"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.93,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 60,
+            "end": 88
+          },
+          "excerpt": "Marcus Ibe, 2026-07-06 09:40"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-07-06",
+      "normalisedValue": "2026-07-06",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 72,
+            "end": 88
+          },
+          "excerpt": "2026-07-06 09:40"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

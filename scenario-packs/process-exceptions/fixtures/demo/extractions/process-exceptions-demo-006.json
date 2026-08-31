@@ -1,0 +1,228 @@
+{
+  "artifactChecksum": "af050b5fb3be788a9f51a50ce3b9690a63bfb18432e3326bd9c1ceac440ee990",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.99,
+      "value": "B-2210",
+      "normalisedValue": "B-2210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "batch_id"
+          },
+          "excerpt": "B-2210"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.97,
+      "value": "Line 1",
+      "normalisedValue": "Line 1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "line"
+          },
+          "excerpt": "Line 1"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "confidence": 0.97,
+      "value": "mixing",
+      "normalisedValue": "mixing",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "process_stage"
+          },
+          "excerpt": "mixing"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.97,
+      "value": "KM-LOT-448",
+      "normalisedValue": "KM-LOT-448",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "supplier_lot"
+          },
+          "excerpt": "KM-LOT-448"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "confidence": 0.98,
+      "value": 850,
+      "normalisedValue": 850,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "expected_value"
+          },
+          "excerpt": "850"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "confidence": 0.98,
+      "value": 915,
+      "normalisedValue": 915,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "observed_value"
+          },
+          "excerpt": "915"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "confidence": 0.98,
+      "value": 7.6,
+      "normalisedValue": 7.6,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "deviation_pct"
+          },
+          "excerpt": "7.6"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "quantity-affected",
+      "confidence": 0.98,
+      "value": 3800,
+      "normalisedValue": 3800,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "quantity_affected"
+          },
+          "excerpt": "3800"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.85,
+      "value": "consistent with B-2205 finding; supplier lot KM-LOT-448 suspected",
+      "normalisedValue": "consistent with B-2205 finding; supplier lot KM-LOT-448 suspected",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "reported_cause"
+          },
+          "excerpt": "consistent with B-2205 finding; supplier lot KM-LOT-448 suspected"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "confidence": 0.98,
+      "value": "hold",
+      "normalisedValue": "hold",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "disposition"
+          },
+          "excerpt": "hold"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.96,
+      "value": "Owen Bracewell",
+      "normalisedValue": "Owen Bracewell",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "reviewed_by"
+          },
+          "excerpt": "Owen Bracewell"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.97,
+      "value": "2026-02-11",
+      "normalisedValue": "2026-02-11",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date"
+          },
+          "excerpt": "2026-02-11"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

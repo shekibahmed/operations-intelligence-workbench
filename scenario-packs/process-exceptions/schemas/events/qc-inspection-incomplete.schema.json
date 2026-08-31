@@ -1,0 +1,6 @@
+{
+  "id": "qc-inspection-incomplete",
+  "displayName": "QC Inspection Incomplete",
+  "description": "A quality-control inspection was interrupted before completion, leaving the observed value missing; any disposition recommendation attached to it is provisional, not confirmed.",
+  "requiredObservations": ["batch-identifier", "recommended-disposition"]
+}

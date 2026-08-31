@@ -1,0 +1,10 @@
+{
+  "schemaKey": "technician",
+  "displayName": "Technician",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The name of the technician who performed the maintenance or repair.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

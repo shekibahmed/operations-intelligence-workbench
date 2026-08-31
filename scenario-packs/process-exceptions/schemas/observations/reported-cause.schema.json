@@ -1,0 +1,8 @@
+{
+  "schemaKey": "reported-cause",
+  "displayName": "Reported Cause",
+  "entityType": "batch",
+  "valueType": "string",
+  "description": "The cause reported for a deviation, if any. May be explicitly 'under investigation' (not yet determined), which must not be extracted as a determined root cause.",
+  "jsonSchema": { "type": "string" }
+}

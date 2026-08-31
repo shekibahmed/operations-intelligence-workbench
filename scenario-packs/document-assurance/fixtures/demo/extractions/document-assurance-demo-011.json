@@ -1,0 +1,100 @@
+{
+  "artifactChecksum": "655bc660564aa64b609fd094ee58ada6e845fb098f1fecfd2b0be6adbdef3f39",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 43,
+            "end": 99
+          },
+          "excerpt": "Reviewer: Nadia Okonkwo, Review Owner, Review Operations"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "exception",
+      "confidence": 0.93,
+      "value": "proposed",
+      "normalisedValue": "proposed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 293,
+            "end": 359
+          },
+          "excerpt": "I am\nformally proposing that Review Operations accept an exception"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "conflicting-provision",
+      "confidence": 0.88,
+      "value": {
+        "provisionA": "MSA Clause 8.2",
+        "provisionB": "POL-DH-009 Section 4.1",
+        "claimType": "security-incident-liability-cap"
+      },
+      "normalisedValue": {
+        "provisionA": "MSA Clause 8.2",
+        "provisionB": "POL-DH-009 Section 4.1",
+        "claimType": "security-incident-liability-cap"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 376,
+            "end": 436
+          },
+          "excerpt": "the unresolved liability cap conflict between MSA Clause 8.2"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.9,
+      "value": "escalated-for-approval",
+      "normalisedValue": "escalated-for-approval",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1769,
+            "end": 1823
+          },
+          "excerpt": "requires review\nand approval by an authorised reviewer"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

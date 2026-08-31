@@ -1,0 +1,18 @@
+{
+  "schemaKey": "current-operating-status",
+  "displayName": "Current Operating Status",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The asset operating status as stated or implied by the source (e.g. operational, out-of-service, hold-requested).",
+  "jsonSchema": {
+    "type": "string",
+    "enum": [
+      "operational",
+      "out-of-service",
+      "hold-requested",
+      "awaiting-parts",
+      "scheduled",
+      "unresolved-conflicting"
+    ]
+  }
+}

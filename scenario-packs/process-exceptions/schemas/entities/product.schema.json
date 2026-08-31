@@ -1,0 +1,9 @@
+{
+  "id": "product",
+  "displayName": "Product",
+  "description": "A compound/SKU produced at Rivermill Processing Plant, e.g. Compound RM-24.",
+  "attributes": [
+    { "key": "productCode", "type": "string", "description": "The product code, e.g. Compound RM-24." },
+    { "key": "description", "type": "string", "description": "Short description of the product." }
+  ]
+}

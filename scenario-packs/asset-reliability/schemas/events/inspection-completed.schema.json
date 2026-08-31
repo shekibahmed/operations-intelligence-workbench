@@ -1,0 +1,9 @@
+{
+  "id": "inspection-completed",
+  "displayName": "Inspection Completed",
+  "description": "A formal inspection report completed against an asset, with findings and any recommendation.",
+  "requiredObservations": [
+    "asset-identifier",
+    "inspection-finding"
+  ]
+}

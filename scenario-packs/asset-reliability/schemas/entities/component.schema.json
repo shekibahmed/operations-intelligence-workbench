@@ -1,0 +1,22 @@
+{
+  "id": "component",
+  "displayName": "Component",
+  "description": "A subsystem or part of an asset that can independently fail or be serviced.",
+  "attributes": [
+    {
+      "key": "componentCategory",
+      "type": "string",
+      "description": "The type of component (e.g. brake-assembly, hydraulic-cylinder, conveyor-belt, drive-motor)."
+    },
+    {
+      "key": "parentAssetId",
+      "type": "string",
+      "description": "The identifier of the asset this component belongs to."
+    },
+    {
+      "key": "description",
+      "type": "string",
+      "description": "A free-text description of the component."
+    }
+  ]
+}

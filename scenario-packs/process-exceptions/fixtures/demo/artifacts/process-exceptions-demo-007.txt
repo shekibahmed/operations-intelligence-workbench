@@ -1,0 +1,10 @@
+Rivermill Processing Plant — Inventory Exception Note
+Area: Quarantine / Hold Staging Area (Line 1 output)
+Date: 2026-02-12
+Logged by: Priya Nandakumar
+
+Flagging that B-2205's held output — the 4,200 units affected by the viscosity deviation — is still sitting in the quarantine bay with no disposition. It's been three shifts since QC put the hold on and we don't have a release, reject, or rework call yet. Bay space is getting tight; B-2210's held output (3,800 units, confirmed deviation yesterday) is going to need to stack in the same area once it clears mixing.
+
+This needs a disposition decision soon, not just a hold. Escalating to make sure it's on the radar for sign-off, not sitting in QC's queue behind other work.
+
+— Priya Nandakumar

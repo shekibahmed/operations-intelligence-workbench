@@ -1,0 +1,75 @@
+{
+  "artifactChecksum": "69d897df3fe42561d6117048594e991b0d547b5c1cc667a461c948d2ef853377",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "checklist-status",
+      "confidence": 0.95,
+      "value": "complete",
+      "normalisedValue": "complete",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "complete"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "owner"
+          },
+          "excerpt": "Tomas Reyes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.85,
+      "value": "MCS-NDA-2026-0007",
+      "normalisedValue": "MCS-NDA-2026-0007",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 1,
+            "column": "checklist_item"
+          },
+          "excerpt": "Mutual NDA executed (ref MCS-NDA-2026-0007)"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

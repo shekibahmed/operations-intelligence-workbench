@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "011851e04ae3b5486d7f03232142a82b3861350bf3d8d6261fc4efc5011a1d25",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.95,
+      "value": "2026-02-18",
+      "normalisedValue": "2026-02-18",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 79,
+            "end": 95
+          },
+          "excerpt": "Date: 2026-02-18"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.95,
+      "value": "Tomas Reyes",
+      "normalisedValue": "Tomas Reyes",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 96,
+            "end": 117
+          },
+          "excerpt": "Operator: Tomas Reyes"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.93,
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 219,
+            "end": 287
+          },
+          "excerpt": "B-2205 (4,200 units) and B-2210 (3,800 units) are both still on hold"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.93,
+      "value": "B-2210",
+      "normalisedValue": "B-2210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 240,
+            "end": 287
+          },
+          "excerpt": "and B-2210 (3,800 units) are both still on hold"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "confidence": 0.85,
+      "value": "pending",
+      "normalisedValue": "pending",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 269,
+            "end": 330
+          },
+          "excerpt": "both still on hold in quarantine, no disposition decision yet"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "maintenance-completed",
+  "displayName": "Maintenance Completed",
+  "description": "A maintenance, repair or servicing action recorded as completed against an asset.",
+  "requiredObservations": [
+    "asset-identifier",
+    "work-order-reference",
+    "service-date"
+  ]
+}

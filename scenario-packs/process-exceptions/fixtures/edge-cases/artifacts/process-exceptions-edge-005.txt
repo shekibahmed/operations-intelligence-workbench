@@ -1,0 +1,13 @@
+Rivermill Processing Plant — Shift Report
+Line: Line 1 (Mixing)
+Shift: A (Day)
+Date: 2026-01-19
+Operator: Tomas Reyes
+
+Shift began on schedule at 06:00. Mixer 1 and Mixer 2 both ran the full shift without interruption. Batch B-2098 was completed and released to QC ahead of schedule; batch B-2099 was started at 11:40 and is tracking normally against the standard mix profile.
+
+Raw material draw from the Kestrel Materials Co. bins matched the batch tickets, no shortages or substitutions needed. Housekeeping walkthrough at 13:00 found nothing out of place. No safety incidents, no quality holds, no maintenance callouts.
+
+Handover to Shift B: nothing outstanding. Mixer 2 due for its routine seal inspection tomorrow per the PM calendar, already logged with maintenance.
+
+— Tomas Reyes

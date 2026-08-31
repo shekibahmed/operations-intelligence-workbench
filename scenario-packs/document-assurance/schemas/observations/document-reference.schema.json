@@ -1,0 +1,8 @@
+{
+  "schemaKey": "document-reference",
+  "displayName": "Document Reference",
+  "entityType": "document",
+  "valueType": "string",
+  "description": "The stable reference number or identifier of the document a filing pertains to, or of the document being extracted.",
+  "jsonSchema": { "type": "string" }
+}

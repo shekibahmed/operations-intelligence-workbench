@@ -1,0 +1,14 @@
+Rivermill Processing Plant — Production Summary
+Line: Line 3 (Packaging)
+Shift: A (Day)
+Date: 2026-01-21
+
+Units packaged: 18,420 (target 18,000)
+Line uptime: 97.2%
+Downtime: 22 minutes, changeover between SKU runs (planned)
+Reject rate: 0.3% (within normal band, mostly minor carton seal rejects caught by the checkweigher/vision system)
+Batches run: B-2104, B-2105, B-2106 — all released, no QC holds
+
+No exceptions to report. Line ran a clean shift against the standard packaging schedule. Carton stock from Drayton Supply Partners held up fine, no supply interruptions.
+
+Compiled by: Line 3 shift lead

@@ -1,0 +1,27 @@
+From: Tobias Krantz <t.krantz@ferrowindustrial.example>
+To: maintenance@northgatedc.example
+Subject: A-520 leak test results
+Date: 2026-07-17
+
+Hi Marcus,
+
+Ran the refrigerant leak test on A-520 today per your request following
+the inspection notes from the 10th. Found it - there's a slow leak at
+one of the line fittings on the discharge side, right where the line
+connects to the condenser. Fitting itself looks slightly corroded, which
+lines up with a gradual leak rather than a sudden failure, matches what
+your inspector suspected.
+
+Rest of the system checked out fine - compressor motor itself sounds
+healthy, no other leak points found with the sniffer test across the
+rest of the line.
+
+Recommend replacing the fitting rather than just resealing it given the
+corrosion. We can do that as a same-week callout if you want to get it
+scheduled, shouldn't take more than a couple hours including recharge
+and a post-repair leak check.
+
+Let me know and I'll get it on the schedule.
+
+Tobias Krantz
+Ferrow Industrial Services

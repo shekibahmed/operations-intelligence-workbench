@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "bef57838baa8184e8ae009690fdccfb7738ce82765d50fc087db2ba965dc9c71",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.96,
+      "value": "A-501",
+      "normalisedValue": "A-501",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 98,
+            "end": 124
+          },
+          "excerpt": "backup power test on A-501"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.7,
+      "value": "radiator / coolant system",
+      "normalisedValue": "cooling-system",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 132,
+            "end": 189
+          },
+          "excerpt": "shut itself down about 12 minutes in on an overheat alarm"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.87,
+      "value": "overheat alarm shutdown during monthly test run, ~12 minutes in",
+      "normalisedValue": "overheat alarm shutdown during monthly test run, ~12 minutes in",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 132,
+            "end": 189
+          },
+          "excerpt": "shut itself down about 12 minutes in on an overheat alarm"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.93,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 49,
+            "end": 77
+          },
+          "excerpt": "Marcus Ibe, 2026-04-14 10:22"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-04-14",
+      "normalisedValue": "2026-04-14",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 61,
+            "end": 77
+          },
+          "excerpt": "2026-04-14 10:22"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

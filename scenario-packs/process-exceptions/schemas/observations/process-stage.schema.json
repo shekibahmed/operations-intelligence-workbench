@@ -1,0 +1,8 @@
+{
+  "schemaKey": "process-stage",
+  "displayName": "Process Stage",
+  "entityType": "process",
+  "valueType": "string",
+  "description": "The process stage the observation pertains to: mixing, filling, or packaging.",
+  "jsonSchema": { "type": "string", "enum": ["mixing", "filling", "packaging"] }
+}

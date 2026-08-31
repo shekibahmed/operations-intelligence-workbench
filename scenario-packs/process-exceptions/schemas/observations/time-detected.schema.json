@@ -1,0 +1,8 @@
+{
+  "schemaKey": "time-detected",
+  "displayName": "Time Detected",
+  "entityType": "shift",
+  "valueType": "string",
+  "description": "The date (and time, where given) the artifact's content was detected or filed.",
+  "jsonSchema": { "type": "string" }
+}

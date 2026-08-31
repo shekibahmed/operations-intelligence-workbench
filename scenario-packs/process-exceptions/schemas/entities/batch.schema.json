@@ -1,0 +1,12 @@
+{
+  "id": "batch",
+  "displayName": "Batch",
+  "description": "A single production batch of a product, run on a specific line against a specific supplier lot.",
+  "attributes": [
+    { "key": "batchCode", "type": "string", "description": "The batch identifier, e.g. B-2205." },
+    { "key": "productId", "type": "string", "description": "The product this batch is an instance of." },
+    { "key": "lineId", "type": "string", "description": "The line the batch was run on." },
+    { "key": "supplierLotId", "type": "string", "description": "The supplier lot consumed by this batch, if applicable." },
+    { "key": "status", "type": "string", "description": "Current batch status, e.g. released, on-hold, closed." }
+  ]
+}

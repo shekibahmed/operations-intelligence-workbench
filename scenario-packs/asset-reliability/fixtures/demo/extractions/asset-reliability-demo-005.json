@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "1e28325c988fc35341b03fb3ed06a046bac56d6d3ed2249980b5e32edb571c2d",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 140,
+            "end": 172
+          },
+          "excerpt": "A-142 brake failure on yard ramp"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.96,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "Priya Nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 6,
+            "end": 57
+          },
+          "excerpt": "Priya Nandakumar <p.nandakumar@northgatedc.example>"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.94,
+      "value": "2026-06-02",
+      "normalisedValue": "2026-06-02",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 203,
+            "end": 219
+          },
+          "excerpt": "Date: 2026-06-02"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.93,
+      "value": "hold from service pending review",
+      "normalisedValue": "hold from service pending review",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1123,
+            "end": 1196
+          },
+          "excerpt": "formally\nrequesting that A-142 be held from service effective immediately"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "severity-indicator",
+      "confidence": 0.87,
+      "value": "safety-critical",
+      "normalisedValue": "safety-critical",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 536,
+            "end": 607
+          },
+          "excerpt": "this was close and it happened on an incline with\npeople working nearby"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "previous-repair-reference",
+      "confidence": 0.85,
+      "value": "2026-04-06 brake pad replacement by Ferrow Industrial Services",
+      "normalisedValue": "2026-04-06 brake pad replacement by Ferrow Industrial Services",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 678,
+            "end": 741
+          },
+          "excerpt": "2026-04-06: brake pad replacement by Ferrow Industrial Services"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

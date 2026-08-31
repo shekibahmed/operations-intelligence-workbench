@@ -1,0 +1,11 @@
+Rivermill Processing Plant — Operator Note
+Line: Line 1 (Mixing)
+Shift: A (Day)
+Date: 2026-02-10
+Operator: Tomas Reyes
+
+Started batch B-2210 this morning — next batch scheduled on binder lot KM-LOT-448 after B-2205. Early viscosity reading at the 20-minute mark is already trending the same way B-2205 did, running above the normal curve for this point in the mix. Too early to call it a confirmed deviation but the shape of it looks the same as what I saw two days ago.
+
+Pulling in-process samples more frequently on this one and letting QC know now rather than waiting until end of mix.
+
+— Tomas Reyes

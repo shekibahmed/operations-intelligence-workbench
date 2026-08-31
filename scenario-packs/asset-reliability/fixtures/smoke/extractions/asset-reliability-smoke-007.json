@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "92b1458c18061c5b067543508acc419017b6670e38ce1d1dd0defaaa09dad2e4",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-520",
+      "normalisedValue": "A-520",
+      "confidence": 0.98,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-520"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "value": "NG-WO-11190",
+      "normalisedValue": "NG-WO-11190",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "NG-WO-11190"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "value": "2026-06-05",
+      "normalisedValue": "2026-06-05",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "service_date"
+          },
+          "excerpt": "2026-06-05"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "technician"
+          },
+          "excerpt": "Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "confidence": 0.96,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Completed"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

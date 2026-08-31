@@ -1,0 +1,129 @@
+{
+  "artifactChecksum": "c81046c829c57f54779e4184066f956220c4b7866a8ec1fcba0c98ad31034af3",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 15,
+            "end": 71
+          },
+          "excerpt": "Reviewer: Nadia Okonkwo, Review Owner, Review Operations"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "financial-threshold",
+      "confidence": 0.9,
+      "value": {
+        "amount": 2000000,
+        "currency": "USD"
+      },
+      "normalisedValue": {
+        "amount": 2000000,
+        "currency": "USD"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 579,
+            "end": 614
+          },
+          "excerpt": "at two million dollars ($2,000,000)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "financial-threshold",
+      "confidence": 0.9,
+      "value": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "normalisedValue": {
+        "amount": 5000000,
+        "currency": "USD"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 764,
+            "end": 814
+          },
+          "excerpt": "shall not exceed five million dollars ($5,000,000)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "conflicting-provision",
+      "confidence": 0.88,
+      "value": {
+        "provisionA": "MSA Clause 8.2",
+        "provisionB": "POL-DH-009 Section 4.1",
+        "claimType": "security-incident-liability-cap"
+      },
+      "normalisedValue": {
+        "provisionA": "MSA Clause 8.2",
+        "provisionB": "POL-DH-009 Section 4.1",
+        "claimType": "security-incident-liability-cap"
+      },
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 817,
+            "end": 915
+          },
+          "excerpt": "These two figures directly conflict with respect to security-incident\nliability for Project Falcon"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.92,
+      "value": "unresolved",
+      "normalisedValue": "unresolved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1305,
+            "end": 1337
+          },
+          "excerpt": "I am flagging this as unresolved"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "id": "analyzer-reading-logged",
+  "displayName": "Analyzer Reading Logged",
+  "description": "An automated in-line analyzer logged a reading for a batch, informational unless it exceeds tolerance.",
+  "requiredObservations": ["batch-identifier", "expected-value", "observed-value", "deviation"]
+}

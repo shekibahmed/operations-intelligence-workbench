@@ -1,0 +1,365 @@
+[
+  {
+    "fixtureId": "asset-reliability-smoke-001",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-118"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "horn"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "horn isn't making any sound"
+      },
+      {
+        "schemaKey": "severity-indicator",
+        "status": "extracted",
+        "value": "minor"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Dana Osei"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-01-15"
+      }
+    ],
+    "expectedEntities": [
+      "A-118"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine, minor, single occurrence."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-002",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-127"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-10412"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-01-20"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "oil and filter"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-127"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine oil/filter change."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-003",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-211"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-01-25"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "no defects found"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "continue on standard quarterly inspection interval, next inspection due approximately 2026-04-25"
+      }
+    ],
+    "expectedEntities": [
+      "A-211"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Clean baseline ahead of demo-009."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-004",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-302"
+      },
+      {
+        "schemaKey": "service-provider-reference",
+        "status": "extracted",
+        "value": "Coastal Fleet Maintenance"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Carla Jimenez"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-02-02"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "hinge and pivot-point lubrication"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-302"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Vendor-performed routine lubrication."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-005",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-405"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-02-18"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "primary intake air filter"
+      },
+      {
+        "schemaKey": "current-operating-status",
+        "status": "extracted",
+        "value": "operational"
+      }
+    ],
+    "expectedEntities": [
+      "A-405"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine filter replacement."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-006",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-163"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "tail light"
+      },
+      {
+        "schemaKey": "symptom",
+        "status": "extracted",
+        "value": "tail light out on the driver's side"
+      },
+      {
+        "schemaKey": "severity-indicator",
+        "status": "extracted",
+        "value": "minor"
+      },
+      {
+        "schemaKey": "reporter",
+        "status": "extracted",
+        "value": "Priya Nandakumar"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-03-02"
+      }
+    ],
+    "expectedEntities": [
+      "A-163"
+    ],
+    "expectedEventType": "fault-reported",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Routine, minor, precedes edge-007's unrelated structural flag."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-007",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-520"
+      },
+      {
+        "schemaKey": "work-order-reference",
+        "status": "extracted",
+        "value": "NG-WO-11190"
+      },
+      {
+        "schemaKey": "service-date",
+        "status": "extracted",
+        "value": "2026-06-05"
+      },
+      {
+        "schemaKey": "technician",
+        "status": "extracted",
+        "value": "Marcus Ibe"
+      },
+      {
+        "schemaKey": "service-status",
+        "status": "extracted",
+        "value": "Completed"
+      }
+    ],
+    "expectedEntities": [
+      "A-520"
+    ],
+    "expectedEventType": "maintenance-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Clean baseline before Storyline E begins."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-008",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-156"
+      },
+      {
+        "schemaKey": "inspector",
+        "status": "extracted",
+        "value": "Lena Fischer"
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-07-01"
+      },
+      {
+        "schemaKey": "inspection-finding",
+        "status": "extracted",
+        "value": "passed inspection with no defects requiring corrective action"
+      },
+      {
+        "schemaKey": "component",
+        "status": "extracted",
+        "value": "brake assembly"
+      },
+      {
+        "schemaKey": "recommendation",
+        "status": "extracted",
+        "value": "monitor brake pad wear at next scheduled service interval; not a defect at this time"
+      }
+    ],
+    "expectedEntities": [
+      "A-156"
+    ],
+    "expectedEventType": "inspection-completed",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Advisory note only, not a defect finding; setup for edge-004."
+  },
+  {
+    "fixtureId": "asset-reliability-smoke-009",
+    "expectedObservations": [
+      {
+        "schemaKey": "asset-identifier",
+        "status": "extracted",
+        "value": "A-405"
+      },
+      {
+        "schemaKey": "sensor-reading",
+        "status": "extracted",
+        "value": {
+          "value": 0.42,
+          "unit": "inH2O",
+          "thresholdLow": 0.1,
+          "thresholdHigh": 0.6,
+          "status": "normal"
+        }
+      },
+      {
+        "schemaKey": "date-reported",
+        "status": "extracted",
+        "value": "2026-02-20"
+      }
+    ],
+    "expectedEntities": [
+      "A-405"
+    ],
+    "expectedEventType": "sensor-reading-logged",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "Automated reading within threshold, corroborates smoke-005."
+  }
+]

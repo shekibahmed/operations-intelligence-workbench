@@ -1,0 +1,59 @@
+{
+  "artifactChecksum": "8b4aeb2978c9e9e4ea66d1018b849dc9ae87b22653a6bb4976995a8a7103f690",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.9,
+      "value": "A-127",
+      "normalisedValue": "A-127",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 95,
+            "end": 115
+          },
+          "excerpt": "el montacargas A-127"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "symptom",
+      "confidence": 0.35,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 116,
+            "end": 155
+          },
+          "excerpt": "esta haciendo un ruido raro en el freno"
+        }
+      ],
+      "reason": "Source text is in Spanish, outside this deployment's supported extraction language set; abstaining from confident field extraction rather than silently machine-translating."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

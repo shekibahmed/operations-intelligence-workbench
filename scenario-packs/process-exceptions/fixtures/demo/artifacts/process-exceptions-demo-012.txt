@@ -1,0 +1,11 @@
+Rivermill Processing Plant — Shift Report
+Line: Line 1 (Mixing)
+Shift: A (Day)
+Date: 2026-02-18
+Operator: Tomas Reyes
+
+Closing out the week on the KM-LOT-448 situation for whoever's picking this up. Status as of today: B-2205 (4,200 units) and B-2210 (3,800 units) are both still on hold in quarantine, no disposition decision yet. Priya's formal hold request on the rest of the KM-LOT-448 material went out Monday and is waiting on supervisor/QC sign-off — I believe there was a review meeting Tuesday but I don't have the outcome as of writing this.
+
+No further batches have been run on KM-LOT-448 since the hold request. Line otherwise ran normally this week outside of the held batches. Flagging again for handover: do not release B-2205 or B-2210 without a documented disposition decision.
+
+— Tomas Reyes

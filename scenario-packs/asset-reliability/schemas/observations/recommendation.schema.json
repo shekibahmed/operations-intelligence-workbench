@@ -1,0 +1,10 @@
+{
+  "schemaKey": "recommendation",
+  "displayName": "Recommendation",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "A recommended follow-up action stated in an inspection or vendor record.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

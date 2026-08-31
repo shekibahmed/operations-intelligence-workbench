@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "6e7b1d957eeed4244b7592531d06dd957c9d93bd0c207a3c29e3354fe1a8bf03",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-520",
+      "normalisedValue": "A-520",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 33,
+            "end": 84
+          },
+          "excerpt": "Asset: A-520 (Arkwell AC-60 refrigerant compressor)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.9,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 102,
+            "end": 123
+          },
+          "excerpt": "Logged by: Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "confidence": 0.9,
+      "value": "Ferrow Industrial Services",
+      "normalisedValue": "Ferrow Industrial Services",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 125,
+            "end": 189
+          },
+          "excerpt": "Ferrow (Tobias) came out today and replaced the corroded fitting"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-07-21",
+      "normalisedValue": "2026-07-21",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 85,
+            "end": 101
+          },
+          "excerpt": "Date: 2026-07-21"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.92,
+      "value": "operational",
+      "normalisedValue": "operational",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 675,
+            "end": 721
+          },
+          "excerpt": "A-520 is OPERATIONAL, returned to full service"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

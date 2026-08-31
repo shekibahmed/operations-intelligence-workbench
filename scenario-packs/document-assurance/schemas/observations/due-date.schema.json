@@ -1,0 +1,8 @@
+{
+  "schemaKey": "due-date",
+  "displayName": "Due Date",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "The due date associated with an obligation, expressed as an ISO 8601 calendar date.",
+  "jsonSchema": { "type": "string", "format": "date" }
+}

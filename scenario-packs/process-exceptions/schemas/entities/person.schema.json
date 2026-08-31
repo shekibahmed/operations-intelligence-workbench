@@ -1,0 +1,9 @@
+{
+  "id": "person",
+  "displayName": "Person",
+  "description": "A named individual referenced by artifacts in this pack (operator, QC lead, or supervisor).",
+  "attributes": [
+    { "key": "fullName", "type": "string", "description": "The person's full name." },
+    { "key": "role", "type": "string", "description": "Their role, e.g. Line 1 operator, QC lead, shift supervisor." }
+  ]
+}

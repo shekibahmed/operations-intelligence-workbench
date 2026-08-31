@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "64f55f04ba24edad111dd06c4c20dc37bf23020f0ff4b246e269172ac73de6bc",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 31,
+            "end": 78
+          },
+          "excerpt": "Asset: A-142 (Talbrook TF-40 electric forklift)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "confidence": 0.95,
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 96,
+            "end": 117
+          },
+          "excerpt": "Logged by: Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.94,
+      "value": "2026-06-03",
+      "normalisedValue": "2026-06-03",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 79,
+            "end": 95
+          },
+          "excerpt": "Date: 2026-06-03"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "confidence": 0.95,
+      "value": "out-of-service",
+      "normalisedValue": "out-of-service",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 751,
+            "end": 797
+          },
+          "excerpt": "A-142 is OUT OF SERVICE, tagged and locked out"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.92,
+      "value": "not to be returned to the floor without sign-off",
+      "normalisedValue": "not to be returned to the floor without sign-off",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 799,
+            "end": 867
+          },
+          "excerpt": "Not to be\nreturned to the floor without sign-off per Priya's request"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "artifactChecksum": "ed975d84f9598fadd31a665a15a530774f749892dc136e2d1d56bd1d5f08bc6b",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.95,
+      "value": "A-210",
+      "normalisedValue": "A-210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 117,
+            "end": 139
+          },
+          "excerpt": "A-210 belt replacement"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-provider-reference",
+      "confidence": 0.93,
+      "value": "Coastal Fleet Maintenance",
+      "normalisedValue": "Coastal Fleet Maintenance",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 6,
+            "end": 63
+          },
+          "excerpt": "Carla Jimenez <c.jimenez@coastalfleetmaintenance.example>"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.92,
+      "value": "2026-03-27",
+      "normalisedValue": "2026-03-27",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 140,
+            "end": 156
+          },
+          "excerpt": "Date: 2026-03-27"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.85,
+      "value": "full belt replacement, estimated downtime approximately 4 hours",
+      "normalisedValue": "full belt replacement, estimated downtime approximately 4 hours",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 748,
+            "end": 802
+          },
+          "excerpt": "Estimated downtime for the line: approximately 4 hours"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

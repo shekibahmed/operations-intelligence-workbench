@@ -1,0 +1,6 @@
+{
+  "id": "correspondence-logged",
+  "displayName": "Correspondence Logged",
+  "description": "General correspondence was logged for the record without itself changing any obligation, exception, or decision status. Used, among other things, for correspondence containing suspicious or manipulative embedded content that must be flagged and not acted upon.",
+  "requiredObservations": ["review-status"]
+}

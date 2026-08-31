@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "5837375ce7eebe03d9dbd5bf5f96b984df583f02fb29dd3f27f99afe3861497e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-20",
+      "normalisedValue": "2026-01-20",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 106,
+            "end": 116
+          },
+          "excerpt": "2026-01-20"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "value": "Priya Nandakumar",
+      "normalisedValue": "priya-nandakumar",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 128,
+            "end": 144
+          },
+          "excerpt": "Priya Nandakumar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "value": 47,
+      "normalisedValue": 47,
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 251,
+            "end": 278
+          },
+          "excerpt": "47 physical vs. 44 expected"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "value": "delivery physically staged but not yet posted to the inventory system by the receiving clerk",
+      "normalisedValue": "unposted-receipt",
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 381,
+            "end": 442
+          },
+          "excerpt": "not yet posted to the inventory system by the receiving clerk"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "disposition-status",
+      "value": "resolved",
+      "normalisedValue": "resolved",
+      "confidence": 0.9,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 445,
+            "end": 514
+          },
+          "excerpt": "Posted the missing receipt in the system this afternoon and recounted"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

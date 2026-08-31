@@ -1,0 +1,8 @@
+{
+  "schemaKey": "responsible-party",
+  "displayName": "Responsible Party",
+  "entityType": "obligation",
+  "valueType": "string",
+  "description": "The named person or organisation responsible for discharging an obligation or authoring a filing.",
+  "jsonSchema": { "type": "string" }
+}

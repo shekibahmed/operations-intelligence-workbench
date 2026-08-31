@@ -1,0 +1,17 @@
+{
+  "id": "location",
+  "displayName": "Location",
+  "description": "A named facility zone or area used to place assets and activity.",
+  "attributes": [
+    {
+      "key": "zoneName",
+      "type": "string",
+      "description": "The name of the zone or area (e.g. Zone A - Receiving)."
+    },
+    {
+      "key": "description",
+      "type": "string",
+      "description": "A free-text description of the location."
+    }
+  ]
+}

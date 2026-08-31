@@ -1,0 +1,84 @@
+[
+  {
+    "id": "document-assurance-edge-001",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-edge-001.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "7bb0455f0019822fd1eb88a8fe3a29c3b15b05cf1a7a3f1cd36ad666bc6846e5",
+    "expectedExtraction": "extractions/document-assurance-edge-001.json"
+  },
+  {
+    "id": "document-assurance-edge-002",
+    "artifactType": "audit-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "content/document-assurance-edge-002.csv",
+    "sourceMetadata": {
+      "narrativeSource": "internal audit checklist"
+    },
+    "sha256": "d6cba9f5b181b4793fda28bf4867778ac1c2101142fc83c095a83002bc6e92e3",
+    "expectedExtraction": "extractions/document-assurance-edge-002.json"
+  },
+  {
+    "id": "document-assurance-edge-003",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-edge-003.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "51c5c340039cad1efa9cfbfb02023a11b5c8cb3a844f776d89211e3363c3723f",
+    "expectedExtraction": "extractions/document-assurance-edge-003.json"
+  },
+  {
+    "id": "document-assurance-edge-004",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-edge-004.txt",
+    "sourceMetadata": {
+      "narrativeSource": "reviewer correction note"
+    },
+    "sha256": "3d9ee45e945a52d1c56204281adcc188bda57c2b1c6a438252465fbee95ff27e",
+    "expectedExtraction": "extractions/document-assurance-edge-004.json"
+  },
+  {
+    "id": "document-assurance-edge-005",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "content/document-assurance-edge-005.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer",
+      "sourceNote": "exact duplicate resubmission of document-assurance-demo-005"
+    },
+    "sha256": "ab565ab76e3d9f57b4ee664657d719a0d187a9118c1f3c61006df6d95d1417a7",
+    "expectedExtraction": "extractions/document-assurance-edge-005.json"
+  },
+  {
+    "id": "document-assurance-edge-006",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-edge-006.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "a9e43b2ce2720c7b02a7ae38386fb13b692b0d693334f74ea8e4f4c8ae4051fc",
+    "expectedExtraction": "extractions/document-assurance-edge-006.json"
+  },
+  {
+    "id": "document-assurance-edge-007",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "content/document-assurance-edge-007.txt",
+    "sourceMetadata": {
+      "narrativeSource": "exception proposal reviewer note"
+    },
+    "sha256": "2e5d39087c0873aae4d662bdc04bc267281bac4bffec8357f21cfd3b37247f7d",
+    "expectedExtraction": "extractions/document-assurance-edge-007.json"
+  }
+]

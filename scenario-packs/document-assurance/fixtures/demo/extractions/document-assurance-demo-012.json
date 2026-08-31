@@ -1,0 +1,75 @@
+{
+  "artifactChecksum": "8b249f95b7f87a797d9fc918aec574e733f0324aaa4e63d6146f0b626868c98a",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.93,
+      "value": "Marcus Ibori",
+      "normalisedValue": "Marcus Ibori",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 785,
+            "end": 837
+          },
+          "excerpt": "From: Marcus Ibori <marcus.ibori@reviewops.internal>"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "exception",
+      "confidence": 0.92,
+      "value": "approved",
+      "normalisedValue": "approved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1271,
+            "end": 1295
+          },
+          "excerpt": "Approving on that\nbasis."
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "review-status",
+      "confidence": 0.9,
+      "value": "approved",
+      "normalisedValue": "approved",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 1055,
+            "end": 1097
+          },
+          "excerpt": "The conditions you\nproposed are reasonable"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

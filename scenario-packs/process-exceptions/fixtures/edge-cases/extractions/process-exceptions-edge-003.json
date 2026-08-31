@@ -1,0 +1,98 @@
+{
+  "artifactChecksum": "efb0670a78e463cf524514560fd8e38f39f2efc4677c2007ba3cec2b0bd978ff",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.93,
+      "value": "2026-01-26",
+      "normalisedValue": "2026-01-26",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 70,
+            "end": 86
+          },
+          "excerpt": "Date: 2026-01-26"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.94,
+      "value": "Ingrid Halvorsen",
+      "normalisedValue": "Ingrid Halvorsen",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 87,
+            "end": 113
+          },
+          "excerpt": "Operator: Ingrid Halvorsen"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "confidence": 0.45,
+      "value": "Line 2",
+      "normalisedValue": "Line 2",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 54
+          },
+          "excerpt": "Line: Line 2"
+        }
+      ],
+      "alternativeCandidates": [
+        {
+          "value": "Line 2B",
+          "confidence": 0.4
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reported-cause",
+      "confidence": 0.8,
+      "value": "inconsistent cap-torque readings, 14:00-14:45, adjusted capper head",
+      "normalisedValue": "inconsistent cap-torque readings, 14:00-14:45, adjusted capper head",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 143,
+            "end": 233
+          },
+          "excerpt": "inconsistent cap torque readings on Line 2 this afternoon, roughly between 14:00 and 14:45"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

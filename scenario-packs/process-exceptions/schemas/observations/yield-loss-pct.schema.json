@@ -1,0 +1,8 @@
+{
+  "schemaKey": "yield-loss-pct",
+  "displayName": "Yield Loss Percentage",
+  "entityType": "line",
+  "valueType": "number",
+  "description": "The percentage yield loss versus plan reported for a line over a period (day/week), as stated in a production summary.",
+  "jsonSchema": { "type": "number" }
+}

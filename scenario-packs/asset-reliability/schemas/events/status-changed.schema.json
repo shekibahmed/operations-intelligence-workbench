@@ -1,0 +1,9 @@
+{
+  "id": "status-changed",
+  "displayName": "Status Changed",
+  "description": "An explicit change or restatement of an asset's current operating status.",
+  "requiredObservations": [
+    "asset-identifier",
+    "current-operating-status"
+  ]
+}

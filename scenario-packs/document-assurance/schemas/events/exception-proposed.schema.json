@@ -1,0 +1,6 @@
+{
+  "id": "exception-proposed",
+  "displayName": "Exception Proposed",
+  "description": "A reviewer formally proposed accepting an exception, with or without adequate supporting evidence and clause citation.",
+  "requiredObservations": ["exception"]
+}

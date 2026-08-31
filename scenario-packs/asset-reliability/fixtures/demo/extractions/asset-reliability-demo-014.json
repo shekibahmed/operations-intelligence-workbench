@@ -1,0 +1,152 @@
+{
+  "artifactChecksum": "41bf96dde826834d76ddda28e09451f3e52ed851916e2655251af601e3ae053a",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-301",
+      "normalisedValue": "A-301",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Asset: A-301 (Corvale DL-15 hydraulic dock leveler)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspector",
+      "confidence": 0.96,
+      "value": "Lena Fischer",
+      "normalisedValue": "Lena Fischer",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspector: Lena Fischer, Northgate Facilities"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.95,
+      "value": "2026-02-11",
+      "normalisedValue": "2026-02-11",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Inspection Date: 2026-02-11"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "inspection-finding",
+      "confidence": 0.87,
+      "value": "seal patch holding for now, but original cylinder near end of life",
+      "normalisedValue": "seal patch holding for now, but original cylinder near end of life",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "this is a patch on an original hydraulic\nlift cylinder and should not be treated as a permanent fix"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommendation",
+      "confidence": 0.9,
+      "value": "full hydraulic cylinder replacement within 30 days (by approximately 2026-03-13)",
+      "normalisedValue": "full hydraulic cylinder replacement within 30 days (by approximately 2026-03-13)",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "Schedule full hydraulic cylinder replacement on A-301 within 30 days\n(by approximately 2026-03-13)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "follow-up-due-date",
+      "confidence": 0.87,
+      "value": "2026-03-13",
+      "normalisedValue": "2026-03-13",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "by approximately 2026-03-13"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "related-asset-reference",
+      "confidence": 0.85,
+      "value": "A-302",
+      "normalisedValue": "A-302",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "A-302 (bay 4) is the same Corvale DL-15 model, installed the\nsame date as A-301"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "install-batch",
+      "confidence": 0.83,
+      "value": "2020-05-15",
+      "normalisedValue": "2020-05-15",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "installed the\nsame date as A-301 (2020-05-15)"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

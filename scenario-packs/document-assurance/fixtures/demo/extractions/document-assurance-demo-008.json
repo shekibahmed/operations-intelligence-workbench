@@ -1,0 +1,104 @@
+{
+  "artifactChecksum": "6e9d203f2442e57b35d26756c9cd841c079309717a0ee852e61daa3a558298de",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.96,
+      "value": "VLP-FAL-2026-0142-A1",
+      "normalisedValue": "VLP-FAL-2026-0142-A1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference No. VLP-FAL-2026-0142-A1"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "effective-date",
+      "confidence": 0.94,
+      "value": "2026-05-12",
+      "normalisedValue": "2026-05-12",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "entered into as of\nMay 12, 2026"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "due-date",
+      "confidence": 0.92,
+      "value": "2026-05-01",
+      "normalisedValue": "2026-05-01",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "replace the initial insurance\ncertificate due date of \"March 1, 2026\" with \"May 1, 2026.\""
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.87,
+      "value": "insurance-maintenance",
+      "normalisedValue": "insurance-maintenance",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 2
+          },
+          "excerpt": "1. AMENDMENT TO CLAUSE 6.2"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.88,
+      "value": "Nadia Okonkwo",
+      "normalisedValue": "Nadia Okonkwo",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 3
+          },
+          "excerpt": "Name: Nadia Okonkwo"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

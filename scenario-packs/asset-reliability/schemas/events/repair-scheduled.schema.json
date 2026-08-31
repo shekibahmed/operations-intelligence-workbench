@@ -1,0 +1,10 @@
+{
+  "id": "repair-scheduled",
+  "displayName": "Repair Scheduled",
+  "description": "A repair or replacement action scheduled for a future date.",
+  "requiredObservations": [
+    "asset-identifier",
+    "work-order-reference",
+    "service-date"
+  ]
+}

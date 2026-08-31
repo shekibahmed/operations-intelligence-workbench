@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "b8d432d45b82bab0f6ba8e0660c3f56be64ee92defaa2b4c54085414b42719ab",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "value": "A-405",
+      "normalisedValue": "A-405",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 33,
+            "end": 81
+          },
+          "excerpt": "Asset: A-405 (BrightAir RTU-9 rooftop HVAC unit)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "technician",
+      "value": "Marcus Ibe",
+      "normalisedValue": "Marcus Ibe",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 99,
+            "end": 120
+          },
+          "excerpt": "Logged by: Marcus Ibe"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-date",
+      "value": "2026-02-18",
+      "normalisedValue": "2026-02-18",
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 82,
+            "end": 98
+          },
+          "excerpt": "Date: 2026-02-18"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "value": "primary intake air filter",
+      "normalisedValue": "air filter",
+      "confidence": 0.88,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 135,
+            "end": 160
+          },
+          "excerpt": "primary intake air filter"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "current-operating-status",
+      "value": "operational",
+      "normalisedValue": "operational",
+      "confidence": 0.75,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 369,
+            "end": 411
+          },
+          "excerpt": "Unit cycled normally after the filter swap"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

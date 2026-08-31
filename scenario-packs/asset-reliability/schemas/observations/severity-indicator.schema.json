@@ -1,0 +1,15 @@
+{
+  "schemaKey": "severity-indicator",
+  "displayName": "Severity Indicator",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The reported or assessed severity of the finding.",
+  "jsonSchema": {
+    "type": "string",
+    "enum": [
+      "minor",
+      "moderate",
+      "safety-critical"
+    ]
+  }
+}

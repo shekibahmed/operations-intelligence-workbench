@@ -1,0 +1,6 @@
+{
+  "id": "qc-deviation-confirmed",
+  "displayName": "QC Deviation Confirmed",
+  "description": "A quality-control check confirmed a deviation on a batch exceeding tolerance, typically resulting in a hold pending disposition.",
+  "requiredObservations": ["batch-identifier", "expected-value", "observed-value", "deviation", "quantity-affected", "supplier-lot-identifier", "disposition-status"]
+}

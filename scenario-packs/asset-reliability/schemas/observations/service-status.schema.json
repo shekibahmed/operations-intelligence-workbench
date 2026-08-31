@@ -1,0 +1,16 @@
+{
+  "schemaKey": "service-status",
+  "displayName": "Service Status",
+  "entityType": "asset",
+  "valueType": "string",
+  "description": "The completion status of a maintenance, repair or inspection record itself (e.g. Completed, Scheduled), distinct from the asset's current operating status.",
+  "jsonSchema": {
+    "type": "string",
+    "enum": [
+      "Completed",
+      "Scheduled",
+      "In-Progress",
+      "Closed"
+    ]
+  }
+}

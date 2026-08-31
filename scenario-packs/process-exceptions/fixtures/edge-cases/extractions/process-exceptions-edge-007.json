@@ -1,0 +1,161 @@
+{
+  "artifactChecksum": "cd460cf8439198c6a6fbe6a5b09575d7bec930490790a0fba66429fa2542783c",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.98,
+      "value": "B-2101",
+      "normalisedValue": "B-2101",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "batch_id"
+          },
+          "excerpt": "B-2101"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "confidence": 0.96,
+      "value": "packaging",
+      "normalisedValue": "packaging",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "process_stage"
+          },
+          "excerpt": "packaging"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "supplier-lot-identifier",
+      "confidence": 0.94,
+      "value": "KM-LOT-401",
+      "normalisedValue": "KM-LOT-401",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "supplier_lot"
+          },
+          "excerpt": "KM-LOT-401"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "confidence": 0.9,
+      "value": "pass - no particulate",
+      "normalisedValue": "pass - no particulate",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "expected_value"
+          },
+          "excerpt": "pass - no particulate"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "observed-value",
+      "confidence": 0.15,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "note"
+          },
+          "excerpt": "Inspector was called away before completing the reading; observed_value was not recorded"
+        }
+      ],
+      "reason": "The observed_value field is blank; the inspector was called away before completing the reading, per the artifact's own note."
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "recommended-disposition",
+      "confidence": 0.75,
+      "value": "reject - recommend rejection pending re-inspection",
+      "normalisedValue": "reject - recommend rejection pending re-inspection",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "recommended_disposition"
+          },
+          "excerpt": "reject - recommend rejection pending re-inspection"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.93,
+      "value": "Owen Bracewell",
+      "normalisedValue": "Owen Bracewell",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "reviewed_by"
+          },
+          "excerpt": "Owen Bracewell"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.93,
+      "value": "2026-01-27",
+      "normalisedValue": "2026-01-27",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "date"
+          },
+          "excerpt": "2026-01-27"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "artifactChecksum": "3d9ee45e945a52d1c56204281adcc188bda57c2b1c6a438252465fbee95ff27e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.92,
+      "value": "Marcus Ibori",
+      "normalisedValue": "Marcus Ibori",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 28,
+            "end": 90
+          },
+          "excerpt": "Reviewer: Marcus Ibori, Authorised Reviewer, Review Operations"
+        }
+      ]
+    },
+    {
+      "status": "negated",
+      "schemaKey": "conflicting-provision",
+      "confidence": 0.87,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 504,
+            "end": 522
+          },
+          "excerpt": "That is\nincorrect."
+        }
+      ],
+      "reason": "Explicitly states Clause 8.2 does NOT apply to Project Harbor and that an earlier flag conflating the two engagements was an error. Must not be read as resolving the still-open Project Falcon liability-cap conflict."
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "artifactChecksum": "b28b65de50f583eef793a5532085c9090d90f46df37d5cb4e2a562db0186da6e",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-142",
+      "normalisedValue": "A-142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-142"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "repeat-fault-count",
+      "confidence": 0.9,
+      "value": 3,
+      "normalisedValue": 3,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "repeat_fault_count"
+          },
+          "excerpt": "3"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "downtime-hours",
+      "confidence": 0.88,
+      "value": 146,
+      "normalisedValue": 146,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "total_downtime_hours"
+          },
+          "excerpt": "146"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-210",
+      "normalisedValue": "A-210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 1,
+            "column": "asset_id"
+          },
+          "excerpt": "A-210"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "repeat-fault-count",
+      "confidence": 0.9,
+      "value": 2,
+      "normalisedValue": 2,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 1,
+            "column": "repeat_fault_count"
+          },
+          "excerpt": "2"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.97,
+      "value": "A-501",
+      "normalisedValue": "A-501",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 2,
+            "column": "asset_id"
+          },
+          "excerpt": "A-501"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "repeat-fault-count",
+      "confidence": 0.9,
+      "value": 2,
+      "normalisedValue": 2,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 2,
+            "column": "repeat_fault_count"
+          },
+          "excerpt": "2"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "artifactChecksum": "e38e818035ed8e0ce24328ba736366ead7791d6f6e4972e8aaa63c6870d3211a",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "value": "B-2115",
+      "normalisedValue": "B-2115",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.batch_id"
+          },
+          "excerpt": "B-2115"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "line-identifier",
+      "value": "Line 3",
+      "normalisedValue": "line-3",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.line"
+          },
+          "excerpt": "Line 3"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "process-stage",
+      "value": "packaging",
+      "normalisedValue": "packaging",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.process_stage"
+          },
+          "excerpt": "packaging"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "expected-value",
+      "value": 100,
+      "normalisedValue": 100,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.expected_value"
+          },
+          "excerpt": "100"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "observed-value",
+      "value": 99.4,
+      "normalisedValue": 99.4,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.observed_value"
+          },
+          "excerpt": "99.4"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "deviation",
+      "value": 0.6,
+      "normalisedValue": 0.6,
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.deviation_pct"
+          },
+          "excerpt": "0.6"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "value": "2026-01-23T10:15:00Z",
+      "normalisedValue": "2026-01-23T10:15:00Z",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "json-path",
+            "path": "$.reading_timestamp"
+          },
+          "excerpt": "2026-01-23T10:15:00Z"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

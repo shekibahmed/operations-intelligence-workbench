@@ -1,0 +1,38 @@
+{
+  "id": "technical",
+  "title": "Asset Reliability \u2014 Technical View",
+  "widgets": [
+    {
+      "id": "critical-signals",
+      "type": "stat-card",
+      "title": "Critical Signals",
+      "parameters": {
+        "metricId": "critical-signal-count"
+      }
+    },
+    {
+      "id": "repeat-fault-list",
+      "type": "list-card",
+      "title": "Repeat Fault Signals",
+      "parameters": {
+        "metricId": "repeat-fault-count"
+      }
+    },
+    {
+      "id": "overdue-actions-table",
+      "type": "sla-table",
+      "title": "Overdue and At-Risk Actions",
+      "parameters": {
+        "metricId": "overdue-actions"
+      }
+    },
+    {
+      "id": "recent-activity-feed",
+      "type": "activity-feed",
+      "title": "Recent Extraction and Observation Activity",
+      "parameters": {
+        "metricId": "recent-reliability-activity"
+      }
+    }
+  ]
+}

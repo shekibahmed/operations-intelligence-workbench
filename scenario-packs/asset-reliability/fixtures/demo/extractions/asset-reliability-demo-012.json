@@ -1,0 +1,109 @@
+{
+  "artifactChecksum": "f9979579f054498de183656db41947ddd1c66993968a6f9e5c679ff99a65bff7",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.96,
+      "value": "A-301",
+      "normalisedValue": "A-301",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 133,
+            "end": 162
+          },
+          "excerpt": "dock leveler at bay 3 (A-301)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "component",
+      "confidence": 0.75,
+      "value": "hydraulic lift cylinder",
+      "normalisedValue": "hydraulic-cylinder",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 97,
+            "end": 145
+          },
+          "excerpt": "puddle of hydraulic fluid under the dock leveler"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.85,
+      "value": "fresh hydraulic fluid puddle under the leveler",
+      "normalisedValue": "fresh hydraulic fluid puddle under the leveler",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 197,
+            "end": 256
+          },
+          "excerpt": "small puddle, maybe the size of a dinner plate, looks fresh"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter",
+      "confidence": 0.94,
+      "value": "Dana Osei",
+      "normalisedValue": "Dana Osei",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 61,
+            "end": 88
+          },
+          "excerpt": "Dana Osei, 2026-02-05 11:02"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "date-reported",
+      "confidence": 0.93,
+      "value": "2026-02-05",
+      "normalisedValue": "2026-02-05",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 72,
+            "end": 88
+          },
+          "excerpt": "2026-02-05 11:02"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

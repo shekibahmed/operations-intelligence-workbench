@@ -1,0 +1,126 @@
+{
+  "artifactChecksum": "92aa8410d9924acb7dcb99214c292448571737363c171282dffcb0818c0cbbe1",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "time-detected",
+      "confidence": 0.94,
+      "value": "2026-02-12",
+      "normalisedValue": "2026-02-12",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 107,
+            "end": 123
+          },
+          "excerpt": "Date: 2026-02-12"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "reporter-name",
+      "confidence": 0.94,
+      "value": "Priya Nandakumar",
+      "normalisedValue": "Priya Nandakumar",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 124,
+            "end": 151
+          },
+          "excerpt": "Logged by: Priya Nandakumar"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.95,
+      "value": "B-2205",
+      "normalisedValue": "B-2205",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 153,
+            "end": 187
+          },
+          "excerpt": "Flagging that B-2205's held output"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "quantity-affected",
+      "confidence": 0.9,
+      "value": 4200,
+      "normalisedValue": 4200,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 190,
+            "end": 241
+          },
+          "excerpt": "the 4,200 units affected by the viscosity deviation"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.9,
+      "value": "B-2210",
+      "normalisedValue": "B-2210",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 437,
+            "end": 470
+          },
+          "excerpt": "B-2210's held output (3,800 units"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "hold-scope-description",
+      "confidence": 0.85,
+      "value": "Quarantine / Hold Staging Area, Line 1 output",
+      "normalisedValue": "Quarantine / Hold Staging Area, Line 1 output",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 54,
+            "end": 106
+          },
+          "excerpt": "Area: Quarantine / Hold Staging Area (Line 1 output)"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

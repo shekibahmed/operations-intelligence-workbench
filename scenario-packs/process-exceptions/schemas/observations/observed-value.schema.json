@@ -1,0 +1,8 @@
+{
+  "schemaKey": "observed-value",
+  "displayName": "Observed Value",
+  "entityType": "batch",
+  "valueType": "number",
+  "description": "The actually observed/measured value for the test parameter. May be missing if an inspection was interrupted before completion.",
+  "jsonSchema": { "type": "number" }
+}
