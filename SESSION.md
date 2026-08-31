@@ -45,10 +45,11 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-509 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-509-case-decision-ui` | `../oiw-ux` | running (batch C UI; integration points if 506 unmerged at branch time) |
+| OIW-601 | Codex (high) | `agent/codex/OIW-601-metric-service` | `../oiw-core` | running (metric evaluation, A5; pre-authorized MetricDefinition v1.5) |
+| OIW-602 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-602-dashboards-tour-e2e` | `../oiw-ux` | running (dashboards + guided tour + NORTH-STAR E2E = M1 closer) |
 
 
-Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). OIW-506 merged (PR #20): backend vertical slice COMPLETE source→approval; contracts v1.4 (CaseDefinition, ADR-011); adversarial approval-bypass fails at service+DB layers. OIW-509 (UI) still running. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
+Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). Merged: OIW-506 #20 (engines; slice complete), OIW-509 #21 (case/decision/entity/signal UI; lead reconciliation pass — suite+e2e green post-506-merge). Final M1 pair running: OIW-601 ∥ OIW-602. After merge + reconciliation (swap metrics adapter if needed): M1 EXIT REVIEW against PRD §26 Wave 2 criteria, then wrap-up for product owner. Do NOT start Wave 3 (packs two/three lifecycle proof) without owner check-in. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
 
 ## Frozen contracts
 
