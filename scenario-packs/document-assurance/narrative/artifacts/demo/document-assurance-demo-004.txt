@@ -1,0 +1,47 @@
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+Subject: Project Falcon - insurance certificate renewal date
+Date: February 20, 2026 14:32
+
+Hi Priya,
+
+Following up on our onboarding checklist for Project Falcon. Clause 6.2
+of the MSA has the initial insurance certificate due March 1, 2026.
+Can you confirm whether that date is still on track, and whether the
+certificate that comes through will show a clean annual renewal date
+we can track going forward?
+
+Thanks,
+Nadia
+
+---
+
+From: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: RE: Project Falcon - insurance certificate renewal date
+Date: February 24, 2026 10:05
+
+Hi Nadia,
+
+Thanks for checking in. Our broker is finalizing the renewal now - it's
+been a bit of a moving target this cycle because we're consolidating
+two policies into one, so the certificate might land right around the
+1st or could slip a little into the following week depending on how
+underwriting wraps up on their end. I don't have a locked date to give
+you yet, but I'll push for it to land close to the original target.
+I'll circle back as soon as I have something firmer from the broker.
+
+Best,
+Priya
+
+---
+
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+Subject: RE: Project Falcon - insurance certificate renewal date
+Date: February 24, 2026 10:41
+
+Understood, thanks for the update. Please send it over as soon as it's
+available - I'll flag it as pending on our end in the meantime.
+
+Nadia

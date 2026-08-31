@@ -1,0 +1,41 @@
+From: Tomas Reyes <tomas.reyes@reviewops.internal>
+To: Dana Whitfield <dana.whitfield@meridiancompliance.example>
+Subject: Quick check - NDA renewal date
+Date: April 8, 2026 09:14
+
+Hi Dana,
+
+Just doing some housekeeping ahead of our Q2 cycle. Can you confirm
+the renewal/expiration date you have on file for our mutual NDA
+(ref. MCS-NDA-2026-0007)? I have it as January 10, 2028, two years
+from the effective date, but wanted to double check against your
+records before I update our tracker.
+
+Thanks,
+Tomas
+
+---
+
+From: Dana Whitfield <dana.whitfield@meridiancompliance.example>
+To: Tomas Reyes <tomas.reyes@reviewops.internal>
+Subject: RE: Quick check - NDA renewal date
+Date: April 8, 2026 11:02
+
+Hi Tomas,
+
+Confirmed - our records show the same date, January 10, 2028. No
+changes on our end. Happy to keep the current term as-is.
+
+Best,
+Dana
+
+---
+
+From: Tomas Reyes <tomas.reyes@reviewops.internal>
+To: Dana Whitfield <dana.whitfield@meridiancompliance.example>
+Subject: RE: Quick check - NDA renewal date
+Date: April 8, 2026 11:15
+
+Perfect, thank you - closing this out on my end.
+
+Tomas

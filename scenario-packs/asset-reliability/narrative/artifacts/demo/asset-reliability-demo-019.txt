@@ -1,0 +1,31 @@
+From: Priya Nandakumar <p.nandakumar@northgatedc.example>
+To: maintenance@northgatedc.example; facilities-leadership@northgatedc.example
+Subject: A-501 backup generator - flagging as risk ahead of facility audit
+Date: 2026-05-04
+
+Team,
+
+Wanted to flag A-501 (Yard backup generator) as a risk item ahead of the
+upcoming facility audit. Quick timeline:
+
+- 2026-04-14: unit shut down on an overheat alarm during the routine
+  monthly test run.
+- 2026-04-15: logged as resolved after a coolant top-up, status set back
+  to operational.
+- 2026-04-29: follow-up inspection found coolant low again and identified
+  bent/blocked radiator fins as a likely root cause - meaning the
+  original issue was not actually fixed, just masked for a couple of
+  weeks.
+
+This is our only backup power source for the facility, so I don't want
+this sitting in a "resolved, operational" state in our records when the
+inspection findings say otherwise. If the audit team pulls maintenance
+history on A-501 as-is, it will show a clean resolution that doesn't
+match reality.
+
+Requesting this get prioritized for the radiator repair and a proper
+cooling system pressure test before we represent this unit as fully
+operational in any audit materials.
+
+Priya Nandakumar
+Shift Supervisor, Northgate Distribution Center

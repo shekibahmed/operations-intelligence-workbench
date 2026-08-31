@@ -1,0 +1,43 @@
+REVIEWER NOTE - FORMAL EXCEPTION PROPOSAL
+
+Reviewer: Nadia Okonkwo, Review Owner, Review Operations
+Date: July 8, 2026
+Subject: Project Falcon - proposed "accept exception" decision for
+liability cap conflicting-provisions issue
+
+Following the Q2 2026 compliance report (issued July 2, 2026), I am
+formally proposing that Review Operations accept an exception with
+respect to the unresolved liability cap conflict between MSA Clause 8.2
+(ref VLP-FAL-2026-0142) and Data Handling Policy POL-DH-009, Section
+4.1, for Project Falcon.
+
+BACKGROUND
+
+Clause 8.2 sets an aggregate liability cap, including for security
+incidents, of $2,000,000. Section 4.1 of POL-DH-009 separately sets a
+liability standard of $5,000,000 for security incidents. Despite
+outreach to Vantage's legal contact (Priya Deshmukh) on May 5 and
+May 8, 2026, Vantage's confirmation that "the contract governs" did not
+resolve which figure applies in practice, and no further written
+clarification has been received as of this note.
+
+PROPOSED EXCEPTION AND CONDITIONS
+
+I propose that Review Operations proceed on the basis that Clause 8.2's
+$2,000,000 figure governs for Project Falcon specifically, consistent
+with the MSA's own precedence clause (12.1), subject to the following
+conditions:
+
+1. This exception applies only to Project Falcon and does not set a
+   precedent for other engagements referencing POL-DH-009.
+2. The exception is to be reviewed again at the next annual policy
+   review cycle (January 2027) or sooner if Vantage provides written
+   confirmation resolving the ambiguity.
+3. The outstanding insurance certificate item is NOT covered by this
+   exception and must continue to be pursued separately as a collection
+   item.
+
+This exception, given the liability exposure involved, requires review
+and approval by an authorised reviewer before it is treated as accepted.
+
+- Nadia

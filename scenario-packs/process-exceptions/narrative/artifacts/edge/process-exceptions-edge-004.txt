@@ -1,0 +1,12 @@
+From: Priya Nandakumar
+To: Owen Bracewell
+Date: 2026-01-15
+Subject: B-2190 root cause — closed out, not supplier-related
+
+Owen,
+
+Following up on the viscosity deviation we saw on B-2190 back on the 5th. Maintenance found that the mixer 1 temperature probe had drifted out of calibration, which was throwing the viscosity reading off during the back half of that batch — nothing to do with the Kestrel Materials Co. binder lot (KM-LOT-448) that batch was run on. Probe's been recalibrated and verified against the reference standard as of yesterday.
+
+Want to be clear on this one since it's easy to jump to "bad raw material lot" whenever we see a viscosity flag: this specific deviation on B-2190 was ruled out as supplier-related. Please don't carry it forward as evidence against KM-LOT-448 in any future write-up — the two aren't connected, at least not based on what we found here.
+
+Priya

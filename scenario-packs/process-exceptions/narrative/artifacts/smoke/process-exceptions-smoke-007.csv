@@ -1,0 +1,2 @@
+batch_id,product,line,process_stage,supplier_lot,test_parameter,expected_value,observed_value,unit,deviation_pct,quantity_affected,reported_cause,disposition,reviewed_by,date
+B-2110,Compound RM-18,Line 3,packaging,DR-LOT-220,fill_weight,500,503,g,0.6,0,,released,Owen Bracewell,2026-01-22

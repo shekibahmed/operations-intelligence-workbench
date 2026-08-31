@@ -1,0 +1,13 @@
+{
+  "event_type": "obligation_status.export",
+  "source_system": "Review Operations Compliance Tracker",
+  "export_id": "COMPLY-EXP-2026-0142",
+  "party": "Consolidated Freight Underwriters",
+  "document_reference": "smoke-007-service-order",
+  "obligation": "delivery_deadline",
+  "due_date": "2026-02-10",
+  "status": "met",
+  "evidence_on_file": true,
+  "generated_timestamp": "2026-02-11T08:00:00Z",
+  "note": "Routine automated status snapshot, no exception, no reviewer action required."
+}

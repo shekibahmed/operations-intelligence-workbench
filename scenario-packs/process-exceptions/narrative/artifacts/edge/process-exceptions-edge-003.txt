@@ -1,0 +1,11 @@
+Rivermill Processing Plant — Shift Report
+Line: Line 2
+Shift: A (Day)
+Date: 2026-01-26
+Operator: Ingrid Halvorsen
+
+Ran into a short stretch of inconsistent cap torque readings on Line 2 this afternoon, roughly between 14:00 and 14:45. Adjusted the capper head and readings settled back into spec. Worth noting the small-format run we started subbing over to the 2B head partway through the afternoon to clear the backlog on the mini-bottle SKU — not sure if the torque drift I'm describing above was before or after that changeover, my note-taking got behind while I was dealing with it. Whoever picks this up should check the capper event log timestamps against 14:00-14:45 to confirm which head was actually running.
+
+No other issues. Handover to Shift B: keep an eye on cap torque on whichever head is running the mini-bottle SKU.
+
+— Ingrid Halvorsen

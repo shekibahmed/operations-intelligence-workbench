@@ -1,0 +1,4 @@
+[Northgate Facilities Maintenance Chat - #maintenance-bay]
+
+Marcus Ibe, 2026-07-06 09:40
+A-520 tripped its breaker again this morning, third time this week. resets fine and runs for a while after, but it shouldn't be tripping like this at all. going to reset it now to keep the bay cooled but this needs a real look, not just another reset

@@ -1,0 +1,6 @@
+reporting_period_start,reporting_period_end,asset_id,asset_type,location,repeat_fault_count,total_downtime_hours,rank,notes
+2026-02-01,2026-07-31,A-142,Forklift,Zone C - Shipping,3,146,1,"Two brake-related fault reports plus follow-up diagnostic within reporting period; unit held from service pending review since 2026-06-03. Highest downtime and highest safety severity of any asset in period."
+2026-02-01,2026-07-31,A-210,Conveyor,Zone B - Storage High-Bay,2,9,2,"Repeat belt-slippage reports; tension adjustment did not hold, full belt replacement quoted and pending scheduling."
+2026-02-01,2026-07-31,A-501,Generator,Yard,2,18,3,"Overheat shutdown initially logged resolved after coolant top-up; follow-up inspection found recurring low coolant and radiator fin damage, contradicting resolved status. Flagged ahead of facility audit."
+2026-02-01,2026-07-31,A-520,Compressor,Maintenance Bay,1,6,4,"Repeated breaker trips traced to slow refrigerant leak at a corroded fitting; fitting replaced 2026-07-21, monitoring ongoing."
+2026-02-01,2026-07-31,A-301,Dock Leveler,Zone A - Receiving,1,0,5,"Hydraulic cylinder seal weep temporarily patched; full cylinder replacement scheduled, no unplanned downtime recorded to date."

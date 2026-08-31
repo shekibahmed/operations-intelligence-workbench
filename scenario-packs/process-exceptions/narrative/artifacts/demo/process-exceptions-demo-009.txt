@@ -1,0 +1,14 @@
+From: Priya Nandakumar
+To: Plant Manager; Owen Bracewell
+Date: 2026-02-16
+Subject: Formal request — hold all output on supplier lot KM-LOT-448 pending investigation
+
+Team,
+
+Requesting a formal hold on all remaining output produced using Kestrel Materials Co. binder lot KM-LOT-448, plus any unused material still in that lot, until we have a confirmed root cause for the viscosity deviations on B-2205 and B-2210.
+
+Summary of what we have: two consecutive batches on this lot, both showing viscosity deviations in the 7-8% range, roughly 8,000 units combined now sitting in quarantine with no disposition. This week's Line 1 summary shows the yield-loss trend tracks specifically to this lot — every batch on a different lot this week ran clean. I don't think it's responsible to keep releasing product off KM-LOT-448 while that's still an open question, and I don't want the held batches to keep aging in the bay without a decision either way.
+
+This needs supervisor/QC sign-off to action — please treat as priority. I'll hold a review meeting tomorrow morning if that helps move it.
+
+Priya

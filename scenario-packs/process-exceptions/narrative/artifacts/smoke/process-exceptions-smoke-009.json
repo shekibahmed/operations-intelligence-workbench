@@ -1,0 +1,15 @@
+{
+  "event_type": "analyzer.reading",
+  "source_system": "Rivermill Line 3 In-Line Analyzer",
+  "instrument_id": "ANLZ-L3-02",
+  "batch_id": "B-2115",
+  "line": "Line 3",
+  "process_stage": "packaging",
+  "reading_timestamp": "2026-01-23T10:15:00Z",
+  "expected_value": 100.0,
+  "observed_value": 99.4,
+  "unit": "percent_fill_target",
+  "deviation_pct": 0.6,
+  "status": "within_tolerance",
+  "note": "Routine automated in-line reading, no exception raised."
+}

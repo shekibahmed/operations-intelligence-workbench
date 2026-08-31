@@ -1,0 +1,34 @@
+REVIEWER NOTE
+
+Reviewer: Nadia Okonkwo, Review Owner, Review Operations
+Date: May 3, 2026
+Subject: Project Falcon - liability cap discrepancy identified
+
+While cross-checking the Project Falcon Master Services Agreement
+against our internal Data Handling Policy for the onboarding item that
+was still outstanding, I found a discrepancy that needs to be tracked
+as a conflicting-provisions issue rather than a simple documentation
+gap.
+
+MSA Clause 8.2 (ref VLP-FAL-2026-0142) caps aggregate liability under
+the agreement, including liability arising from data security
+incidents, at two million dollars ($2,000,000).
+
+Data Handling Policy POL-DH-009, Section 4.1, separately states that
+liability for security incidents affecting data processed under an
+engagement shall not exceed five million dollars ($5,000,000).
+
+These two figures directly conflict with respect to security-incident
+liability for Project Falcon. Clause 12.1 of the MSA states that the
+Agreement governs over internal policy documents in the event of a
+conflict, which would suggest the $2,000,000 figure in Clause 8.2
+controls. However, Section 5.1 of the policy frames the relationship the
+other way, deferring back to "the precedence terms of the applicable
+agreement" without resolving which figure is meant to apply in practice.
+
+I am flagging this as unresolved. This should not be treated as settled
+by either document in isolation. I'll be raising this with Vantage's
+legal contact for clarification before we treat either figure as
+authoritative.
+
+- Nadia

@@ -1,0 +1,4 @@
+[Northgate Facilities Maintenance Chat - #yard]
+
+Marcus Ibe, 2026-04-14 10:22
+running the monthly backup power test on A-501 and it shut itself down about 12 minutes in on an overheat alarm. gauge was climbing faster than I'd expect for a unit that just started a routine test run, not under any real load. let it cool and tried a restart, alarm cleared and it ran a few more minutes okay before I shut it down manually rather than push it. going to check coolant level and the radiator when I get a chance later today

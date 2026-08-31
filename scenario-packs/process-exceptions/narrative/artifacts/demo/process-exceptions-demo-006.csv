@@ -1,0 +1,2 @@
+batch_id,product,line,process_stage,supplier_lot,test_parameter,expected_value,observed_value,unit,deviation_pct,quantity_affected,reported_cause,disposition,reviewed_by,date
+B-2210,Compound RM-24,Line 1,mixing,KM-LOT-448,viscosity,850,915,cP,7.6,3800,"consistent with B-2205 finding; supplier lot KM-LOT-448 suspected",hold,Owen Bracewell,2026-02-11

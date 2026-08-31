@@ -1,0 +1,53 @@
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+Subject: Project Falcon - liability cap clarification needed
+Date: May 5, 2026 09:20
+
+Hi Priya,
+
+I need to flag something for clarification. Our internal Data Handling
+Policy (POL-DH-009, Section 4.1) sets a liability cap of $5,000,000 for
+security incidents, but Clause 8.2 of the Project Falcon MSA caps
+aggregate liability, including for security incidents, at $2,000,000.
+Can you confirm from Vantage's side which figure you understand to
+control for Project Falcon?
+
+Thanks,
+Nadia
+
+---
+
+From: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: RE: Project Falcon - liability cap clarification needed
+Date: May 8, 2026 16:47
+
+Hi Nadia,
+
+Thanks for flagging. Our position is straightforward - the contract
+governs, per the precedence clause. That's consistent with how we've
+always understood these engagements to work: the signed agreement is
+what binds us, and internal policy documents on either side are
+guidance, not controlling terms.
+
+I know that's a little general, so let me know if you need something
+more specific in writing for your file, but from our side there's no
+ambiguity here - the contract is the contract.
+
+Best,
+Priya
+
+---
+
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+Subject: RE: Project Falcon - liability cap clarification needed
+Date: May 8, 2026 17:10
+
+Thanks, Priya. To be precise for our records - when you say "the
+contract governs," are you confirming that Clause 8.2's $2,000,000
+figure is the operative cap, including for security incidents? I want
+to make sure we're reading "the contract" the same way before I close
+this out on my end.
+
+Nadia

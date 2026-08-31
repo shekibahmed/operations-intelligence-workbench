@@ -1,0 +1,36 @@
+From: Priya Nandakumar <p.nandakumar@northgatedc.example>
+To: maintenance@northgatedc.example; safety@northgatedc.example
+Subject: URGENT - A-142 brake failure on yard ramp, requesting hold from service
+Date: 2026-06-02
+
+Team,
+
+Escalating this immediately. This afternoon Owen Vasquez was operating
+A-142 on the yard ramp with a load and reported that the brakes did not
+hold, causing the unit to roll backward toward the storage rack at the
+bottom before he was able to stop it using the parking brake. No injuries
+and no contact, but this was close and it happened on an incline with
+people working nearby.
+
+This is not the first flag on this unit's brakes. For reference:
+
+- 2026-04-06: brake pad replacement by Ferrow Industrial Services after a
+  soft-pedal complaint.
+- 2026-05-18: operator reported grinding and spongy pedal again.
+- 2026-05-21: follow-up inspection found uneven pad wear and fluid
+  weeping at a line fitting, recommended a full diagnostic within 5
+  business days.
+- 2026-06-02 (today): brake failure to hold on an incline under load.
+
+Given the pattern and the severity of today's incident, I am formally
+requesting that A-142 be held from service effective immediately, pending
+a full review and sign-off before it goes back on the floor. Please do
+not return this unit to service without that review regardless of any
+quick fix that gets applied - I want the full history looked at, not
+just today's symptom.
+
+Owen has parked the unit at the bottom of the yard ramp. Please have
+maintenance move it under power-off/tow only if it needs to be relocated.
+
+Priya Nandakumar
+Shift Supervisor, Northgate Distribution Center

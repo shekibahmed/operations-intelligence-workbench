@@ -1,0 +1,41 @@
+From: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+To: Marcus Ibori <marcus.ibori@reviewops.internal>
+Subject: Project Falcon - exception approval request (liability cap)
+Date: July 10, 2026 10:03
+
+Hi Marcus,
+
+Following my reviewer note from July 8, I'd like to request your
+approval as authorised reviewer on the proposed "accept exception"
+decision for the Project Falcon liability cap conflict (Clause 8.2 vs.
+POL-DH-009 Section 4.1). Full background and proposed conditions are in
+the note - happy to walk through it if useful before you sign off.
+
+Separately and unrelated - are you still the point of contact for
+Project Harbor questions, or has that moved to someone else on your
+team? Someone asked me this week and I wasn't sure who to point them
+to.
+
+Thanks,
+Nadia
+
+---
+
+From: Marcus Ibori <marcus.ibori@reviewops.internal>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: RE: Project Falcon - exception approval request (liability cap)
+Date: July 12, 2026 15:26
+
+Hi Nadia,
+
+Reviewed the note and the underlying correspondence. The conditions you
+proposed are reasonable - scoping it to Project Falcon only, tying it
+to the next annual review cycle, and keeping the insurance item separate
+all make sense given where things stand with Vantage. Approving on that
+basis.
+
+On Project Harbor - still me for now, though that may shift once the
+Q3 staffing review wraps up. Feel free to route anything Harbor-related
+to me in the meantime.
+
+Marcus

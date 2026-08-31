@@ -1,0 +1,11 @@
+Rivermill Processing Plant — Operator Note
+Line: Line 1 (Mixing)
+Shift: A (Day)
+Date: 2026-02-09
+Operator: Tomas Reyes
+
+Keeping an eye on batch B-2205 this morning — viscosity readings have been creeping up through the mix cycle, running noticeably higher than what I'd normally expect at this point in the profile. Not out of spec yet on the in-process check, but the trend is up, not flat, and it's higher than what I saw on the last few batches off this line.
+
+This batch is running on the Kestrel Materials Co. binder lot KM-LOT-448. Pulling an extra in-process sample at the 45-minute mark to see if it keeps climbing. Will flag to QC if it doesn't level off before end of mix.
+
+— Tomas Reyes

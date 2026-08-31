@@ -1,0 +1,20 @@
+Repair Update - Maintenance Bay
+
+Asset: A-520 (Arkwell AC-60 refrigerant compressor)
+Date: 2026-07-21
+Logged by: Marcus Ibe
+
+Ferrow (Tobias) came out today and replaced the corroded fitting on the
+discharge line per the leak test findings from last week. Recharged the
+system to spec after the fitting swap and ran a post-repair leak check
+with the sniffer, came back clean, no leak detected at the repaired
+fitting or anywhere else along the line.
+
+Ran the compressor for about an hour under normal load, no breaker
+trips, pressure holding steady. This looks like the actual fix rather
+than another temporary patch, unlike the reset-and-recharge we did on
+the 6th.
+
+Status: A-520 is OPERATIONAL, returned to full service. Will keep
+monitoring breaker activity over the next couple weeks to confirm the
+fix holds.

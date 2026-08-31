@@ -1,0 +1,10 @@
+Rivermill Processing Plant — Inventory Exception Note
+Area: Raw Material Warehouse (Line 1 staging)
+Date: 2026-01-20
+Logged by: Priya Nandakumar
+
+Cycle count on the Kestrel Materials Co. binder pallets (bay 4) came back 3 bags over the system count — 47 physical vs. 44 expected. Checked the receiving log and found a delivery from two days ago that had been physically staged but not yet posted to the inventory system by the receiving clerk.
+
+Posted the missing receipt in the system this afternoon and recounted — bay 4 now matches, 47 and 47. No product impact, no batch was short-fed as a result. Closing this out same shift, severity low.
+
+— Priya Nandakumar

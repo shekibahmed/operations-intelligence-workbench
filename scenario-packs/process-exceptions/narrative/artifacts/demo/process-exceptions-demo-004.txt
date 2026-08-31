@@ -1,0 +1,12 @@
+From: Priya Nandakumar
+To: Owen Bracewell
+Date: 2026-02-10
+Subject: Root cause check needed — B-2205 viscosity, possible KM-LOT-448 pattern
+
+Owen,
+
+Can you have someone run a proper root-cause check on the B-2205 viscosity deviation from yesterday? Tomas flagged it climbing through the mix and QC's 8.2% deviation confirms it wasn't just an in-process blip.
+
+The thing that's bugging me is this is the same binder lot, KM-LOT-448, that was on B-2190 back on the 5th of January — that batch had a similar viscosity flag. I know that one got closed out, but with a second batch on the same lot showing the same kind of deviation a few weeks later, I want us to actually look hard at whether KM-LOT-448 itself is the common thread here rather than assuming it's unrelated again. Please prioritize this — I don't want to be sitting on held product without an answer.
+
+Priya

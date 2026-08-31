@@ -1,0 +1,2 @@
+asset_id,work_order,service_date,technician,description,status
+A-520,NG-WO-11240,2026-07-06,Marcus Ibe,Reset tripped breaker (third occurrence this week). Checked refrigerant pressure, found slightly low, topped up charge as a temporary measure. Breaker holding after reset and recharge. Root cause not yet confirmed - recommend leak diagnostic.,Completed

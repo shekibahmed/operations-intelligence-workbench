@@ -1,0 +1,13 @@
+Rivermill Processing Plant — Shift Report
+Line: Line 1 (Mixing)
+Shift: A (Day)
+Date: 2026-02-09
+Operator: Tomas Reyes
+
+Main item for handover: batch B-2205 came in with a viscosity reading well above target — QC logged an 8.2% deviation on the in-process check, roughly 4,200 units' worth of output affected. I flagged this partway through the shift after the reading kept climbing instead of leveling off (see my earlier note). QC has put a hold on the batch pending review.
+
+This batch was run on Kestrel Materials Co. binder lot KM-LOT-448. Worth checking whether this lot has come up before — the profile felt familiar.
+
+Rest of the shift was normal. Batch B-2204 completed and released with no issues. Handover to Shift B: B-2205 is on hold, do not release without QC sign-off.
+
+— Tomas Reyes

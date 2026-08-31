@@ -1,0 +1,2 @@
+batch_id,product,line,process_stage,supplier_lot,test_parameter,expected_value,observed_value,unit,deviation_pct,quantity_affected,reported_cause,disposition,reviewed_by,date
+B-2211,Compound RM-09,Line 2,filling,DR-LOT-220,fill_weight,500,497,g,-0.6,0,minor filler dosing drift - adjusted 2026-02-16,released,Owen Bracewell,2026-02-17

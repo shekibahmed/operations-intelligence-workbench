@@ -1,0 +1,19 @@
+Repair Update - Yard
+
+Asset: A-501 (Sterling GEN-150 diesel backup generator)
+Date: 2026-04-15
+Logged by: Marcus Ibe
+
+Followed up on yesterday's overheat shutdown during the monthly test run.
+Coolant level was noticeably low when I checked the reservoir. Topped it
+back up to the full mark, checked visible hoses and the radiator cap
+seal, no obvious leak or drip found, so likely just ran low over time
+between checks rather than an active leak. Ran a 20-minute test after
+topping up, temp gauge stayed in the normal range the whole time, no
+alarm.
+
+Issue resolved. Asset status updated back to operational. Will keep an
+eye on coolant level at next monthly test to confirm this was a one-time
+low-fluid situation and not something recurring.
+
+Status: A-501 is OPERATIONAL.

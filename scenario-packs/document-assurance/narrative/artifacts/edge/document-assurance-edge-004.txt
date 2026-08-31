@@ -1,0 +1,29 @@
+REVIEWER NOTE - CORRECTION
+
+Reviewer: Marcus Ibori, Authorised Reviewer, Review Operations
+Date: July 15, 2026
+Subject: Correction - Clause 8.2 does NOT apply to Project Harbor
+
+I want to correct the record on something that came up during this
+week's cross-engagement review. An earlier informal flag suggested that
+the liability cap conflict under discussion for Project Falcon (MSA
+Clause 8.2, ref VLP-FAL-2026-0142, versus Data Handling Policy
+POL-DH-009 Section 4.1) also applied to Project Harbor. That is
+incorrect.
+
+Clause 8.2 is a provision of the Project Falcon Master Services
+Agreement with Vantage Logistics Partners only. Project Harbor is a
+separate, unrelated engagement with a different counterparty and its own
+governing agreement, which contains its own liability provisions
+entirely distinct from Clause 8.2. There is no conflicting-provisions
+issue on Project Harbor arising from Clause 8.2, and no exception is
+needed there.
+
+The earlier flag appears to have resulted from someone conflating the
+two engagements because both were mentioned in the same internal thread.
+I've corrected the tracking entry for Project Harbor to remove the
+reference to Clause 8.2. This note should not be read as saying
+anything about the status of the actual Project Falcon liability cap
+issue, which remains open and unrelated to this correction.
+
+- Marcus
