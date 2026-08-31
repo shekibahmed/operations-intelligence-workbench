@@ -45,15 +45,15 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-108 | Codex (high) | `agent/codex/OIW-108-observation-schema-api` | `../oiw-core` | running (unblocks OIW-301) |
-| OIW-301 | Codex (high) | `agent/codex/OIW-301-ingestion-intelligence` | parked | BLOCKED on OIW-108 (PR #12 holds the blocker record); fixture blocker (edge-005 not byte-identical) already fixed on main by integrator |
+| OIW-301 | Codex (high) | `agent/codex/OIW-301-ingestion-intelligence` | `../oiw-core` | resumed (both blockers cleared: OIW-108 merged PR #13; edge-005 fixed on main) |
 | OIW-210 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-210-web-wiring` | `../oiw-ux` | running |
 
-Merge order: OIW-108 → OIW-210 → OIW-301-resume.
+Merge order: OIW-210 → OIW-301 (or by completion; no shared paths).
 
 ## Frozen contracts
 
-`packages/contracts/` frozen at **v1.1** (v1.0 PR #3 + additive PR #5:
+`packages/contracts/` frozen at **v1.2** (v1.1 + additive OIW-108 PR #13:
+ObservationSchemaDefinition, validateObservationValue; ADR-009). Previously (v1.0 PR #3 + additive PR #5:
 negated observation status, alternativeCandidates, conflicting review
 state). Covers: canonical domain schemas (14 objects), pack manifest,
 workflow definition, rule schema + closed fact catalogue v1, checksum-keyed
@@ -63,10 +63,7 @@ OIW-107 is pre-authorized for an additive v1.2 seed-bundle schema if needed.
 
 ## Known blockers
 
-- OIW-301 BLOCKED on missing observation-schema contract/API; OIW-108
-  (running) is the fix. Its second blocker (edge-005 fixture not a true
-  exact duplicate) already fixed on main by integrator. Resume OIW-301 on
-  its branch once 108 merges.
+None.
 
 Resolved incidents (kept for takeover context):
 - OIW-105 BLOCKED→COMPLETE cycle: blocked on missing upstream APIs,
