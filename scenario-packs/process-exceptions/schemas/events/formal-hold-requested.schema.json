@@ -1,6 +1,14 @@
 {
-  "id": "formal-hold-requested",
+  "eventType": "formal-hold-requested",
   "displayName": "Formal Hold Requested",
   "description": "A supervisor formally requested a hold on all remaining output and unused material tied to a supplier lot, pending root-cause confirmation. Drives the pack's hold-affected-output Decision.",
-  "requiredObservations": ["supplier-lot-identifier", "hold-scope-description", "reporter-name", "time-detected"]
+  "requiredObservations": ["supplier-lot-identifier", "hold-scope-description", "reporter-name", "time-detected"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "supplier-lot-identifier"
+  }
 }

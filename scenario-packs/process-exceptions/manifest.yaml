@@ -94,6 +94,7 @@ observationSchemas:
   - schemas/observations/recommended-disposition.schema.json
   - schemas/observations/hold-scope-description.schema.json
   - schemas/observations/yield-loss-pct.schema.json
+seedEntities: seed/entities.json
 caseDefinitions:
   - schemas/cases/exception-case.schema.json
 workflows:

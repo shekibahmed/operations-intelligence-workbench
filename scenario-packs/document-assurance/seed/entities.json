@@ -1,0 +1,218 @@
+[
+  {
+    "id": "party-vantage-logistics-partners",
+    "entityType": "party",
+    "displayName": "Vantage Logistics Partners",
+    "externalReference": "vantage-logistics-partners",
+    "aliases": ["Vantage", "VLP"],
+    "attributes": { "relationship": "client", "jurisdiction": "State of Ashford" },
+    "status": "active"
+  },
+  {
+    "id": "party-consolidated-freight-underwriters",
+    "entityType": "party",
+    "displayName": "Consolidated Freight Underwriters",
+    "externalReference": "consolidated-freight-underwriters",
+    "aliases": ["CFU"],
+    "attributes": { "relationship": "vendor" },
+    "status": "active"
+  },
+  {
+    "id": "party-meridian-compliance-services",
+    "entityType": "party",
+    "displayName": "Meridian Compliance Services",
+    "externalReference": "meridian-compliance-services",
+    "aliases": ["Meridian Compliance", "MCS"],
+    "attributes": { "relationship": "vendor", "jurisdiction": "State of Ashford" },
+    "status": "active"
+  },
+  {
+    "id": "document-project-falcon-msa",
+    "entityType": "document",
+    "displayName": "Project Falcon Master Services Agreement",
+    "externalReference": "VLP-FAL-2026-0142",
+    "aliases": ["Project Falcon MSA", "Falcon MSA", "the Vantage agreement"],
+    "attributes": { "party": "Vantage Logistics Partners", "project": "Project Falcon", "executedOn": "2026-01-15" },
+    "status": "active"
+  },
+  {
+    "id": "document-project-falcon-amendment-1",
+    "entityType": "document",
+    "displayName": "Amendment No. 1 to the Project Falcon MSA",
+    "externalReference": "VLP-FAL-2026-0142-A1",
+    "aliases": ["Falcon Amendment No. 1", "Amendment 1"],
+    "attributes": { "parentDocument": "VLP-FAL-2026-0142", "executedOn": "2026-05-12" },
+    "status": "active"
+  },
+  {
+    "id": "document-vantage-mutual-nda",
+    "entityType": "document",
+    "displayName": "Vantage Logistics Partners Mutual NDA",
+    "externalReference": "VLP-NDA-2024-0019",
+    "aliases": ["Vantage NDA", "the Vantage agreement"],
+    "attributes": { "party": "Vantage Logistics Partners", "unrelatedToProjectFalcon": true },
+    "status": "active"
+  },
+  {
+    "id": "document-meridian-mutual-nda",
+    "entityType": "document",
+    "displayName": "Meridian Compliance Services Mutual NDA",
+    "externalReference": "MCS-NDA-2026-0007",
+    "aliases": ["Meridian NDA", "MCS NDA"],
+    "attributes": { "party": "Meridian Compliance Services", "executedOn": "2026-01-10" },
+    "status": "active"
+  },
+  {
+    "id": "document-data-handling-policy",
+    "entityType": "document",
+    "displayName": "Internal Data Handling Policy",
+    "externalReference": "POL-DH-009",
+    "aliases": ["Data Handling Policy", "POL DH 009"],
+    "attributes": { "effectiveOn": "2026-01-01", "internal": true },
+    "status": "active"
+  },
+  {
+    "id": "document-data-retention-policy",
+    "entityType": "document",
+    "displayName": "Internal Data Retention Policy",
+    "externalReference": "POL-RET-014",
+    "aliases": ["Data Retention Policy", "POL RET 014"],
+    "attributes": { "internal": true },
+    "status": "active"
+  },
+  {
+    "id": "document-cfu-service-order",
+    "entityType": "document",
+    "displayName": "Service Order CFU-SO-2026-0033",
+    "externalReference": "CFU-SO-2026-0033",
+    "aliases": ["CFU service order", "CFU SO 2026 0033"],
+    "attributes": { "party": "Consolidated Freight Underwriters" },
+    "status": "active"
+  },
+  {
+    "id": "jurisdiction-state-of-ashford",
+    "entityType": "jurisdiction",
+    "displayName": "State of Ashford",
+    "externalReference": "state-of-ashford",
+    "aliases": ["Ashford"],
+    "attributes": { "syntheticJurisdiction": true },
+    "status": "active"
+  },
+  {
+    "id": "project-falcon",
+    "entityType": "project",
+    "displayName": "Project Falcon",
+    "externalReference": "project-falcon",
+    "aliases": ["Falcon"],
+    "attributes": { "party": "Vantage Logistics Partners", "governingDocument": "VLP-FAL-2026-0142" },
+    "status": "active"
+  },
+  {
+    "id": "project-harbor",
+    "entityType": "project",
+    "displayName": "Project Harbor",
+    "externalReference": "project-harbor",
+    "aliases": ["Harbor"],
+    "attributes": { "unrelatedToProjectFalcon": true },
+    "status": "active"
+  },
+  {
+    "id": "obligation-falcon-quarterly-reporting",
+    "entityType": "obligation",
+    "displayName": "Project Falcon MSA Clause 5.3",
+    "externalReference": "VLP-FAL-2026-0142:5.3",
+    "aliases": ["Clause 5.3", "quarterly compliance reporting"],
+    "attributes": { "documentReference": "VLP-FAL-2026-0142", "obligationKind": "quarterly-reporting" },
+    "status": "ongoing"
+  },
+  {
+    "id": "obligation-falcon-insurance-certificate",
+    "entityType": "obligation",
+    "displayName": "Project Falcon MSA Clause 6.2",
+    "externalReference": "VLP-FAL-2026-0142:6.2",
+    "aliases": ["Clause 6.2", "insurance certificate maintenance"],
+    "attributes": { "documentReference": "VLP-FAL-2026-0142", "dueOn": "2026-05-01" },
+    "status": "overdue"
+  },
+  {
+    "id": "obligation-falcon-liability-cap",
+    "entityType": "obligation",
+    "displayName": "Project Falcon MSA Clause 8.2",
+    "externalReference": "VLP-FAL-2026-0142:8.2",
+    "aliases": ["Clause 8.2", "Falcon liability cap"],
+    "attributes": { "documentReference": "VLP-FAL-2026-0142", "amount": 2000000, "currency": "USD" },
+    "status": "exception-accepted"
+  },
+  {
+    "id": "obligation-policy-liability-standard",
+    "entityType": "obligation",
+    "displayName": "POL-DH-009 Section 4.1",
+    "externalReference": "POL-DH-009:4.1",
+    "aliases": ["Section 4.1", "data security liability standard"],
+    "attributes": { "documentReference": "POL-DH-009", "amount": 5000000, "currency": "USD" },
+    "status": "active"
+  },
+  {
+    "id": "party-contact-priya-deshmukh",
+    "entityType": "party-contact",
+    "displayName": "Priya Deshmukh",
+    "externalReference": "priya-deshmukh",
+    "aliases": ["P. Deshmukh"],
+    "attributes": { "party": "Vantage Logistics Partners", "role": "senior-counsel" },
+    "status": "active"
+  },
+  {
+    "id": "party-contact-dana-whitfield",
+    "entityType": "party-contact",
+    "displayName": "Dana Whitfield",
+    "externalReference": "dana-whitfield",
+    "aliases": ["D. Whitfield"],
+    "attributes": { "party": "Meridian Compliance Services", "role": "director-client-engagements" },
+    "status": "active"
+  },
+  {
+    "id": "party-contact-marcus-ellery",
+    "entityType": "party-contact",
+    "displayName": "Marcus Ellery",
+    "externalReference": "marcus-ellery",
+    "aliases": ["M. Ellery"],
+    "attributes": { "party": "Consolidated Freight Underwriters", "role": "account-manager" },
+    "status": "active"
+  },
+  {
+    "id": "review-owner-nadia-okonkwo",
+    "entityType": "review-owner",
+    "displayName": "Nadia Okonkwo",
+    "externalReference": "nadia-okonkwo",
+    "aliases": ["N. Okonkwo"],
+    "attributes": { "role": "review-owner", "project": "Project Falcon" },
+    "status": "active"
+  },
+  {
+    "id": "review-owner-marcus-ibori",
+    "entityType": "review-owner",
+    "displayName": "Marcus Ibori",
+    "externalReference": "marcus-ibori",
+    "aliases": ["M. Ibori"],
+    "attributes": { "role": "authorised-reviewer" },
+    "status": "active"
+  },
+  {
+    "id": "review-owner-elena-cho",
+    "entityType": "review-owner",
+    "displayName": "Elena Cho",
+    "externalReference": "elena-cho",
+    "aliases": ["E. Cho"],
+    "attributes": { "role": "internal-reviewer" },
+    "status": "active"
+  },
+  {
+    "id": "review-owner-tomas-reyes",
+    "entityType": "review-owner",
+    "displayName": "Tomas Reyes",
+    "externalReference": "tomas-reyes",
+    "aliases": ["T. Reyes"],
+    "attributes": { "role": "internal-reviewer" },
+    "status": "active"
+  }
+]

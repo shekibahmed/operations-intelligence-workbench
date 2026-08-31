@@ -1,0 +1,317 @@
+[
+  {
+    "id": "asset-a-118",
+    "entityType": "asset",
+    "displayName": "A-118",
+    "externalReference": "A-118",
+    "aliases": ["A118", "Forklift A-118"],
+    "attributes": { "model": "Talbrook TF-40", "location": "Zone A (Receiving)", "installedOn": "2021-11-02", "procurementBatch": "NG-2021-FLEET-02" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-127",
+    "entityType": "asset",
+    "displayName": "A-127",
+    "externalReference": "A-127",
+    "aliases": ["A127", "Forklift A-127"],
+    "attributes": { "model": "Talbrook TF-40", "location": "Zone B (Storage High-Bay)", "installedOn": "2021-11-02", "procurementBatch": "NG-2021-FLEET-02" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-140",
+    "entityType": "asset",
+    "displayName": "A-140",
+    "externalReference": "A-140",
+    "aliases": ["A140", "A-14?", "Forklift A-140"],
+    "attributes": { "model": "Talbrook TF-42", "location": "Zone B (Storage High-Bay)", "installedOn": "2023-01-09" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-142",
+    "entityType": "asset",
+    "displayName": "A-142",
+    "externalReference": "A-142",
+    "aliases": ["A142", "A-14?", "Forklift A-142", "Unit 142"],
+    "attributes": { "model": "Talbrook TF-40", "location": "Zone C (Shipping)", "installedOn": "2022-03-14", "procurementBatch": "NG-2022-FLEET-01" },
+    "status": "out-of-service"
+  },
+  {
+    "id": "asset-a-156",
+    "entityType": "asset",
+    "displayName": "A-156",
+    "externalReference": "A-156",
+    "aliases": ["A156", "Forklift A-156"],
+    "attributes": { "model": "Talbrook TF-40", "location": "Zone C (Shipping)", "installedOn": "2022-03-14", "procurementBatch": "NG-2022-FLEET-01" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-163",
+    "entityType": "asset",
+    "displayName": "A-163",
+    "externalReference": "A-163",
+    "aliases": ["A163", "Forklift A-163"],
+    "attributes": { "model": "Talbrook TF-40", "location": "Yard", "installedOn": "2020-08-20" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-210",
+    "entityType": "asset",
+    "displayName": "A-210",
+    "externalReference": "A-210",
+    "aliases": ["A210", "Conveyor A-210"],
+    "attributes": { "model": "Meridian CB-200", "location": "Zone B (Storage High-Bay)", "installedOn": "2021-06-01", "installBatch": "NG-2021-CONV-01" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-211",
+    "entityType": "asset",
+    "displayName": "A-211",
+    "externalReference": "A-211",
+    "aliases": ["A211", "Conveyor A-211"],
+    "attributes": { "model": "Meridian CB-200", "location": "Zone B (Storage High-Bay)", "installedOn": "2021-06-01", "installBatch": "NG-2021-CONV-01" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-301",
+    "entityType": "asset",
+    "displayName": "A-301",
+    "externalReference": "A-301",
+    "aliases": ["A301", "Dock leveler A-301"],
+    "attributes": { "model": "Corvale DL-15", "location": "Zone A (Receiving)", "bay": 3, "installedOn": "2020-05-15" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-302",
+    "entityType": "asset",
+    "displayName": "A-302",
+    "externalReference": "A-302",
+    "aliases": ["A302", "Dock leveler A-302"],
+    "attributes": { "model": "Corvale DL-15", "location": "Zone A (Receiving)", "bay": 4, "installedOn": "2020-05-15" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-405",
+    "entityType": "asset",
+    "displayName": "A-405",
+    "externalReference": "A-405",
+    "aliases": ["A405", "HVAC A-405"],
+    "attributes": { "model": "BrightAir RTU-9", "location": "Maintenance Bay", "installedOn": "2019-09-10" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-501",
+    "entityType": "asset",
+    "displayName": "A-501",
+    "externalReference": "A-501",
+    "aliases": ["A501", "Generator A-501"],
+    "attributes": { "model": "Sterling GEN-150", "location": "Yard", "installedOn": "2021-02-01", "installBatch": "NG-2021-MECH-YARD/MB" },
+    "status": "operational"
+  },
+  {
+    "id": "asset-a-520",
+    "entityType": "asset",
+    "displayName": "A-520",
+    "externalReference": "A-520",
+    "aliases": ["A520", "Compressor A-520"],
+    "attributes": { "model": "Arkwell AC-60", "location": "Maintenance Bay", "installedOn": "2021-02-01", "installBatch": "NG-2021-MECH-YARD/MB" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-142-brake-assembly",
+    "entityType": "component",
+    "displayName": "Brake assembly (A-142)",
+    "externalReference": "A-142:brake-assembly",
+    "aliases": ["A-142 brake assembly", "A-142 brakes"],
+    "attributes": { "assetReference": "A-142", "componentKind": "brake-assembly" },
+    "status": "failed"
+  },
+  {
+    "id": "component-a-142-hydraulic-lift-cylinder",
+    "entityType": "component",
+    "displayName": "Hydraulic lift cylinder (A-142)",
+    "externalReference": "A-142:hydraulic-lift-cylinder",
+    "aliases": ["A-142 lift cylinder", "mast lift cylinder"],
+    "attributes": { "assetReference": "A-142", "componentKind": "hydraulic-lift-cylinder" },
+    "status": "attention-required"
+  },
+  {
+    "id": "component-tf-40-drive-motor",
+    "entityType": "component",
+    "displayName": "Talbrook TF-40 drive motor",
+    "externalReference": "TF-40:drive-motor",
+    "aliases": ["TF-40 drive motor", "drive motor"],
+    "attributes": { "assetReferences": ["A-142", "A-118", "A-127", "A-156"], "componentKind": "drive-motor" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-156-brake-assembly",
+    "entityType": "component",
+    "displayName": "Brake assembly (A-156)",
+    "externalReference": "A-156:brake-assembly",
+    "aliases": ["A-156 brake assembly", "A-156 brakes"],
+    "attributes": { "assetReference": "A-156", "componentKind": "brake-assembly" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-127-brake-assembly",
+    "entityType": "component",
+    "displayName": "Brake assembly (A-127)",
+    "externalReference": "A-127:brake-assembly",
+    "aliases": ["A-127 brake assembly", "A-127 brakes"],
+    "attributes": { "assetReference": "A-127", "componentKind": "brake-assembly" },
+    "status": "attention-required"
+  },
+  {
+    "id": "component-a-140-brake-assembly",
+    "entityType": "component",
+    "displayName": "Brake assembly (A-140)",
+    "externalReference": "A-140:brake-assembly",
+    "aliases": ["A-140 brake assembly", "A-140 brakes"],
+    "attributes": { "assetReference": "A-140", "componentKind": "brake-assembly" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-210-conveyor-belt",
+    "entityType": "component",
+    "displayName": "Conveyor belt (A-210)",
+    "externalReference": "A-210:conveyor-belt",
+    "aliases": ["A-210 conveyor belt", "A-210 belt"],
+    "attributes": { "assetReference": "A-210", "componentKind": "conveyor-belt", "installedOn": "2021-06-01" },
+    "status": "replacement-pending"
+  },
+  {
+    "id": "component-a-211-conveyor-belt",
+    "entityType": "component",
+    "displayName": "Conveyor belt (A-211)",
+    "externalReference": "A-211:conveyor-belt",
+    "aliases": ["A-211 conveyor belt", "A-211 belt"],
+    "attributes": { "assetReference": "A-211", "componentKind": "conveyor-belt", "installedOn": "2021-06-01" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-163-drive-chain",
+    "entityType": "component",
+    "displayName": "Drive chain (A-163)",
+    "externalReference": "A-163:drive-chain",
+    "aliases": ["A-163 drive chain"],
+    "attributes": { "assetReference": "A-163", "componentKind": "drive-chain" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-301-hydraulic-cylinder",
+    "entityType": "component",
+    "displayName": "Dock-leveler hydraulic cylinder (A-301)",
+    "externalReference": "A-301:hydraulic-cylinder",
+    "aliases": ["A-301 hydraulic cylinder", "A-301 cylinder seal"],
+    "attributes": { "assetReference": "A-301", "componentKind": "hydraulic-cylinder", "installedOn": "2020-05-15" },
+    "status": "replacement-scheduled"
+  },
+  {
+    "id": "component-a-302-hydraulic-cylinder",
+    "entityType": "component",
+    "displayName": "Dock-leveler hydraulic cylinder (A-302)",
+    "externalReference": "A-302:hydraulic-cylinder",
+    "aliases": ["A-302 hydraulic cylinder", "A-302 cylinder seal"],
+    "attributes": { "assetReference": "A-302", "componentKind": "hydraulic-cylinder", "installedOn": "2020-05-15" },
+    "status": "operational"
+  },
+  {
+    "id": "component-shared-control-board",
+    "entityType": "component",
+    "displayName": "Shared control board family",
+    "externalReference": "shared:control-board",
+    "aliases": ["control board"],
+    "attributes": { "assetReferences": ["A-405", "A-210", "A-163"], "componentKind": "control-board" },
+    "status": "operational"
+  },
+  {
+    "id": "component-a-520-refrigerant-fitting",
+    "entityType": "component",
+    "displayName": "Refrigerant compressor fitting (A-520)",
+    "externalReference": "A-520:refrigerant-fitting",
+    "aliases": ["A-520 compressor fitting", "refrigerant fitting"],
+    "attributes": { "assetReference": "A-520", "componentKind": "refrigerant-fitting" },
+    "status": "repaired"
+  },
+  {
+    "id": "component-a-501-radiator-coolant-system",
+    "entityType": "component",
+    "displayName": "Radiator and coolant system (A-501)",
+    "externalReference": "A-501:radiator-coolant-system",
+    "aliases": ["A-501 cooling system", "radiator coolant system"],
+    "attributes": { "assetReference": "A-501", "componentKind": "radiator-coolant-system" },
+    "status": "attention-required"
+  },
+  {
+    "id": "location-zone-a-receiving",
+    "entityType": "location",
+    "displayName": "Zone A (Receiving)",
+    "externalReference": "zone-a",
+    "aliases": ["Zone A", "Receiving"],
+    "attributes": { "facility": "Northgate Distribution Center" },
+    "status": "active"
+  },
+  {
+    "id": "location-zone-b-storage-high-bay",
+    "entityType": "location",
+    "displayName": "Zone B (Storage High-Bay)",
+    "externalReference": "zone-b",
+    "aliases": ["Zone B", "Storage High-Bay"],
+    "attributes": { "facility": "Northgate Distribution Center" },
+    "status": "active"
+  },
+  {
+    "id": "location-zone-c-shipping",
+    "entityType": "location",
+    "displayName": "Zone C (Shipping)",
+    "externalReference": "zone-c",
+    "aliases": ["Zone C", "Shipping"],
+    "attributes": { "facility": "Northgate Distribution Center" },
+    "status": "active"
+  },
+  {
+    "id": "location-maintenance-bay",
+    "entityType": "location",
+    "displayName": "Maintenance Bay",
+    "externalReference": "maintenance-bay",
+    "aliases": ["Repair Bay"],
+    "attributes": { "facility": "Northgate Distribution Center" },
+    "status": "active"
+  },
+  {
+    "id": "location-yard",
+    "entityType": "location",
+    "displayName": "Yard",
+    "externalReference": "yard",
+    "aliases": ["Northgate Yard", "yard ramp"],
+    "attributes": { "facility": "Northgate Distribution Center" },
+    "status": "active"
+  },
+  {
+    "id": "service-provider-northgate-facilities",
+    "entityType": "service-provider",
+    "displayName": "Northgate Facilities",
+    "externalReference": "northgate-facilities",
+    "aliases": ["Internal maintenance team"],
+    "attributes": { "providerKind": "internal" },
+    "status": "active"
+  },
+  {
+    "id": "service-provider-ferrow-industrial-services",
+    "entityType": "service-provider",
+    "displayName": "Ferrow Industrial Services",
+    "externalReference": "ferrow-industrial-services",
+    "aliases": ["Ferrow", "Ferrow Industrial"],
+    "attributes": { "providerKind": "external" },
+    "status": "active"
+  },
+  {
+    "id": "service-provider-coastal-fleet-maintenance",
+    "entityType": "service-provider",
+    "displayName": "Coastal Fleet Maintenance",
+    "externalReference": "coastal-fleet-maintenance",
+    "aliases": ["Coastal Fleet"],
+    "attributes": { "providerKind": "external" },
+    "status": "active"
+  }
+]

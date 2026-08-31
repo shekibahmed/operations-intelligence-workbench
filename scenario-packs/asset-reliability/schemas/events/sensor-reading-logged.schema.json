@@ -1,9 +1,17 @@
 {
-  "id": "sensor-reading-logged",
+  "eventType": "sensor-reading-logged",
   "displayName": "Sensor Reading Logged",
   "description": "An automated sensor or telemetry reading logged for an asset.",
   "requiredObservations": [
     "asset-identifier",
     "sensor-reading"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

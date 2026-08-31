@@ -1,10 +1,18 @@
 {
-  "id": "maintenance-completed",
+  "eventType": "maintenance-completed",
   "displayName": "Maintenance Completed",
   "description": "A maintenance, repair or servicing action recorded as completed against an asset.",
   "requiredObservations": [
     "asset-identifier",
     "work-order-reference",
     "service-date"
-  ]
+  ],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "service-date",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

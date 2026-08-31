@@ -1,10 +1,18 @@
 {
-  "id": "repair-scheduled",
+  "eventType": "repair-scheduled",
   "displayName": "Repair Scheduled",
   "description": "A repair or replacement action scheduled for a future date.",
   "requiredObservations": [
     "asset-identifier",
     "work-order-reference",
     "service-date"
-  ]
+  ],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "service-date",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

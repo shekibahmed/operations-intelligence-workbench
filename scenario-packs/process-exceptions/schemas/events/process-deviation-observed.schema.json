@@ -1,6 +1,14 @@
 {
-  "id": "process-deviation-observed",
+  "eventType": "process-deviation-observed",
   "displayName": "Process Deviation Observed",
   "description": "An operator or crew observed and recorded a process deviation directly (in-process trend, torque drift, reject-rate spike, minor fill-weight drift), prior to or independent of a formal QC confirmation.",
-  "requiredObservations": ["time-detected", "process-stage"]
+  "requiredObservations": ["time-detected", "process-stage"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "process-stage"
+  }
 }

@@ -1,6 +1,14 @@
 {
-  "id": "routine-handover-sent",
+  "eventType": "routine-handover-sent",
   "displayName": "Routine Handover Sent",
   "description": "A routine, issue-free handover email was sent between shifts or supervisors, with no new exception content.",
-  "requiredObservations": ["reporter-name", "time-detected"]
+  "requiredObservations": ["reporter-name", "time-detected"],
+  "optionalObservations": ["line-identifier"],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "line-identifier"
+  }
 }

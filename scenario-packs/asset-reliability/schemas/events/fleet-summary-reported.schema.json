@@ -1,10 +1,18 @@
 {
-  "id": "fleet-summary-reported",
+  "eventType": "fleet-summary-reported",
   "displayName": "Fleet Summary Reported",
   "description": "A periodic leadership-facing rollup summarising fault recurrence and downtime across multiple assets.",
   "requiredObservations": [
     "asset-identifier",
     "repeat-fault-count",
     "downtime-hours"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

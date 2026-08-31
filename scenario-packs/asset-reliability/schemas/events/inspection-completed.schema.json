@@ -1,9 +1,17 @@
 {
-  "id": "inspection-completed",
+  "eventType": "inspection-completed",
   "displayName": "Inspection Completed",
   "description": "A formal inspection report completed against an asset, with findings and any recommendation.",
   "requiredObservations": [
     "asset-identifier",
     "inspection-finding"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

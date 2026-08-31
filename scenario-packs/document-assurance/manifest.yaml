@@ -87,6 +87,7 @@ observationSchemas:
   - schemas/observations/required-evidence.schema.json
   - schemas/observations/responsible-party.schema.json
   - schemas/observations/review-status.schema.json
+seedEntities: seed/entities.json
 caseDefinitions:
   - schemas/cases/review-case.schema.json
 workflows:

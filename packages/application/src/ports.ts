@@ -47,6 +47,19 @@ export interface ArtifactRecord {
     | "failed-terminal";
 }
 
+export interface EntityRecord {
+  id: string;
+  workspaceId: string;
+  entityType: string;
+  displayName: string;
+  externalReference: string | null;
+  aliases: string[];
+  attributes: Record<string, JsonValue>;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface AuditEntryRecord {
   id: string;
   workspaceId: string;
@@ -81,6 +94,7 @@ export interface AuditEntryRepositoryPort extends InsertRepositoryPort<AuditEntr
 export interface SeedRepositoryPorts {
   sources: InsertRepositoryPort<SourceRecord>;
   artifacts: InsertRepositoryPort<ArtifactRecord>;
+  entities: InsertRepositoryPort<EntityRecord>;
   auditEntries: AuditEntryRepositoryPort;
 }
 
@@ -110,6 +124,17 @@ export interface SeedFixtureArtifact {
 export interface SeedFixtureSet {
   name: "smoke" | "demo" | "edge-cases";
   artifacts: SeedFixtureArtifact[];
+  entities: readonly SeedEntityDefinition[];
+}
+
+export interface SeedEntityDefinition {
+  id: string;
+  entityType: string;
+  displayName: string;
+  externalReference: string | null;
+  aliases: string[];
+  attributes: Record<string, JsonValue>;
+  status: string;
 }
 
 export type FixtureSetLoader<TPack extends SeedPack> = (

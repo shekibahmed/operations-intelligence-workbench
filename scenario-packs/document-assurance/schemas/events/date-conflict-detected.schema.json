@@ -1,6 +1,14 @@
 {
-  "id": "date-conflict-detected",
+  "eventType": "date-conflict-detected",
   "displayName": "Date Conflict Detected",
   "description": "A due date recorded in a checklist or tracking artifact disagrees with the due date stated in the governing clause, and the discrepancy is genuine and unresolved.",
-  "requiredObservations": ["due-date"]
+  "requiredObservations": ["due-date"],
+  "optionalObservations": ["document-reference"],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

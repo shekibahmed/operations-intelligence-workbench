@@ -82,6 +82,18 @@ async function normalizedSeedSnapshot(workspaceId: string) {
 
   return {
     sources: [...sourceNames.values()].sort(),
+    entities: (await repositories.entities.list(workspaceId))
+      .map((entity) => ({
+        entityType: entity.entityType,
+        displayName: entity.displayName,
+        externalReference: entity.externalReference,
+        aliases: entity.aliases,
+        attributes: entity.attributes,
+        status: entity.status,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      }))
+      .sort((left, right) => left.displayName.localeCompare(right.displayName)),
     artifacts: (await repositories.artifacts.list(workspaceId))
       .map((artifact) => ({
         source: sourceNames.get(artifact.sourceId),
@@ -123,16 +135,28 @@ describe("asset-reliability guest seed and reset", () => {
 
     const seededB = await seedService.seed(workspaceB, pack, loadFixtureSet);
     expect(seededB.artifactCount).toBe(25);
+    expect(seededB.entityCount).toBeGreaterThan(0);
     const beforeSeedingA = await operationalSnapshot(workspaceB.id);
 
     const seededA = await seedService.seed(workspaceA, pack, loadFixtureSet);
-    expect(seededA).toMatchObject({ fixtureSet: "demo", artifactCount: 25, warnings: [] });
+    expect(seededA).toMatchObject({
+      fixtureSet: "demo",
+      artifactCount: 25,
+      entityCount: seededB.entityCount,
+      warnings: [],
+    });
     expect(await operationalSnapshot(workspaceB.id)).toEqual(beforeSeedingA);
 
     expect(await normalizedSeedSnapshot(workspaceA.id)).toEqual(
       await normalizedSeedSnapshot(workspaceB.id),
     );
     const initialA = await operationalSnapshot(workspaceA.id);
+    expect(
+      initialA.entities
+        .filter((entity) => ["A-142", "A-140"].includes(entity.externalReference ?? ""))
+        .map((entity) => entity.externalReference)
+        .sort(),
+    ).toEqual(["A-140", "A-142"]);
 
     await repositories.sources.insert(workspaceA.id, {
       id: randomUUID(),
@@ -147,7 +171,11 @@ describe("asset-reliability guest seed and reset", () => {
     );
 
     const reset = await resetService.reset(workspaceA, pack, loadFixtureSet);
-    expect(reset).toMatchObject({ fixtureSet: "demo", artifactCount: 25 });
+    expect(reset).toMatchObject({
+      fixtureSet: "demo",
+      artifactCount: 25,
+      entityCount: seededA.entityCount,
+    });
     expect(await operationalSnapshot(workspaceA.id)).toEqual(initialA);
     expect(await operationalSnapshot(workspaceB.id)).toEqual(beforeSeedingA);
 

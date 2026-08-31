@@ -1,6 +1,14 @@
 {
-  "id": "compliance-report-filed",
+  "eventType": "compliance-report-filed",
   "displayName": "Compliance Report Filed",
   "description": "A periodic compliance report was filed for a vendor or engagement, with zero or more open findings.",
-  "requiredObservations": ["reporting-period"]
+  "requiredObservations": ["reporting-period"],
+  "optionalObservations": ["document-reference"],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

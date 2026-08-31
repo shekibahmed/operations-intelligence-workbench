@@ -1,6 +1,14 @@
 {
-  "id": "qc-inspection-incomplete",
+  "eventType": "qc-inspection-incomplete",
   "displayName": "QC Inspection Incomplete",
   "description": "A quality-control inspection was interrupted before completion, leaving the observed value missing; any disposition recommendation attached to it is provisional, not confirmed.",
-  "requiredObservations": ["batch-identifier", "recommended-disposition"]
+  "requiredObservations": ["batch-identifier", "recommended-disposition"],
+  "optionalObservations": ["time-detected"],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "batch-identifier"
+  }
 }

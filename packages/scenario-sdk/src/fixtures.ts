@@ -9,6 +9,7 @@ import {
   SlugSchema,
   type ExtractionResult,
   type ScenarioPack,
+  type SeedEntity,
 } from "@oiw/contracts";
 import { z } from "zod";
 
@@ -53,6 +54,7 @@ export interface LoadedFixtureSet {
   name: FixtureSetName;
   directory: string;
   artifacts: LoadedFixtureArtifact[];
+  entities: readonly SeedEntity[];
 }
 
 export type FixtureSetLoadResult =
@@ -115,7 +117,12 @@ export async function loadFixtureSet(
   if (!(await directoryExists(setDirectory))) {
     return {
       status: "loaded",
-      fixtureSet: { name: setName, directory: setDirectory, artifacts: [] },
+      fixtureSet: {
+        name: setName,
+        directory: setDirectory,
+        artifacts: [],
+        entities: pack.seedEntities,
+      },
       warnings: [
         issueWarning(relativeSetPath, `Fixture set "${setName}" directory not found; loaded empty`),
       ],
@@ -216,7 +223,7 @@ export async function loadFixtureSet(
   }
   return {
     status: "loaded",
-    fixtureSet: { name: setName, directory: setDirectory, artifacts },
+    fixtureSet: { name: setName, directory: setDirectory, artifacts, entities: pack.seedEntities },
     warnings: [],
   };
 }

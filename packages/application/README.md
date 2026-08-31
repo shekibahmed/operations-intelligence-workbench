@@ -27,11 +27,13 @@ the web layer remains responsible for setting it.
 ## Seed and reset
 
 `SeedService` loads the requested manifest fixture set through the injected
-Scenario SDK loader. Source and Artifact UUIDs derive from Workspace ID and
-stable fixture keys, record ordering is stable, seed timestamps are fixed and
-raw fixture content/checksums are retained. Current packs declare Artifact
-fixtures only; richer canonical records can be added at the loader/port
-boundary without pack-specific application conditionals.
+Scenario SDK loader. Source, Artifact and Entity UUIDs derive from Workspace ID
+and stable fixture/seed keys, record ordering is stable, seed timestamps are
+fixed and raw fixture content/checksums are retained. Validated pack seed
+Entities become canonical workspace-scoped Entity rows; aliases remain on the
+canonical field and are mirrored into attributes for the public exact/alias
+resolution boundary. Seed and reset results report source, Artifact and Entity
+counts.
 
 `ResetService` validates and loads the seed plan before destructive work,
 calls persistence's atomic Workspace-scoped clear, renews the guest TTL and

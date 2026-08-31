@@ -73,6 +73,7 @@ observationSchemas:
   - schemas/observations/repeat-fault-count.schema.json
   - schemas/observations/sensor-reading.schema.json
   - schemas/observations/service-status.schema.json
+seedEntities: seed/entities.json
 caseDefinitions:
   - schemas/cases/reliability-case.schema.json
 workflows:

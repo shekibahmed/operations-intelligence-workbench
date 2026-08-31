@@ -1,6 +1,14 @@
 {
-  "id": "root-cause-closed",
+  "eventType": "root-cause-closed",
   "displayName": "Root-Cause Closed",
   "description": "A root-cause investigation was closed with a determined cause. May explicitly rule out a supplier lot as the cause, in which case this event must not be aggregated as evidence of a supplier-linked pattern.",
-  "requiredObservations": ["batch-identifier", "reported-cause", "time-detected"]
+  "requiredObservations": ["batch-identifier", "reported-cause", "time-detected"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "batch-identifier"
+  }
 }

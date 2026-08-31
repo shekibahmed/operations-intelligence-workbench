@@ -1,6 +1,14 @@
 {
-  "id": "contract-executed",
+  "eventType": "contract-executed",
   "displayName": "Contract Executed",
   "description": "A contract, NDA, or service order was signed by both parties, creating one or more obligations.",
-  "requiredObservations": ["document-reference", "effective-date"]
+  "requiredObservations": ["document-reference", "effective-date"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "effective-date",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

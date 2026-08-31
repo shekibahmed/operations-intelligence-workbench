@@ -1,6 +1,14 @@
 {
-  "id": "inventory-exception-logged",
+  "eventType": "inventory-exception-logged",
   "displayName": "Inventory Exception Logged",
   "description": "A count discrepancy, staging/space issue, or other inventory-level exception was logged, whether resolved same-shift or left open.",
-  "requiredObservations": ["time-detected"]
+  "requiredObservations": ["time-detected"],
+  "optionalObservations": ["line-identifier"],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "line-identifier"
+  }
 }

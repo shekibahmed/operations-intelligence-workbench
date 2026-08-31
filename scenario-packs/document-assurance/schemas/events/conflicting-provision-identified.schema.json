@@ -1,6 +1,14 @@
 {
-  "id": "conflicting-provision-identified",
+  "eventType": "conflicting-provision-identified",
   "displayName": "Conflicting Provision Identified",
   "description": "A reviewer explicitly identified and named a conflict between two provisions (e.g. a contract clause and an internal policy section) stating incompatible figures for the same kind of claim.",
-  "requiredObservations": ["financial-threshold", "conflicting-provision"]
+  "requiredObservations": ["financial-threshold", "conflicting-provision"],
+  "optionalObservations": ["document-reference"],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

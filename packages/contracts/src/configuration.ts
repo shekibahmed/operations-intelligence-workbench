@@ -334,6 +334,102 @@ export const ObservationSchemaDefinitionSchema = z.discriminatedUnion("valueType
     .strict(),
 ]);
 
+const EventOccurredAtMappingSchema = z
+  .object({
+    observationSchemaKey: SlugSchema.nullable(),
+    fallback: z.literal("artifact-received-at"),
+  })
+  .strict();
+
+const EventPrimaryEntityMappingSchema = z
+  .object({
+    observationSchemaKey: SlugSchema,
+  })
+  .strict();
+
+/**
+ * Contract v1.3 for one pack-owned event-definition file. Required and
+ * optional observations compose the Event attributes under their schema keys;
+ * mappings select the Event time and primary Entity without core pack logic.
+ */
+export const EventDefinitionSchema = z
+  .object({
+    eventType: SlugSchema,
+    displayName: z.string().min(1).max(200),
+    description: z.string().min(1),
+    requiredObservations: z.array(SlugSchema).min(1),
+    optionalObservations: z.array(SlugSchema).default([]),
+    occurredAt: EventOccurredAtMappingSchema,
+    primaryEntity: EventPrimaryEntityMappingSchema.nullable(),
+  })
+  .strict()
+  .superRefine((definition, context) => {
+    const required = new Set(definition.requiredObservations);
+    if (required.size !== definition.requiredObservations.length) {
+      context.addIssue({
+        code: "custom",
+        message: "requiredObservations must be unique",
+        path: ["requiredObservations"],
+      });
+    }
+
+    const optional = new Set(definition.optionalObservations);
+    if (optional.size !== definition.optionalObservations.length) {
+      context.addIssue({
+        code: "custom",
+        message: "optionalObservations must be unique",
+        path: ["optionalObservations"],
+      });
+    }
+    definition.optionalObservations.forEach((schemaKey, index) => {
+      if (required.has(schemaKey)) {
+        context.addIssue({
+          code: "custom",
+          message: "An observation cannot be both required and optional",
+          path: ["optionalObservations", index],
+        });
+      }
+    });
+
+    const composed = new Set([...required, ...optional]);
+    const occurredAtSchemaKey = definition.occurredAt.observationSchemaKey;
+    if (occurredAtSchemaKey !== null && !composed.has(occurredAtSchemaKey)) {
+      context.addIssue({
+        code: "custom",
+        message: "occurredAt observationSchemaKey must be required or optional",
+        path: ["occurredAt", "observationSchemaKey"],
+      });
+    }
+    const entitySchemaKey = definition.primaryEntity?.observationSchemaKey;
+    if (entitySchemaKey !== undefined && !composed.has(entitySchemaKey)) {
+      context.addIssue({
+        code: "custom",
+        message: "primaryEntity observationSchemaKey must be required or optional",
+        path: ["primaryEntity", "observationSchemaKey"],
+      });
+    }
+  });
+
+/** Contract v1.3 for one synthetic Entity authored by a Scenario Pack. */
+export const SeedEntitySchema = z
+  .object({
+    id: SlugSchema,
+    entityType: SlugSchema,
+    displayName: z.string().min(1).max(300),
+    externalReference: z.string().min(1).nullable(),
+    aliases: z.array(z.string().min(1)).default([]),
+    attributes: z.record(z.string(), JsonValueSchema),
+    status: SlugSchema,
+  })
+  .strict()
+  .superRefine((entity, context) => {
+    if (new Set(entity.aliases).size !== entity.aliases.length) {
+      context.addIssue({ code: "custom", message: "aliases must be unique", path: ["aliases"] });
+    }
+  });
+
+export const SeedEntityCatalogueSchema = z.array(SeedEntitySchema);
+
 const DashboardReferencesSchema = z
   .object({
     leadership: RelativePathSchema,
@@ -364,6 +460,7 @@ export const ScenarioPackManifestSchema = z
     entityTypes: z.array(PackTypeDefinitionSchema).min(1),
     eventTypes: z.array(PackTypeDefinitionSchema).min(1),
     observationSchemas: z.array(RelativePathSchema).min(1),
+    seedEntities: RelativePathSchema.optional(),
     caseDefinitions: z.array(RelativePathSchema).min(1),
     workflows: z.record(SlugSchema, RelativePathSchema).refine((value) => Object.keys(value).length > 0, {
       message: "At least one workflow is required",
@@ -399,5 +496,7 @@ export const ScenarioPackSchema = ScenarioPackManifestSchema;
 export type RuleDefinition = z.infer<typeof RuleDefinitionSchema>;
 export type WorkflowDefinition = z.infer<typeof WorkflowDefinitionSchema>;
 export type ObservationSchemaDefinition = z.infer<typeof ObservationSchemaDefinitionSchema>;
+export type EventDefinition = z.infer<typeof EventDefinitionSchema>;
+export type SeedEntity = z.infer<typeof SeedEntitySchema>;
 export type ScenarioPackManifest = z.infer<typeof ScenarioPackManifestSchema>;
 export type ScenarioPack = z.infer<typeof ScenarioPackSchema>;

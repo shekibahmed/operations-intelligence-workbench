@@ -1,6 +1,14 @@
 {
-  "id": "routine-calibration-performed",
+  "eventType": "routine-calibration-performed",
   "displayName": "Routine Calibration Performed",
   "description": "A routine equipment calibration check was performed and found within tolerance, requiring no exception handling.",
-  "requiredObservations": ["expected-value", "observed-value", "time-detected"]
+  "requiredObservations": ["expected-value", "observed-value", "time-detected"],
+  "optionalObservations": ["line-identifier"],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "line-identifier"
+  }
 }

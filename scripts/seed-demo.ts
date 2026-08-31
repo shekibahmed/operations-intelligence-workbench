@@ -45,7 +45,9 @@ try {
   );
   console.log(`Seeded ${entry.id}@${entry.version} from ${relative(repositoryRoot, entry.directory)}.`);
   console.log(`Workspace: ${workspace.slug} (${workspace.id})`);
-  console.log(`Fixture set: ${result.fixtureSet}; ${result.sourceCount} sources, ${result.artifactCount} artifacts.`);
+  console.log(
+    `Fixture set: ${result.fixtureSet}; ${result.sourceCount} sources, ${result.artifactCount} artifacts, ${result.entityCount} entities.`,
+  );
   if (result.warnings.length > 0) console.warn(`${result.warnings.length} fixture warning(s) reported.`);
 } catch (error) {
   if (workspaceId !== undefined) await repositories.workspaces.delete(workspaceId);

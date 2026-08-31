@@ -1,6 +1,14 @@
 {
-  "id": "analyzer-reading-logged",
+  "eventType": "analyzer-reading-logged",
   "displayName": "Analyzer Reading Logged",
   "description": "An automated in-line analyzer logged a reading for a batch, informational unless it exceeds tolerance.",
-  "requiredObservations": ["batch-identifier", "expected-value", "observed-value", "deviation"]
+  "requiredObservations": ["batch-identifier", "expected-value", "observed-value", "deviation"],
+  "optionalObservations": ["time-detected"],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "batch-identifier"
+  }
 }

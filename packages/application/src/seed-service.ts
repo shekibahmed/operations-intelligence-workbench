@@ -1,5 +1,6 @@
 import type {
   ArtifactRecord,
+  EntityRecord,
   FixtureSetLoader,
   JsonValue,
   SeedFixtureArtifact,
@@ -17,6 +18,7 @@ export interface SeedResult {
   fixtureSet: SeedFixtureSet["name"];
   sourceCount: number;
   artifactCount: number;
+  entityCount: number;
   warnings: unknown[];
 }
 
@@ -151,6 +153,30 @@ export class SeedService {
       await this.repositories.artifacts.insert(workspace.id, record);
     }
 
+    const entities = [...prepared.fixtureSet.entities].sort((left, right) =>
+      left.id.localeCompare(right.id),
+    );
+    for (const entity of entities) {
+      const record: EntityRecord = {
+        id: deterministicUuid(workspace.id, `entity:${entity.id}`),
+        workspaceId: workspace.id,
+        entityType: entity.entityType,
+        displayName: entity.displayName,
+        externalReference: entity.externalReference,
+        aliases: [...entity.aliases],
+        attributes: {
+          ...entity.attributes,
+          aliases: [...entity.aliases],
+          seedEntityId: entity.id,
+          synthetic: true,
+        },
+        status: entity.status,
+        createdAt: DEMO_SEED_TIMESTAMP,
+        updatedAt: DEMO_SEED_TIMESTAMP,
+      };
+      await this.repositories.entities.insert(workspace.id, record);
+    }
+
     const audits = await this.repositories.auditEntries.list(workspace.id);
     await this.repositories.auditEntries.insert(
       workspace.id,
@@ -165,6 +191,7 @@ export class SeedService {
           fixtureSet: prepared.fixtureSet.name,
           sourceCount: sources.length,
           artifactCount: prepared.fixtureSet.artifacts.length,
+          entityCount: entities.length,
         },
         previousEntryHash: latestAuditHash(audits),
       }),
@@ -174,6 +201,7 @@ export class SeedService {
       fixtureSet: prepared.fixtureSet.name,
       sourceCount: sources.length,
       artifactCount: prepared.fixtureSet.artifacts.length,
+      entityCount: entities.length,
       warnings: prepared.warnings,
     };
   }

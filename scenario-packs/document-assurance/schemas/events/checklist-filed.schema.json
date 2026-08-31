@@ -1,6 +1,14 @@
 {
-  "id": "checklist-filed",
+  "eventType": "checklist-filed",
   "displayName": "Checklist Filed",
   "description": "An onboarding, requalification, or audit checklist was filed, whether fully complete or with outstanding items.",
-  "requiredObservations": ["checklist-status"]
+  "requiredObservations": ["checklist-status"],
+  "optionalObservations": ["document-reference"],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

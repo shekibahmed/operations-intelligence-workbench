@@ -1,9 +1,17 @@
 {
-  "id": "status-changed",
+  "eventType": "status-changed",
   "displayName": "Status Changed",
   "description": "An explicit change or restatement of an asset's current operating status.",
   "requiredObservations": [
     "asset-identifier",
     "current-operating-status"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

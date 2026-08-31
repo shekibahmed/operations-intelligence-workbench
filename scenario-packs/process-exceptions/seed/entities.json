@@ -1,0 +1,263 @@
+[
+  {
+    "id": "process-mixing",
+    "entityType": "process",
+    "displayName": "Mixing",
+    "externalReference": "mixing",
+    "aliases": ["mixing process", "mix stage"],
+    "attributes": { "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "process-filling",
+    "entityType": "process",
+    "displayName": "Filling",
+    "externalReference": "filling",
+    "aliases": ["filling process", "fill stage"],
+    "attributes": { "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "process-packaging",
+    "entityType": "process",
+    "displayName": "Packaging",
+    "externalReference": "packaging",
+    "aliases": ["packaging process", "pack stage"],
+    "attributes": { "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "line-1-mixing",
+    "entityType": "line",
+    "displayName": "Line 1 (Mixing)",
+    "externalReference": "line-1",
+    "aliases": ["Line 1", "Mixing Line 1"],
+    "attributes": { "process": "mixing", "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "line-2-filling",
+    "entityType": "line",
+    "displayName": "Line 2 (Filling)",
+    "externalReference": "line-2",
+    "aliases": ["Line 2", "Filling Line 2"],
+    "attributes": { "process": "filling", "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "line-2b",
+    "entityType": "line",
+    "displayName": "Line 2B",
+    "externalReference": "line-2b",
+    "aliases": ["Line 2", "2B head", "Line 2B head"],
+    "attributes": { "process": "filling", "parentLine": "line-2", "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "line-3-packaging",
+    "entityType": "line",
+    "displayName": "Line 3 (Packaging)",
+    "externalReference": "line-3",
+    "aliases": ["Line 3", "Packaging Line 3"],
+    "attributes": { "process": "packaging", "site": "Rivermill Processing Plant" },
+    "status": "active"
+  },
+  {
+    "id": "batch-b-2101",
+    "entityType": "batch",
+    "displayName": "B-2101",
+    "externalReference": "B-2101",
+    "aliases": ["B2101", "Batch B-2101"],
+    "attributes": { "product": "RM-12", "line": "line-1", "supplierLot": "KM-LOT-401" },
+    "status": "released"
+  },
+  {
+    "id": "batch-b-2110",
+    "entityType": "batch",
+    "displayName": "B-2110",
+    "externalReference": "B-2110",
+    "aliases": ["B2110", "Batch B-2110"],
+    "attributes": { "product": "RM-18", "lines": ["line-2", "line-3"], "supplierLot": "DR-LOT-220" },
+    "status": "released"
+  },
+  {
+    "id": "batch-b-2190",
+    "entityType": "batch",
+    "displayName": "B-2190",
+    "externalReference": "B-2190",
+    "aliases": ["B2190", "Batch B-2190"],
+    "attributes": { "product": "RM-24", "line": "line-1", "supplierLot": "KM-LOT-448", "supplierCauseRuledOut": true },
+    "status": "closed"
+  },
+  {
+    "id": "batch-b-2205",
+    "entityType": "batch",
+    "displayName": "B-2205",
+    "externalReference": "B-2205",
+    "aliases": ["B2205", "Batch B-2205"],
+    "attributes": { "product": "RM-24", "line": "line-1", "supplierLot": "KM-LOT-448", "quantityAffected": 4200 },
+    "status": "on-hold"
+  },
+  {
+    "id": "batch-b-2210",
+    "entityType": "batch",
+    "displayName": "B-2210",
+    "externalReference": "B-2210",
+    "aliases": ["B2210", "Batch B-2210"],
+    "attributes": { "product": "RM-24", "line": "line-1", "supplierLot": "KM-LOT-448", "quantityAffected": 3800 },
+    "status": "on-hold"
+  },
+  {
+    "id": "batch-b-2211",
+    "entityType": "batch",
+    "displayName": "B-2211",
+    "externalReference": "B-2211",
+    "aliases": ["B2211", "Batch B-2211"],
+    "attributes": { "product": "RM-09", "line": "line-2", "supplierLot": "DR-LOT-220" },
+    "status": "released"
+  },
+  {
+    "id": "product-rm-09",
+    "entityType": "product",
+    "displayName": "Compound RM-09",
+    "externalReference": "RM-09",
+    "aliases": ["RM09", "Compound RM09"],
+    "attributes": { "primaryLine": "line-2" },
+    "status": "active"
+  },
+  {
+    "id": "product-rm-12",
+    "entityType": "product",
+    "displayName": "Compound RM-12",
+    "externalReference": "RM-12",
+    "aliases": ["RM12", "Compound RM12"],
+    "attributes": { "primaryLine": "line-1" },
+    "status": "active"
+  },
+  {
+    "id": "product-rm-18",
+    "entityType": "product",
+    "displayName": "Compound RM-18",
+    "externalReference": "RM-18",
+    "aliases": ["RM18", "Compound RM18"],
+    "attributes": { "primaryLine": "line-3" },
+    "status": "active"
+  },
+  {
+    "id": "product-rm-24",
+    "entityType": "product",
+    "displayName": "Compound RM-24",
+    "externalReference": "RM-24",
+    "aliases": ["RM24", "Compound RM24"],
+    "attributes": { "primaryLine": "line-1" },
+    "status": "active"
+  },
+  {
+    "id": "shift-a-day",
+    "entityType": "shift",
+    "displayName": "Shift A (Day)",
+    "externalReference": "shift-a",
+    "aliases": ["Shift A", "Day shift"],
+    "attributes": {},
+    "status": "active"
+  },
+  {
+    "id": "shift-b-night",
+    "entityType": "shift",
+    "displayName": "Shift B (Night)",
+    "externalReference": "shift-b",
+    "aliases": ["Shift B", "Night shift"],
+    "attributes": {},
+    "status": "active"
+  },
+  {
+    "id": "shift-c-weekend",
+    "entityType": "shift",
+    "displayName": "Shift C (Weekend)",
+    "externalReference": "shift-c",
+    "aliases": ["Shift C", "Weekend shift"],
+    "attributes": {},
+    "status": "active"
+  },
+  {
+    "id": "supplier-kestrel-materials",
+    "entityType": "supplier",
+    "displayName": "Kestrel Materials Co.",
+    "externalReference": "kestrel-materials",
+    "aliases": ["Kestrel Materials", "Kestrel"],
+    "attributes": {},
+    "status": "active"
+  },
+  {
+    "id": "supplier-drayton-supply-partners",
+    "entityType": "supplier",
+    "displayName": "Drayton Supply Partners",
+    "externalReference": "drayton-supply-partners",
+    "aliases": ["Drayton Supply", "Drayton"],
+    "attributes": {},
+    "status": "active"
+  },
+  {
+    "id": "supplier-lot-km-448",
+    "entityType": "supplier-lot",
+    "displayName": "KM-LOT-448",
+    "externalReference": "KM-LOT-448",
+    "aliases": ["KM LOT 448", "KM-448"],
+    "attributes": { "supplier": "Kestrel Materials Co." },
+    "status": "under-investigation"
+  },
+  {
+    "id": "supplier-lot-km-401",
+    "entityType": "supplier-lot",
+    "displayName": "KM-LOT-401",
+    "externalReference": "KM-LOT-401",
+    "aliases": ["KM LOT 401", "KM-401"],
+    "attributes": { "supplier": "Kestrel Materials Co." },
+    "status": "normal"
+  },
+  {
+    "id": "supplier-lot-dr-220",
+    "entityType": "supplier-lot",
+    "displayName": "DR-LOT-220",
+    "externalReference": "DR-LOT-220",
+    "aliases": ["DR LOT 220", "DR-220"],
+    "attributes": { "supplier": "Drayton Supply Partners" },
+    "status": "normal"
+  },
+  {
+    "id": "person-tomas-reyes",
+    "entityType": "person",
+    "displayName": "Tomas Reyes",
+    "externalReference": "tomas-reyes",
+    "aliases": ["T. Reyes"],
+    "attributes": { "role": "operator", "line": "line-1", "shift": "shift-a" },
+    "status": "active"
+  },
+  {
+    "id": "person-ingrid-halvorsen",
+    "entityType": "person",
+    "displayName": "Ingrid Halvorsen",
+    "externalReference": "ingrid-halvorsen",
+    "aliases": ["I. Halvorsen"],
+    "attributes": { "role": "operator", "line": "line-2", "shift": "shift-a" },
+    "status": "active"
+  },
+  {
+    "id": "person-priya-nandakumar",
+    "entityType": "person",
+    "displayName": "Priya Nandakumar",
+    "externalReference": "priya-nandakumar",
+    "aliases": ["P. Nandakumar"],
+    "attributes": { "role": "shift-supervisor" },
+    "status": "active"
+  },
+  {
+    "id": "person-owen-bracewell",
+    "entityType": "person",
+    "displayName": "Owen Bracewell",
+    "externalReference": "owen-bracewell",
+    "aliases": ["O. Bracewell"],
+    "attributes": { "role": "qc-lead" },
+    "status": "active"
+  }
+]

@@ -1,9 +1,17 @@
 {
-  "id": "diagnostic-completed",
+  "eventType": "diagnostic-completed",
   "displayName": "Diagnostic Completed",
   "description": "A diagnostic or root-cause investigation completed against an asset, typically by a service provider.",
   "requiredObservations": [
     "asset-identifier",
     "inspection-finding"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

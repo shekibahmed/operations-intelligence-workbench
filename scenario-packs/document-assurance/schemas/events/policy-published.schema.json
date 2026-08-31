@@ -1,6 +1,14 @@
 {
-  "id": "policy-published",
+  "eventType": "policy-published",
   "displayName": "Policy Published",
   "description": "An internal policy document is confirmed in force, either standing on its own or as background context referenced by an engagement.",
-  "requiredObservations": ["document-reference", "effective-date"]
+  "requiredObservations": ["document-reference", "effective-date"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "effective-date",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

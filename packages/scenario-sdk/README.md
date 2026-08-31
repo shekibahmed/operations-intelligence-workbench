@@ -13,9 +13,9 @@ const result = await loadPackFromDirectory("scenario-packs/asset-reliability");
 
 switch (result.status) {
   case "loaded":
-    // result.pack: LoadedScenarioPack — manifest, labels, observation
-    // catalogue, workflows, rules and the three dashboard lenses, all
-    // schema-validated.
+    // result.pack: LoadedScenarioPack — manifest, labels, observation and
+    // Event catalogues, seed Entities, workflows, rules and the three
+    // dashboard lenses, all schema-validated.
     // result.warnings: non-fatal issues (e.g. an absent fixture set,
     // tolerated until OIW-004b lands).
     break;
@@ -72,6 +72,31 @@ mechanical edits to the three shipped packs. `confidenceThreshold`, when
 present, must be between zero and one and is exposed unchanged for the
 application-layer abstention policy.
 
+## Event and seed Entity catalogues (contracts v1.3)
+
+Every manifest-declared Event file is validated as an `EventDefinition`. The
+definition identifies required and optional Observation schema keys, the
+Observation used for `occurredAt` (plus the deterministic Artifact-received
+fallback), and the Observation that supplies the primary Entity reference.
+Consumers use the public catalogue rather than importing pack files:
+
+```ts
+import { getEventDefinition } from "@oiw/scenario-sdk";
+
+const fault = getEventDefinition(loadedPack, "fault-reported");
+loadedPack.eventDefinitions.get("fault-reported"); // equivalent
+```
+
+The loader rejects duplicate Event definitions, manifest ID/label mismatches,
+unknown Observation schema keys, and primary-Entity mappings to Observations
+without an `entityType` hint.
+
+Packs may declare `seedEntities` in their manifest. That JSON catalogue is
+validated with `SeedEntityCatalogueSchema`, checked for duplicate stable IDs
+and undeclared Entity types, and exposed as `loadedPack.seedEntities`.
+`loadFixtureSet` also returns the same validated list as
+`fixtureSet.entities`, so application seeding needs no pack filesystem access.
+
 ## Registry
 
 ```ts
@@ -98,6 +123,7 @@ if (result.status === "loaded") {
   // Stable artifact-id order. Each item contains the validated index fields,
   // exact artifact bytes, and its validated ExtractionResult.
   result.fixtureSet.artifacts;
+  result.fixtureSet.entities; // validated, stable pack seed definitions
   result.warnings;
 } else {
   // Invalid index, unsafe/missing paths, checksum mismatches and invalid
@@ -124,12 +150,19 @@ Per PRD §11.3 and the amendments in `docs/PLAN_AMENDMENTS.md`:
 
 - **Manifest** — `manifest.yaml` against `ScenarioPackManifestSchema`
   (`@oiw/contracts`).
-- **Referenced files exist and parse** — labels, entity/event type schemas,
-  case definitions, evaluation sets and tours are read and must be valid JSON.
+- **Referenced files exist and parse** — labels, Entity type schemas, case
+  definitions, evaluation sets and tours are read and must be valid JSON.
 - **Observation schemas (contracts v1.2)** — every `observationSchemas[]`
   reference must conform to `ObservationSchemaDefinitionSchema`; duplicate
   `schemaKey` values fail load, and valid definitions populate the public
   schema-keyed catalogue.
+- **Event definitions (contracts v1.3)** — every `eventTypes[].schema`
+  reference must conform to `EventDefinitionSchema`, match its manifest ID and
+  label, and reference only known Observation schema keys. Valid definitions
+  populate the public event-type-keyed catalogue.
+- **Seed Entities (contracts v1.3)** — an optional manifest `seedEntities`
+  catalogue must conform to `SeedEntityCatalogueSchema`; stable IDs are unique
+  and every `entityType` is declared by the manifest.
 - **Workflow state** — each `workflows[*]` file against
   `WorkflowDefinitionSchema`; transitions and `initialState` must reference
   declared states (enforced by the frozen contract itself).

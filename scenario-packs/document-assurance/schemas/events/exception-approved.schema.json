@@ -1,6 +1,14 @@
 {
-  "id": "exception-approved",
+  "eventType": "exception-approved",
   "displayName": "Exception Approved",
   "description": "An authorised reviewer approved a previously proposed exception on the stated conditions.",
-  "requiredObservations": ["exception", "review-status"]
+  "requiredObservations": ["exception", "review-status"],
+  "optionalObservations": ["document-reference"],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "document-reference"
+  }
 }

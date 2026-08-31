@@ -2,11 +2,15 @@ import { access } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import {
+  EventDefinitionSchema,
   ObservationSchemaDefinitionSchema,
+  SeedEntityCatalogueSchema,
   WorkflowDefinitionSchema,
+  type EventDefinition,
   type ObservationSchemaDefinition,
   type RuleDefinition,
   type ScenarioPack,
+  type SeedEntity,
   type WorkflowDefinition,
 } from "@oiw/contracts";
 
@@ -22,6 +26,8 @@ export interface LoadedScenarioPack {
   manifest: ScenarioPack;
   labels: Record<string, unknown>;
   observationSchemas: ReadonlyMap<string, ObservationSchemaDefinition>;
+  eventDefinitions: ReadonlyMap<string, EventDefinition>;
+  seedEntities: readonly SeedEntity[];
   workflows: Record<string, WorkflowDefinition>;
   rules: RuleDefinition[];
   dashboards: {
@@ -100,7 +106,6 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
 
   const genericJsonPaths = [
     ...manifest.entityTypes.map((entityType) => entityType.schema),
-    ...manifest.eventTypes.map((eventType) => eventType.schema),
     ...manifest.caseDefinitions,
     ...manifest.evaluationSets,
     ...(manifest.tours !== undefined
@@ -139,6 +144,106 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       continue;
     }
     observationSchemas.set(result.value.schemaKey, result.value);
+  }
+
+  const eventDefinitions = new Map<string, EventDefinition>();
+  for (const eventType of manifest.eventTypes) {
+    const result = await readAndValidateJsonFile(
+      resolve(packDirectory, eventType.schema),
+      eventType.schema,
+      EventDefinitionSchema,
+    );
+    if (!result.ok) {
+      errors.push(...result.issues);
+      continue;
+    }
+    const definition = result.value;
+    if (definition.eventType !== eventType.id) {
+      errors.push(
+        issueError(
+          `${eventType.schema}#eventType`,
+          `Event definition "${definition.eventType}" must match manifest event type "${eventType.id}"`,
+        ),
+      );
+    }
+    if (definition.displayName !== eventType.displayName) {
+      errors.push(
+        issueError(
+          `${eventType.schema}#displayName`,
+          `Event definition displayName must match manifest label "${eventType.displayName}"`,
+        ),
+      );
+    }
+    if (eventDefinitions.has(definition.eventType)) {
+      errors.push(
+        issueError(
+          `${eventType.schema}#eventType`,
+          `Duplicate Event definition: ${definition.eventType}`,
+        ),
+      );
+      continue;
+    }
+
+    const referencedSchemaKeys = new Set([
+      ...definition.requiredObservations,
+      ...definition.optionalObservations,
+    ]);
+    for (const schemaKey of referencedSchemaKeys) {
+      if (!observationSchemas.has(schemaKey)) {
+        errors.push(
+          issueError(
+            `${eventType.schema}#${schemaKey}`,
+            `Event definition references unknown observation schemaKey "${schemaKey}"`,
+          ),
+        );
+      }
+    }
+    const primaryEntityKey = definition.primaryEntity?.observationSchemaKey;
+    if (
+      primaryEntityKey !== undefined &&
+      observationSchemas.get(primaryEntityKey)?.entityType === undefined
+    ) {
+      errors.push(
+        issueError(
+          `${eventType.schema}#primaryEntity.observationSchemaKey`,
+          `Primary Entity observation "${primaryEntityKey}" must declare an entityType`,
+        ),
+      );
+    }
+    eventDefinitions.set(definition.eventType, definition);
+  }
+
+  const seedEntities: SeedEntity[] = [];
+  if (manifest.seedEntities !== undefined) {
+    const result = await readAndValidateJsonFile(
+      resolve(packDirectory, manifest.seedEntities),
+      manifest.seedEntities,
+      SeedEntityCatalogueSchema,
+    );
+    if (!result.ok) {
+      errors.push(...result.issues);
+    } else {
+      const entityTypes = new Set(manifest.entityTypes.map((entityType) => entityType.id));
+      const seenIds = new Set<string>();
+      for (const [index, entity] of result.value.entries()) {
+        if (seenIds.has(entity.id)) {
+          errors.push(
+            issueError(`${manifest.seedEntities}#${index}.id`, `Duplicate seed Entity id "${entity.id}"`),
+          );
+          continue;
+        }
+        seenIds.add(entity.id);
+        if (!entityTypes.has(entity.entityType)) {
+          errors.push(
+            issueError(
+              `${manifest.seedEntities}#${index}.entityType`,
+              `Seed Entity references undeclared entity type "${entity.entityType}"`,
+            ),
+          );
+        }
+        seedEntities.push(entity);
+      }
+    }
   }
 
   const workflows: Record<string, WorkflowDefinition> = {};
@@ -203,6 +308,8 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       manifest,
       labels,
       observationSchemas,
+      eventDefinitions,
+      seedEntities,
       workflows,
       rules,
       dashboards: dashboards as LoadedScenarioPack["dashboards"],

@@ -1,9 +1,17 @@
 {
-  "id": "fault-reported",
+  "eventType": "fault-reported",
   "displayName": "Fault Reported",
   "description": "An informal or formal report that an asset is exhibiting a fault or abnormal symptom.",
   "requiredObservations": [
     "asset-identifier",
     "symptom"
-  ]
+  ],
+  "optionalObservations": ["date-reported"],
+  "occurredAt": {
+    "observationSchemaKey": "date-reported",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "asset-identifier"
+  }
 }

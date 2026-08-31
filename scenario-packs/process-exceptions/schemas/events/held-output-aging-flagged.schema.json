@@ -1,6 +1,14 @@
 {
-  "id": "held-output-aging-flagged",
+  "eventType": "held-output-aging-flagged",
   "displayName": "Held Output Aging Flagged",
   "description": "Previously held/quarantined batch output was flagged as aging without a disposition decision, raising an SLA/backlog concern.",
-  "requiredObservations": ["batch-identifier", "quantity-affected", "time-detected"]
+  "requiredObservations": ["batch-identifier", "quantity-affected", "time-detected"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": "time-detected",
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "batch-identifier"
+  }
 }
