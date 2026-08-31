@@ -45,7 +45,8 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | `../oiw-core` | resumed (OIW-109 merged: contracts v1.3, eventDefinitions catalogue, 35 seeded entities incl. A-142/A-140) |
+| OIW-110 | Codex (high) | `agent/codex/OIW-110-event-reconciliation` | `../oiw-core` | running (pack event-definition reconciliation + ambiguity validator; unblocks OIW-501 final parity) |
+| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED 2nd time — implementation COMPLETE and green, only pack data blocks 9/9 gold parity (7/9 exact; see PR #15 agent-run "problems") |
 
 
 Merged this batch: OIW-210 (PR #14, security PASS), OIW-108 (PR #13, contracts v1.2), OIW-301 (PR #12, test-reviewer PASS on all 9 criteria incl. smoke parity + injection inertness). Merge order for batch B: by completion (no shared paths). After batch B: batch C = case/action/decision/approval engines (Codex, executes the pending rule outcomes via the ActionExecutor seam) ∥ case+decision UI, then dashboards wiring + north-star e2e (M1).
