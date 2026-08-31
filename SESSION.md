@@ -5,129 +5,87 @@
 
 ## Current milestone
 
-**Wave 2 (Asset Reliability vertical slice) — batch A in flight.**
-Wave 1 COMPLETE and exit-reviewed against PRD §26: three packs load, seed +
-reset live-verified (25 artifacts), all routes render, core neutral. Carried
-gap: selector UI still stub-wired → first item of Wave 2 batch A (OIW-210).
-Batch A: OIW-301 (ingestion+adapters+fixture provider, Codex) ∥ OIW-210
-(web wiring to real services, Claude m900x). Batch B after A: entity/event/
-rules/signals engines + review-queue UI. Batch C: case/action/decision
-engines + case/decision UI + north-star e2e.
+**M1 COMPLETE (2026-09-01): the full Asset Reliability vertical slice.**
+Exit criterion (PRD §26 Wave 2) met and continuously enforced: the
+north-star Playwright spec (`apps/web/e2e/north-star.spec.ts`) walks the
+complete PRD §13 visitor journey — scenario selection → seeded workspace →
+artifact processing → evidence-backed review → entity/event/rules/signal →
+critical case → hold-from-service decision → human approval → real
+dashboards → audit trail — with real state assertions, green in CI.
 
-## Merged tasks
+**PAUSED at milestone boundary awaiting product-owner check-in before
+Wave 3** (Process Exception + Document Assurance lifecycle proof, PRD §26
+Wave 3 / M2). No agents running.
 
-- OIW-000 — Repository bootstrap and coordination layer (lead thread)
-- OIW-001 — Monorepo scaffold and contract freeze (PR #3; neutrality +
-  test reviewers PASS; commands verified by lead)
-- OIW-003 — UX specification and demonstration narrative (PR #2)
-- OIW-005 — Evaluation, threat-model and quality plan (PR #1)
-- OIW-004a — Synthetic narrative content for three packs (PR #4;
-  evaluation-reviewer PASS)
-- OIW-002 — Contract amendments v1.1 + ADR-008 (PR #5)
-- OIW-101 — DB schema, migrations, persistence repositories (PR #7; six
-  DB-boundary guarantee tests verified incl. approval guard; CI has a
-  Postgres service; docker-compose for local dev)
-- OIW-103 — Scenario pack validator and registry (PR #6; A8 core-track
-  review PASS)
-- OIW-201 — App shell, lens switcher, navigation (PR #8; ux-accessibility
-  reviewer PASS; screenshots committed under apps/web/e2e/screenshots/)
-- OIW-107 — Seed/reset API extensions (PR #11; zero breaking changes)
-- OIW-105 — Guest workspace lifecycle, seed and reset (PR #9; BLOCKED→
-  COMPLETE; demo:seed/demo:reset live-verified by lead)
-- OIW-004b — Schema-bound scenario pack content (PR #10; remediation run
-  after headless-ceiling failure; two mechanical integration fixes by lead
-  (dashboard widget shape, fixture dir layout) + tours made optional in
-  contracts (A7); final validate:packs = 3 loaded / 0 invalid / 0 warnings
-  with checksum-verified extractions; v1.1 negated/candidates exercised in
-  edge-003/004)
+## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
-## Active tasks
+Wave 0: OIW-000, 001(#3), 003(#2), 005(#1), 004a(#4)
+Wave 1: OIW-002(#5, contracts v1.1), 101(#7), 103(#6), 201(#8), 004b(#10),
+  107(#11), 105(#9)
+Wave 2 / M1: OIW-210(#14), 108(#13, v1.2), 301(#12), 406(#16), 408(#18),
+  109(v1.3 + seed entities), 110(#19, ambiguity validator), 501(#15, 9/9
+  gold parity), 506(#20, engines; contracts v1.4), 509(#21), 601(#22,
+  metrics v1.5), 602(#23, dashboards + tour + north-star e2e)
 
-| Task | Harness | Branch | Worktree | Status |
-|---|---|---|---|---|
-| OIW-601 | Codex (high) | `agent/codex/OIW-601-metric-service` | `../oiw-core` | running (metric evaluation, A5; pre-authorized MetricDefinition v1.5) |
-| OIW-602 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-602-dashboards-tour-e2e` | `../oiw-ux` | running (dashboards + guided tour + NORTH-STAR E2E = M1 closer) |
+## Contracts
 
+Frozen at **v1.5**: canonical domain (v1.0) + negated/candidates/conflicting
+(v1.1) + ObservationSchemaDefinition (v1.2) + EventDefinition/SeedEntity
+(v1.3) + CaseDefinition (v1.4) + MetricDefinition (v1.5). ADRs 001–012.
+Changes require a dedicated contract-change task.
 
-Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). Merged: OIW-506 #20 (engines; slice complete), OIW-509 #21 (case/decision/entity/signal UI; lead reconciliation pass — suite+e2e green post-506-merge). Final M1 pair running: OIW-601 ∥ OIW-602. After merge + reconciliation (swap metrics adapter if needed): M1 EXIT REVIEW against PRD §26 Wave 2 criteria, then wrap-up for product owner. Do NOT start Wave 3 (packs two/three lifecycle proof) without owner check-in. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
+## Tracked debt / deltas
 
-## Frozen contracts
+- Review-queue tablet collapsible drawer (UX_SPEC §5.6) → Wave 4 responsive
+  pass.
+- `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric-service
+  seam (by design); presentation extras (sample records, hrefs) derived in
+  the adapter — consider promoting into the service at Wave 3/4 if packs
+  two/three dashboards need the same.
+- PDF fixtures are text-with-page-markers; real PDF binary parsing deferred
+  (A7) — revisit before public launch claims FR-013 fully.
+- `pnpm eval` remains a stub; evaluation runner (core track per A8) is
+  Wave 4 scope with gold sets already in packs.
 
-`packages/contracts/` frozen at **v1.3** (v1.2 + additive OIW-109: EventDefinition w/ occurredAt mapping, SeedEntity; ADR-010). Previously (v1.1 + additive OIW-108 PR #13:
-ObservationSchemaDefinition, validateObservationValue; ADR-009). Previously (v1.0 PR #3 + additive PR #5:
-negated observation status, alternativeCandidates, conflicting review
-state). Covers: canonical domain schemas (14 objects), pack manifest,
-workflow definition, rule schema + closed fact catalogue v1, checksum-keyed
-expected-extraction contract (A1), IntelligenceProvider. Changes require a
-dedicated contract-change task. ADRs 001–008 in `docs/decisions/`.
-OIW-107 is pre-authorized for an additive v1.2 seed-bundle schema if needed.
+## Next integration sequence (AFTER owner check-in)
 
-## Tracked spec deltas (lead staging debt)
+1. Wave 3 / M2: run the same lifecycle on process-exceptions +
+   document-assurance — expect mostly pack-content tasks (their gold sets,
+   expected extractions and event definitions are shipped but never
+   exercised end-to-end; the ambiguity validator already passes them);
+   common lifecycle contract test against every pack (PRD §10.4); pack
+   authoring guide + scaffold template.
+2. Wave 4: evaluation runner + full eval suite, prompt-injection/approval-
+   bypass/workspace-isolation test hardening, accessibility + responsive
+   review, rate limiting, error states, threat-model remediation, exports.
+3. Wave 5: Vercel + hosted Supabase deployment, analytics + CTA, README/
+   walkthroughs, public launch (repo flips public; enable branch protection).
 
-- Review queue tablet collapsible drawer (UX_SPEC §5.6) → Wave 4
-  responsive pass.
+## Operating rules learned (keep applying)
 
-## Known blockers
-
-None.
-
-Resolved incidents (kept for takeover context):
-- OIW-105 BLOCKED→COMPLETE cycle: blocked on missing upstream APIs,
-  unblocked by OIW-107 (PR #11), resumed and merged (PR #9). Both merged.
-- OIW-107 first launch stalled on stdin (fix: `</dev/null`, now an
-  operating rule).
-- OIW-004b first session terminated by the headless 600s background-wait
-  ceiling while its detached sub-agents were authoring. Remediation run is
-  in progress over the intact partial worktree output.
-
-## Operating rules learned
-
-- Headless launches: always set `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`
-  for `claude -p` agent runs, and instruct agents to work sequentially, not
-  via detached background sub-agents.
-- `codex exec` launches must redirect stdin (`</dev/null`) or codex may
-  block forever "reading additional input from stdin".
-- Lockfile: one owner per batch (OIW-101 held it this batch); other tasks
-  edit only their own package.json; integrator verifies frozen install
-  after every merge involving the lockfile.
-
-## Next integration sequence
-
-1. Merge OIW-004b (evaluation-reviewer gate; then run `pnpm validate:packs`
-   against the real packs on the merged tree — first true validator×content
-   integration check)
-2. Merge OIW-107 (zero-breaking-changes gate), resume + merge OIW-105
-3. Wave 1 exit review against PRD §26 Wave 1 criteria
-4. Lead thread cuts Wave 2 packets (vertical slice): ingestion service +
-   format adapters, fixture intelligence provider + validation/abstention,
-   review queue UI, entity resolution, event assembly, rules/signals, case/
-   action/decision engines, dashboards wiring, north-star e2e (PRD §27
-   epics 3–6, amendments A3/A7/A8)
+- Headless Claude launches: `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`,
+  sequential work, no detached sub-agents.
+- `codex exec` launches: always `</dev/null`.
+- Lockfile: single owner per batch or integrator-reconciled at merge with a
+  frozen-install verification.
+- Parallel lanes touching shared pack data: the lead runs the full suite on
+  the MERGED tree before any merge (caught the OIW-601×602 conflict).
+- BLOCKED protocol works: five blocked cycles all resolved via bounded
+  upstream tasks (OIW-107/108/109/110 + 602-remediation), zero boundary
+  bypasses.
 
 ## Commands currently expected to pass
 
-`pnpm install`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`,
-`pnpm architecture:check`, `pnpm validate:packs` (loads all three real packs), `pnpm db:migrate` /
-`pnpm db:reset` (docker Postgres via `docker compose up -d`). CI runs the
-suite incl. persistence integration tests on every PR. `pnpm eval` remains
-a stub until the evaluation runner task.
-
-## Ownership rules in force
-
-- Migrations owner: unassigned (was OIW-101; next assignment at Wave 2 if
-  schema changes needed).
-- Lockfile/root config: integrator between batches; batch owner when
-  explicitly granted in a packet.
-- `SESSION.md`: lead thread only.
+`pnpm install/lint/typecheck/test/build/validate:packs/architecture:check`,
+`pnpm db:migrate`, `pnpm demo:seed --pack asset-reliability` (25 artifacts,
+35 entities), `pnpm demo:reset`, `(cd apps/web && pnpm test:e2e)` — 7 specs
+incl. north-star. CI runs all of it per PR.
 
 ## Repository notes
 
 - Remote: `https://github.com/shekibahmed/operations-intelligence-workbench`
-  (private until M3).
-- Branch protection unavailable on this plan for private repos; `main`
-  protected by convention (PR-only, lead integrator merges) until public.
-- OpenCode cannot authenticate against a Claude Max subscription; packs
-  track runs on Claude Code (m900x). OpenCode/cursor-agent remain available
-  as overflow with other providers.
-- Two Claude accounts on this machine: primary (`~/.claude`, lead thread)
-  and m900x (`~/.claude-m900x`, worker threads via CLAUDE_CONFIG_DIR).
+  (private until M3). Branch protection by convention until public.
+- Worktrees: `../oiw-core`, `../oiw-ux`, `../oiw-packs`, `../oiw-quality`
+  (all clean, on stale task branches — re-point per task at next wave).
+- Accounts: primary Claude (`~/.claude`, lead) + m900x
+  (`~/.claude-m900x`, workers via CLAUDE_CONFIG_DIR); Codex via ChatGPT sub.
