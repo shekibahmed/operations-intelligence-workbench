@@ -5,8 +5,9 @@
 
 ## Current milestone
 
-**M0 — Contract Freeze (Wave 0): 3 of 4 tasks merged.** Contracts are FROZEN
-as of PR #3. OIW-004a (narrative fixtures) still in progress.
+**Wave 0 COMPLETE (M0). Wave 1 in progress.** Contracts frozen at PR #3;
+one approved contract-change task (OIW-002) in flight for three additive
+amendments surfaced by fixture authoring (see `docs/tasks/OIW-002.md`).
 
 ## Merged tasks
 
@@ -15,12 +16,20 @@ as of PR #3. OIW-004a (narrative fixtures) still in progress.
   reviewer subagents PASS; all required commands verified by the lead thread)
 - OIW-003 — UX specification and demonstration narrative (PR #2)
 - OIW-005 — Evaluation, threat-model and quality plan (PR #1)
+- OIW-004a — Synthetic narrative content for three packs (PR #4;
+  evaluation-reviewer PASS on all criteria)
 
-## Active tasks
+## Active tasks (Wave 1, first batch)
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-004a | Claude Code (Sonnet, m900x) | `agent/claude/OIW-004a-narrative-fixtures` | `../oiw-packs` | running |
+| OIW-002 | Codex (high) | `agent/codex/OIW-002-contract-amendments` | `../oiw-core` | running |
+| OIW-103 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-103-pack-validator-registry` | `../oiw-packs` | running |
+| OIW-201 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-201-app-shell` | `../oiw-ux` | running |
+
+Wave 1 lockfile rule: each task edits only its own package's `package.json`
+and may run `pnpm install` locally; the integrator regenerates
+`pnpm-lock.yaml` at each merge. Merge order: OIW-002 → OIW-103 → OIW-201.
 
 ## Frozen contracts
 
@@ -49,13 +58,16 @@ None.
 
 ## Next integration sequence
 
-1. Review + merge OIW-004a when its agent completes (evaluation-reviewer
-   subagent pass; reconcile its contract-needs notes against the frozen
-   contracts)
-2. Lead thread reconciles contract-needs flagged in agent-runs OIW-003/004a/005
-   (contract-change task only if needed)
-3. Lead thread cuts OIW-004b + Wave 1 task packets (see `docs/PRD.md` §26–27
-   and `docs/PLAN_AMENDMENTS.md` A6–A8)
+1. Merge OIW-002 (contract amendments; unblocks OIW-004b and Wave 1 engines)
+2. Merge OIW-103 (core-track review required per A8), then OIW-201
+3. Lead thread cuts + launches OIW-004b (schema-bound packs) and OIW-101
+   (DB schema + persistence, Codex) after OIW-002 merges
+
+Contract-needs reconciliation (Wave 0 close-out): items 1/2/4 from
+agent-runs/OIW-004a.md → OIW-002; near-duplicate handling and source-quality
+flags deliberately deferred to Wave 1/2 engine packets (to be recorded in
+ADR-008); evidence locators, awaiting-approval state, currency values —
+already covered by frozen contracts.
 
 ## Commands currently expected to pass
 
