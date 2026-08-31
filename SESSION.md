@@ -46,9 +46,8 @@ engines + case/decision UI + north-star e2e.
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
 | OIW-301 | Codex (high) | `agent/codex/OIW-301-ingestion-intelligence` | `../oiw-core` | resumed (both blockers cleared: OIW-108 merged PR #13; edge-005 fixed on main) |
-| OIW-210 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-210-web-wiring` | `../oiw-ux` | running |
 
-Merge order: OIW-210 → OIW-301 (or by completion; no shared paths).
+Merge order: OIW-301 next (running). OIW-210 merged (PR #14; security-reviewer PASS all areas; Playwright 5/5 incl. cross-workspace redirect; real selector→workspace→inbox journey live).
 
 ## Frozen contracts
 
