@@ -45,11 +45,11 @@ engines + case/decision UI + north-star e2e.
 
 | Task | Harness | Branch | Worktree | Status |
 |---|---|---|---|---|
-| OIW-110 | Codex (high) | `agent/codex/OIW-110-event-reconciliation` | `../oiw-core` | running (pack event-definition reconciliation + ambiguity validator; unblocks OIW-501 final parity) |
-| OIW-501 | Codex (high) | `agent/codex/OIW-501-entity-event-rules` | parked | BLOCKED 2nd time — implementation COMPLETE and green, only pack data blocks 9/9 gold parity (7/9 exact; see PR #15 agent-run "problems") |
+| OIW-506 | Codex (high) | `agent/codex/OIW-506-case-decision-engines` | `../oiw-core` | running (batch C engines; pre-authorized CaseDefinition v1.4) |
+| OIW-509 | Claude Code (Sonnet, m900x) | `agent/claude/OIW-509-case-decision-ui` | `../oiw-ux` | running (batch C UI; integration points if 506 unmerged at branch time) |
 
 
-Merged this batch: OIW-210 (PR #14, security PASS), OIW-108 (PR #13, contracts v1.2), OIW-301 (PR #12, test-reviewer PASS on all 9 criteria incl. smoke parity + injection inertness). Merge order for batch B: by completion (no shared paths). After batch B: batch C = case/action/decision/approval engines (Codex, executes the pending rule outcomes via the ActionExecutor seam) ∥ case+decision UI, then dashboards wiring + north-star e2e (M1).
+Merged batches B: OIW-210 #14, OIW-108 #13, OIW-301 #12, OIW-406 #16, OIW-408 #18, OIW-109 (contracts v1.3 + 35 seed entities), OIW-110 #19 (event reconciliation + ambiguity validator), OIW-501 #15 (9/9 gold parity; source→signal pipeline complete). Merge order for batch B: by completion (no shared paths). Batch C running. After batch C merges: reconciliation pass (509↔506 integration points), then dashboards wiring + guided tour + north-star Playwright e2e = M1.
 
 ## Frozen contracts
 
