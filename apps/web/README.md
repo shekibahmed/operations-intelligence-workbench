@@ -4,10 +4,15 @@ The application shell: navigation, lens switcher, guest session lifecycle,
 and every P0 route from `docs/UX_SPEC.md` §1.1. As of OIW-210, guest
 sessions, workspace creation/seeding/reset and the artifact inbox and
 technical artifact inspector are wired to real persisted data
-(`@oiw/persistence` + `@oiw/application` + `@oiw/scenario-sdk`). Review
-queue, cases, entities, decisions, rule trace, audit's supporting narrative
-and about-pack's rules/metrics section have no upstream engine yet (OIW-301
-processing) and remain on in-repo stub data — those screens carry a visible
+(`@oiw/persistence` + `@oiw/application` + `@oiw/scenario-sdk`). As of
+OIW-406, the Inbox's Process action, the Review Queue and the Technical
+Inspector's extraction sections are wired to the real `processArtifact`
+orchestration (`@oiw/application` + `@oiw/ingestion` + `@oiw/intelligence`,
+OIW-301) and the real accept/correct/reject/mark-insufficient-evidence
+review write path. Cases, entities, decisions, rule trace, audit's
+supporting narrative and about-pack's rules/metrics section have no
+upstream engine yet (rules/events/cases land in a parallel batch) and
+remain on in-repo stub data — those screens carry a visible
 "Demo preview" notice.
 
 ## Local run
@@ -62,24 +67,43 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
 - `src/app/w/[workspace]/actions.ts` — `resetWorkspace`: re-validates the
   session, then calls `ResetService.reset` (workspace menu's "Reset demo",
   behind a confirm dialog per UX_SPEC).
+- `src/app/w/[workspace]/inbox/actions.ts` — `processArtifactAction`:
+  re-validates the session, then runs `ArtifactProcessingService.processArtifact`
+  (`src/lib/server/artifact-processing.ts` wires `@oiw/persistence` repositories,
+  `@oiw/ingestion`'s `FormatAdapterRegistry` and `@oiw/intelligence`'s
+  `FixtureIntelligenceProvider`/`StructuredOutputValidator`/
+  `ConfidenceAbstentionPolicy` against the workspace's active pack). Returns a
+  typed `{ ok, ... }` result instead of throwing, so a processing failure
+  renders the Inbox row's real failed state with Retry (NFR §16.1) rather than
+  a generic server-action error.
+- `src/app/w/[workspace]/review/actions.ts` — `acceptObservation`,
+  `correctObservation`, `rejectObservation`, `markInsufficientEvidence`,
+  `getObservationRevisions`: re-validate the session, record the ADR-007 guest
+  session ID as the human reviewer, and write through
+  `ObservationRepository.correct` — which already implements ADR-006 (revision
+  snapshot + downstream Event/Case re-evaluation marking) in one transaction.
+  Once an artifact's last pending/conflicting Observation is resolved, these
+  also flip its `processingStatus` back from `needs-review` to `processed` (no
+  other public API recomputes this after processing finishes).
 
 ## What's real vs. stub-marked
 
 | Screen | Data |
 | --- | --- |
 | Guest session, workspace create/seed/reset | Real (`@oiw/application` + `@oiw/persistence`) |
-| Inbox | Real artifacts/sources; linked-entity/observation/review-required/related-case columns are genuinely empty (no processing engine yet — OIW-301), not fabricated |
-| Technical artifact inspector | Real raw content, metadata, checksum, segments; proposed-observations/entity-resolution sections show "not yet run" rather than stub data |
+| Inbox | Real artifacts/sources/observation-counts; the Process action runs real extraction (OIW-301/OIW-406). Linked-entity/related-case columns are genuinely empty (no entity resolution or case engine yet), not fabricated |
+| Review queue | Real: lists Observations with `reviewStatus` pending/conflicting; evidence is highlighted from the real persisted `ArtifactSegment`; Accept/Correct/Reject/Mark insufficient evidence write real, audited, schema-validated corrections |
+| Technical artifact inspector | Real raw content, metadata, checksum, segments, proposed observations (value, confidence, evidence, review status, extractor), and a processing trace derived from the real audit trail. Entity-resolution candidates stay "not implemented" — real absence, not a stub value |
 | Overview | Real artifact/source counts, real (zero) case/decision counts, real audit-derived activity feed; severity breakdown, SLA table, trend line and pattern/impact cards remain stub-marked (no signal/case engine yet) |
 | Pack labels (top bar, breadcrumbs, nav, About this pack's entity/event/workflow sections) | Real, from the loaded pack's registry entry |
-| Audit | Real audit entries (`workspace-seeded`/`workspace-reset` etc.) |
-| Review queue, Cases, Case detail, Entities, Entity detail, Decisions, Rule trace, About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" |
+| Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*` etc.) |
+| Cases, Case detail, Entities, Entity detail, Decisions, Rule trace, About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — no rule/event/case engine yet |
 
 `?state=empty|loading|error` remains supported on the stub-marked screens
 only, to demonstrate those states without a live backend (unchanged from
-Wave 1). The real-data screens (Overview, Inbox, Technical artifact
-inspector, Audit) get real loading state via Next's `loading.tsx` file
-convention (automatic Suspense around the page while the DB fetch is in
+Wave 1). The real-data screens (Overview, Inbox, Review Queue, Technical
+artifact inspector, Audit) get real loading state via Next's `loading.tsx`
+file convention (automatic Suspense around the page while the DB fetch is in
 flight) and real error state via `error.tsx` route error boundaries; their
 `?state=` support is limited to `error` (to demonstrate the error boundary
 on demand).

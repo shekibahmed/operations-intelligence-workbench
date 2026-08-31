@@ -26,12 +26,13 @@ export default async function ArtifactInboxPage({
   const { workspace, labels } = await getWorkspaceContext(slug);
 
   const repositories = getRepositories();
-  const [artifacts, sources] = await Promise.all([
+  const [artifacts, sources, observations] = await Promise.all([
     repositories.artifacts.list(workspace.id),
     repositories.sources.list(workspace.id),
+    repositories.observations.list(workspace.id),
   ]);
 
-  const rows = mapArtifactsToInboxRows(artifacts, sources, base);
+  const rows = mapArtifactsToInboxRows(artifacts, sources, observations, base);
 
   return (
     <WorkspaceShell
@@ -51,7 +52,7 @@ export default async function ArtifactInboxPage({
         <EmptyState title="No artifacts have arrived yet" />
       ) : (
         <div className="overflow-x-auto rounded-lg border border-border bg-surface p-2">
-          <InboxTable rows={rows} />
+          <InboxTable workspace={slug} rows={rows} />
         </div>
       )}
     </WorkspaceShell>

@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 import { caseIds, entityIds } from "../src/lib/stub/ids";
 import { stubRuleTrace } from "../src/lib/stub/rule-trace";
@@ -78,7 +78,6 @@ test("stub-marked screens (no upstream data yet) stay reachable and lens-switchi
   const base = await startGuestWorkspace(page);
 
   const STUB_ROUTES: { path: string; heading: string | RegExp }[] = [
-    { path: `${base}/review`, heading: "Review Queue" },
     { path: `${base}/cases`, heading: "Cases" },
     { path: `${base}/cases/${caseIds.open}`, heading: /Repeat brake-assembly fault/ },
     { path: `${base}/entities`, heading: "Entities" },
@@ -137,4 +136,70 @@ test("screenshots of changed screens", async ({ page }) => {
     await expect(page.getByRole("heading", { name: target.heading }).first()).toBeVisible();
     await page.screenshot({ path: `e2e/screenshots/${target.name}-tablet.png`, fullPage: true });
   }
+});
+
+/**
+ * Finds the inbox row for the pack's informal "brake-fault" chat message
+ * (PRD §13.4-13.5 demo journey; `asset-reliability-demo-001`) by sniffing
+ * each row's Technical Inspector page for its known raw text, since the
+ * inbox table itself never renders artifact body content (UX_SPEC §5.5) and
+ * artifact IDs are content-derived, not something a test can precompute
+ * without reaching into `@oiw/application`'s internals.
+ */
+async function findBrakeFaultRow(page: Page, base: string): Promise<{ href: string; row: Locator }> {
+  await page.goto(`${base}/inbox`);
+  await expect(page.getByRole("heading", { name: "Inbox" })).toBeVisible();
+  const hrefs = await page.locator("table tbody tr a").evaluateAll((anchors) => anchors.map((a) => a.getAttribute("href")));
+
+  for (const href of hrefs) {
+    if (href === null) continue;
+    // In-page `fetch` (not `page.request`, a separate HTTP client that does
+    // not apply Chromium's localhost-is-a-secure-context exception) so the
+    // `Secure` ADR-007 session cookie is actually sent to this http://
+    // dev/test server, same as a real navigation would send it.
+    const found = await page.evaluate(async (url) => {
+      const response = await fetch(`${url}?lens=technical`, { credentials: "same-origin" });
+      return (await response.text()).includes("grinding noise when I brake hard");
+    }, href);
+    if (found) {
+      return { href, row: page.locator("table tbody tr", { has: page.locator(`a[href="${href}"]`) }) };
+    }
+  }
+  throw new Error("Could not locate the informal brake-fault artifact in the inbox");
+}
+
+test("processing the brake-fault artifact populates the review queue; accepting it resolves the review and the inbox status (OIW-406 journey)", async ({
+  page,
+}) => {
+  const base = await startGuestWorkspace(page);
+
+  const { href: artifactHref, row } = await findBrakeFaultRow(page, base);
+  await row.getByRole("button", { name: "Process" }).click();
+  await expect(row.getByText("Needs review")).toBeVisible();
+  await expect(row.locator("td").nth(5)).toHaveText("6"); // Observations column: 6 fields extracted; only previous-repair-reference falls below the confidence threshold
+
+  await test.step("the low-confidence observation is queued for review with its evidence highlighted", async () => {
+    await page.goto(`${base}/review`);
+    await expect(page.getByRole("heading", { name: "Review Queue" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /previous-repair-reference/ })).toBeVisible();
+    await expect(page.locator("mark")).toHaveText("it had brake work done back in the spring");
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.screenshot({ path: "e2e/screenshots/review-populated-desktop.png", fullPage: true });
+    await page.setViewportSize({ width: 800, height: 1000 });
+    await page.screenshot({ path: "e2e/screenshots/review-populated-tablet.png", fullPage: true });
+    await page.setViewportSize({ width: 1280, height: 900 });
+  });
+
+  await test.step("accepting the observation clears the queue, audits the reviewer and syncs the inbox status", async () => {
+    await page.getByRole("button", { name: "Accept" }).click();
+    await expect(page.getByText("Review queue is clear")).toBeVisible();
+
+    await page.goto(`${base}/inbox`);
+    await expect(row.getByText("Processed")).toBeVisible();
+
+    await page.goto(artifactHref);
+    const observationItem = page.locator("li", { hasText: "previous-repair-reference" });
+    await expect(observationItem.getByText("Accepted", { exact: true })).toBeVisible();
+  });
 });

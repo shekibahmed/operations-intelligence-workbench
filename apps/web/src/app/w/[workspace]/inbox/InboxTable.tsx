@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Artifact } from "@oiw/contracts";
 
+import { processArtifactAction } from "@/app/w/[workspace]/inbox/actions";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 
@@ -16,10 +18,6 @@ export interface InboxRow {
   technicalHref: string;
 }
 
-function rowNeedsReview(row: InboxRow): boolean {
-  return row.reviewRequired;
-}
-
 const STATUS_LABEL: Record<Artifact["processingStatus"], string> = {
   received: "Received",
   processing: "Processing",
@@ -29,26 +27,47 @@ const STATUS_LABEL: Record<Artifact["processingStatus"], string> = {
   "failed-terminal": "Failed",
 };
 
+const RETRYABLE_STATUSES: ReadonlySet<Artifact["processingStatus"]> = new Set([
+  "received",
+  "failed-retryable",
+  "failed-terminal",
+]);
+
 /**
- * Processing here is a client-local simulation (Process → brief spinner →
- * "processed"/"needs-review") since Wave 1 has no ingestion engine
- * (non-goal). The row updates in place without a full table reload, per
- * UX_SPEC §5.5.
+ * Process (UX_SPEC §5.5, NFR §16.1) synchronously runs the real
+ * `processArtifact` orchestration (OIW-301) server-side. The row updates in
+ * place from the action's result without a full table reload; `router.refresh()`
+ * then re-syncs the rest of the table's server-derived columns (observation
+ * counts, review-required) in the background on the next paint.
  */
-export function InboxTable({ rows }: { rows: InboxRow[] }) {
+export function InboxTable({ workspace, rows }: { workspace: string; rows: InboxRow[] }) {
+  const router = useRouter();
   const [statusOverrides, setStatusOverrides] = useState<Record<string, Artifact["processingStatus"]>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [processingIds, setProcessingIds] = useState<Set<string>>(new Set());
 
-  function process(artifactId: string, needsReview: boolean) {
+  async function process(artifactId: string) {
     setProcessingIds((prev) => new Set(prev).add(artifactId));
-    window.setTimeout(() => {
-      setProcessingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(artifactId);
-        return next;
-      });
-      setStatusOverrides((prev) => ({ ...prev, [artifactId]: needsReview ? "needs-review" : "processed" }));
-    }, 500);
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next[artifactId];
+      return next;
+    });
+
+    const result = await processArtifactAction(workspace, artifactId);
+
+    setProcessingIds((prev) => {
+      const next = new Set(prev);
+      next.delete(artifactId);
+      return next;
+    });
+
+    if (result.ok) {
+      setStatusOverrides((prev) => ({ ...prev, [artifactId]: result.status }));
+      router.refresh();
+    } else {
+      setErrors((prev) => ({ ...prev, [artifactId]: result.message }));
+    }
   }
 
   return (
@@ -72,6 +91,7 @@ export function InboxTable({ rows }: { rows: InboxRow[] }) {
           const { artifact, sourceName, linkedEntity, observationsFound, reviewRequired, relatedCaseTitle, technicalHref } = row;
           const status = statusOverrides[artifact.id] ?? artifact.processingStatus;
           const isProcessing = processingIds.has(artifact.id);
+          const error = errors[artifact.id];
           return (
             <tr key={artifact.id} className="border-b border-border last:border-0">
               <td className="px-2 py-2">
@@ -89,6 +109,11 @@ export function InboxTable({ rows }: { rows: InboxRow[] }) {
                     {STATUS_LABEL[status]}
                   </Badge>
                 )}
+                {error ? (
+                  <p role="alert" className="mt-1 text-xs text-[var(--color-critical-ink)]">
+                    {error}
+                  </p>
+                ) : null}
               </td>
               <td className="hidden px-2 py-2 xl:table-cell">{linkedEntity ?? "—"}</td>
               <td className="hidden px-2 py-2 xl:table-cell">{observationsFound}</td>
@@ -96,12 +121,12 @@ export function InboxTable({ rows }: { rows: InboxRow[] }) {
               <td className="hidden px-2 py-2 xl:table-cell">{relatedCaseTitle ?? "—"}</td>
               <td className="px-2 py-2">
                 <Button
-                  variant="secondary"
+                  variant={status.startsWith("failed") ? "danger" : "secondary"}
                   type="button"
-                  disabled={status !== "received" || isProcessing}
-                  onClick={() => process(artifact.id, rowNeedsReview(row))}
+                  disabled={!RETRYABLE_STATUSES.has(status) || isProcessing}
+                  onClick={() => void process(artifact.id)}
                 >
-                  Process
+                  {status.startsWith("failed") ? "Retry" : "Process"}
                 </Button>
               </td>
             </tr>

@@ -1,12 +1,16 @@
 import { notFound } from "next/navigation";
-import type { ArtifactSegment } from "@oiw/contracts";
+import type { ArtifactSegment, AuditEntry, Observation } from "@oiw/contracts";
 
+import { Badge } from "@/components/ui/Badge";
 import { CopyableJson } from "@/components/ui/CopyableJson";
 import { InspectorTabs } from "@/components/ui/InspectorTabs";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
+import { formatLocator } from "@/lib/format-locator";
+import { highlightRanges, type TextHighlightRange } from "@/lib/highlight-text";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
+import { formatConfidence, REVIEW_STATUS_LABEL, REVIEW_STATUS_TONE } from "@/lib/observation-display";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
 import { getRepositories } from "@/lib/server/db";
@@ -14,19 +18,48 @@ import { getWorkspaceContext } from "@/lib/server/context";
 import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
-function formatLocator(locator: ArtifactSegment["locator"]): string {
-  switch (locator.kind) {
-    case "text-range":
-      return `Characters ${locator.start}–${locator.end}`;
-    case "page":
-      return `Page ${locator.page}`;
-    case "table-cell":
-      return `Row ${locator.row}, column ${locator.column}`;
-    case "json-path":
-      return `Path ${locator.path}`;
-    case "attachment":
-      return `Attachment ${locator.attachmentId}`;
+const PROCESSING_AUDIT_ACTIONS = new Set([
+  "artifact-processing-started",
+  "artifact-processing-completed",
+  "artifact-processing-failed",
+  "extraction-rejected",
+]);
+
+function processingAuditEntries(entries: AuditEntry[], artifactId: string): AuditEntry[] {
+  return entries
+    .filter((entry) => entry.subject.type === "artifact" && entry.subject.id === artifactId)
+    .filter((entry) => PROCESSING_AUDIT_ACTIONS.has(entry.action))
+    .sort((a, b) => Date.parse(a.occurredAt) - Date.parse(b.occurredAt));
+}
+
+function processingDurationMs(trace: AuditEntry[]): number | null {
+  const started = trace.find((entry) => entry.action === "artifact-processing-started");
+  const finished = [...trace].reverse().find((entry) => entry.action !== "artifact-processing-started");
+  if (started === undefined || finished === undefined) return null;
+  return Date.parse(finished.occurredAt) - Date.parse(started.occurredAt);
+}
+
+/**
+ * Every Observation's evidence span, for the raw-viewer highlight (UX_SPEC
+ * §5.12: "reused from Review Queue, §5.6"). Deliberately scoped to
+ * Observations' own evidence segments rather than every persisted
+ * `ArtifactSegment` — the latter also includes the adapter's coarse parse
+ * segments (e.g. one per chat message), which would highlight entire
+ * message blocks instead of the specific evidence phrase within them.
+ */
+function evidenceHighlightRanges(
+  observations: Observation[],
+  segmentsById: Map<string, ArtifactSegment>,
+): TextHighlightRange[] {
+  const ranges: TextHighlightRange[] = [];
+  for (const observation of observations) {
+    if (observation.evidenceSegmentId === null) continue;
+    const segment = segmentsById.get(observation.evidenceSegmentId);
+    if (segment !== undefined && segment.locator.kind === "text-range") {
+      ranges.push({ start: segment.locator.start, end: segment.locator.end });
+    }
   }
+  return ranges;
 }
 
 export default async function TechnicalArtifactInspectorPage({
@@ -47,7 +80,16 @@ export default async function TechnicalArtifactInspectorPage({
   const artifact = await repositories.artifacts.findById(workspace.id, id);
   if (artifact === null) notFound();
 
-  const segments = await repositories.artifactSegments.listByArtifact(workspace.id, id);
+  const [segments, observations, auditEntries] = await Promise.all([
+    repositories.artifactSegments.listByArtifact(workspace.id, id),
+    repositories.observations.listByArtifact(workspace.id, id),
+    repositories.auditEntries.list(workspace.id),
+  ]);
+  const segmentsById = new Map<string, ArtifactSegment>(segments.map((segment) => [segment.id, segment]));
+  const trace = processingAuditEntries(auditEntries, id);
+  const durationMs = processingDurationMs(trace);
+  const providerEntry = observations.find((observation) => observation.extractor !== null)?.extractor ?? null;
+  const evidenceRanges = evidenceHighlightRanges(observations, segmentsById);
 
   return (
     <WorkspaceShell
@@ -71,7 +113,9 @@ export default async function TechnicalArtifactInspectorPage({
       ) : (
         <>
           <SectionCard title="Raw artifact">
-            <p className="whitespace-pre-wrap text-sm text-ink">{artifact.rawText ?? "No text content."}</p>
+            <p className="whitespace-pre-wrap text-sm text-ink">
+              {artifact.rawText === null ? "No text content." : highlightRanges(artifact.rawText, evidenceRanges)}
+            </p>
           </SectionCard>
 
           <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -106,20 +150,97 @@ export default async function TechnicalArtifactInspectorPage({
             </SectionCard>
 
             <SectionCard title="Proposed observations">
-              <p className="text-sm text-ink-muted">
-                No observations yet — extraction has not run for this artifact (processing lands in a later wave).
-              </p>
+              {observations.length === 0 ? (
+                <p className="text-sm text-ink-muted">
+                  No observations yet — this artifact has not been processed (use Process from the Inbox).
+                </p>
+              ) : (
+                <ul className="flex flex-col gap-3 text-sm">
+                  {observations.map((observation) => {
+                    const segment = observation.evidenceSegmentId !== null ? segmentsById.get(observation.evidenceSegmentId) : undefined;
+                    return (
+                      <li key={observation.id} className="border-b border-border pb-3 last:border-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="font-medium text-ink">{observation.schemaKey}</p>
+                          <Badge tone={REVIEW_STATUS_TONE[observation.reviewStatus]}>{REVIEW_STATUS_LABEL[observation.reviewStatus]}</Badge>
+                          <Badge tone="neutral">Confidence: {formatConfidence(observation.confidence)}</Badge>
+                        </div>
+                        <p className="mt-1 text-ink">
+                          {observation.evidenceStatus === "insufficient-evidence"
+                            ? `Insufficient evidence — ${observation.insufficiencyReason ?? "no reason recorded"}`
+                            : String(observation.value ?? "—")}
+                        </p>
+                        {segment !== undefined ? (
+                          <p className="text-xs text-ink-muted">
+                            Evidence: {formatLocator(segment.locator)}
+                            {segment.excerpt !== null ? ` — "${segment.excerpt}"` : ""}
+                          </p>
+                        ) : null}
+                        {observation.alternativeCandidates !== undefined && observation.alternativeCandidates.length > 0 ? (
+                          <p className="text-xs text-ink-muted">
+                            Alternative candidates:{" "}
+                            {observation.alternativeCandidates
+                              .map((candidate) => `${String(candidate.value)} (${formatConfidence(candidate.confidence)})`)
+                              .join(", ")}
+                          </p>
+                        ) : null}
+                        {observation.extractor !== null ? (
+                          <p className="text-xs text-ink-muted">
+                            Extractor: {observation.extractor.id}@{observation.extractor.version}
+                          </p>
+                        ) : null}
+                        {observation.reviewStatus === "pending" || observation.reviewStatus === "conflicting" ? (
+                          <a href={`${base}/review`} className="text-xs font-medium text-[var(--color-accent)] hover:underline">
+                            Review this observation
+                          </a>
+                        ) : null}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </SectionCard>
 
             <SectionCard title="Entity-resolution candidates">
               <p className="text-sm text-ink-muted">
-                No entity-resolution candidates yet — extraction has not run for this artifact.
+                Entity resolution is not implemented yet — every Observation&apos;s entity link remains unset.
               </p>
             </SectionCard>
           </div>
 
+          <SectionCard title="Provider metadata and processing trace">
+            {trace.length === 0 ? (
+              <p className="text-sm text-ink-muted">This artifact has not been processed yet.</p>
+            ) : (
+              <>
+                <dl className="text-sm">
+                  {providerEntry !== null ? (
+                    <>
+                      <dt className="text-ink-muted">Extractor</dt>
+                      <dd className="text-ink">
+                        {providerEntry.id}@{providerEntry.version}
+                      </dd>
+                    </>
+                  ) : null}
+                  <dt className="mt-2 text-ink-muted">Processing duration</dt>
+                  <dd className="text-ink">{durationMs === null ? "—" : `${durationMs}ms`}</dd>
+                </dl>
+                <ol className="mt-3 flex flex-col gap-2 border-t border-border pt-3 text-sm">
+                  {trace.map((entry) => (
+                    <li key={entry.id}>
+                      <p className="font-medium text-ink">
+                        {entry.action} <span className="font-normal text-ink-muted">— {entry.actor.type}:{entry.actor.id}</span>
+                      </p>
+                      <p className="text-xs text-ink-muted">{new Date(entry.occurredAt).toLocaleString()} — {entry.cause}</p>
+                    </li>
+                  ))}
+                </ol>
+              </>
+            )}
+          </SectionCard>
+
           <SectionCard title="Structured payload">
-            <CopyableJson value={{ artifact, segments }} />
+            <CopyableJson value={{ artifact, segments, observations }} />
           </SectionCard>
         </>
       )}

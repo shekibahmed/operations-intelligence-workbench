@@ -83,6 +83,13 @@ vi.mock("@/lib/server/db", async () => {
       artifactSegments: {
         listByArtifact: async (_workspaceId: string, artifactId: string) =>
           stub.stubArtifactSegments.filter((segment) => segment.artifactId === artifactId),
+        findById: async (_workspaceId: string, id: string) =>
+          stub.stubArtifactSegments.find((segment) => segment.id === id) ?? null,
+      },
+      observations: {
+        list: async () => stub.stubObservations,
+        listByArtifact: async (_workspaceId: string, artifactId: string) =>
+          stub.stubObservations.filter((observation) => observation.artifactId === artifactId),
       },
     }),
   };

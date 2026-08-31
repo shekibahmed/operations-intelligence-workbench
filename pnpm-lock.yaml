@@ -41,6 +41,12 @@ importers:
       '@oiw/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@oiw/ingestion':
+        specifier: workspace:*
+        version: link:../../packages/ingestion
+      '@oiw/intelligence':
+        specifier: workspace:*
+        version: link:../../packages/intelligence
       '@oiw/persistence':
         specifier: workspace:*
         version: link:../../packages/persistence
