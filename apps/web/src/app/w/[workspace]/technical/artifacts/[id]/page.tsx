@@ -1,23 +1,33 @@
 import { notFound } from "next/navigation";
+import type { ArtifactSegment } from "@oiw/contracts";
 
 import { CopyableJson } from "@/components/ui/CopyableJson";
 import { InspectorTabs } from "@/components/ui/InspectorTabs";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import {
-  findArtifactById,
-  findEntityById,
-  getPackLabels,
-  segmentsForArtifact,
-  stubObservations,
-} from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { getRepositories } from "@/lib/server/db";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
+
+function formatLocator(locator: ArtifactSegment["locator"]): string {
+  switch (locator.kind) {
+    case "text-range":
+      return `Characters ${locator.start}–${locator.end}`;
+    case "page":
+      return `Page ${locator.page}`;
+    case "table-cell":
+      return `Row ${locator.row}, column ${locator.column}`;
+    case "json-path":
+      return `Path ${locator.path}`;
+    case "attachment":
+      return `Attachment ${locator.attachmentId}`;
+  }
+}
 
 export default async function TechnicalArtifactInspectorPage({
   params,
@@ -26,29 +36,26 @@ export default async function TechnicalArtifactInspectorPage({
   params: Promise<{ workspace: string; id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace, id } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug, id } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("technical-artifact", `${base}/technical/artifacts/${id}`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
-  const artifact = findArtifactById(id);
-  if (!artifact) notFound();
+  const repositories = getRepositories();
+  const artifact = await repositories.artifacts.findById(workspace.id, id);
+  if (artifact === null) notFound();
 
-  const observations = stubObservations.filter((observation) => observation.artifactId === artifact.id);
-  const segments = segmentsForArtifact(artifact.id);
-  const entityCandidates = [...new Set(observations.map((observation) => observation.entityId).filter((value): value is string => value !== null))].map(
-    (entityId) => findEntityById(entityId),
-  );
+  const segments = await repositories.artifactSegments.listByArtifact(workspace.id, id);
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       itemLabel={artifact.artifactType}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
@@ -67,75 +74,52 @@ export default async function TechnicalArtifactInspectorPage({
             <p className="whitespace-pre-wrap text-sm text-ink">{artifact.rawText ?? "No text content."}</p>
           </SectionCard>
 
-          {state === "loading" ? (
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-              {Array.from({ length: 4 }, (_, index) => (
-                <Skeleton key={index} className="h-40" label="Loading derived data" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-              <SectionCard title="Proposed observations">
-                {observations.length === 0 ? (
-                  <p className="text-sm text-ink-muted">No observations extracted from this artifact.</p>
-                ) : (
-                  <ul className="flex flex-col gap-3 text-sm">
-                    {observations.map((observation) => (
-                      <li key={observation.id} className="border-b border-border pb-2 last:border-0">
-                        <p className="font-medium text-ink">{observation.schemaKey}</p>
-                        {observation.evidenceStatus === "insufficient-evidence" ? (
-                          <p className="text-[var(--color-critical-ink)]">
-                            Insufficient evidence — {observation.insufficiencyReason}
-                          </p>
-                        ) : (
-                          <p>
-                            Value: {String(observation.value)} · Confidence: {Math.round((observation.confidence ?? 0) * 100)}%
-                          </p>
-                        )}
-                        <p className="text-xs text-ink-muted">
-                          Review status: {observation.reviewStatus} · Evidence: {segments.find((segment) => segment.id === observation.evidenceSegmentId)?.excerpt ?? "—"}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </SectionCard>
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+            <SectionCard title="Metadata">
+              <dl className="text-sm">
+                <dt className="text-ink-muted">Artifact type</dt>
+                <dd className="text-ink">{artifact.artifactType}</dd>
+                <dt className="mt-2 text-ink-muted">MIME type</dt>
+                <dd className="text-ink">{artifact.mimeType}</dd>
+                <dt className="mt-2 text-ink-muted">Checksum (SHA-256)</dt>
+                <dd className="break-all font-mono text-xs text-ink">{artifact.checksum}</dd>
+                <dt className="mt-2 text-ink-muted">Received</dt>
+                <dd className="text-ink">{new Date(artifact.receivedAt).toLocaleString()}</dd>
+                <dt className="mt-2 text-ink-muted">Processing status</dt>
+                <dd className="text-ink">{artifact.processingStatus}</dd>
+              </dl>
+            </SectionCard>
 
-              <SectionCard title="Entity-resolution candidates">
-                {entityCandidates.length === 0 ? (
-                  <p className="text-sm text-ink-muted">No entity-resolution candidates.</p>
-                ) : (
-                  <ul className="flex flex-col gap-1 text-sm">
-                    {entityCandidates.map((entity) =>
-                      entity ? (
-                        <li key={entity.id}>
-                          <a href={`${base}/entities/${entity.id}`} className="text-[var(--color-accent)] hover:underline">
-                            {entity.displayName}
-                          </a>
-                        </li>
-                      ) : null,
-                    )}
-                  </ul>
-                )}
-              </SectionCard>
+            <SectionCard title="Segments">
+              {segments.length === 0 ? (
+                <p className="text-sm text-ink-muted">No segments recorded for this artifact yet.</p>
+              ) : (
+                <ul className="flex flex-col gap-2 text-sm">
+                  {segments.map((segment) => (
+                    <li key={segment.id} className="border-b border-border pb-2 last:border-0">
+                      <p className="font-medium text-ink">{formatLocator(segment.locator)}</p>
+                      {segment.excerpt !== null ? <p className="text-ink-muted">{segment.excerpt}</p> : null}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </SectionCard>
 
-              <SectionCard title="Parsed representation">
-                <p className="text-sm text-ink-muted">Artifact type: {artifact.artifactType} · MIME: {artifact.mimeType}</p>
-              </SectionCard>
+            <SectionCard title="Proposed observations">
+              <p className="text-sm text-ink-muted">
+                No observations yet — extraction has not run for this artifact (processing lands in a later wave).
+              </p>
+            </SectionCard>
 
-              <SectionCard title="Provider metadata">
-                <dl className="text-sm">
-                  <dt className="text-ink-muted">Extractor</dt>
-                  <dd className="text-ink">fixture-intelligence-provider v1.0.0</dd>
-                  <dt className="mt-2 text-ink-muted">Processing duration</dt>
-                  <dd className="text-ink">118 ms</dd>
-                </dl>
-              </SectionCard>
-            </div>
-          )}
+            <SectionCard title="Entity-resolution candidates">
+              <p className="text-sm text-ink-muted">
+                No entity-resolution candidates yet — extraction has not run for this artifact.
+              </p>
+            </SectionCard>
+          </div>
 
           <SectionCard title="Structured payload">
-            <CopyableJson value={{ artifact, observations, segments }} />
+            <CopyableJson value={{ artifact, segments }} />
           </SectionCard>
         </>
       )}

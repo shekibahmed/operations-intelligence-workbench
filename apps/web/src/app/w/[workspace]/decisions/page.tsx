@@ -1,13 +1,15 @@
 import { DecisionCard } from "@/app/w/[workspace]/decisions/DecisionCard";
 import type { DecisionCardData } from "@/app/w/[workspace]/decisions/DecisionCard";
+import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { findSegmentById, getPackLabels, resolveLabel, stubDecisions } from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { findSegmentById, resolveLabel, stubDecisions } from "@/lib/stub";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
 const RISK_ORDER: Record<string, number> = { critical: 0, high: 1, medium: 2, low: 3 };
@@ -19,12 +21,12 @@ export default async function DecisionCentrePage({
   params: Promise<{ workspace: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("decisions", `${base}/decisions`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
   const decisions = [...stubDecisions].sort((a, b) => (RISK_ORDER[a.riskLevel] ?? 9) - (RISK_ORDER[b.riskLevel] ?? 9));
 
@@ -50,15 +52,16 @@ export default async function DecisionCentrePage({
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <h1 className="text-lg font-semibold text-ink">Decisions</h1>
+      <DemoPreviewNotice />
 
       {state === "loading" ? (
         <div className="grid grid-cols-1 gap-4 xl:grid-cols-2" aria-busy="true">

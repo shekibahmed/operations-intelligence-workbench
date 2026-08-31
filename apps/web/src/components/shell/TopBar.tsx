@@ -5,11 +5,13 @@ import { SyntheticDataNotice } from "@/components/shell/SyntheticDataNotice";
 import type { Lens } from "@/lib/lens";
 
 export function TopBar({
+  workspace,
   packName,
   packId,
   lens,
   sessionMinutesRemaining,
 }: {
+  workspace: string;
   packName: string;
   packId: string;
   lens: Lens;
@@ -26,7 +28,7 @@ export function TopBar({
         </div>
         <LensSwitcher activeLens={lens} />
         <div className="flex items-center gap-3">
-          <SessionIndicator minutesRemaining={sessionMinutesRemaining} />
+          <SessionIndicator workspace={workspace} minutesRemaining={sessionMinutesRemaining} />
           <AdaptCta scenario={packId} />
         </div>
       </div>

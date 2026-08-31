@@ -12,7 +12,10 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@oiw/application": "workspace:*",
     "@oiw/contracts": "workspace:*",
+    "@oiw/persistence": "workspace:*",
+    "@oiw/scenario-sdk": "workspace:*",
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-tabs": "^1.1.21",
     "next": "^16.3.3",

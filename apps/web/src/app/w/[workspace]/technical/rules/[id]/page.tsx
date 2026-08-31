@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { ConditionTree } from "@/components/widgets/ConditionTree";
+import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { InspectorTabs } from "@/components/ui/InspectorTabs";
 import { SectionCard } from "@/components/ui/SectionCard";
@@ -9,9 +10,9 @@ import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { getPackLabels } from "@/lib/stub";
 import { stubRuleTrace } from "@/lib/stub/rule-trace";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function TechnicalRuleTracePage({
@@ -21,22 +22,22 @@ export default async function TechnicalRuleTracePage({
   params: Promise<{ workspace: string; id: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace, id } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug, id } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("technical-rule", `${base}/technical/rules/${id}`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
   if (id !== stubRuleTrace.ruleId) notFound();
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       itemLabel={stubRuleTrace.ruleId}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
@@ -46,6 +47,7 @@ export default async function TechnicalRuleTracePage({
         artifactHref={`${base}/technical/artifacts/${DEFAULT_ARTIFACT_ID}`}
         ruleHref={`${base}/technical/rules/${stubRuleTrace.ruleId}`}
       />
+      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load this rule trace." />

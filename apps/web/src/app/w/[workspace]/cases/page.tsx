@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/Badge";
 import { DataTable } from "@/components/ui/DataTable";
 import type { DataTableColumn } from "@/components/ui/DataTable";
+import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -8,8 +9,9 @@ import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { getPackLabels, resolveLabel, stubCases } from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { resolveLabel, stubCases } from "@/lib/stub";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import type { Case } from "@oiw/contracts";
 import { resolveScreenState } from "@/types/screen-state";
 
@@ -20,12 +22,12 @@ export default async function CaseListPage({
   params: Promise<{ workspace: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("cases", `${base}/cases`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
   const rows = [...stubCases].sort((a, b) => (a.dueAt ?? "9999").localeCompare(b.dueAt ?? "9999"));
 
@@ -50,15 +52,16 @@ export default async function CaseListPage({
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <h1 className="text-lg font-semibold text-ink">Cases</h1>
+      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load cases." />

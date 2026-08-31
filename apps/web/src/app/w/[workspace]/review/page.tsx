@@ -1,12 +1,14 @@
 import { ReviewQueuePanel } from "@/app/w/[workspace]/review/ReviewQueuePanel";
 import type { ReviewQueueEntry } from "@/app/w/[workspace]/review/ReviewQueuePanel";
+import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { findArtifactById, getPackLabels, stubReviewQueue } from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { findArtifactById, stubReviewQueue } from "@/lib/stub";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function ReviewQueuePage({
@@ -16,12 +18,12 @@ export default async function ReviewQueuePage({
   params: Promise<{ workspace: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("review", `${base}/review`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
   const entries: ReviewQueueEntry[] = stubReviewQueue.map((item) => {
     const artifact = findArtifactById(item.observation.artifactId);
@@ -39,15 +41,16 @@ export default async function ReviewQueuePage({
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <h1 className="text-lg font-semibold text-ink">Review Queue</h1>
+      <DemoPreviewNotice />
 
       {state === "loading" ? (
         <Skeleton className="h-96" label="Loading review queue" />

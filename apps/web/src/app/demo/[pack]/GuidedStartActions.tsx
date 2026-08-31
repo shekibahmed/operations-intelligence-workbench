@@ -1,39 +1,39 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { startGuestWorkspace } from "@/app/demo/[pack]/actions";
 import { Button } from "@/components/ui/Button";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { isRedirectError } from "@/lib/is-redirect-error";
 
 /**
- * Workspace creation (PRD §16.2: "should feel immediate") is simulated with
- * a short delay against the in-repo stub workspace — there is no real
- * workspace-creation backend in Wave 1 (OIW-201 non-goal). `forcedState`
- * lets `?state=loading|error` demonstrate those states without a click, for
- * review/screenshot purposes.
+ * `forcedState` lets `?state=loading|error` demonstrate those states without
+ * a click, for review/screenshot purposes (PRD §16.2 default state remains a
+ * real click against `startGuestWorkspace`).
  */
 export function GuidedStartActions({
-  workspaceSlug,
+  packId,
   forcedState,
 }: {
-  workspaceSlug: string;
+  packId: string;
   forcedState?: "loading" | "error" | undefined;
 }) {
-  const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState(false);
 
-  function start(target: "tour" | "free") {
+  async function start(target: "tour" | "free") {
     setError(false);
     setPending(true);
-    window.setTimeout(() => {
-      const href =
-        target === "tour"
-          ? `/w/${workspaceSlug}/inbox?lens=operations&tour=1`
-          : `/w/${workspaceSlug}/overview?lens=leadership`;
-      router.push(href);
-    }, 400);
+    try {
+      await startGuestWorkspace(packId, target);
+      // startGuestWorkspace redirects on success; falling through here means
+      // it returned without redirecting, which should never happen.
+    } catch (thrown) {
+      if (isRedirectError(thrown)) throw thrown;
+      setPending(false);
+      setError(true);
+    }
   }
 
   if (forcedState === "loading" || pending) {

@@ -50,7 +50,7 @@ export default async function GuidedScenarioStartPage({
         </ul>
       </section>
 
-      <GuidedStartActions workspaceSlug={`demo-${pack.id}`} forcedState={forcedState} />
+      <GuidedStartActions packId={pack.id} forcedState={forcedState} />
     </main>
   );
 }

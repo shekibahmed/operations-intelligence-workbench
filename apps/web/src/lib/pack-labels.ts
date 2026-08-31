@@ -2,11 +2,10 @@
  * Shape of the label data a Scenario Pack manifest supplies (UX_SPEC §8.2).
  * This is an `apps/web`-local type, not a frozen contract: `packages/contracts`
  * only records the *path* to a pack's labels file
- * (`ScenarioPackManifestSchema.labels`), not the label document's shape. Wave 2
- * pack-registry wiring will read real label files against a schema like this
- * one; until then, `apps/web` renders from typed stub label objects so no
- * generic component ever hard-codes domain vocabulary (AGENTS.md Product Rule,
- * UX_SPEC §8.1).
+ * (`ScenarioPackManifestSchema.labels`), not the label document's shape.
+ * `src/lib/server/pack-registry.ts` maps a loaded pack's real `labels.json`
+ * into this shape, so no generic component ever hard-codes domain vocabulary
+ * (AGENTS.md Product Rule, UX_SPEC §8.1).
  */
 export interface PackLabels {
   packId: string;

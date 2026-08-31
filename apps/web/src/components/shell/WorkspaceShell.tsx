@@ -34,7 +34,7 @@ export function WorkspaceShell({
         Skip to main content
       </a>
       <LensCookieSync lens={lens} />
-      <TopBar packName={packName} packId={packId} lens={lens} sessionMinutesRemaining={sessionMinutesRemaining} />
+      <TopBar workspace={workspace} packName={packName} packId={packId} lens={lens} sessionMinutesRemaining={sessionMinutesRemaining} />
       <div className="flex flex-1 flex-col xl:flex-row">
         <MobileNavDrawer>
           <PrimaryNav workspace={workspace} lens={lens} defaultArtifactId={defaultArtifactId} defaultRuleId={defaultRuleId} />

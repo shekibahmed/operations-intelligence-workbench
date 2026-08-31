@@ -1,20 +1,14 @@
 import { InboxTable } from "@/app/w/[workspace]/inbox/InboxTable";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
-import { Skeleton } from "@/components/ui/Skeleton";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
+import { mapArtifactsToInboxRows } from "@/lib/inbox-mapping";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import {
-  findEntityById,
-  getPackLabels,
-  stubArtifacts,
-  stubCases,
-  stubObservations,
-  stubSources,
-} from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { getRepositories } from "@/lib/server/db";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function ArtifactInboxPage({
@@ -24,39 +18,28 @@ export default async function ArtifactInboxPage({
   params: Promise<{ workspace: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("inbox", `${base}/inbox`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
-  const rows = stubArtifacts.map((artifact) => {
-    const source = stubSources.find((entry) => entry.id === artifact.sourceId);
-    const observations = stubObservations.filter((observation) => observation.artifactId === artifact.id);
-    const linkedEntityId = observations.find((observation) => observation.entityId !== null)?.entityId ?? null;
-    const linkedEntity = linkedEntityId ? (findEntityById(linkedEntityId)?.displayName ?? null) : null;
-    const relatedCase = linkedEntityId
-      ? stubCases.find((entry) => entry.relatedEntityIds.includes(linkedEntityId) && entry.status !== "closed")
-      : undefined;
-    return {
-      artifact,
-      sourceName: source?.name ?? artifact.sourceId,
-      linkedEntity,
-      observationsFound: observations.length,
-      reviewRequired: observations.some((observation) => observation.reviewStatus === "pending"),
-      relatedCaseTitle: relatedCase?.title ?? null,
-      technicalHref: `${base}/technical/artifacts/${artifact.id}`,
-    };
-  });
+  const repositories = getRepositories();
+  const [artifacts, sources] = await Promise.all([
+    repositories.artifacts.list(workspace.id),
+    repositories.sources.list(workspace.id),
+  ]);
+
+  const rows = mapArtifactsToInboxRows(artifacts, sources, base);
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
@@ -64,9 +47,7 @@ export default async function ArtifactInboxPage({
 
       {state === "error" ? (
         <ErrorState message="Could not load the artifact inbox." />
-      ) : state === "loading" ? (
-        <Skeleton className="h-64" label="Loading artifact inbox" />
-      ) : state === "empty" || rows.length === 0 ? (
+      ) : rows.length === 0 ? (
         <EmptyState title="No artifacts have arrived yet" />
       ) : (
         <div className="overflow-x-auto rounded-lg border border-border bg-surface p-2">

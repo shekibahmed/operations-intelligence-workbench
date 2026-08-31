@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { ActionItemChecklist } from "@/app/w/[workspace]/cases/[caseId]/ActionItemChecklist";
 import { Badge } from "@/components/ui/Badge";
+import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -10,8 +11,9 @@ import { buildCaseDetailView } from "@/lib/case-detail";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { getPackLabels, resolveLabel } from "@/lib/stub";
-import { SESSION_MINUTES_REMAINING } from "@/lib/stub/workspace";
+import { resolveLabel } from "@/lib/stub";
+import { getWorkspaceContext } from "@/lib/server/context";
+import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
 
 export default async function CaseDetailPage({
@@ -21,12 +23,12 @@ export default async function CaseDetailPage({
   params: Promise<{ workspace: string; caseId: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { workspace, caseId } = await params;
-  const base = workspaceBase(workspace);
+  const { workspace: slug, caseId } = await params;
+  const base = workspaceBase(slug);
   const rawSearchParams = await searchParams;
   const lens = await resolveLens("case-detail", `${base}/cases/${caseId}`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
-  const labels = getPackLabels();
+  const { workspace, labels } = await getWorkspaceContext(slug);
 
   const view = buildCaseDetailView(caseId);
   if (!view) notFound();
@@ -35,11 +37,11 @@ export default async function CaseDetailPage({
 
   return (
     <WorkspaceShell
-      workspace={workspace}
+      workspace={slug}
       packName={labels.packName}
       packId={labels.packId}
       lens={lens}
-      sessionMinutesRemaining={SESSION_MINUTES_REMAINING}
+      sessionMinutesRemaining={minutesRemaining(workspace.expiresAt)}
       itemLabel={caseRecord.title}
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
@@ -56,6 +58,7 @@ export default async function CaseDetailPage({
           </Badge>
         </div>
       </header>
+      <DemoPreviewNotice />
 
       {state === "error" ? (
         <ErrorState message="Could not load case sections." />

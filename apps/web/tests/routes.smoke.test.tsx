@@ -23,6 +23,71 @@ import { stubRuleTrace } from "@/lib/stub/rule-trace";
 
 const WORKSPACE = "demo-asset-reliability";
 
+/**
+ * These route-smoke tests call page functions directly (no real Next.js
+ * server, no real Postgres). `requireWorkspace`/`getWorkspacePackLabels`
+ * stand in for a validated guest session; `getRepositories` stands in for
+ * `@oiw/persistence`, reusing the same in-repo stub fixtures the rest of
+ * this file already renders against (loaded via dynamic `import()` inside
+ * the factory since `vi.mock` factories are hoisted above this file's own
+ * imports and cannot safely close over module-level `const`s declared
+ * below them). Session-cookie and real-data-mapping behaviour is covered
+ * separately in `server-workspace.test.ts` and `inbox-mapping.test.ts`.
+ */
+const FAKE_WORKSPACE = vi.hoisted(() => ({
+  id: "00000000-0000-4000-8000-000000000001",
+  name: "Asset Reliability Demo",
+  slug: "demo-asset-reliability",
+  activePackId: "asset-reliability",
+  mode: "public-demo" as const,
+  createdAt: "2026-01-01T00:00:00.000Z",
+  resetAt: null,
+  expiresAt: "2099-01-01T00:00:00.000Z",
+}));
+
+const FAKE_LABELS = vi.hoisted(() => ({
+  packId: "asset-reliability",
+  packName: "Asset Reliability",
+  packDescription: "Test-double pack description.",
+  entityTypes: {},
+  eventTypes: {},
+  signalTypes: {},
+  caseTypes: {},
+  actionTypes: {},
+  decisionTypes: {},
+  workflowStates: {},
+}));
+
+vi.mock("@/lib/server/workspace", () => ({
+  requireWorkspace: vi.fn(async () => FAKE_WORKSPACE),
+}));
+
+vi.mock("@/lib/server/pack-registry", () => ({
+  getWorkspacePackLabels: vi.fn(async () => FAKE_LABELS),
+  findPackEntry: vi.fn(async () => undefined),
+  loadPackRegistry: vi.fn(async () => ({ loaded: [], invalid: [], skipped: [], get: () => undefined, list: () => [] })),
+}));
+
+vi.mock("@/lib/server/db", async () => {
+  const stub = await import("@/lib/stub");
+  return {
+    getRepositories: () => ({
+      artifacts: {
+        list: async () => stub.stubArtifacts,
+        findById: async (_workspaceId: string, id: string) => stub.stubArtifacts.find((artifact) => artifact.id === id) ?? null,
+      },
+      sources: { list: async () => stub.stubSources },
+      cases: { list: async () => stub.stubCases },
+      decisions: { list: async () => stub.stubDecisions },
+      auditEntries: { list: async () => stub.stubAuditEntries },
+      artifactSegments: {
+        listByArtifact: async (_workspaceId: string, artifactId: string) =>
+          stub.stubArtifactSegments.filter((segment) => segment.artifactId === artifactId),
+      },
+    }),
+  };
+});
+
 function setRoute(pathname: string, query: Record<string, string> = {}) {
   vi.mocked(usePathname).mockReturnValue(pathname);
   vi.mocked(useSearchParams).mockReturnValue(new URLSearchParams(query) as never);
