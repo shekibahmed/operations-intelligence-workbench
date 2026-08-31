@@ -8,6 +8,11 @@ export { MANIFEST_FILE_NAME, loadManifest } from "./manifest.js";
 export type { ManifestLoadResult } from "./manifest.js";
 export { loadPackFromDirectory } from "./loader.js";
 export type { LoadedScenarioPack, PackLoadResult } from "./loader.js";
+export { getObservationSchema, validateObservationValue } from "./observations.js";
+export type {
+  ObservationValueValidationIssue,
+  ObservationValueValidationResult,
+} from "./observations.js";
 export { buildPackRegistry } from "./registry.js";
 export type { InvalidPackEntry, PackRegistry, PackRegistryEntry, SkippedPackEntry } from "./registry.js";
 export { collectEventTypeReferences, RuleFileSchema, validateRuleEventTypes } from "./rules.js";

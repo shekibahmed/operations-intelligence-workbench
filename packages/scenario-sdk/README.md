@@ -13,8 +13,9 @@ const result = await loadPackFromDirectory("scenario-packs/asset-reliability");
 
 switch (result.status) {
   case "loaded":
-    // result.pack: LoadedScenarioPack — manifest, labels, workflows,
-    // rules and the three dashboard lenses, all schema-validated.
+    // result.pack: LoadedScenarioPack — manifest, labels, observation
+    // catalogue, workflows, rules and the three dashboard lenses, all
+    // schema-validated.
     // result.warnings: non-fatal issues (e.g. an absent fixture set,
     // tolerated until OIW-004b lands).
     break;
@@ -32,6 +33,44 @@ switch (result.status) {
 `loadPackFromDirectory` never throws for pack-content problems; IO/parse/
 schema failures all surface as `invalid` issues so a caller can enumerate
 many pack directories without one bad pack crashing the process.
+
+## Observation-schema catalogue (contracts v1.2)
+
+Every manifest-referenced observation-schema file is parsed against
+`ObservationSchemaDefinitionSchema` while the pack loads. A loaded pack exposes
+the definitions by `schemaKey` without requiring consumers to read pack files:
+
+```ts
+import {
+  getObservationSchema,
+  validateObservationValue,
+} from "@oiw/scenario-sdk";
+
+const definition = getObservationSchema(loadedPack, "record-id");
+// Equivalent direct catalogue access:
+loadedPack.observationSchemas.get("record-id");
+
+if (definition !== undefined) {
+  const result = validateObservationValue(definition, proposedValue);
+  if (!result.ok) {
+    result.issues; // value-relative paths and diagnostic messages
+  }
+}
+```
+
+`validateObservationValue` is synchronous, pure and performs no filesystem
+access. It implements the constrained JSON Schema subset used by the packs:
+strings (including enum, date and pattern constraints), finite numbers and
+integers (including minimum/maximum), booleans, and structured objects with
+declared/required properties. `null` is not a valid supported value;
+insufficient-evidence and negated nulls remain explicit extraction states.
+
+The definition's existing `displayName` is its pack-supplied label, and
+`entityType` is the optional entity-link hint. `evidenceRequired` defaults to
+`true` when omitted, preserving the platform provenance rule without requiring
+mechanical edits to the three shipped packs. `confidenceThreshold`, when
+present, must be between zero and one and is exposed unchanged for the
+application-layer abstention policy.
 
 ## Registry
 
@@ -86,8 +125,11 @@ Per PRD §11.3 and the amendments in `docs/PLAN_AMENDMENTS.md`:
 - **Manifest** — `manifest.yaml` against `ScenarioPackManifestSchema`
   (`@oiw/contracts`).
 - **Referenced files exist and parse** — labels, entity/event type schemas,
-  observation schemas, case definitions, evaluation sets and tours are read
-  and must be valid JSON.
+  case definitions, evaluation sets and tours are read and must be valid JSON.
+- **Observation schemas (contracts v1.2)** — every `observationSchemas[]`
+  reference must conform to `ObservationSchemaDefinitionSchema`; duplicate
+  `schemaKey` values fail load, and valid definitions populate the public
+  schema-keyed catalogue.
 - **Workflow state** — each `workflows[*]` file against
   `WorkflowDefinitionSchema`; transitions and `initialState` must reference
   declared states (enforced by the frozen contract itself).

@@ -222,6 +222,118 @@ const PackTypeDefinitionSchema = z
   })
   .strict();
 
+const ObservationStringJsonSchema = z
+  .object({
+    type: z.literal("string"),
+    enum: z.array(z.string()).min(1).optional(),
+    format: z.literal("date").optional(),
+    pattern: z.string().optional(),
+  })
+  .strict()
+  .superRefine((schema, context) => {
+    if (schema.enum !== undefined && new Set(schema.enum).size !== schema.enum.length) {
+      context.addIssue({ code: "custom", message: "enum values must be unique", path: ["enum"] });
+    }
+    if (schema.pattern !== undefined) {
+      try {
+        new RegExp(schema.pattern, "u");
+      } catch {
+        context.addIssue({ code: "custom", message: "pattern must be a valid regular expression", path: ["pattern"] });
+      }
+    }
+  });
+
+const ObservationNumberJsonSchema = z
+  .object({
+    type: z.enum(["number", "integer"]),
+    minimum: z.number().finite().optional(),
+    maximum: z.number().finite().optional(),
+  })
+  .strict()
+  .superRefine((schema, context) => {
+    if (schema.minimum !== undefined && schema.maximum !== undefined && schema.minimum > schema.maximum) {
+      context.addIssue({ code: "custom", message: "minimum must not exceed maximum", path: ["minimum"] });
+    }
+  });
+
+const ObservationBooleanJsonSchema = z.object({ type: z.literal("boolean") }).strict();
+
+const ObservationObjectPropertySchema = z.union([
+  ObservationStringJsonSchema,
+  ObservationNumberJsonSchema,
+  ObservationBooleanJsonSchema,
+]);
+
+const ObservationObjectJsonSchema = z
+  .object({
+    type: z.literal("object"),
+    properties: z.record(z.string(), ObservationObjectPropertySchema),
+    required: z.array(z.string()).optional(),
+    additionalProperties: z.boolean().optional(),
+  })
+  .strict()
+  .superRefine((schema, context) => {
+    schema.required?.forEach((property, index) => {
+      if (!(property in schema.properties)) {
+        context.addIssue({
+          code: "custom",
+          message: "required properties must be declared in properties",
+          path: ["required", index],
+        });
+      }
+    });
+    if (schema.required !== undefined && new Set(schema.required).size !== schema.required.length) {
+      context.addIssue({ code: "custom", message: "required properties must be unique", path: ["required"] });
+    }
+  });
+
+const ObservationSchemaDefinitionBase = {
+  schemaKey: SlugSchema,
+  displayName: z.string().min(1).max(200),
+  description: z.string().min(1),
+  entityType: SlugSchema.optional(),
+  evidenceRequired: z.boolean().default(true),
+  confidenceThreshold: z.number().min(0).max(1).optional(),
+};
+
+/**
+ * Contract v1.2 for one pack-owned observation-schema file. `displayName` is
+ * the pack-supplied label and `entityType` is the optional entity-link hint.
+ * The supported JSON Schema subset matches the definitions shipped by the
+ * three initial packs and is intentionally executable without another schema
+ * engine.
+ */
+export const ObservationSchemaDefinitionSchema = z.discriminatedUnion("valueType", [
+  z
+    .object({
+      ...ObservationSchemaDefinitionBase,
+      valueType: z.literal("string"),
+      jsonSchema: ObservationStringJsonSchema,
+    })
+    .strict(),
+  z
+    .object({
+      ...ObservationSchemaDefinitionBase,
+      valueType: z.literal("number"),
+      jsonSchema: ObservationNumberJsonSchema,
+    })
+    .strict(),
+  z
+    .object({
+      ...ObservationSchemaDefinitionBase,
+      valueType: z.literal("boolean"),
+      jsonSchema: ObservationBooleanJsonSchema,
+    })
+    .strict(),
+  z
+    .object({
+      ...ObservationSchemaDefinitionBase,
+      valueType: z.literal("object"),
+      jsonSchema: ObservationObjectJsonSchema,
+    })
+    .strict(),
+]);
+
 const DashboardReferencesSchema = z
   .object({
     leadership: RelativePathSchema,
@@ -286,5 +398,6 @@ export const ScenarioPackSchema = ScenarioPackManifestSchema;
 
 export type RuleDefinition = z.infer<typeof RuleDefinitionSchema>;
 export type WorkflowDefinition = z.infer<typeof WorkflowDefinitionSchema>;
+export type ObservationSchemaDefinition = z.infer<typeof ObservationSchemaDefinitionSchema>;
 export type ScenarioPackManifest = z.infer<typeof ScenarioPackManifestSchema>;
 export type ScenarioPack = z.infer<typeof ScenarioPackSchema>;

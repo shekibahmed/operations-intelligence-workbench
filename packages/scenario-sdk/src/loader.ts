@@ -1,7 +1,14 @@
 import { access } from "node:fs/promises";
 import { resolve } from "node:path";
 
-import { WorkflowDefinitionSchema, type RuleDefinition, type ScenarioPack, type WorkflowDefinition } from "@oiw/contracts";
+import {
+  ObservationSchemaDefinitionSchema,
+  WorkflowDefinitionSchema,
+  type ObservationSchemaDefinition,
+  type RuleDefinition,
+  type ScenarioPack,
+  type WorkflowDefinition,
+} from "@oiw/contracts";
 
 import { DashboardDefinitionSchema, type DashboardDefinition } from "./dashboards.js";
 import { issueError, type PackIssue } from "./errors.js";
@@ -14,6 +21,7 @@ export interface LoadedScenarioPack {
   directory: string;
   manifest: ScenarioPack;
   labels: Record<string, unknown>;
+  observationSchemas: ReadonlyMap<string, ObservationSchemaDefinition>;
   workflows: Record<string, WorkflowDefinition>;
   rules: RuleDefinition[];
   dashboards: {
@@ -93,7 +101,6 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
   const genericJsonPaths = [
     ...manifest.entityTypes.map((entityType) => entityType.schema),
     ...manifest.eventTypes.map((eventType) => eventType.schema),
-    ...manifest.observationSchemas,
     ...manifest.caseDefinitions,
     ...manifest.evaluationSets,
     ...(manifest.tours !== undefined
@@ -109,6 +116,29 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
     if (!result.ok) {
       errors.push(...result.issues);
     }
+  }
+
+  const observationSchemas = new Map<string, ObservationSchemaDefinition>();
+  for (const relativePath of manifest.observationSchemas) {
+    const result = await readAndValidateJsonFile(
+      resolve(packDirectory, relativePath),
+      relativePath,
+      ObservationSchemaDefinitionSchema,
+    );
+    if (!result.ok) {
+      errors.push(...result.issues);
+      continue;
+    }
+    if (observationSchemas.has(result.value.schemaKey)) {
+      errors.push(
+        issueError(
+          `${relativePath}#schemaKey`,
+          `Duplicate observation schemaKey: ${result.value.schemaKey}`,
+        ),
+      );
+      continue;
+    }
+    observationSchemas.set(result.value.schemaKey, result.value);
   }
 
   const workflows: Record<string, WorkflowDefinition> = {};
@@ -172,6 +202,7 @@ export async function loadPackFromDirectory(packDirectory: string): Promise<Pack
       directory: packDirectory,
       manifest,
       labels,
+      observationSchemas,
       workflows,
       rules,
       dashboards: dashboards as LoadedScenarioPack["dashboards"],

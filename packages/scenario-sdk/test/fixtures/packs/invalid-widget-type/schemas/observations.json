@@ -1,8 +1,10 @@
 {
-  "type": "object",
-  "properties": {
-    "record-id": {
-      "type": "string"
-    }
+  "schemaKey": "record-id",
+  "displayName": "Record identifier",
+  "entityType": "record",
+  "valueType": "string",
+  "description": "The stable identifier stated in the source.",
+  "jsonSchema": {
+    "type": "string"
   }
 }
