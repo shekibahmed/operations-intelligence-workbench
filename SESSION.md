@@ -22,7 +22,12 @@ OIW-702 MERGED (PR #26): all three packs now have full click-through
 guided tours, each with its own Playwright journey (9 e2e specs total) —
 product-owner tours request delivered. M2 tail items remaining: pack
 authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
-owner request or fold into Wave 4 start. No agents running.
+owner request or fold into Wave 4 start.
+
+**Resumed after window-close (no state lost). Now running:** OIW-705
+(pack authoring guide + scaffold template = M2 close-out, Claude m900x,
+../oiw-quality) ∥ OIW-802 (evaluation runner = first Wave 4 task, Codex,
+../oiw-core). No shared paths; merge by completion.
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
