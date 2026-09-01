@@ -1,0 +1,18 @@
+{
+  "id": "operations",
+  "title": "Template Pack — Operations View",
+  "widgets": [
+    {
+      "id": "at-risk-actions",
+      "type": "sla-table",
+      "title": "Follow-Up Actions At Risk",
+      "parameters": { "metricId": "follow-up-actions-at-risk" }
+    },
+    {
+      "id": "recent-activity",
+      "type": "activity-feed",
+      "title": "Recent Intake Activity",
+      "parameters": { "metricId": "total-intake-events" }
+    }
+  ]
+}

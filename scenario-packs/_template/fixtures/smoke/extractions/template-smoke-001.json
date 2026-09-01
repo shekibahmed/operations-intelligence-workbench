@@ -1,0 +1,37 @@
+{
+  "artifactChecksum": "65ce9ca951646668b58ceeb89eaffbc7dc02e48da100f60efb1a38f59b376f94",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "template-record-identifier",
+      "value": "SUB-001",
+      "normalisedValue": "SUB-001",
+      "confidence": 0.97,
+      "evidence": [
+        {
+          "locator": { "kind": "text-range", "start": 52, "end": 59 },
+          "excerpt": "SUB-001"
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-05T00:00:00Z",
+    "completedAt": "2026-01-05T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

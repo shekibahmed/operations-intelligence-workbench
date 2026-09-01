@@ -1,0 +1,33 @@
+{
+  "id": "default",
+  "version": "1.0.0",
+  "initialState": "open",
+  "states": [
+    { "id": "open", "label": "Open", "terminal": false },
+    { "id": "in-review", "label": "In Review", "terminal": false },
+    { "id": "awaiting-approval", "label": "Awaiting Approval", "terminal": false },
+    { "id": "resolved", "label": "Resolved", "terminal": false },
+    { "id": "closed", "label": "Closed", "terminal": true }
+  ],
+  "transitions": [
+    { "id": "start-review", "from": "open", "to": "in-review" },
+    { "id": "propose-resolution-decision", "from": "in-review", "to": "awaiting-approval" },
+    { "id": "return-to-review", "from": "awaiting-approval", "to": "in-review" },
+    { "id": "mark-resolved", "from": "in-review", "to": "resolved" },
+    { "id": "close-resolved-case", "from": "resolved", "to": "closed" },
+    {
+      "id": "approve-and-close",
+      "from": "awaiting-approval",
+      "to": "closed",
+      "requiresApprovalPolicyId": "template-resolution-approval"
+    }
+  ],
+  "closureRequirements": [
+    {
+      "id": "decision-resolved",
+      "type": "decision-approved",
+      "definitionId": "template-resolve-subject",
+      "description": "Any proposed resolution Decision for this case's Subject must be approved, rejected, or otherwise resolved before the case can close. WHY a decision-approved closure requirement (rather than none): it is the mechanism that keeps a high-risk outcome from silently auto-closing (AGENTS.md 'High-risk Decisions require a recorded human Approval') and it is the one every real pack in this repository also declares."
+    }
+  ]
+}

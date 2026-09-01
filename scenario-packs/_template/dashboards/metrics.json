@@ -1,0 +1,71 @@
+[
+  {
+    "id": "total-intake-events",
+    "name": "Total Intake Events",
+    "description": "The total count of Record Received events processed. WHY 'count' and no filters: aggregation 'count' (contracts v1.5) accepts recordType/timeWindow/illustrative only — it is the one aggregation kind that cannot filter, so it is demonstrated here as a plain total rather than a subset.",
+    "classification": "observed",
+    "aggregation": "count",
+    "parameters": {
+      "recordType": "events"
+    },
+    "format": "number"
+  },
+  {
+    "id": "open-intake-cases",
+    "name": "Open Intake Cases",
+    "description": "The count of Intake Cases that are not yet in a terminal (closed) workflow state.",
+    "classification": "calculated",
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "template-intake-case" },
+        { "field": "status", "operator": "not-in", "values": ["closed"] }
+      ]
+    },
+    "format": "number"
+  },
+  {
+    "id": "cases-by-severity",
+    "name": "Cases by Severity",
+    "description": "The distribution of open Intake Cases grouped by severity level.",
+    "classification": "calculated",
+    "aggregation": "count-by-field",
+    "parameters": {
+      "recordType": "cases",
+      "field": "severity",
+      "filters": [
+        { "field": "caseType", "operator": "equals", "value": "template-intake-case" },
+        { "field": "status", "operator": "not-in", "values": ["closed"] }
+      ]
+    },
+    "format": "number"
+  },
+  {
+    "id": "repeated-record-signal-trend",
+    "name": "Repeated Record Signal Trend",
+    "description": "The count of repeated-record-intake Signals raised per week, used to visualise recurrence trends.",
+    "classification": "calculated",
+    "aggregation": "trend-over-time",
+    "parameters": {
+      "recordType": "signals",
+      "timestampField": "createdAt",
+      "bucket": "week",
+      "filters": [{ "field": "signalType", "operator": "equals", "value": "repeated-record-intake" }]
+    },
+    "format": "number"
+  },
+  {
+    "id": "follow-up-actions-at-risk",
+    "name": "Follow-Up Actions At Risk",
+    "description": "The count of open or in-progress follow-up Actions due, or at risk of missing their due date, within 24 hours.",
+    "classification": "calculated",
+    "aggregation": "sla-derived",
+    "parameters": {
+      "recordType": "action-items",
+      "atRiskWithinHours": 24,
+      "filters": [{ "field": "status", "operator": "in", "values": ["open", "in-progress"] }]
+    },
+    "format": "number"
+  }
+]

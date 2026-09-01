@@ -1,0 +1,24 @@
+[
+  {
+    "id": "template-smoke-001",
+    "artifactType": "intake-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/template-smoke-001.txt",
+    "sourceMetadata": {
+      "narrativeSource": "intake desk log"
+    },
+    "sha256": "65ce9ca951646668b58ceeb89eaffbc7dc02e48da100f60efb1a38f59b376f94",
+    "expectedExtraction": "extractions/template-smoke-001.json"
+  },
+  {
+    "id": "template-smoke-002",
+    "artifactType": "intake-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/template-smoke-002.txt",
+    "sourceMetadata": {
+      "narrativeSource": "intake desk log"
+    },
+    "sha256": "d7017df96dac1d82f71754e58f68240cfb221d1d8374e4283e3d96a6dc3d49ab",
+    "expectedExtraction": "extractions/template-smoke-002.json"
+  }
+]

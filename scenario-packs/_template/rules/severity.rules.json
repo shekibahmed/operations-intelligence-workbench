@@ -1,0 +1,19 @@
+[
+  {
+    "id": "repeated-record-signal",
+    "version": "1.0.0",
+    "description": "Flags a Subject once at least two related records have arrived within 30 days. WHY an aggregate fact and not a value comparison: this template's only Observation is an identifier string with no severity-like field of its own, so the closed fact catalogue's related-event-count aggregate (contracts/configuration.ts AggregateFactSchema, PLAN_AMENDMENTS A2) is the only fact that can express 'this is happening again' without inventing pack-specific logic in core.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 720 },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      {
+        "type": "create-signal",
+        "definitionId": "repeated-record-intake",
+        "parameters": { "severity": "medium" }
+      }
+    ]
+  }
+]

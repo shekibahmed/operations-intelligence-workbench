@@ -1,0 +1,16 @@
+{
+  "caseType": "template-intake-case",
+  "displayName": { "singular": "Intake Case", "plural": "Intake Cases" },
+  "description": "Tracks a Subject from repeated record intake through a reviewed, human-approved resolution. WHY defaultDueInHours is 72 and not left null: PRD SS16.4/AGENTS.md require a recorded human Approval before a high-risk outcome executes, and a case with no due date has no way to surface as at-risk on the sla-derived Metric this template demonstrates (dashboards/metrics.json#follow-up-actions-at-risk).",
+  "workflowId": "default",
+  "defaultPriority": "normal",
+  "defaultSeverity": "medium",
+  "defaultOwner": "template-team",
+  "defaultDueInHours": 72,
+  "closureRequirements": ["decision-resolved"],
+  "triggeredByRules": [
+    "repeated-record-signal",
+    "repeated-record-case",
+    "recurring-record-approval"
+  ]
+}

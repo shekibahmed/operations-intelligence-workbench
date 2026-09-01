@@ -1,0 +1,29 @@
+[
+  {
+    "id": "recurring-record-approval",
+    "version": "1.0.0",
+    "description": "Proposes a human-approval-gated resolution Decision once intake repeats a third time, and separately flags the proposal for review. WHY propose-decision and flag-review together: this is the pair every pack needs to gate a high-risk outcome behind a recorded human Approval instead of letting a rule execute it (AGENTS.md AI-and-Safety rules; PRD SS16.4) — propose-decision alone would still let the proposal go unnoticed, so flag-review additionally surfaces it to a human reviewer.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 720 },
+      "operator": "greater-than-or-equal",
+      "value": 3
+    },
+    "then": [
+      {
+        "type": "propose-decision",
+        "definitionId": "template-resolve-subject",
+        "parameters": {
+          "decisionType": "template-resolve-subject",
+          "approvalPolicyId": "template-resolution-approval",
+          "riskLevel": "high",
+          "rationale": "This Subject has three or more related intake records; propose a resolution instead of continuing to auto-process it."
+        }
+      },
+      {
+        "type": "flag-review",
+        "definitionId": "recurring-record-review",
+        "parameters": { "reason": "Third or later repeated intake for this Subject." }
+      }
+    ]
+  }
+]

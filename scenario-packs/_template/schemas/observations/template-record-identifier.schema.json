@@ -1,0 +1,12 @@
+{
+  "schemaKey": "template-record-identifier",
+  "displayName": "Record Identifier",
+  "entityType": "template-subject",
+  "valueType": "string",
+  "description": "The stable identifier for the record's Subject, exactly as it appears in the source content. WHY this is the pack's only Observation: it is required by the Event definition (so every Event has a fact to key on) and it carries the 'entityType' hint (so it can also serve as the Event's primaryEntity mapping) — the smallest Observation catalogue that still exercises both cross-checks the loader performs (an Event's requiredObservations and its primaryEntity.observationSchemaKey). A real pack authors one Observation schema per distinct fact it needs to extract, not one Observation total.",
+  "evidenceRequired": true,
+  "jsonSchema": {
+    "type": "string",
+    "pattern": "^[A-Za-z0-9-]+$"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "eventType": "template-record-received",
+  "displayName": "Record Received",
+  "description": "A generic inbound record naming a Subject. WHY only one Event type: this template's authoring-order lesson (docs/PACK_AUTHORING.md SS3) is schemas-first, event-definitions-with-discriminators-second; a pack with several Event types must give each one a required Observation, or a requiredObservationValues constraint, that no other Event definition shares (contracts v1.4, the OIW-110 defect class) — this template has only one Event so there is nothing to disambiguate yet. Add a second Event type only after giving it its own distinguishing required Observation or value constraint.",
+  "requiredObservations": ["template-record-identifier"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": {
+    "observationSchemaKey": "template-record-identifier"
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "fixtureId": "template-smoke-001",
+    "expectedObservations": [
+      { "schemaKey": "template-record-identifier", "status": "extracted", "value": "SUB-001" }
+    ],
+    "expectedEntities": ["SUB-001"],
+    "expectedEventType": "template-record-received",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "First intake record for SUB-001; below the two-event repeated-record-signal threshold on its own."
+  },
+  {
+    "fixtureId": "template-smoke-002",
+    "expectedObservations": [
+      { "schemaKey": "template-record-identifier", "status": "extracted", "value": "SUB-002" }
+    ],
+    "expectedEntities": ["SUB-002"],
+    "expectedEventType": "template-record-received",
+    "expectedSignals": [],
+    "expectedCaseLinkage": false,
+    "expectedDecision": null,
+    "notes": "First intake record for SUB-002; a distinct Subject from smoke-001, so it does not contribute to SUB-001's related-event count."
+  }
+]

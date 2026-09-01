@@ -87,7 +87,11 @@ async function migrateIsolatedDatabase(): Promise<void> {
 
 beforeAll(async () => {
   expect(registry.invalid).toEqual([]);
-  expect(registry.skipped).toEqual([]);
+  // Underscore-prefixed template directories are skipped by convention
+  // (OIW-706); anything else skipped is a real problem.
+  expect(
+    registry.skipped.filter((entry) => !/\/_[^/]+$/.test(entry.directory)),
+  ).toEqual([]);
   expect(registry.loaded.map(({ id }) => id)).toEqual([
     "asset-reliability",
     "document-assurance",

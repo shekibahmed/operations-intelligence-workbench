@@ -1,0 +1,27 @@
+{
+  "id": "technical",
+  "title": "Template Pack — Technical Inspector",
+  "widgets": [
+    {
+      "id": "signal-trend",
+      "type": "trend-line",
+      "title": "Repeated Record Signal Trend (Weekly)",
+      "parameters": { "metricId": "repeated-record-signal-trend", "periods": 12 }
+    },
+    {
+      "id": "recent-intake-list",
+      "type": "list-card",
+      "title": "Recent Records",
+      "parameters": { "metricId": "total-intake-events" }
+    },
+    {
+      "id": "total-intake-impact",
+      "type": "text-impact",
+      "title": "Intake Volume",
+      "parameters": {
+        "metricId": "total-intake-events",
+        "caveat": "Observed count, not an estimate."
+      }
+    }
+  ]
+}

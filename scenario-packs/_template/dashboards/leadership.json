@@ -1,0 +1,24 @@
+{
+  "id": "leadership",
+  "title": "Template Pack — Leadership Overview",
+  "widgets": [
+    {
+      "id": "open-cases-stat",
+      "type": "stat-card",
+      "title": "Open Intake Cases",
+      "parameters": { "metricId": "open-intake-cases" }
+    },
+    {
+      "id": "severity-mix",
+      "type": "severity-breakdown",
+      "title": "Cases by Severity",
+      "parameters": { "metricId": "cases-by-severity" }
+    },
+    {
+      "id": "pending-approvals-card",
+      "type": "pending-approvals",
+      "title": "Subjects Awaiting Approval",
+      "parameters": { "metricId": "open-intake-cases" }
+    }
+  ]
+}

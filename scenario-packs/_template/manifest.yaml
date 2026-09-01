@@ -1,0 +1,49 @@
+schemaVersion: "1.0"
+id: template
+version: "1.0.0"
+name: "Template Pack"
+description: >
+  A minimal, industry-neutral scaffold demonstrating one working example of
+  every Scenario Pack contract (PRD SS11 / SS21.2): a generic "record intake"
+  scenario used only to teach pack authoring via docs/PACK_AUTHORING.md. Not
+  a demo scenario — see this pack's README for why it is excluded from
+  /demo.
+labels: labels.json
+entityTypes:
+  - id: template-subject
+    displayName: "Subject"
+    schema: schemas/entities/template-subject.schema.json
+eventTypes:
+  - id: template-record-received
+    displayName: "Record Received"
+    schema: schemas/events/template-record-received.schema.json
+observationSchemas:
+  - schemas/observations/template-record-identifier.schema.json
+seedEntities: seed/entities.json
+caseDefinitions:
+  - schemas/cases/template-intake-case.schema.json
+workflows:
+  default: workflows/default.workflow.json
+rules:
+  - rules/severity.rules.json
+  - rules/escalation.rules.json
+  - rules/approval.rules.json
+metrics:
+  - dashboards/metrics.json
+dashboards:
+  leadership: dashboards/leadership.json
+  operations: dashboards/operations.json
+  technical: dashboards/technical.json
+fixtures:
+  # Only smoke/ has content (Owned Paths: "2 smoke fixtures"). demo/ and
+  # edge-cases/ are declared, as the manifest requires, but have no
+  # directory on disk; the loader treats that as a warning, not an error
+  # (see @oiw/scenario-sdk README, "A pack with no directory for the
+  # requested set returns a typed empty artifact list and a warning").
+  smoke: fixtures/smoke
+  demo: fixtures/demo
+  edgeCases: fixtures/edge-cases
+evaluationSets:
+  - evaluations/smoke.gold.json
+defaultLens: leadership
+defaultFixtureSet: smoke

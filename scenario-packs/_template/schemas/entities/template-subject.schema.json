@@ -1,0 +1,12 @@
+{
+  "id": "template-subject",
+  "displayName": "Subject",
+  "description": "The generic thing a record is about. WHY 'Subject' and not something concrete: a real pack replaces this with its actual entity (an asset, a contract, a shipment) and picks attributes that matter for that domain (PLAN_AMENDMENTS A2/core neutrality rule in AGENTS.md forbids industry vocabulary in core code, but a pack's own entity attributes are exactly where that vocabulary belongs).",
+  "attributes": [
+    {
+      "key": "category",
+      "type": "string",
+      "description": "A free-text category label for the Subject. WHY a single generic attribute: this template keeps its entity minimal on purpose so validate:packs stays fast to read end to end; add whatever attributes your domain needs."
+    }
+  ]
+}

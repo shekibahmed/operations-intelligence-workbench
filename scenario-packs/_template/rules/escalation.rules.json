@@ -1,0 +1,24 @@
+[
+  {
+    "id": "repeated-record-case",
+    "version": "1.0.0",
+    "description": "Opens an Intake Case and a first follow-up Action together once a Subject repeats. WHY create-case and create-action fire from the same rule: every real pack in this repository pairs a Case with an initial Action (e.g. asset-reliability's missing-inspection-escalation) so a Case never opens without a next step already assigned to its owner.",
+    "when": {
+      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "withinHours": 720 },
+      "operator": "greater-than-or-equal",
+      "value": 2
+    },
+    "then": [
+      {
+        "type": "create-case",
+        "definitionId": "template-intake-case",
+        "parameters": { "title": "Repeated record intake" }
+      },
+      {
+        "type": "create-action",
+        "definitionId": "template-follow-up",
+        "parameters": { "title": "Review repeated record intake" }
+      }
+    ]
+  }
+]

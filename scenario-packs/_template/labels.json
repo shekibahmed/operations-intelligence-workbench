@@ -1,0 +1,48 @@
+{
+  "entityTypes": {
+    "template-subject": { "singular": "Subject", "plural": "Subjects" }
+  },
+  "eventTypes": {
+    "template-record-received": "Record Received"
+  },
+  "caseTypes": {
+    "template-intake-case": { "singular": "Intake Case", "plural": "Intake Cases" }
+  },
+  "workflowStates": {
+    "open": "Open",
+    "in-review": "In Review",
+    "awaiting-approval": "Awaiting Approval",
+    "resolved": "Resolved",
+    "closed": "Closed"
+  },
+  "severity": {
+    "info": "Info",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "critical": "Critical"
+  },
+  "priority": {
+    "low": "Low",
+    "normal": "Normal",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "signalTypes": {
+    "repeated-record-intake": "Repeated Record Intake"
+  },
+  "actionTypes": {
+    "template-follow-up": "Follow-Up Review"
+  },
+  "decisionTypes": {
+    "template-resolve-subject": "Resolve Subject"
+  },
+  "approvalPolicies": {
+    "template-resolution-approval": "Resolution Approval"
+  },
+  "lenses": {
+    "leadership": "Leadership",
+    "operations": "Operations",
+    "technical": "Technical"
+  }
+}
