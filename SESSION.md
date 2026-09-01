@@ -24,10 +24,13 @@ product-owner tours request delivered. M2 tail items remaining: pack
 authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
 owner request or fold into Wave 4 start.
 
-**Resumed after window-close (no state lost). Now running:** OIW-705
-(pack authoring guide + scaffold template = M2 close-out, Claude m900x,
-../oiw-quality) ∥ OIW-802 (evaluation runner = first Wave 4 task, Codex,
-../oiw-core). No shared paths; merge by completion.
+**Running:** OIW-802 (evaluation runner, Codex, ../oiw-core) ∥ OIW-706
+(registry underscore-exclusion, Codex #2, ../oiw-packs — unblocks
+OIW-705). OIW-705 (guide + _template) BLOCKED as pre-flagged: registry
+has no exclusion mechanism; requested option 1 (skip _-prefixed dirs)
+accepted by lead + validate:packs must still validate templates. After
+OIW-706 merges: lead reconciles OIW-705 branch (content needs no change
+per its handoff — merge main, re-run suite, merge).
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
