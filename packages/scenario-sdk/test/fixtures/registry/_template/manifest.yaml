@@ -1,0 +1,36 @@
+schemaVersion: "1.0"
+id: template-fixture
+version: 1.0.0
+name: Template Fixture
+description: A neutral valid template used to verify registry exclusion and validator inclusion.
+labels: ./labels.json
+entityTypes:
+  - id: record
+    displayName: Record
+    schema: ./schemas/entities/record.json
+eventTypes:
+  - id: record-received
+    displayName: Record received
+    schema: ./schemas/events/record-received.json
+observationSchemas:
+  - ./schemas/observations.json
+caseDefinitions:
+  - ./schemas/cases.json
+workflows:
+  default: ./workflows/default.workflow.json
+rules:
+  - ./rules/default.rules.json
+metrics:
+  - ./metrics/default.metrics.json
+dashboards:
+  leadership: ./dashboards/leadership.json
+  operations: ./dashboards/operations.json
+  technical: ./dashboards/technical.json
+fixtures:
+  smoke: ./fixtures/smoke
+  demo: ./fixtures/demo
+  edgeCases: ./fixtures/edge-cases
+evaluationSets:
+  - ./evaluations/gold-observations.json
+defaultLens: leadership
+defaultFixtureSet: smoke

@@ -1,0 +1,12 @@
+{
+  "eventType": "record-received",
+  "displayName": "Record received",
+  "description": "A neutral operational record was received.",
+  "requiredObservations": ["record-id"],
+  "optionalObservations": [],
+  "occurredAt": {
+    "observationSchemaKey": null,
+    "fallback": "artifact-received-at"
+  },
+  "primaryEntity": { "observationSchemaKey": "record-id" }
+}

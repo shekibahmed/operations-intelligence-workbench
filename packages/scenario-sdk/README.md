@@ -129,11 +129,17 @@ const registry = await buildPackRegistry("scenario-packs");
 
 registry.loaded; // PackRegistryEntry[] — id, version, directory, pack, warnings
 registry.invalid; // packs that failed validation, with their issues
-registry.skipped; // narrative-only packs, pending OIW-004b
+registry.skipped; // narrative-only packs and `_`-prefixed template directories
 
 registry.get("asset-reliability", "1.0.0"); // LoadedScenarioPack | undefined
 registry.list(); // all loaded packs, in stable (sorted directory name) order
 ```
+
+Directory names beginning with `_` are reserved for pack templates. Registry
+enumeration reports them as `skipped` with the template-convention reason, so
+they cannot appear as selectable application/demo packs. `pnpm validate:packs`
+still loads and fully validates those directories, reporting them with a
+distinct `TEMPLATE` label so scaffold content remains covered by CI.
 
 ## Loading a fixture set
 
@@ -164,8 +170,9 @@ OIW-004b `artifacts/` layout while retaining compatibility with its
 narrative-authored `content/` index paths.
 
 `scripts/validate-packs.ts` (`pnpm validate:packs`) runs the registry over
-`scenario-packs/`, prints a per-pack `OK` / `FAIL` / `SKIP` line, and exits
-non-zero only if any pack is `invalid`.
+`scenario-packs/`, prints a per-pack `OK` / `FAIL` / `SKIP` line plus a
+`TEMPLATE`-labelled line for every `_`-prefixed directory, and exits non-zero
+if any pack or template is `invalid`.
 
 ## What gets validated
 
@@ -223,6 +230,7 @@ file path exactly as declared in the manifest, optionally suffixed with
 `test/fixtures/packs/` holds one valid pack and one invalid pack per failure
 mode (bad manifest, undeclared event type, unknown fact kind, undeclared
 workflow state, unknown widget type, missing expected extraction), plus a
-narrative-only pack and an empty directory. `test/fixtures/registry/` holds
-a miniature `scenario-packs/`-shaped directory (one loaded, one invalid, one
-skipped) for the registry enumeration test.
+narrative-only pack and an empty directory. `test/fixtures/registry/` holds a
+miniature `scenario-packs/`-shaped directory (one loaded, one invalid, one
+narrative-only skip and one valid `_template`) for the registry enumeration
+and validator tests.

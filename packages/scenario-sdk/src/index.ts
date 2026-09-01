@@ -22,7 +22,12 @@ export type {
 } from "./observations.js";
 export { MetricDefinitionCatalogueSchema, getMetricDefinition } from "./metrics.js";
 export type { MetricDefinitionCatalogue } from "./metrics.js";
-export { buildPackRegistry } from "./registry.js";
+export {
+  TEMPLATE_PACK_DIRECTORY_PREFIX,
+  TEMPLATE_PACK_SKIP_REASON,
+  buildPackRegistry,
+  isTemplatePackDirectoryName,
+} from "./registry.js";
 export type { InvalidPackEntry, PackRegistry, PackRegistryEntry, SkippedPackEntry } from "./registry.js";
 export { collectEventTypeReferences, RuleFileSchema, validateRuleEventTypes } from "./rules.js";
 export {

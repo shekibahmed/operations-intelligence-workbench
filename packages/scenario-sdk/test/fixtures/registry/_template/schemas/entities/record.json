@@ -1,0 +1,7 @@
+{
+  "type": "object",
+  "properties": {
+    "recordId": { "type": "string" }
+  },
+  "required": ["recordId"]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "open-cases",
+    "name": "Open Cases",
+    "description": "Count of open cases.",
+    "classification": "calculated",
+    "aggregation": "count-where",
+    "parameters": {
+      "recordType": "cases",
+      "filters": [{ "field": "status", "operator": "equals", "value": "open" }]
+    },
+    "format": "number"
+  }
+]

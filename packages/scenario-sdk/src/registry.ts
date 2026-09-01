@@ -4,6 +4,14 @@ import { resolve } from "node:path";
 import type { PackIssue } from "./errors.js";
 import { loadPackFromDirectory, type LoadedScenarioPack } from "./loader.js";
 
+export const TEMPLATE_PACK_DIRECTORY_PREFIX = "_";
+export const TEMPLATE_PACK_SKIP_REASON =
+  'Directory name starts with "_"; underscore-prefixed directories are pack templates and are excluded from the registry.';
+
+export function isTemplatePackDirectoryName(name: string): boolean {
+  return name.startsWith(TEMPLATE_PACK_DIRECTORY_PREFIX);
+}
+
 export interface PackRegistryEntry {
   id: string;
   version: string;
@@ -60,6 +68,10 @@ export async function buildPackRegistry(scenarioPacksDirectory: string): Promise
 
   for (const name of directoryNames) {
     const directory = resolve(scenarioPacksDirectory, name);
+    if (isTemplatePackDirectoryName(name)) {
+      skipped.push({ directory, reason: TEMPLATE_PACK_SKIP_REASON });
+      continue;
+    }
     const result = await loadPackFromDirectory(directory);
     if (result.status === "loaded") {
       loaded.push({

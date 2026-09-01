@@ -1,0 +1,12 @@
+{
+  "id": "technical-overview",
+  "title": "Technical Overview",
+  "widgets": [
+    {
+      "id": "open-cases",
+      "type": "stat-card",
+      "title": "Open Cases",
+      "parameters": { "metricId": "open-cases" }
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import { buildPackRegistry } from "../src/registry.js";
 const registryFixtures = resolve(import.meta.dirname, "fixtures/registry");
 
 describe("buildPackRegistry", () => {
-  it("loads a valid pack, reports an invalid one without crashing, and reports a narrative-only skip", async () => {
+  it("loads a valid pack, reports an invalid one, and skips narrative-only and template directories", async () => {
     const registry = await buildPackRegistry(registryFixtures);
 
     expect(registry.loaded).toHaveLength(1);
@@ -17,8 +17,13 @@ describe("buildPackRegistry", () => {
     expect(registry.invalid).toHaveLength(1);
     expect(registry.invalid[0]?.errors.length).toBeGreaterThan(0);
 
-    expect(registry.skipped).toHaveLength(1);
-    expect(registry.skipped[0]?.reason).toContain("narrative/");
+    expect(registry.skipped).toHaveLength(2);
+    expect(registry.skipped.find(({ directory }) => directory.endsWith("gamma-pack"))?.reason).toContain(
+      "narrative/",
+    );
+    expect(registry.skipped.find(({ directory }) => directory.endsWith("_template"))?.reason).toContain(
+      "pack templates",
+    );
   });
 
   it("looks packs up by id and version, and lists loaded packs in stable directory order", async () => {
