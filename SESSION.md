@@ -17,11 +17,12 @@ dashboards → audit trail — with real state assertions, green in CI.
 11/11 across all three packs, wired into pnpm test/CI; one real engine gap
 found+fixed (assembler now honours ADR-010 value discriminators, OIW-703
 PR #25); pack-data fixes adversarially reviewed against narrative (zero
-semantic drift); asset-reliability byte-untouched throughout. Remaining
-for the tours request: OIW-702 (running, m900x) — click-through tours for
-process-exceptions + document-assurance with per-pack Playwright journeys.
-M2 formal exit review after OIW-702 merges (pack authoring guide +
-scaffold template remain as M2 tail items).
+semantic drift); asset-reliability byte-untouched throughout.
+OIW-702 MERGED (PR #26): all three packs now have full click-through
+guided tours, each with its own Playwright journey (9 e2e specs total) —
+product-owner tours request delivered. M2 tail items remaining: pack
+authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
+owner request or fold into Wave 4 start. No agents running.
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
