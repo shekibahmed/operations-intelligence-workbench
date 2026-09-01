@@ -51,6 +51,22 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "obligation",
+      "confidence": 0.87,
+      "value": "insurance-maintenance",
+      "normalisedValue": "insurance-maintenance",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "2.1 Insurance Certificate (Clause 6.2)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "responsible-party",
       "confidence": 0.9,
       "value": "Nadia Okonkwo",

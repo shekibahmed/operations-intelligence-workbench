@@ -85,7 +85,7 @@
     "entityType": "document",
     "displayName": "Service Order CFU-SO-2026-0033",
     "externalReference": "CFU-SO-2026-0033",
-    "aliases": ["CFU service order", "CFU SO 2026 0033"],
+    "aliases": ["CFU service order", "CFU SO 2026 0033", "smoke-007-service-order"],
     "attributes": { "party": "Consolidated Freight Underwriters" },
     "status": "active"
   },

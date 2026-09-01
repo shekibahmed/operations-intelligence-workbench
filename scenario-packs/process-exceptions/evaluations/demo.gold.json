@@ -13,6 +13,11 @@
         "value": "Tomas Reyes"
       },
       {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
+      },
+      {
         "schemaKey": "batch-identifier",
         "status": "extracted",
         "value": "B-2205"
@@ -58,7 +63,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 850
+        "value": "850 cP"
       },
       {
         "schemaKey": "observed-value",
@@ -171,6 +176,11 @@
         "value": "2026-02-10"
       },
       {
+        "schemaKey": "investigation-request",
+        "status": "extracted",
+        "value": "root-cause investigation"
+      },
+      {
         "schemaKey": "batch-identifier",
         "status": "extracted",
         "value": "B-2205"
@@ -210,6 +220,11 @@
         "schemaKey": "reporter-name",
         "status": "extracted",
         "value": "Tomas Reyes"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
       },
       {
         "schemaKey": "batch-identifier",
@@ -262,7 +277,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 850
+        "value": "850 cP"
       },
       {
         "schemaKey": "observed-value",
@@ -368,6 +383,11 @@
         "value": "Line 1"
       },
       {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "mixing"
+      },
+      {
         "schemaKey": "yield-loss-pct",
         "status": "extracted",
         "value": 5.1
@@ -389,8 +409,7 @@
       }
     ],
     "expectedEntities": [
-      "B-2205",
-      "B-2210"
+      "line-1"
     ],
     "expectedEventType": "production-summary-filed",
     "expectedSignals": [
@@ -424,7 +443,9 @@
         "value": "all remaining output plus unused material on supplier lot KM-LOT-448"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "KM-LOT-448"
+    ],
     "expectedEventType": "formal-hold-requested",
     "expectedSignals": [],
     "expectedCaseLinkage": true,
@@ -447,6 +468,11 @@
         "schemaKey": "reporter-name",
         "status": "extracted",
         "value": "Ingrid Halvorsen"
+      },
+      {
+        "schemaKey": "process-stage",
+        "status": "extracted",
+        "value": "filling"
       },
       {
         "schemaKey": "batch-identifier",
@@ -499,7 +525,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 500
+        "value": "500 g"
       },
       {
         "schemaKey": "observed-value",

@@ -3,12 +3,12 @@
   "displayName": "Obligation Status Confirmed",
   "description": "An automated system export confirmed the current status of a tracked obligation with evidence on file; informational, no reviewer action required.",
   "requiredObservations": ["obligation", "due-date"],
-  "optionalObservations": [],
+  "optionalObservations": ["document-reference", "required-evidence"],
   "occurredAt": {
     "observationSchemaKey": null,
     "fallback": "artifact-received-at"
   },
   "primaryEntity": {
-    "observationSchemaKey": "obligation"
+    "observationSchemaKey": "document-reference"
   }
 }

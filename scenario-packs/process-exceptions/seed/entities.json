@@ -63,6 +63,24 @@
     "status": "active"
   },
   {
+    "id": "batch-b-2098",
+    "entityType": "batch",
+    "displayName": "B-2098",
+    "externalReference": "B-2098",
+    "aliases": ["B2098", "Batch B-2098"],
+    "attributes": { "line": "line-1" },
+    "status": "released"
+  },
+  {
+    "id": "batch-b-2099",
+    "entityType": "batch",
+    "displayName": "B-2099",
+    "externalReference": "B-2099",
+    "aliases": ["B2099", "Batch B-2099"],
+    "attributes": { "line": "line-1" },
+    "status": "active"
+  },
+  {
     "id": "batch-b-2101",
     "entityType": "batch",
     "displayName": "B-2101",
@@ -72,12 +90,30 @@
     "status": "released"
   },
   {
+    "id": "batch-b-2109",
+    "entityType": "batch",
+    "displayName": "B-2109",
+    "externalReference": "B-2109",
+    "aliases": ["B2109", "Batch B-2109"],
+    "attributes": { "line": "line-2" },
+    "status": "released"
+  },
+  {
     "id": "batch-b-2110",
     "entityType": "batch",
     "displayName": "B-2110",
     "externalReference": "B-2110",
     "aliases": ["B2110", "Batch B-2110"],
     "attributes": { "product": "RM-18", "lines": ["line-2", "line-3"], "supplierLot": "DR-LOT-220" },
+    "status": "released"
+  },
+  {
+    "id": "batch-b-2115",
+    "entityType": "batch",
+    "displayName": "B-2115",
+    "externalReference": "B-2115",
+    "aliases": ["B2115", "Batch B-2115"],
+    "attributes": { "product": "routine-fill-run", "line": "line-3" },
     "status": "released"
   },
   {

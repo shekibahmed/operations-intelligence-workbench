@@ -35,54 +35,55 @@ entityTypes:
     displayName: "Person"
     schema: schemas/entities/person.schema.json
 eventTypes:
-  - id: shift-report-filed
-    displayName: "Shift Report Filed"
-    schema: schemas/events/shift-report-filed.schema.json
-  - id: production-summary-filed
-    displayName: "Production Summary Filed"
-    schema: schemas/events/production-summary-filed.schema.json
-  - id: routine-handover-sent
-    displayName: "Routine Handover Sent"
-    schema: schemas/events/routine-handover-sent.schema.json
-  - id: routine-calibration-performed
-    displayName: "Routine Calibration Performed"
-    schema: schemas/events/routine-calibration-performed.schema.json
-  - id: qc-check-passed
-    displayName: "QC Check Passed"
-    schema: schemas/events/qc-check-passed.schema.json
-  - id: qc-deviation-confirmed
-    displayName: "QC Deviation Confirmed"
-    schema: schemas/events/qc-deviation-confirmed.schema.json
-  - id: qc-inspection-incomplete
-    displayName: "QC Inspection Incomplete"
-    schema: schemas/events/qc-inspection-incomplete.schema.json
-  - id: process-deviation-observed
-    displayName: "Process Deviation Observed"
-    schema: schemas/events/process-deviation-observed.schema.json
-  - id: inventory-exception-logged
-    displayName: "Inventory Exception Logged"
-    schema: schemas/events/inventory-exception-logged.schema.json
-  - id: held-output-aging-flagged
-    displayName: "Held Output Aging Flagged"
-    schema: schemas/events/held-output-aging-flagged.schema.json
-  - id: root-cause-investigation-requested
-    displayName: "Root-Cause Investigation Requested"
-    schema: schemas/events/root-cause-investigation-requested.schema.json
-  - id: root-cause-closed
-    displayName: "Root-Cause Closed"
-    schema: schemas/events/root-cause-closed.schema.json
   - id: formal-hold-requested
     displayName: "Formal Hold Requested"
     schema: schemas/events/formal-hold-requested.schema.json
+  - id: qc-deviation-confirmed
+    displayName: "QC Deviation Confirmed"
+    schema: schemas/events/qc-deviation-confirmed.schema.json
+  - id: held-output-aging-flagged
+    displayName: "Held Output Aging Flagged"
+    schema: schemas/events/held-output-aging-flagged.schema.json
+  - id: qc-check-passed
+    displayName: "QC Check Passed"
+    schema: schemas/events/qc-check-passed.schema.json
   - id: analyzer-reading-logged
     displayName: "Analyzer Reading Logged"
     schema: schemas/events/analyzer-reading-logged.schema.json
+  - id: qc-inspection-incomplete
+    displayName: "QC Inspection Incomplete"
+    schema: schemas/events/qc-inspection-incomplete.schema.json
+  - id: routine-calibration-performed
+    displayName: "Routine Calibration Performed"
+    schema: schemas/events/routine-calibration-performed.schema.json
+  - id: root-cause-investigation-requested
+    displayName: "Root-Cause Investigation Requested"
+    schema: schemas/events/root-cause-investigation-requested.schema.json
+  - id: production-summary-filed
+    displayName: "Production Summary Filed"
+    schema: schemas/events/production-summary-filed.schema.json
+  - id: process-deviation-observed
+    displayName: "Process Deviation Observed"
+    schema: schemas/events/process-deviation-observed.schema.json
+  - id: root-cause-closed
+    displayName: "Root-Cause Closed"
+    schema: schemas/events/root-cause-closed.schema.json
+  - id: shift-report-filed
+    displayName: "Shift Report Filed"
+    schema: schemas/events/shift-report-filed.schema.json
+  - id: inventory-exception-logged
+    displayName: "Inventory Exception Logged"
+    schema: schemas/events/inventory-exception-logged.schema.json
+  - id: routine-handover-sent
+    displayName: "Routine Handover Sent"
+    schema: schemas/events/routine-handover-sent.schema.json
 observationSchemas:
   - schemas/observations/batch-identifier.schema.json
   - schemas/observations/expected-value.schema.json
   - schemas/observations/observed-value.schema.json
   - schemas/observations/deviation.schema.json
   - schemas/observations/quantity-affected.schema.json
+  - schemas/observations/investigation-request.schema.json
   - schemas/observations/process-stage.schema.json
   - schemas/observations/time-detected.schema.json
   - schemas/observations/reported-cause.schema.json

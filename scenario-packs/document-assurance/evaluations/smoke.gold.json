@@ -156,7 +156,9 @@
         "value": "MCS-NDA-2026-0007"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "MCS-NDA-2026-0007"
+    ],
     "expectedEventType": "reviewer-signoff-recorded",
     "expectedSignals": [],
     "expectedCaseLinkage": false,
@@ -170,6 +172,11 @@
         "schemaKey": "document-reference",
         "status": "extracted",
         "value": "CFU-SO-2026-0033"
+      },
+      {
+        "schemaKey": "effective-date",
+        "status": "extracted",
+        "value": "2026-02-02"
       },
       {
         "schemaKey": "due-date",

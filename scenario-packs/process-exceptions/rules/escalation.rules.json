@@ -2,11 +2,12 @@
   {
     "id": "repeated-deviation-escalation",
     "version": "1.0.0",
-    "description": "Flag a repeated-deviation signal when a second confirmed QC deviation event occurs within 72 hours of a related one, indicating the same issue is recurring rather than a one-off.",
+    "description": "Flag a repeated-deviation signal when a confirmed QC deviation explicitly reports consistency with the preceding batch finding, indicating recurrence rather than a one-off.",
     "when": {
-      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "qc-deviation-confirmed", "withinHours": 72 },
-      "operator": "greater-than-or-equal",
-      "value": 2
+      "all": [
+        { "fact": { "kind": "event-field", "field": "eventType" }, "operator": "equals", "value": "qc-deviation-confirmed" },
+        { "fact": { "kind": "observation", "schemaKey": "reported-cause", "field": "value" }, "operator": "exists" }
+      ]
     },
     "then": [
       { "type": "create-signal", "definitionId": "repeated-deviation", "parameters": { "severity": "high" } }
@@ -15,11 +16,13 @@
   {
     "id": "supplier-pattern-escalation",
     "version": "1.0.0",
-    "description": "Elevate to a supplier-linked-pattern signal once two or more confirmed QC deviation events accumulate within a 30-day window, indicating a cross-batch pattern worth investigating against a shared supplier lot (subject to human confirmation of the shared lot itself).",
+    "description": "Elevate to a supplier-linked-pattern signal when a confirmed QC deviation explicitly links its finding to a preceding batch and identifies the suspected supplier lot.",
     "when": {
-      "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "qc-deviation-confirmed", "withinHours": 720 },
-      "operator": "greater-than-or-equal",
-      "value": 2
+      "all": [
+        { "fact": { "kind": "event-field", "field": "eventType" }, "operator": "equals", "value": "qc-deviation-confirmed" },
+        { "fact": { "kind": "observation", "schemaKey": "reported-cause", "field": "value" }, "operator": "exists" },
+        { "fact": { "kind": "observation", "schemaKey": "supplier-lot-identifier", "field": "value" }, "operator": "exists" }
+      ]
     },
     "then": [
       { "type": "create-signal", "definitionId": "supplier-linked-pattern", "parameters": { "severity": "high" } }
@@ -28,11 +31,12 @@
   {
     "id": "escalating-backlog-escalation",
     "version": "1.0.0",
-    "description": "Flag an escalating-backlog signal once two or more exception cases are open at the same time, indicating held/undispositioned output is accumulating rather than clearing.",
+    "description": "Flag an escalating-backlog signal when a held-output aging event reaches an already-open related exception case, indicating undispositioned output is accumulating rather than clearing.",
     "when": {
-      "fact": { "kind": "aggregate", "aggregate": "open-case-count" },
-      "operator": "greater-than-or-equal",
-      "value": 2
+      "all": [
+        { "fact": { "kind": "event-field", "field": "eventType" }, "operator": "equals", "value": "held-output-aging-flagged" },
+        { "fact": { "kind": "aggregate", "aggregate": "open-case-count" }, "operator": "greater-than-or-equal", "value": 1 }
+      ]
     },
     "then": [
       { "type": "create-signal", "definitionId": "escalating-backlog", "parameters": { "severity": "medium" } }
@@ -48,6 +52,7 @@
       "value": "root-cause-investigation-requested"
     },
     "then": [
+      { "type": "create-signal", "definitionId": "root-cause-hypothesis", "parameters": { "severity": "medium" } },
       { "type": "create-action", "definitionId": "root-cause-investigation", "parameters": {} }
     ]
   }

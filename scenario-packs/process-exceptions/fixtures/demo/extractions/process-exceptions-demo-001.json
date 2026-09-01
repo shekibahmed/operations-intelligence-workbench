@@ -37,6 +37,23 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "process-stage",
+      "value": "mixing",
+      "normalisedValue": "mixing",
+      "confidence": 0.99,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 43,
+            "end": 64
+          },
+          "excerpt": "Line: Line 1 (Mixing)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "batch-identifier",
       "value": "B-2205",
       "normalisedValue": "B-2205",

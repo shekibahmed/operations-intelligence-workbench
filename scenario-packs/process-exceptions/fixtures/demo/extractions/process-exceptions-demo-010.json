@@ -37,6 +37,23 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "process-stage",
+      "confidence": 0.99,
+      "value": "filling",
+      "normalisedValue": "filling",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 43,
+            "end": 65
+          },
+          "excerpt": "Line: Line 2 (Filling)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "batch-identifier",
       "confidence": 0.95,
       "value": "B-2211",

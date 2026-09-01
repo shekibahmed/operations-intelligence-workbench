@@ -3,6 +3,6 @@
   "displayName": "Disposition Status",
   "entityType": "batch",
   "valueType": "string",
-  "description": "The confirmed disposition of a batch: released, hold, or reject.",
-  "jsonSchema": { "type": "string", "enum": ["released", "hold", "reject"] }
+  "description": "The current disposition state of output, including resolved and pending review states.",
+  "jsonSchema": { "type": "string", "enum": ["released", "hold", "reject", "resolved", "pending"] }
 }

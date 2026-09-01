@@ -3,6 +3,23 @@
   "observations": [
     {
       "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.9,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 398,
+            "end": 416
+          },
+          "excerpt": "Project Falcon MSA"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "financial-threshold",
       "confidence": 0.85,
       "value": {

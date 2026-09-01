@@ -73,8 +73,8 @@
       "status": "extracted",
       "schemaKey": "expected-value",
       "confidence": 0.98,
-      "value": 850,
-      "normalisedValue": 850,
+      "value": "850 cP",
+      "normalisedValue": "850 cP",
       "evidence": [
         {
           "locator": {

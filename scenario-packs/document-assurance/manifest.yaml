@@ -35,15 +35,15 @@ eventTypes:
   - id: checklist-filed
     displayName: "Checklist Filed"
     schema: schemas/events/checklist-filed.schema.json
-  - id: clarification-requested
-    displayName: "Clarification Requested"
-    schema: schemas/events/clarification-requested.schema.json
   - id: compliance-report-filed
     displayName: "Compliance Report Filed"
     schema: schemas/events/compliance-report-filed.schema.json
   - id: conflicting-provision-identified
     displayName: "Conflicting Provision Identified"
     schema: schemas/events/conflicting-provision-identified.schema.json
+  - id: clarification-requested
+    displayName: "Clarification Requested"
+    schema: schemas/events/clarification-requested.schema.json
   - id: contract-amended
     displayName: "Contract Amended"
     schema: schemas/events/contract-amended.schema.json
@@ -53,9 +53,9 @@ eventTypes:
   - id: correspondence-logged
     displayName: "Correspondence Logged"
     schema: schemas/events/correspondence-logged.schema.json
-  - id: cross-engagement-flag-corrected
-    displayName: "Cross-Engagement Flag Corrected"
-    schema: schemas/events/cross-engagement-flag-corrected.schema.json
+  - id: obligation-status-confirmed
+    displayName: "Obligation Status Confirmed"
+    schema: schemas/events/obligation-status-confirmed.schema.json
   - id: date-conflict-detected
     displayName: "Date Conflict Detected"
     schema: schemas/events/date-conflict-detected.schema.json
@@ -65,9 +65,9 @@ eventTypes:
   - id: exception-proposed
     displayName: "Exception Proposed"
     schema: schemas/events/exception-proposed.schema.json
-  - id: obligation-status-confirmed
-    displayName: "Obligation Status Confirmed"
-    schema: schemas/events/obligation-status-confirmed.schema.json
+  - id: cross-engagement-flag-corrected
+    displayName: "Cross-Engagement Flag Corrected"
+    schema: schemas/events/cross-engagement-flag-corrected.schema.json
   - id: policy-published
     displayName: "Policy Published"
     schema: schemas/events/policy-published.schema.json
@@ -75,6 +75,7 @@ eventTypes:
     displayName: "Reviewer Sign-off Recorded"
     schema: schemas/events/reviewer-signoff-recorded.schema.json
 observationSchemas:
+  - schemas/observations/amendment-reference.schema.json
   - schemas/observations/checklist-status.schema.json
   - schemas/observations/conflicting-provision.schema.json
   - schemas/observations/document-reference.schema.json

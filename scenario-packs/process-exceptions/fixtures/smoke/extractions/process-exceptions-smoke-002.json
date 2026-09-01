@@ -72,8 +72,8 @@
     {
       "status": "extracted",
       "schemaKey": "expected-value",
-      "value": 600,
-      "normalisedValue": 600,
+      "value": "600 cP",
+      "normalisedValue": "600 cP",
       "confidence": 0.99,
       "evidence": [
         {

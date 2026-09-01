@@ -39,16 +39,16 @@
       "status": "extracted",
       "schemaKey": "document-reference",
       "confidence": 0.85,
-      "value": "VLP-FAL-2026-0142-A1",
-      "normalisedValue": "VLP-FAL-2026-0142-A1",
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
       "evidence": [
         {
           "locator": {
             "kind": "table-cell",
-            "row": 1,
+            "row": 0,
             "column": "checklist_item"
           },
-          "excerpt": "Amendment No. 1 executed (ref VLP-FAL-2026-0142-A1)"
+          "excerpt": "Project Falcon MSA fully executed (ref VLP-FAL-2026-0142)"
         }
       ]
     },

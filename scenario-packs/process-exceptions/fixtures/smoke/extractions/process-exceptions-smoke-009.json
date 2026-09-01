@@ -52,8 +52,8 @@
     {
       "status": "extracted",
       "schemaKey": "expected-value",
-      "value": 100,
-      "normalisedValue": 100,
+      "value": "100.0%",
+      "normalisedValue": "100.0%",
       "confidence": 0.99,
       "evidence": [
         {

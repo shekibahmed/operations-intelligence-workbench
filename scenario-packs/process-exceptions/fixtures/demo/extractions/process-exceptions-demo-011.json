@@ -73,8 +73,8 @@
       "status": "extracted",
       "schemaKey": "expected-value",
       "confidence": 0.98,
-      "value": 500,
-      "normalisedValue": 500,
+      "value": "500 g",
+      "normalisedValue": "500 g",
       "evidence": [
         {
           "locator": {

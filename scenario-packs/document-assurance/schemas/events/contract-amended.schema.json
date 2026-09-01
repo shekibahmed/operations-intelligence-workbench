@@ -2,13 +2,13 @@
   "eventType": "contract-amended",
   "displayName": "Contract Amended",
   "description": "A legitimate amendment to an existing contract was executed, updating one or more obligation terms.",
-  "requiredObservations": ["document-reference", "due-date"],
-  "optionalObservations": [],
+  "requiredObservations": ["amendment-reference", "due-date"],
+  "optionalObservations": ["document-reference", "effective-date", "obligation", "responsible-party"],
   "occurredAt": {
     "observationSchemaKey": null,
     "fallback": "artifact-received-at"
   },
   "primaryEntity": {
-    "observationSchemaKey": "document-reference"
+    "observationSchemaKey": "amendment-reference"
   }
 }

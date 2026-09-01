@@ -3,6 +3,22 @@
   "observations": [
     {
       "status": "extracted",
+      "schemaKey": "amendment-reference",
+      "confidence": 0.98,
+      "value": "VLP-FAL-2026-0142-A1",
+      "normalisedValue": "VLP-FAL-2026-0142-A1",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference No. VLP-FAL-2026-0142-A1"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "document-reference",
       "confidence": 0.96,
       "value": "VLP-FAL-2026-0142-A1",

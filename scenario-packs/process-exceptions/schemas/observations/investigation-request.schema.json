@@ -1,0 +1,9 @@
+{
+  "schemaKey": "investigation-request",
+  "displayName": "Investigation Request",
+  "valueType": "string",
+  "description": "A stated request to open a root-cause or other formal investigation.",
+  "jsonSchema": {
+    "type": "string"
+  }
+}

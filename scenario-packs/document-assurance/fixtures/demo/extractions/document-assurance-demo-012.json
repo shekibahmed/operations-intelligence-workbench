@@ -3,6 +3,19 @@
   "observations": [
     {
       "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.96,
+      "value": "Project Falcon",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": { "kind": "text-range", "start": 115, "end": 129 },
+          "excerpt": "Project Falcon"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "responsible-party",
       "confidence": 0.93,
       "value": "Marcus Ibori",

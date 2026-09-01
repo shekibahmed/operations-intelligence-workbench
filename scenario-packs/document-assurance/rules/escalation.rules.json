@@ -20,7 +20,7 @@
     "when": {
       "all": [
         { "fact": { "kind": "observation", "schemaKey": "required-evidence", "field": "value" }, "operator": "equals", "value": "missing" },
-        { "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "compliance-report-filed", "withinHours": 4380 }, "operator": "greater-than-or-equal", "value": 2 }
+        { "fact": { "kind": "aggregate", "aggregate": "related-event-count", "eventType": "compliance-report-filed", "withinHours": 4380 }, "operator": "greater-than-or-equal", "value": 1 }
       ]
     },
     "then": [

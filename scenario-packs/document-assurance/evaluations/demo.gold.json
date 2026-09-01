@@ -198,6 +198,11 @@
     "fixtureId": "document-assurance-demo-006",
     "expectedObservations": [
       {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
         "schemaKey": "responsible-party",
         "status": "extracted",
         "value": "Nadia Okonkwo"
@@ -249,6 +254,11 @@
     "fixtureId": "document-assurance-demo-007",
     "expectedObservations": [
       {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
         "schemaKey": "financial-threshold",
         "status": "extracted",
         "value": {
@@ -290,6 +300,11 @@
   {
     "fixtureId": "document-assurance-demo-008",
     "expectedObservations": [
+      {
+        "schemaKey": "amendment-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142-A1"
+      },
       {
         "schemaKey": "document-reference",
         "status": "extracted",
@@ -341,7 +356,7 @@
       {
         "schemaKey": "document-reference",
         "status": "extracted",
-        "value": "VLP-FAL-2026-0142-A1"
+        "value": "VLP-FAL-2026-0142"
       },
       {
         "schemaKey": "due-date",
@@ -363,6 +378,11 @@
   {
     "fixtureId": "document-assurance-demo-010",
     "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
       {
         "schemaKey": "reporting-period",
         "status": "extracted",
@@ -406,6 +426,11 @@
     "fixtureId": "document-assurance-demo-011",
     "expectedObservations": [
       {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "VLP-FAL-2026-0142"
+      },
+      {
         "schemaKey": "responsible-party",
         "status": "extracted",
         "value": "Nadia Okonkwo"
@@ -447,6 +472,11 @@
   {
     "fixtureId": "document-assurance-demo-012",
     "expectedObservations": [
+      {
+        "schemaKey": "document-reference",
+        "status": "extracted",
+        "value": "Project Falcon"
+      },
       {
         "schemaKey": "responsible-party",
         "status": "extracted",

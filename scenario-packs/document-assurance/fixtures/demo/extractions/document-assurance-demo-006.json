@@ -3,6 +3,23 @@
   "observations": [
     {
       "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.98,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 452,
+            "end": 473
+          },
+          "excerpt": "ref VLP-FAL-2026-0142"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "responsible-party",
       "confidence": 0.93,
       "value": "Nadia Okonkwo",

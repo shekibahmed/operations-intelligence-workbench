@@ -2,7 +2,7 @@
   "schemaKey": "expected-value",
   "displayName": "Expected Value",
   "entityType": "batch",
-  "valueType": "number",
-  "description": "The target/expected value for the test parameter being measured (e.g. target viscosity or fill weight).",
-  "jsonSchema": { "type": "number" }
+  "valueType": "string",
+  "description": "The target or acceptance criterion as recorded, supporting both numeric measurement targets and textual inspection expectations.",
+  "jsonSchema": { "type": "string" }
 }

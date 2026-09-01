@@ -28,7 +28,9 @@
         "value": "B-2099"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "B-2098"
+    ],
     "expectedEventType": "shift-report-filed",
     "expectedSignals": [],
     "expectedCaseLinkage": false,
@@ -61,7 +63,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 600
+        "value": "600 cP"
       },
       {
         "schemaKey": "observed-value",
@@ -124,7 +126,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 500
+        "value": "500 g"
       },
       {
         "schemaKey": "batch-identifier",
@@ -132,7 +134,9 @@
         "value": "B-2108"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "line-2"
+    ],
     "expectedEventType": "routine-calibration-performed",
     "expectedSignals": [],
     "expectedCaseLinkage": false,
@@ -199,7 +203,9 @@
         "value": "B-2104, B-2105, B-2106"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "line-3"
+    ],
     "expectedEventType": "production-summary-filed",
     "expectedSignals": [],
     "expectedCaseLinkage": false,
@@ -258,7 +264,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 500
+        "value": "500 g"
       },
       {
         "schemaKey": "observed-value",
@@ -311,10 +317,12 @@
       {
         "schemaKey": "disposition-status",
         "status": "extracted",
-        "value": "released to the warehouse after checkweigher sign-off"
+        "value": "released"
       }
     ],
-    "expectedEntities": [],
+    "expectedEntities": [
+      "B-2109"
+    ],
     "expectedEventType": "shift-report-filed",
     "expectedSignals": [],
     "expectedCaseLinkage": false,
@@ -342,7 +350,7 @@
       {
         "schemaKey": "expected-value",
         "status": "extracted",
-        "value": 100
+        "value": "100.0%"
       },
       {
         "schemaKey": "observed-value",

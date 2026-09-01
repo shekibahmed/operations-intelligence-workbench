@@ -19,6 +19,22 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "effective-date",
+      "confidence": 0.96,
+      "value": "2026-02-02",
+      "normalisedValue": "2026-02-02",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Date: February 2, 2026"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "due-date",
       "confidence": 0.93,
       "value": "2026-03-20",
@@ -29,7 +45,7 @@
             "kind": "page",
             "page": 1
           },
-          "excerpt": "no later than\nMarch 20, 2026"
+          "excerpt": "no later\nthan March 20, 2026"
         }
       ]
     },

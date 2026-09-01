@@ -3,6 +3,10 @@
   "displayName": "Exception Approved",
   "description": "An authorised reviewer approved a previously proposed exception on the stated conditions.",
   "requiredObservations": ["exception", "review-status"],
+  "requiredObservationValues": {
+    "exception": ["approved"],
+    "review-status": ["approved"]
+  },
   "optionalObservations": ["document-reference"],
   "occurredAt": {
     "observationSchemaKey": null,

@@ -8,5 +8,5 @@
   "defaultOwner": "exception-review-team",
   "defaultDueInHours": 24,
   "closureRequirements": ["disposition-recorded", "investigation-evidence-present"],
-  "triggeredByRules": ["threshold-breach-severity"]
+  "triggeredByRules": ["threshold-breach-severity", "hold-affected-output-approval"]
 }

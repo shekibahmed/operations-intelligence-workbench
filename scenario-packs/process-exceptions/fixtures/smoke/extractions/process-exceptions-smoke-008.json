@@ -39,7 +39,7 @@
       "status": "extracted",
       "schemaKey": "batch-identifier",
       "value": "B-2109 and B-2110",
-      "normalisedValue": "B-2109,B-2110",
+      "normalisedValue": "B-2109",
       "confidence": 0.92,
       "evidence": [
         {
@@ -55,7 +55,7 @@
     {
       "status": "extracted",
       "schemaKey": "disposition-status",
-      "value": "released to the warehouse after checkweigher sign-off",
+      "value": "released",
       "normalisedValue": "released",
       "confidence": 0.93,
       "evidence": [

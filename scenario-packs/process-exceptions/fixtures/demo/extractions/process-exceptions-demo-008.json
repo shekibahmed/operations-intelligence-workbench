@@ -20,6 +20,23 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "process-stage",
+      "confidence": 0.99,
+      "value": "mixing",
+      "normalisedValue": "mixing",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 48,
+            "end": 69
+          },
+          "excerpt": "Line: Line 1 (Mixing)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "yield-loss-pct",
       "confidence": 0.92,
       "value": 5.1,

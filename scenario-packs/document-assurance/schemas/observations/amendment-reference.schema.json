@@ -1,0 +1,11 @@
+{
+  "schemaKey": "amendment-reference",
+  "displayName": "Amendment Reference",
+  "entityType": "document",
+  "valueType": "string",
+  "description": "The stable reference of a document that explicitly amends an existing agreement.",
+  "jsonSchema": {
+    "type": "string",
+    "pattern": "^[A-Z0-9-]+$"
+  }
+}

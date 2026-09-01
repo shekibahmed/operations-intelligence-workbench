@@ -2,8 +2,8 @@
   "eventType": "root-cause-investigation-requested",
   "displayName": "Root-Cause Investigation Requested",
   "description": "A supervisor requested a formal root-cause investigation for a batch deviation, optionally raising a hypothesis linking it to a prior incident or supplier lot.",
-  "requiredObservations": ["batch-identifier", "reporter-name", "time-detected"],
-  "optionalObservations": [],
+  "requiredObservations": ["batch-identifier", "reporter-name", "time-detected", "investigation-request"],
+  "optionalObservations": ["supplier-lot-identifier"],
   "occurredAt": {
     "observationSchemaKey": "time-detected",
     "fallback": "artifact-received-at"

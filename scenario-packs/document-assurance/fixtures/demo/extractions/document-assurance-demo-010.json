@@ -3,6 +3,22 @@
   "observations": [
     {
       "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.99,
+      "value": "VLP-FAL-2026-0142",
+      "normalisedValue": "VLP-FAL-2026-0142",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "page",
+            "page": 1
+          },
+          "excerpt": "Reference: VLP-FAL-2026-0142 (as amended by VLP-FAL-2026-0142-A1)"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "reporting-period",
       "confidence": 0.96,
       "value": "2026-Q2",

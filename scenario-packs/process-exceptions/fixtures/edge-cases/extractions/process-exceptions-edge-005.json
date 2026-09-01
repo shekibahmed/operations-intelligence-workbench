@@ -4,9 +4,9 @@
     {
       "status": "extracted",
       "schemaKey": "time-detected",
-      "confidence": 0.98,
       "value": "2026-01-19",
       "normalisedValue": "2026-01-19",
+      "confidence": 0.98,
       "evidence": [
         {
           "locator": {
@@ -21,9 +21,9 @@
     {
       "status": "extracted",
       "schemaKey": "reporter-name",
-      "confidence": 0.97,
       "value": "Tomas Reyes",
-      "normalisedValue": "Tomas Reyes",
+      "normalisedValue": "tomas-reyes",
+      "confidence": 0.97,
       "evidence": [
         {
           "locator": {
@@ -38,9 +38,9 @@
     {
       "status": "extracted",
       "schemaKey": "line-identifier",
-      "confidence": 0.96,
       "value": "Line 1 (Mixing)",
       "normalisedValue": "line-1",
+      "confidence": 0.96,
       "evidence": [
         {
           "locator": {
@@ -55,9 +55,9 @@
     {
       "status": "extracted",
       "schemaKey": "batch-identifier",
-      "confidence": 0.95,
       "value": "B-2098",
       "normalisedValue": "B-2098",
+      "confidence": 0.95,
       "evidence": [
         {
           "locator": {
@@ -72,9 +72,9 @@
     {
       "status": "extracted",
       "schemaKey": "batch-identifier",
-      "confidence": 0.93,
       "value": "B-2099",
       "normalisedValue": "B-2099",
+      "confidence": 0.93,
       "evidence": [
         {
           "locator": {

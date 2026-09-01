@@ -18,7 +18,7 @@ lives in `narrative/` (read-only; authored under OIW-004a).
 | `labels.json` | UI label set (entity/event/case types, workflow states, severities, signal/action/decision types, lenses, review reasons). |
 | `schemas/entities/` | `document`, `jurisdiction`, `obligation`, `party`, `party-contact`, `project`, `review-owner`. |
 | `schemas/events/` | 14 event types (`contract-executed`, `conflicting-provision-identified`, `exception-proposed`, `exception-approved`, etc). |
-| `schemas/observations/` | 12 observation schemas (document-reference, financial-threshold, conflicting-provision, required-evidence, etc — `checklist-status` was added in this task to satisfy `checklist-filed`'s required observation, completing a gap left by the terminated prior session). |
+| `schemas/observations/` | 13 observation schemas (document-reference, amendment-reference, financial-threshold, conflicting-provision, required-evidence, etc — `checklist-status` was added in this task to satisfy `checklist-filed`'s required observation, completing a gap left by the terminated prior session). |
 | `schemas/cases/` | `review-case` — closure requires a resolved Decision and required evidence on file. |
 | `workflows/default.workflow.json` | `open → under-review → awaiting-approval → closed`, with an approval-gated close requiring the `authorised-reviewer-approval` policy. |
 | `rules/severity.rules.json` | Conflicting-provisions and missing-evidence flagging; missing/ambiguous-reference review routing. |
@@ -87,8 +87,14 @@ Clarification threads, routine reviewer sign-offs and logged correspondence
 share the `review-status` Observation key, so their definitions constrain its
 authored value: `resolved`/`unresolved`, `no-escalation-needed`, and
 `not-accepted`, respectively. Cross-engagement corrections use their explicit
-conflicting-provision and responsible-party facts. Contract execution also
-requires a responsible party, distinguishing it from policy publication.
+conflicting-provision and responsible-party facts. Exception proposals and
+approvals likewise require their authored `proposed` and `approved` values and
+are matched before the more general correction event. Contract amendments use
+an explicit amendment reference, keeping the parent agreement linked while
+distinguishing an amendment from initial execution. Obligation-status events
+use the governing document reference when present. The missed-deadline rule
+fires on the second related compliance report: the aggregate counts the prior
+report, while the current report supplies the still-missing evidence fact.
 
 ## Deviations / contract notes (see `docs/agent-runs/OIW-004b.md`)
 

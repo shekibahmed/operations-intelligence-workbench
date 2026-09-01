@@ -18,7 +18,7 @@ lives in `narrative/` (read-only; authored under OIW-004a).
 | `labels.json` | UI label set (entity/event/case types, workflow states, severities, signal/action/decision types, lenses, review reasons). |
 | `schemas/entities/` | `process`, `line`, `batch`, `product`, `shift`, `supplier`, `supplier-lot`, `person`. |
 | `schemas/events/` | 14 event types (`qc-deviation-confirmed`, `formal-hold-requested`, `held-output-aging-flagged`, etc). |
-| `schemas/observations/` | 16 observation schemas (batch-identifier, deviation, disposition-status, etc). |
+| `schemas/observations/` | 17 observation schemas (batch-identifier, deviation, disposition-status, investigation-request, etc). |
 | `schemas/cases/` | `exception-case` — closure requires a recorded disposition and investigation evidence. |
 | `workflows/default.workflow.json` | `open → investigating → awaiting-disposition-approval → closed`, with an approval-gated close requiring the `supervisor-qc-hold-approval` policy. |
 | `rules/severity.rules.json` | Threshold-breach and yield-loss flagging; missing/ambiguous/inconsistent-data review routing. |
@@ -80,10 +80,24 @@ and conflicting/insufficient review state (`edge-001`, `edge-007`).
 
 ## Event matching semantics
 
-Shift reports require a batch and detection time, while routine handovers use
-the reporter and detection time. Production summaries require batch and line
-context; inventory exceptions retain their time-based criterion. These keys
-keep routine reporting definitions distinguishable without core process logic.
+Event definitions are ordered from specific operational facts to general
+reporting fallbacks. Confirmed QC deviations require their full measurement,
+quantity, supplier-lot and disposition evidence; production summaries and
+in-process deviations additionally require an explicit process stage. Formal
+investigation requests use their own observation rather than being inferred
+from an ordinary batch reference. Shift reports require a resolvable batch and
+detection time, while inventory exceptions and routine handovers retain their
+distinct disposition/reporter evidence.
+
+`expected-value` is text-valued so it can preserve either a unit-bearing
+numeric target (`850 cP`, `500 g`) or a genuinely textual inspection criterion
+(`pass - no particulate`). `disposition-status` records the explicit current
+state (`released`, `hold`, `reject`, `resolved` or `pending`). Cross-batch
+signals fire only when the later confirmed QC record explicitly links its
+finding to the earlier batch and supplier lot; the root-cause request records
+both a medium-severity hypothesis signal and an investigation action. A held
+output aging event raises the backlog signal when it reaches an already-open
+related exception case.
 
 ## Deviations / contract notes (see `docs/agent-runs/OIW-004b.md`)
 

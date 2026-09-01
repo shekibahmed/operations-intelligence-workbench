@@ -37,6 +37,23 @@
     },
     {
       "status": "extracted",
+      "schemaKey": "investigation-request",
+      "confidence": 0.97,
+      "value": "root-cause investigation",
+      "normalisedValue": "root-cause investigation",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 175,
+            "end": 198
+          },
+          "excerpt": "proper root-cause check"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
       "schemaKey": "batch-identifier",
       "confidence": 0.95,
       "value": "B-2205",
