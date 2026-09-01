@@ -24,11 +24,20 @@ product-owner tours request delivered. M2 tail items remaining: pack
 authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
 owner request or fold into Wave 4 start.
 
-**WAVE 3 / M2 FULLY COMPLETE.** OIW-706 (#28, registry _-exclusion +
-template-aware validate:packs) and OIW-705 (#27, PACK_AUTHORING.md +
-scenario-packs/_template, CI-validated) merged. All PRD Wave 3
-deliverables done. **Running:** OIW-802 (evaluation runner, first Wave 4
-task, Codex, ../oiw-core).
+**PAUSED by product owner (2026-09-01, machine moving offices). WAVE 3 /
+M2 FULLY COMPLETE** — OIW-706 (#28) and OIW-705 (#27) merged; all PRD
+Wave 3 deliverables done.
+
+TO RESUME (say "resume"): (1) docker compose -f ../oiw-core/docker-compose.yml
+up -d; (2) OIW-802 (evaluation runner, first Wave 4 task) is FINISHED and
+awaiting lead verification+merge: branch agent/codex/OIW-802-eval-runner
+fully pushed, handoff COMPLETE, PR #29 open — run the lead verification
+(suite + pnpm eval on all three packs + confirm the sabotage test) then
+merge; (3) continue Wave 4 per Next integration sequence (rate limiting,
+accessibility/responsive audit incl. tablet-drawer debt, exports,
+prompt-injection/isolation hardening, threat-model remediation), then
+Wave 5 (deployment + public launch). All agents stopped; Postgres
+containers stopped; all worktrees clean; everything pushed.
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
