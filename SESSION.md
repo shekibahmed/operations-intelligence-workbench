@@ -13,15 +13,15 @@ artifact processing → evidence-backed review → entity/event/rules/signal →
 critical case → hold-from-service decision → human approval → real
 dashboards → audit trail — with real state assertions, green in CI.
 
-**Wave 3 / M2 in progress.** OIW-701 (common lifecycle proof) BLOCKED
-with a real engine find: event assembler ignores requiredObservationValues
-(ADR-010 discriminators; unexercised by asset-reliability, required by
-document-assurance). OIW-703 (bounded assembler fix, Codex, running) →
-resume OIW-701 (also fixes pack-data defects it inventoried: duplicate
-extraction conflicts in both packs' edge-005 + others listed in its
-agent-run, draft PR #24) → OIW-702 (tours for packs two/three, staged).
-M1 remains green; post-M1 hotfixes: dev-script prebuild, hydration-safe
-nav (b03ac6d).
+**M2 NEUTRALITY PROOF MERGED (PR #24 + #25).** Common lifecycle test
+11/11 across all three packs, wired into pnpm test/CI; one real engine gap
+found+fixed (assembler now honours ADR-010 value discriminators, OIW-703
+PR #25); pack-data fixes adversarially reviewed against narrative (zero
+semantic drift); asset-reliability byte-untouched throughout. Remaining
+for the tours request: OIW-702 (running, m900x) — click-through tours for
+process-exceptions + document-assurance with per-pack Playwright journeys.
+M2 formal exit review after OIW-702 merges (pack authoring guide +
+scaffold template remain as M2 tail items).
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
