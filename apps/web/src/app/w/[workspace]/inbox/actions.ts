@@ -40,14 +40,14 @@ export async function processArtifactAction(
 }
 
 /**
- * Guided tour convenience action (UX_SPEC §4; asset-reliability only): the
- * tour pins one artifact (the informal brake-fault message) for the visitor
- * to Process by hand, then — real, not fabricated — processes the small set
- * of other real fixture artifacts about the same asset (by their stable
- * fixture id, `lib/fixture-artifact.ts`) through the exact same
- * `processArtifactForWorkspace`/`tryAdvanceArtifact` path a manual click
- * would use, so the repeat-fault pattern the rest of the tour walks through
- * is real, real-processed data rather than something only a 25-row manual
+ * Guided tour convenience action (UX_SPEC §4, one tour per pack): each
+ * pack's tour pins one artifact for the visitor to Process by hand, then —
+ * real, not fabricated — processes a small set of other real fixture
+ * artifacts from that pack's own storyline (by their stable fixture id,
+ * `lib/fixture-artifact.ts`, named per-step in `lib/tour/steps.ts`) through
+ * the exact same `processArtifactForWorkspace`/`tryAdvanceArtifact` path a
+ * manual click would use, so the pattern the rest of the tour walks through
+ * is real, real-processed data rather than something only a many-row manual
  * hunt-and-click could produce. Idempotent: already-processed fixtures are
  * skipped.
  */

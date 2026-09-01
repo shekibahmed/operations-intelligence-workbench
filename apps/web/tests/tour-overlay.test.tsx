@@ -22,10 +22,17 @@ afterEach(() => {
 });
 
 describe("TourOverlay", () => {
-  it("stays hidden for a non-asset-reliability pack, even with ?tour=1", () => {
+  it("stays hidden for a pack with no configured tour, even with ?tour=1", () => {
     window.history.pushState({}, "", `${BASE}/inbox?tour=1`);
-    render(<TourOverlay workspace="workspace-1" base={BASE} packId="document-assurance" />);
+    render(<TourOverlay workspace="workspace-1" base={BASE} packId="not-a-real-pack" />);
     expect(screen.queryByTestId("tour-panel")).not.toBeInTheDocument();
+  });
+
+  it("activates for the other two registered packs' own tours", async () => {
+    window.history.pushState({}, "", `${BASE}/inbox?tour=1`);
+    render(<TourOverlay workspace="workspace-1" base={BASE} packId="process-exceptions" />);
+    await waitFor(() => expect(screen.getByTestId("tour-panel")).toBeInTheDocument());
+    expect(screen.getByText("New artifacts have arrived")).toBeInTheDocument();
   });
 
   it("activates on the first Inbox arrival (?tour=1) and shows the first step, focused", async () => {

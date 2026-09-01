@@ -55,15 +55,22 @@ service — every caller only depends on the exported `MetricValue`/
 
 The guided tour (`src/lib/tour/steps.ts` + `src/components/tour/TourOverlay.tsx`,
 mounted in `WorkspaceShell`) is a lightweight, dependency-free overlay
-(UX_SPEC §4) scoped to the Asset Reliability pack only (amendment A7/L1-L2 —
-packs two/three get no tour in P0). It reads a typed step list (target
-element, title, body, action hint, how to advance) and spotlights a real
-`data-tour="..."` element already present on the real screen; `sessionStorage`
-carries progress across the full-page navigations between steps (a hard
-reload intentionally exits the tour, per UX_SPEC §4), and pathname-based
-reconciliation lets it resume correctly even when a visitor navigates by
-clicking a real product link (e.g. into a Case Detail whose ID isn't known
-ahead of time) instead of the tour's own Next button.
+(UX_SPEC §4). Amendment A7/L1-L2 originally scoped it to Asset Reliability
+only; OIW-702 (product-owner request, 2026-09-01) supersedes that and gives
+Process Exception Management and Document Assurance their own full tours
+through the same overlay — `TOUR_STEPS_BY_PACK` (`steps.ts`) is the only
+per-pack switch, there is no second mechanism. Each pack's typed step list
+(target element, title, body, action hint, how to advance, and which real
+fixture artifacts to process for real before advancing) spotlights a real
+`data-tour="..."` element already present on the real screen — every one of
+those elements lives in a generic, pack-neutral component (Inbox, Review
+Queue, Rule trace, Cases, Case Detail, Decisions, Overview, Audit, the
+shell's Adapt CTA), so no second implementation was needed per pack.
+`sessionStorage` carries progress across the full-page navigations between
+steps (a hard reload intentionally exits the tour, per UX_SPEC §4), and
+pathname-based reconciliation lets it resume correctly even when a visitor
+navigates by clicking a real product link (e.g. into a Case Detail whose ID
+isn't known ahead of time) instead of the tour's own Next button.
 
 ## Local run
 
@@ -195,7 +202,7 @@ useful for `pnpm demo:reset`-style manual testing against a known slug).
 | Pack labels (top bar, breadcrumbs, nav, About this pack's entity/event/workflow sections) | Real, from the loaded pack's registry entry |
 | Audit | Real audit entries (`workspace-seeded`/`workspace-reset`/`artifact-processing-*`/`observation-*`/`rule-evaluated`/`signal-created`/`case-created`/`action-item-created`/`decision-*` etc.) |
 | About this pack's rules/metrics/dashboard sections | Stub (`src/lib/stub/`), visibly marked "Demo preview" — out of this task's scope |
-| Guided tour (OIW-602) | Real: asset-reliability only, spotlights real `data-tour` elements on real screens; never fabricates a value not reachable by the same route/state without the tour running |
+| Guided tour (OIW-602, all three packs OIW-702) | Real: one tour per registered pack, spotlights real `data-tour` elements on real screens; never fabricates a value not reachable by the same route/state without the tour running |
 
 `?state=empty|loading|error` remains supported on About this pack's
 stub-marked sections only, to demonstrate those states without a live

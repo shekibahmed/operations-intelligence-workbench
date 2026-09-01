@@ -7,6 +7,7 @@ import type { Artifact } from "@oiw/contracts";
 import { processArtifactAction } from "@/app/w/[workspace]/inbox/actions";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { tourTargetFixtureId } from "@/lib/tour/steps";
 
 export interface InboxRow {
   artifact: Artifact;
@@ -18,9 +19,6 @@ export interface InboxRow {
   technicalHref: string;
   fixtureId: string | null;
 }
-
-/** The guided tour's pinned artifact (UX_SPEC §4; asset-reliability only, DEMO_SCRIPT step 3). */
-export const TOUR_TARGET_FIXTURE_ID = "asset-reliability-demo-001";
 
 const STATUS_LABEL: Record<Artifact["processingStatus"], string> = {
   received: "Received",
@@ -44,8 +42,9 @@ const RETRYABLE_STATUSES: ReadonlySet<Artifact["processingStatus"]> = new Set([
  * then re-syncs the rest of the table's server-derived columns (observation
  * counts, review-required) in the background on the next paint.
  */
-export function InboxTable({ workspace, rows }: { workspace: string; rows: InboxRow[] }) {
+export function InboxTable({ workspace, rows, packId }: { workspace: string; rows: InboxRow[]; packId: string }) {
   const router = useRouter();
+  const targetFixtureId = tourTargetFixtureId(packId);
   const [statusOverrides, setStatusOverrides] = useState<Record<string, Artifact["processingStatus"]>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [processingIds, setProcessingIds] = useState<Set<string>>(new Set());
@@ -96,7 +95,7 @@ export function InboxTable({ workspace, rows }: { workspace: string; rows: Inbox
           const status = statusOverrides[artifact.id] ?? artifact.processingStatus;
           const isProcessing = processingIds.has(artifact.id);
           const error = errors[artifact.id];
-          const isTourTarget = fixtureId === TOUR_TARGET_FIXTURE_ID;
+          const isTourTarget = targetFixtureId !== undefined && fixtureId === targetFixtureId;
           return (
             <tr
               key={artifact.id}

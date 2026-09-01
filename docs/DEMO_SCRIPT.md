@@ -159,49 +159,227 @@ creates the workspace and lands on the Inbox with the tour active.
   > event, signal, case, decision, approval — plays out again, but with
   > different terminology, schemas, workflows and dashboards. This is the
   > proof that the core platform is neutral.
-- **Action**: Visitor selects a different pack; tour ends here (each pack's
-  own guided path, if any, is out of P0 scope beyond the leadership-only
-  outlines below).
+- **Action**: Visitor selects a different pack; the Asset Reliability tour
+  ends here. Document Assurance and Process Exception Management each carry
+  their own full guided tour, below, rather than a separate contrast-only
+  path.
 
 ---
 
-## Leadership-Only Outline — Process Exception Management
+## Full Guided Demonstration — Process Exception Management
 
-Per amendment A7: packs two and three carry a **Leadership tour only** in
-P0, not the full step-by-step above. This outline is intentionally shorter.
+Amendment A7/L2 originally deferred packs two and three to a Leadership-only
+outline in P0. Per product-owner request (2026-09-01), that deferral is
+superseded: this pack now carries the same full click-through tour as Asset
+Reliability, in the pack's own vocabulary, implemented in
+`apps/web/src/lib/tour/steps.ts`. It walks the KM-LOT-448 supplier-lot
+escalation (`docs/agent-runs/OIW-701.md`) from first symptom to the
+supervisor/QC hold-affected-output approval.
 
-1. **Select the pack** (`/demo` → `/demo/process-exception-management`) —
-   problem statement: convert shift reports, quality records, production
-   notes and operational deviations into structured exception cases (PRD
-   §12.2).
-2. **Leadership Overview** (`/w/[workspace]/overview?lens=leadership`) —
-   arrive directly here (no inbox-first guided path for this pack in P0).
-   Point out: Open Exceptions stat, Exceptions-by-process-stage severity
-   breakdown, repeated-deviation-rate trend, output-awaiting-decision SLA
-   table, pending approvals card.
-3. **One example decision** (`/w/[workspace]/decisions`) — show a single
-   pre-existing "hold affected output" Decision (PRD §12.2 example approval)
-   with its rationale and required supervisor approval, without walking the
-   full artifact→review→event→signal chain.
-4. **Contrast callout** — same copy pattern as Full Script Step 10: same
-   object model, different vocabulary ("exception" instead of "reliability
-   case," "batch"/"line"/"shift" instead of "asset"/"component").
+### Step 0 — Arrival (`/demo`)
 
-## Leadership-Only Outline — Document Assurance
+- **Screen**: Scenario Selector (R2).
+- **Pinned element**: The Process Exception Management pack card.
+- **Action**: Visitor selects Process Exception Management →
+  `/demo/process-exceptions`.
 
-1. **Select the pack** (`/demo` → `/demo/document-assurance`) — problem
-   statement: convert policies, contracts, compliance documents and
-   checklists into tracked obligations, exceptions and review cases (PRD
-   §12.3).
-2. **Leadership Overview** (`/w/[workspace]/overview?lens=leadership`) —
-   point out: Open Obligations stat, Exceptions-by-risk severity breakdown,
-   due-date-exposure SLA table, reviews-awaiting-approval pending-approvals
-   card, missing-evidence-count callout (text/impact card).
-3. **One example decision** (`/w/[workspace]/decisions`) — show a single
-   pre-existing "accept exception" Decision (PRD §12.3 example approval)
-   requiring an authorised reviewer's approval.
-4. **Contrast callout** — same pattern: "obligation" instead of "case,"
-   "party"/"jurisdiction" instead of "asset"/"location."
+### Step 1 — Select a pack (`/demo/process-exceptions`)
+
+- **Screen**: Guided Scenario Start (R3).
+- **Pinned element**: **Start guided tour** button.
+- **Action**: Visitor clicks **Start guided tour**. System creates the
+  workspace and navigates to `/w/[workspace]/inbox?lens=operations` with the
+  tour active.
+
+### Step 2 — View incoming artifacts (`/w/[workspace]/inbox`)
+
+- **Screen**: Artifact Inbox (R5).
+- **Pinned element**: The inbox table, highlighting Tomas Reyes's operator
+  note.
+- **Copy**:
+  > Tomas Reyes's operator note flags a viscosity trend climbing mid-mix on
+  > batch B-2205, Kestrel lot KM-LOT-448 — not yet out of spec, but trending
+  > the wrong way. None of this is structured yet — it's raw input.
+
+### Step 3 — Process an artifact (`/w/[workspace]/inbox`)
+
+- **Screen**: Artifact Inbox (R5), the pinned row.
+- **Pinned element**: The **Process** action on the operator-note row
+  (`process-exceptions-demo-001`).
+- **Action**: Visitor clicks **Process**. Extraction yields batch, line,
+  supplier lot and process-stage fields, all high-confidence — no review
+  needed yet.
+- **Convenience action**: Clicking **Next** for real-processes
+  `process-exceptions-demo-002` (QC's confirmation record) through the same
+  `processArtifact` path a manual click would use, so the ambiguous field the
+  next step reviews is real, non-fabricated data.
+
+### Step 4 — Review uncertainty (`/w/[workspace]/review`)
+
+- **Screen**: Review Queue (R6).
+- **Pinned element**: The queue item for the unresolved `reported-cause`
+  field.
+- **Copy**:
+  > QC's confirmation record for B-2205 came in too: an 8.2% viscosity
+  > deviation, 4,200 units affected — but the reported cause is explicitly
+  > "under investigation." That's routed to the Review Queue instead of
+  > becoming a determined root cause automatically.
+- **Action**: Visitor reviews the evidence, then clicks **Accept**.
+
+### Step 5 — Form an event (system, no dedicated screen)
+
+Real processing continues: clicking **Next** for real-processes
+`process-exceptions-demo-003` through `-009` — Priya's escalation email
+cross-referencing B-2190, B-2210's independent confirmation of the same
+pattern, the inventory-backlog note, the yield-loss production summary, and
+Priya's formal hold request — through the same `processArtifact` path.
+
+### Step 6 — Generate a signal (`/w/[workspace]/technical/rules/hold-affected-output-approval`)
+
+- **Screen**: Technical Inspector — Rule trace (R13).
+- **Pinned element**: The condition tree.
+- **Copy**:
+  > A deterministic rule checked whether a formal hold request had been
+  > recorded for a supplier lot. Priya's escalation — citing two consecutive
+  > deviations on KM-LOT-448 and the mounting quarantine backlog — made that
+  > true. The result: a high-risk Hold Affected Output decision awaiting
+  > supervisor/QC approval.
+
+### Step 7 — Create case and tasks (`/w/[workspace]/cases/[caseId]`)
+
+- **Screen**: Case Detail (R8).
+- **Copy**:
+  > The Exception Case links the KM-LOT-448 pattern across both batches, the
+  > quarantine backlog, the supporting evidence, and the required
+  > investigation actions already attached.
+
+### Step 8 — Approve a decision (`/w/[workspace]/decisions`)
+
+- **Screen**: Decision Centre (R11).
+- **Pinned element**: The Hold Affected Output Decision card.
+- **Action**: Visitor clicks **Approve**, provides the required comment
+  (high-risk decision), confirms.
+
+### Step 9 — Observe dashboard changes (`/w/[workspace]/overview`)
+
+- **Screen**: Leadership Overview (R4), `?lens=leadership`.
+- **Copy**:
+  > Switch to the Leadership lens. Open Exceptions, critical signals and
+  > decisions awaiting approval have all updated from the single approval
+  > you just made.
+
+### Step 10 — Full trace and switch scenarios
+
+- **Screen**: Audit Explorer (R14), then the Adapt CTA in the shell —
+  extraction, review, event assembly, rule execution, case and decision
+  creation, and the approval, in order. Tour ends here; the visitor may
+  switch to another pack from `/demo` for the neutrality contrast (same
+  copy pattern as the Asset Reliability script's Step 10).
+
+## Full Guided Demonstration — Document Assurance
+
+Also superseding the A7/L2 leadership-only deferral (product-owner request,
+2026-09-01). Walks the Project Falcon liability-cap conflict
+(`docs/agent-runs/OIW-701.md`) from the MSA's execution to the
+authorised-reviewer accept-exception approval.
+
+### Step 0 — Arrival (`/demo`)
+
+- **Screen**: Scenario Selector (R2).
+- **Pinned element**: The Document Assurance pack card.
+- **Action**: Visitor selects Document Assurance → `/demo/document-assurance`.
+
+### Step 1 — Select a pack (`/demo/document-assurance`)
+
+- **Screen**: Guided Scenario Start (R3).
+- **Pinned element**: **Start guided tour** button.
+- **Action**: Visitor clicks **Start guided tour**.
+
+### Step 2 — View incoming artifacts (`/w/[workspace]/inbox`)
+
+- **Screen**: Artifact Inbox (R5).
+- **Pinned element**: The inbox table, highlighting the Project Falcon MSA.
+- **Copy**:
+  > Nadia Okonkwo signs the Project Falcon Master Services Agreement with
+  > Vantage Logistics Partners — the liability cap, insurance and reporting
+  > obligations that will matter later are all set here. None of this is
+  > structured yet — it's raw input.
+
+### Step 3 — Process an artifact (`/w/[workspace]/inbox`)
+
+- **Screen**: Artifact Inbox (R5), the pinned row.
+- **Pinned element**: The **Process** action on the MSA row
+  (`document-assurance-demo-001`).
+- **Action**: Visitor clicks **Process**. Extraction yields the document
+  reference and its clauses — no review needed yet.
+- **Convenience action**: Clicking **Next** for real-processes the internal
+  Data Handling Policy and the Project Falcon onboarding checklist
+  (`document-assurance-demo-002`, `-003`) and Nadia's clarification email to
+  Vantage's counsel (`-004`), so the ambiguous field the next step reviews is
+  real, non-fabricated data.
+
+### Step 4 — Review uncertainty (`/w/[workspace]/review`)
+
+- **Screen**: Review Queue (R6).
+- **Pinned element**: The queue item for the unresolved `due-date` field.
+- **Copy**:
+  > As the insurance certificate deadline approaches, Nadia asks Vantage's
+  > counsel to confirm the renewal date — but the reply gives no locked
+  > date, only a range. That's routed to the Review Queue instead of
+  > becoming a determined due date automatically.
+- **Action**: Visitor reviews the evidence, then clicks **Accept**.
+
+### Step 5 — Form an event (system, no dedicated screen)
+
+Real processing continues: clicking **Next** for real-processes
+`document-assurance-demo-005` through `-011` — the missing-evidence
+compliance report, the liability-cap conflict's identification, the
+ambiguous "the contract governs" reply, the legitimate MSA amendment, the
+still-outstanding checklist, the second missed-deadline compliance report,
+and Nadia's formal exception proposal — through the same `processArtifact`
+path.
+
+### Step 6 — Generate a signal (`/w/[workspace]/technical/rules/accept-exception-approval`)
+
+- **Screen**: Technical Inspector — Rule trace (R13).
+- **Pinned element**: The condition tree.
+- **Copy**:
+  > A deterministic rule checked whether a reviewer had formally proposed
+  > accepting an exception. Nadia's proposal — citing the MSA's liability
+  > cap against the internal policy's higher figure, the outreach history,
+  > and three explicit conditions — made that true. The result: a high-risk
+  > Accept Exception decision awaiting an authorised reviewer's approval.
+
+### Step 7 — Create case and tasks (`/w/[workspace]/cases/[caseId]`)
+
+- **Screen**: Case Detail (R8).
+- **Copy**:
+  > The Review Case links the liability-cap conflict, the missing insurance
+  > certificate, the supporting evidence and the required follow-up actions
+  > to Project Falcon.
+
+### Step 8 — Approve a decision (`/w/[workspace]/decisions`)
+
+- **Screen**: Decision Centre (R11).
+- **Pinned element**: The Accept Exception Decision card.
+- **Action**: Visitor clicks **Approve**, provides the required comment
+  (high-risk decision), confirms.
+
+### Step 9 — Observe dashboard changes (`/w/[workspace]/overview`)
+
+- **Screen**: Leadership Overview (R4), `?lens=leadership`.
+- **Copy**:
+  > Switch to the Leadership lens. Open review cases and exceptions awaiting
+  > approval reflect the single approval you just made.
+
+### Step 10 — Full trace and switch scenarios
+
+- **Screen**: Audit Explorer (R14), then the Adapt CTA in the shell. Tour
+  ends here; the visitor may switch to another pack from `/demo` for the
+  neutrality contrast (same copy pattern as the Asset Reliability script's
+  Step 10): same object model — artifact, review, event, signal, case,
+  decision, approval — different vocabulary ("obligation" instead of "case,"
+  "party"/"jurisdiction" instead of "asset"/"location").
 
 ---
 

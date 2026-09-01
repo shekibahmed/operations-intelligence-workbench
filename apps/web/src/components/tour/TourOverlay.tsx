@@ -4,17 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { processFixtureArtifacts } from "@/app/w/[workspace]/inbox/actions";
-import { TOUR_PACK_ID, TOUR_STEPS } from "@/lib/tour/steps";
+import { getTourSteps } from "@/lib/tour/steps";
 import { withLens } from "@/lib/routes";
 
 const STORAGE_KEY = "oiw-tour-state";
-const RELATED_FIXTURE_IDS = [
-  "asset-reliability-demo-002",
-  "asset-reliability-demo-003",
-  "asset-reliability-demo-004",
-  "asset-reliability-demo-005",
-];
-const LAST_INDEX = TOUR_STEPS.length - 1;
 
 interface StoredTourState {
   active: boolean;
@@ -73,8 +66,11 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
   const panelRef = useRef<HTMLDivElement>(null);
   const initializedReload = useRef(false);
 
+  const steps = getTourSteps(packId);
+  const lastIndex = steps === undefined ? 0 : steps.length - 1;
+
   useEffect(() => {
-    if (packId !== TOUR_PACK_ID) return;
+    if (steps === undefined) return;
     if (!initializedReload.current) {
       initializedReload.current = true;
       if (isHardReload()) window.sessionStorage.removeItem(STORAGE_KEY);
@@ -89,23 +85,23 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
       return;
     }
 
-    const current = TOUR_STEPS[currentIndex];
-    if (current !== undefined && !current.match(pathname, base) && currentIndex !== LAST_INDEX) {
-      const forward = TOUR_STEPS.findIndex((step, i) => i > currentIndex && i < LAST_INDEX && step.match(pathname, base));
-      const any = forward !== -1 ? forward : TOUR_STEPS.findIndex((step, i) => i < LAST_INDEX && step.match(pathname, base));
+    const current = steps[currentIndex];
+    if (current !== undefined && !current.match(pathname, base) && currentIndex !== lastIndex) {
+      const forward = steps.findIndex((step, i) => i > currentIndex && i < lastIndex && step.match(pathname, base));
+      const any = forward !== -1 ? forward : steps.findIndex((step, i) => i < lastIndex && step.match(pathname, base));
       if (any !== -1) currentIndex = any;
     }
     active = true;
     writeStoredState({ active, index: currentIndex });
     setIndex(currentIndex);
-  }, [pathname, base, packId]);
+  }, [pathname, base, steps, lastIndex]);
 
   useEffect(() => {
-    if (index === null) {
+    if (index === null || steps === undefined) {
       setTarget(null);
       return;
     }
-    const step = TOUR_STEPS[index];
+    const step = steps[index];
     if (step === undefined) return;
 
     function locate() {
@@ -141,23 +137,23 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [exit]);
 
-  if (index === null) return null;
-  const step = TOUR_STEPS[index];
+  if (index === null || steps === undefined) return null;
+  const step = steps[index];
   if (step === undefined) return null;
 
   function advanceTo(nextIndex: number, path: string | null) {
     writeStoredState({ active: true, index: nextIndex });
     setIndex(nextIndex);
-    if (path !== null) router.push(withLens(path, TOUR_STEPS[nextIndex]!.lens));
+    if (path !== null) router.push(withLens(path, steps![nextIndex]!.lens));
   }
 
   async function goNext() {
-    if (step!.beforeNext === "process-related-fixtures") {
+    if (step!.beforeNext !== undefined) {
       setPending(true);
-      await processFixtureArtifacts(workspace, RELATED_FIXTURE_IDS);
+      await processFixtureArtifacts(workspace, step!.beforeNext.fixtureIds);
       setPending(false);
     }
-    const nextIndex = Math.min(index! + 1, LAST_INDEX);
+    const nextIndex = Math.min(index! + 1, lastIndex);
     if (step!.next.kind === "same-page") {
       advanceTo(nextIndex, null);
     } else if (step!.next.kind === "static") {
@@ -199,7 +195,7 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
         className="pointer-events-none fixed bottom-4 right-4 z-50 w-full max-w-sm rounded-lg border border-border bg-surface p-4 text-left shadow-lg outline-none"
       >
         <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
-          Guided tour · Step {index + 1} of {TOUR_STEPS.length}
+          Guided tour · Step {index + 1} of {steps.length}
         </p>
         <h2 id="tour-panel-heading" className="mt-1 text-sm font-semibold text-ink">
           {step.title}

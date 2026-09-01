@@ -52,7 +52,7 @@ export default async function ArtifactInboxPage({
         <EmptyState title="No artifacts have arrived yet" />
       ) : (
         <div className="overflow-x-auto rounded-lg border border-border bg-surface p-2">
-          <InboxTable workspace={slug} rows={rows} />
+          <InboxTable workspace={slug} rows={rows} packId={labels.packId} />
         </div>
       )}
     </WorkspaceShell>
