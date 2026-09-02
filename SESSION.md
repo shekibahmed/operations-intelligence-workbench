@@ -24,19 +24,25 @@ product-owner tours request delivered. M2 tail items remaining: pack
 authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
 owner request or fold into Wave 4 start.
 
-**WAVE 4 (Hardening) IN PROGRESS — resumed 2026-09-02.** OIW-802 merged
-(PR #29): `pnpm eval` is real — 1.000 on all ten §21.3 dimensions across
-three packs, per-dimension sabotage tests, eval step in CI. Wave 4 batch A:
-OIW-810 MERGED (security gates closed with test evidence; security-
-reviewer PASS). OIW-808 (accessibility + responsive audit; Claude m900x, ../oiw-ux —
-implementation done+lead-verified, remediation run in progress to write
-audit doc/handoff and open the PR after the first session ended its turn
-with a detached scan). Batch B MERGED: OIW-811 (#32, exports FR-110; security-reviewer PASS
-7/7) + OIW-805 (#33, injection matrix across formats × payloads × packs,
-22 e2e specs). Wave 4 close-out RUNNING: OIW-812 (threat-model
-remediation sweep + DEPLOYMENT.md; Codex, ../oiw-core).
-Then Wave 5 (deployment + public launch) — needs owner decisions on
-Vercel/Supabase projects and CTA destination (see PLAN_AMENDMENTS A9).
+**WAVE 4 (Hardening) COMPLETE (2026-09-03).** Merged: OIW-802 #29 (eval
+runner, 1.000 all dimensions + sabotage tests), OIW-810 #30 (rate limits,
+input policy, expiry sweep, adversarial HTTP tests), OIW-808 #31 (axe in
+CI-spec, 16 a11y fixes, tablet drawer, keyboard tours), OIW-811 #32
+(exports FR-110 w/ formula neutralisation), OIW-805 #33 (injection matrix
+across formats × payloads × packs), OIW-812 (threat-model sign-off: all
+17 SECURITY.md rows closed/accepted with evidence; DEPLOYMENT.md runbook;
+approval-concurrency test; trusted-proxy policy; credential-scan breadth).
+Suite: 375+ tests, 22 e2e specs, eval 1.000.
+
+**WAVE 5 (Public Launch / M3) — NEXT.** First task (no owner input
+needed): OIW-901 — add a Playwright e2e job to CI (Postgres service +
+seed) and fix the security.spec 'tampered cookie' sub-step flake. Then
+deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
+project (owner-created, or provision via Supabase MCP on request) and
+repo flip to public at launch; (2) CTA submission destination (email /
+Supabase table / form service). Remaining Wave 5 scope per PRD §26:
+analytics events + CTA (FR-120/121), README + architecture diagram +
+walkthroughs, launch content, branch protection once public.
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
@@ -57,13 +63,12 @@ Changes require a dedicated contract-change task.
 
 ## Tracked debt / deltas
 
-- Security (non-blocking, from OIW-810 review): (a) IP extraction trusts
-  x-forwarded-for on non-Vercel hosts — document as a deployment
-  requirement (trusted-proxy config) in Wave 5; (b) credential scan covers
-  common key shapes only — keep manual review in release checklist;
-  (c) concurrent approvals on one Decision are safe-closed by status
-  check but untested under true concurrency — add a concurrency test in
-  a later hardening pass.
+- e2e: `security.spec.ts` "tampered cookie" sub-step is flaky (passes
+  on rerun; same build) → determinism fix in OIW-901.
+- CI has no Playwright job — e2e enforced only by lead/agent local runs
+  → OIW-901.
+- Accepted risk (SECURITY.md): rate-limit store is process-local; Wave 5
+  deployment notes cover multi-instance implications.
 
 - `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric-service
   seam (by design); presentation extras (sample records, hrefs) derived in
