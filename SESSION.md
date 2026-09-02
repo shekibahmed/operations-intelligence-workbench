@@ -24,20 +24,16 @@ product-owner tours request delivered. M2 tail items remaining: pack
 authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
 owner request or fold into Wave 4 start.
 
-**PAUSED by product owner (2026-09-01, machine moving offices). WAVE 3 /
-M2 FULLY COMPLETE** — OIW-706 (#28) and OIW-705 (#27) merged; all PRD
-Wave 3 deliverables done.
-
-TO RESUME (say "resume"): (1) docker compose -f ../oiw-core/docker-compose.yml
-up -d; (2) OIW-802 (evaluation runner, first Wave 4 task) is FINISHED and
-awaiting lead verification+merge: branch agent/codex/OIW-802-eval-runner
-fully pushed, handoff COMPLETE, PR #29 open — run the lead verification
-(suite + pnpm eval on all three packs + confirm the sabotage test) then
-merge; (3) continue Wave 4 per Next integration sequence (rate limiting,
-accessibility/responsive audit incl. tablet-drawer debt, exports,
-prompt-injection/isolation hardening, threat-model remediation), then
-Wave 5 (deployment + public launch). All agents stopped; Postgres
-containers stopped; all worktrees clean; everything pushed.
+**WAVE 4 (Hardening) IN PROGRESS — resumed 2026-09-02.** OIW-802 merged
+(PR #29): `pnpm eval` is real — 1.000 on all ten §21.3 dimensions across
+three packs, per-dimension sabotage tests, eval step in CI. Wave 4 batch A
+running: OIW-810 (security hardening: rate limiting, upload limits,
+expiry cleanup wiring, product-level isolation/bypass tests; Codex,
+../oiw-core) ∥ OIW-808 (accessibility + responsive audit and fixes incl.
+tablet-drawer debt; Claude m900x, ../oiw-ux). Batch B after: OIW-811
+(exports FR-110) ∥ OIW-805 (product-level prompt-injection test set).
+Then Wave 5 (deployment + public launch) — needs owner decisions on
+Vercel/Supabase projects and CTA destination (see PLAN_AMENDMENTS A9).
 
 ## Merged tasks (chronological; 23 PRs total, all lead-verified)
 
@@ -66,8 +62,6 @@ Changes require a dedicated contract-change task.
   two/three dashboards need the same.
 - PDF fixtures are text-with-page-markers; real PDF binary parsing deferred
   (A7) — revisit before public launch claims FR-013 fully.
-- `pnpm eval` remains a stub; evaluation runner (core track per A8) is
-  Wave 4 scope with gold sets already in packs.
 
 ## Next integration sequence (AFTER owner check-in)
 
@@ -100,8 +94,9 @@ Changes require a dedicated contract-change task.
 
 `pnpm install/lint/typecheck/test/build/validate:packs/architecture:check`,
 `pnpm db:migrate`, `pnpm demo:seed --pack asset-reliability` (25 artifacts,
-35 entities), `pnpm demo:reset`, `(cd apps/web && pnpm test:e2e)` — 7 specs
-incl. north-star. CI runs all of it per PR.
+35 entities), `pnpm demo:reset`, `pnpm eval` (1.000 all dimensions), `(cd apps/web &&
+pnpm test:e2e)` — 9 specs incl. north-star + per-pack tours. CI runs all
+of it per PR.
 
 ## Repository notes
 
