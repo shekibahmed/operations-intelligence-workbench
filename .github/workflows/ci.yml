@@ -48,4 +48,5 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
+      - run: pnpm eval
       - run: pnpm architecture:check
