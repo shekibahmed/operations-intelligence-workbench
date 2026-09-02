@@ -34,9 +34,8 @@ across formats × payloads × packs), OIW-812 (threat-model sign-off: all
 approval-concurrency test; trusted-proxy policy; credential-scan breadth).
 Suite: 375+ tests, 22 e2e specs, eval 1.000.
 
-**WAVE 5 (Public Launch / M3) — NEXT.** First task (no owner input
-needed): OIW-901 — add a Playwright e2e job to CI (Postgres service +
-seed) and fix the security.spec 'tampered cookie' sub-step flake. Then
+**WAVE 5 (Public Launch / M3) — NEXT.** First task RUNNING (no owner input needed): OIW-901 — Playwright e2e
+job in CI + tampered-cookie flake fix (Codex, ../oiw-core). Then
 deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
 project (owner-created, or provision via Supabase MCP on request) and
 repo flip to public at launch; (2) CTA submission destination (email /
