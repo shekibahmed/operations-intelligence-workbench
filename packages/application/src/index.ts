@@ -14,5 +14,8 @@ export * from "./session-token.js";
 export * from "./workspace-service.js";
 export * from "./reset-service.js";
 export * from "./metric-evaluation.js";
+export * from "./artifact-input-policy.js";
+export * from "./rate-limit.js";
+export * from "./workspace-expiry.js";
 
 export const applicationPackageBoundary = "@oiw/application" as const;

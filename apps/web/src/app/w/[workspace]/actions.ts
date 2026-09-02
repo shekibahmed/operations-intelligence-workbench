@@ -6,6 +6,7 @@ import { loadFixtureSet } from "@oiw/scenario-sdk";
 
 import { getRepositories } from "@/lib/server/db";
 import { findPackEntry } from "@/lib/server/pack-registry";
+import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { requireWorkspace } from "@/lib/server/workspace";
 
 /**
@@ -16,6 +17,7 @@ import { requireWorkspace } from "@/lib/server/workspace";
  */
 export async function resetWorkspace(slug: string): Promise<void> {
   const workspace = await requireWorkspace(slug);
+  await enforceGuestRateLimit("reset", workspace);
   if (workspace.activePackId === null) {
     throw new Error(`Workspace ${workspace.id} has no active pack to reset against`);
   }

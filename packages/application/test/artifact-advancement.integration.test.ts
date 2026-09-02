@@ -500,15 +500,15 @@ describe("OIW-501 operational advancement", () => {
     expect(moreInformationResult.approval.outcome).toBe("more-information-required");
     expect(moreInformationResult.decision.status).toBe("more-information-required");
 
-    for (const workspaceId of [
-      approved.workspace.id,
-      rejected.workspace.id,
-      moreInformation.workspace.id,
+    for (const [workspaceId, action] of [
+      [approved.workspace.id, "decision-approved"],
+      [rejected.workspace.id, "decision-rejected"],
+      [moreInformation.workspace.id, "decision-more-information-requested"],
     ]) {
       const audits = await repositories.auditEntries.list(workspaceId);
       expect(audits).toContainEqual(
         expect.objectContaining({
-          action: "decision-approval-recorded",
+          action,
           actor: { type: "human", id: "supervisor-session" },
         }),
       );

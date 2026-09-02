@@ -25,6 +25,11 @@ interface DecisionRepositories {
 }
 
 const risks = new Set<Decision["riskLevel"]>(["low", "medium", "high", "critical"]);
+const approvalAuditActions: Record<Approval["outcome"], string> = {
+  approved: "decision-approved",
+  rejected: "decision-rejected",
+  "more-information-required": "decision-more-information-requested",
+};
 
 export interface HumanSessionIdentity {
   type: "human";
@@ -209,7 +214,7 @@ export class ApprovalService {
     await appendOperationalAudit(this.repositories.auditEntries, {
       workspaceId,
       occurredAt: approvedAt,
-      action: "decision-approval-recorded",
+      action: approvalAuditActions[input.outcome],
       actorId: input.identity.id,
       actorType: "human",
       subject: { type: "decision", id: decisionId },

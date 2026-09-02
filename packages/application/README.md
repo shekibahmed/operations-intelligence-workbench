@@ -12,7 +12,21 @@ ports implemented by `@oiw/persistence`; Scenario Pack parsing remains in
 slug, clock, ID generator and TTL can be supplied for deterministic tests.
 `cleanupExpiredGuestWorkspaces()` enumerates expired records through the
 Workspace repository and deletes only `public-demo` Workspaces. Scheduling is
-deliberately outside this package.
+exposed through `WorkspaceExpirySweep`; `pnpm demo:expire` is the local/hosted
+scheduler entrypoint and accepts an optional `--before <ISO timestamp>` cutoff.
+
+## Public input and rate-limit policies
+
+`ArtifactInputPolicy` is the mandatory server-side boundary for any future
+manual-create or upload endpoint. It permits UTF-8 plain text/CSV, valid JSON
+and `%PDF-`-identified PDFs only; defaults to 1 MiB per artifact and 100
+artifacts per guest workspace. The current public web surface has no manual or
+upload endpoint, so no unvalidated upload path exists.
+
+`GuestRateLimitService` applies token buckets independently to an opaque guest
+session key and a privacy-derived IP key. `TokenBucketStore` is swappable; P0
+uses the bounded, process-local `InMemoryTokenBucketStore`. The web adapter
+owns endpoint defaults and environment-variable overrides.
 
 ## Session tokens
 

@@ -5,13 +5,14 @@ import type { Artifact } from "@oiw/contracts";
 import { fixtureArtifactId } from "@/lib/fixture-artifact";
 import { tryAdvanceArtifact } from "@/lib/server/artifact-advancement";
 import { processArtifactForWorkspace } from "@/lib/server/artifact-processing";
-import { toActionErrorMessage } from "@/lib/server/action-error";
+import { toActionFailure, type ActionFailure } from "@/lib/server/action-error";
 import { getRepositories } from "@/lib/server/db";
+import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { requireWorkspace } from "@/lib/server/workspace";
 
 export type ProcessArtifactActionResult =
   | { ok: true; status: Artifact["processingStatus"]; observationCount: number }
-  | { ok: false; message: string };
+  | ActionFailure;
 
 /**
  * Inbox "Process" row action (UX_SPEC §5.5, NFR §16.1): synchronously runs
@@ -25,6 +26,7 @@ export async function processArtifactAction(
 ): Promise<ProcessArtifactActionResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("artifact-process", workspace);
     const result = await processArtifactForWorkspace(workspace, artifactId);
     if (result.artifact.processingStatus === "processed" || result.artifact.processingStatus === "needs-review") {
       await tryAdvanceArtifact(workspace, artifactId);
@@ -35,7 +37,7 @@ export async function processArtifactAction(
       observationCount: result.observations.length,
     };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Processing failed unexpectedly.") };
+    return toActionFailure(error, "Processing failed unexpectedly.");
   }
 }
 
@@ -54,9 +56,10 @@ export async function processArtifactAction(
 export async function processFixtureArtifacts(
   slug: string,
   fixtureIds: readonly string[],
-): Promise<{ ok: true } | { ok: false; message: string }> {
+): Promise<{ ok: true } | ActionFailure> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("artifact-process", workspace, Math.max(1, fixtureIds.length));
     const repositories = getRepositories();
     const artifacts = await repositories.artifacts.list(workspace.id);
     const targets = artifacts.filter((artifact) => {
@@ -71,6 +74,6 @@ export async function processFixtureArtifacts(
     }
     return { ok: true };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Processing failed unexpectedly.") };
+    return toActionFailure(error, "Processing failed unexpectedly.");
   }
 }

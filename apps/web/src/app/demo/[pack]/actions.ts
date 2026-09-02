@@ -6,6 +6,7 @@ import { loadFixtureSet } from "@oiw/scenario-sdk";
 
 import { getRepositories } from "@/lib/server/db";
 import { findPackEntry } from "@/lib/server/pack-registry";
+import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { setSessionCookie } from "@/lib/server/session";
 
 export type StartEntry = "tour" | "free";
@@ -17,6 +18,7 @@ export type StartEntry = "tour" | "free";
  * the partial workspace first, so a retry never accumulates orphaned rows.
  */
 export async function startGuestWorkspace(packId: string, entry: StartEntry): Promise<void> {
+  await enforceGuestRateLimit("workspace-create");
   const packEntry = await findPackEntry(packId);
   if (packEntry === undefined) {
     throw new Error(`Scenario Pack not found: ${packId}`);

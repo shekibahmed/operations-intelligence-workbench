@@ -1,9 +1,8 @@
 # Security and Threat Model
 
-Status: Wave 0 plan. Written before ingestion, persistence and the review
-queue exist. Every mitigation below is a requirement on the owning task, not
-a claim that it is implemented yet — the `security-reviewer` subagent checks
-future PRs against this document.
+Status: Living public-deployment gate. The threat model was written in Wave 0;
+the evidence table in §5 records implementation status as hardening lands.
+An evidence pointer is not a substitute for its named test passing in CI.
 
 Authoritative sources: `docs/PRD.md` §16.4 (security NFRs), §22 (AI safety),
 §17.6–17.7 (persistence/deployment modes); `docs/PLAN_AMENDMENTS.md` A4
@@ -209,6 +208,50 @@ all be true — treat this as a merge/launch gate, not an aspirational list:
 10. `docs/agent-runs/` for every task touching ingestion, persistence,
     rendering, or the approval engine records a completed security review
     (the `security-reviewer` subagent's PASS) before merge.
+
+### OIW-810 closure evidence (2026-09-02)
+
+| Gate / threat | Status | Evidence |
+|---|---|---|
+| §2 signed, secure guest cookie; forged/tampered/expired cookies | **Closed** | `packages/application/test/session-token.test.ts` (`rejects payload and signature tampering`, `enforces expiry and supports verification-secret rotation`); `apps/web/e2e/security.spec.ts` (`HTTP boundary rejects forged, expired and tampered guest cookies without workspace disclosure`) also asserts `HttpOnly`, `Secure`, `SameSite=Lax`. |
+| §2 / §3.4 URL and direct-object workspace isolation | **Closed** | `apps/web/e2e/security.spec.ts` (`HTTP direct-object references and URL tampering cannot cross guest workspaces`), `apps/web/tests/server-workspace.test.ts`, and workspace-scoped repository integration tests. |
+| §2 / §3.9 rate limiting on every guest write | **Closed for the current public surface** | `tests/security/policies.test.ts` (`wires the shared limiter into every guest-writable Server Action module`, independent session/IP bucket tests); `tests/security/rate-limit-server.test.ts` (429 result, no raw IP retention, one audit per window); `tests/security/decision-server-action.test.ts` (rate-limited action has no operational write). |
+| §3.1 / gate 4 upload/input limits | **Closed for the current public surface** | No manual-create/upload endpoint is exposed. `ArtifactInputPolicy` is the mandatory boundary for a future endpoint and `tests/security/policies.test.ts` rejects unsupported MIME, filename/type mismatch, binary-disguised text, invalid signatures, oversize input and workspace-count overflow. Adding an endpoint without calling this policy reopens the gate. |
+| §3.2 prompt-like input remains data | **Application boundary closed; product fixture suite remains OIW-805** | `tests/security/policies.test.ts` (`keeps prompt-like text as inert artifact data`) and `packages/application/test/artifact-processing.integration.test.ts` injection fixture. OIW-805 owns the broader product-level three-pack set. |
+| §3.6 committed credential scan | **Closed (automated backstop)** | `pnpm architecture:check` scans tracked source/document/config-shaped files for private keys and common provider-token formats and rejects committed `.env*` files other than `.env.example`; OIW-810 manual diff/repository review found no production secret. Hosting environment review remains a launch operation. |
+| §3.7 approval bypass / replay | **Closed** | `tests/security/decision-server-action.test.ts` rejects crafted outcome/status input, missing high-risk comments, cross-workspace IDs, and replay without a second Approval; `packages/application/test/artifact-advancement.integration.test.ts` covers service and provider-shaped bypasses. The web action now delegates to the sole `ApprovalService` path. |
+| §3.8 append-only audit and expiry deletion | **Closed** | `packages/persistence/src/postgres-repositories.test.ts` (`enforces append-only Audit Entries at the database boundary`, whole-workspace deletion); `tests/security/policies.test.ts` (`workspace expiry sweep`) proves only expired `public-demo` workspaces reach that deletion port; `tests/security/expiry-postgres.test.ts` verifies the CLI entrypoint's application path deletes the expired guest and its audit chain while preserving active/private workspaces. |
+| §5 gate 7 deterministic reset | **Closed** | `packages/application/test/seed-reset.integration.test.ts` and `apps/web/e2e/smoke.spec.ts` reset journey. |
+| §5 gate 8 architecture/secret backstop | **Closed** | `pnpm architecture:check`. |
+| §5 gates 6 and 9 | **Pending their owning deployment/accessibility work** | TLS edge enforcement is deployment-owned; accessibility is OIW-808. OIW-810 does not claim these external gates are closed. |
+| §5 gate 10 security-review records | **Pending final release review** | Existing task handoffs are the source of truth; OIW-810 does not retroactively claim reviewer PASS for earlier tasks. |
+
+### Public-demo rate-limit defaults
+
+P0 uses a process-local token-bucket store behind `TokenBucketStore`. Every
+mutation consumes both a session bucket (when a valid guest cookie exists)
+and a privacy-HMAC IP bucket. Raw IP addresses are never stored. Rejections
+return a 429-shaped action result/error, perform no requested operational
+mutation, and append at most one `guest-rate-limit-exceeded` Audit Entry per
+workspace/action window (pre-session creation floods are logged once per
+hashed-IP/action window because no workspace Audit chain exists yet).
+
+| Mutation | Session capacity | IP capacity | Refill interval |
+|---|---:|---:|---:|
+| Workspace create | 4 | 60 | 10 minutes |
+| Artifact process | 30 | 120 | 1 minute |
+| Review | 60 | 240 | 1 minute |
+| Decision | 20 | 80 | 1 minute |
+| Reset | 3 | 12 | 10 minutes |
+| Case action / note | 30 | 120 | 1 minute |
+
+Each value is configurable without a code change using
+`OIW_RATE_LIMIT_<MUTATION>_{SESSION|IP}_CAPACITY` and
+`OIW_RATE_LIMIT_<MUTATION>_REFILL_INTERVAL_MS`, where mutation names use
+upper snake case (for example, `ARTIFACT_PROCESS`). `OIW_RATE_LIMIT_IP_SALT`
+sets a dedicated IP-HMAC salt; otherwise the server-only `SESSION_SECRET` is
+used. A multi-instance deployment must replace the in-memory store with a
+shared atomic implementation before relying on these limits across instances.
 
 ---
 

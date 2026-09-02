@@ -6,23 +6,24 @@ import type { AuditEntry, Entity, JsonValue, Observation, ObservationSchemaDefin
 import type { PersistenceRepositories } from "@oiw/persistence";
 import { validateObservationValue } from "@oiw/scenario-sdk";
 
-import { toActionErrorMessage, UserFacingActionError } from "@/lib/server/action-error";
+import { toActionFailure, type ActionFailure, UserFacingActionError } from "@/lib/server/action-error";
 import { tryAdvanceArtifact } from "@/lib/server/artifact-advancement";
 import { buildAuditEntry } from "@/lib/server/audit";
 import { getRepositories } from "@/lib/server/db";
 import { findPackEntry } from "@/lib/server/pack-registry";
+import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { readSessionPayload } from "@/lib/server/session";
 import { requireWorkspace } from "@/lib/server/workspace";
 
 export type ReviewActionResult =
   | { ok: true; observation: Observation }
-  | { ok: false; message: string };
+  | ActionFailure;
 
 export type CreateEntityActionResult =
   | { ok: true; observation: Observation; entity: Entity }
-  | { ok: false; message: string };
+  | ActionFailure;
 
-export type NoteActionResult = { ok: true; note: AuditEntry } | { ok: false; message: string };
+export type NoteActionResult = { ok: true; note: AuditEntry } | ActionFailure;
 
 async function currentReviewerId(): Promise<string> {
   const payload = await readSessionPayload();
@@ -73,11 +74,15 @@ async function runReviewAction(
 ): Promise<ReviewActionResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("review", workspace);
     const reviewerId = await currentReviewerId();
     const repositories = getRepositories();
 
     const current = await repositories.observations.findById(workspace.id, observationId);
     if (current === null) return { ok: false, message: "This observation could not be found." };
+    if (!QUEUE_STATUSES.has(current.reviewStatus)) {
+      return { ok: false, message: "This observation is no longer awaiting review." };
+    }
 
     const occurredAt = new Date().toISOString();
     const updated = mutate(current, reviewerId, occurredAt);
@@ -101,7 +106,7 @@ async function runReviewAction(
     await tryAdvanceArtifact(workspace, result.artifactId);
     return { ok: true, observation: result };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not save this review action.") };
+    return toActionFailure(error, "Could not save this review action.");
   }
 }
 
@@ -221,6 +226,7 @@ export async function correctObservation(
 ): Promise<ReviewActionResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("review", workspace);
     const reviewerId = await currentReviewerId();
     if (workspace.activePackId === null) {
       return { ok: false, message: "This workspace has no active Scenario Pack." };
@@ -229,6 +235,9 @@ export async function correctObservation(
     const repositories = getRepositories();
     const current = await repositories.observations.findById(workspace.id, observationId);
     if (current === null) return { ok: false, message: "This observation could not be found." };
+    if (!QUEUE_STATUSES.has(current.reviewStatus)) {
+      return { ok: false, message: "This observation is no longer awaiting review." };
+    }
 
     const packEntry = await findPackEntry(workspace.activePackId);
     const definition = packEntry?.pack.observationSchemas.get(current.schemaKey);
@@ -281,7 +290,7 @@ export async function correctObservation(
     await tryAdvanceArtifact(workspace, result.artifactId);
     return { ok: true, observation: result };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not save this correction.") };
+    return toActionFailure(error, "Could not save this correction.");
   }
 }
 
@@ -294,6 +303,7 @@ export async function correctObservation(
 export async function linkEntityAction(slug: string, observationId: string, entityId: string): Promise<ReviewActionResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("review", workspace);
     const reviewerId = await currentReviewerId();
     const repositories = getRepositories();
 
@@ -303,6 +313,9 @@ export async function linkEntityAction(slug: string, observationId: string, enti
     ]);
     if (current === null) return { ok: false, message: "This observation could not be found." };
     if (entity === null) return { ok: false, message: "This entity could not be found." };
+    if (!QUEUE_STATUSES.has(current.reviewStatus)) {
+      return { ok: false, message: "This observation is no longer awaiting review." };
+    }
 
     const occurredAt = new Date().toISOString();
     const updated: Observation = { ...current, entityId: entity.id };
@@ -320,7 +333,7 @@ export async function linkEntityAction(slug: string, observationId: string, enti
     if (result === null) return { ok: false, message: "This observation could not be found." };
     return { ok: true, observation: result };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not link this entity.") };
+    return toActionFailure(error, "Could not link this entity.");
   }
 }
 
@@ -339,6 +352,7 @@ export async function createEntityAction(
 ): Promise<CreateEntityActionResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("review", workspace);
     const reviewerId = await currentReviewerId();
     if (workspace.activePackId === null) {
       return { ok: false, message: "This workspace has no active Scenario Pack." };
@@ -358,6 +372,9 @@ export async function createEntityAction(
     const repositories = getRepositories();
     const current = await repositories.observations.findById(workspace.id, observationId);
     if (current === null) return { ok: false, message: "This observation could not be found." };
+    if (!QUEUE_STATUSES.has(current.reviewStatus)) {
+      return { ok: false, message: "This observation is no longer awaiting review." };
+    }
 
     const externalReference = input.externalReference.trim();
     const createdAt = new Date().toISOString();
@@ -401,7 +418,7 @@ export async function createEntityAction(
     if (result === null) return { ok: false, message: "This observation could not be found." };
     return { ok: true, observation: result, entity };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not create and link this entity.") };
+    return toActionFailure(error, "Could not create and link this entity.");
   }
 }
 
@@ -418,6 +435,7 @@ export async function addReviewerNote(slug: string, observationId: string, note:
   }
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("review", workspace);
     const reviewerId = await currentReviewerId();
     const repositories = getRepositories();
 
@@ -438,7 +456,7 @@ export async function addReviewerNote(slug: string, observationId: string, note:
     const inserted = await repositories.auditEntries.insert(workspace.id, auditEntry);
     return { ok: true, note: inserted };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not save this note.") };
+    return toActionFailure(error, "Could not save this note.");
   }
 }
 

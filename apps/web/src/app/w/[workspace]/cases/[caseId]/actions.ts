@@ -2,14 +2,15 @@
 
 import type { ActionItem, AuditEntry } from "@oiw/contracts";
 
-import { toActionErrorMessage, UserFacingActionError } from "@/lib/server/action-error";
+import { toActionFailure, type ActionFailure, UserFacingActionError } from "@/lib/server/action-error";
 import { buildAuditEntry } from "@/lib/server/audit";
 import { getRepositories } from "@/lib/server/db";
 import { readSessionPayload } from "@/lib/server/session";
+import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { requireWorkspace } from "@/lib/server/workspace";
 
-export type ActionItemToggleResult = { ok: true; actionItem: ActionItem } | { ok: false; message: string };
-export type CaseNoteResult = { ok: true; note: AuditEntry } | { ok: false; message: string };
+export type ActionItemToggleResult = { ok: true; actionItem: ActionItem } | ActionFailure;
+export type CaseNoteResult = { ok: true; note: AuditEntry } | ActionFailure;
 
 async function currentActorId(): Promise<string> {
   const payload = await readSessionPayload();
@@ -27,6 +28,7 @@ export async function toggleActionItemAction(
 ): Promise<ActionItemToggleResult> {
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("case-action", workspace);
     const actorId = await currentActorId();
     const repositories = getRepositories();
 
@@ -55,7 +57,7 @@ export async function toggleActionItemAction(
 
     return { ok: true, actionItem: result };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not update this action item.") };
+    return toActionFailure(error, "Could not update this action item.");
   }
 }
 
@@ -65,6 +67,7 @@ export async function addCaseNoteAction(slug: string, caseId: string, note: stri
   if (trimmed.length === 0) return { ok: false, message: "Enter a note before saving." };
   try {
     const workspace = await requireWorkspace(slug);
+    await enforceGuestRateLimit("case-action", workspace);
     const actorId = await currentActorId();
     const repositories = getRepositories();
 
@@ -84,7 +87,7 @@ export async function addCaseNoteAction(slug: string, caseId: string, note: stri
     const inserted = await repositories.auditEntries.insert(workspace.id, auditEntry);
     return { ok: true, note: inserted };
   } catch (error) {
-    return { ok: false, message: toActionErrorMessage(error, "Could not save this note.") };
+    return toActionFailure(error, "Could not save this note.");
   }
 }
 
