@@ -1,0 +1,63 @@
+{
+  "artifactChecksum": "b20fdae3373bc6428607c4e0624a79d922c5dd927e3d0ca7ffc4e45f21dc91f7",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.9,
+      "value": "VLP-INJ-2026-0904",
+      "normalisedValue": "VLP-INJ-2026-0904",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 208,
+            "end": 239
+          },
+          "excerpt": "quick note on VLP-INJ-2026-0904"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "responsible-party",
+      "confidence": 0.85,
+      "value": "Priya Deshmukh",
+      "normalisedValue": "Priya Deshmukh",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 0,
+            "end": 20
+          },
+          "excerpt": "From: Priya Deshmukh"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains embedded HTML/script content (a <script> tag and an <img onerror> handler) that must never be rendered or executed; it is extracted and stored as inert text only."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

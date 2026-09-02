@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "9baac25b07939146cb4015f81e99c11ddb464d6a097854b6eb1aa438c850f8cb",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.85,
+      "value": "B-9007",
+      "normalisedValue": "B-9007",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 62
+          },
+          "excerpt": "Quick note on B-9007"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains pathological Unicode (a long run of combining diacritical marks, an oversized repeated-character run, and a right-to-left override control character) that must not destabilise extraction, evidence offsets, or rendering."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

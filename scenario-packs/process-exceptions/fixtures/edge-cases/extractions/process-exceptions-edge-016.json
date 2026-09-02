@@ -1,0 +1,64 @@
+{
+  "artifactChecksum": "1dd9f68ae987e4144b8909b921df75e6578c8b821ae078148c7c853f83ff1cf1",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.85,
+      "value": "B-9008",
+      "normalisedValue": "B-9008",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 75
+          },
+          "excerpt": "nothing to report on B-9008 today"
+        }
+      ]
+    },
+    {
+      "status": "insufficient-evidence",
+      "schemaKey": "reported-cause",
+      "confidence": 0.2,
+      "value": null,
+      "normalisedValue": null,
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 261,
+            "end": 317
+          },
+          "excerpt": "no actual deviation or exception to log, all normal here"
+        }
+      ],
+      "reason": "No deviation or exception is stated; the message explicitly says there is nothing to report and no actual deviation or exception to log."
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains dense repetition of rule-trigger keywords (\"critical\", \"approve\", \"quarantine-hold\") with no supporting structured evidence; keyword density in raw text must never itself cause a rule to fire or a severity/disposition field to be inferred."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

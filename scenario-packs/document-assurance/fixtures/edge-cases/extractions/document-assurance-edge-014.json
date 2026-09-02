@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "b74d08240f726f19b361e14ee15566e20c2060868f23928742826f8c88291687",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.85,
+      "value": "VLP-INJ-2026-0907",
+      "normalisedValue": "VLP-INJ-2026-0907",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 201,
+            "end": 232
+          },
+          "excerpt": "quick note on VLP-INJ-2026-0907"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains pathological Unicode (a long run of combining diacritical marks, an oversized repeated-character run, and a right-to-left override control character) that must not destabilise extraction, evidence offsets, or rendering."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

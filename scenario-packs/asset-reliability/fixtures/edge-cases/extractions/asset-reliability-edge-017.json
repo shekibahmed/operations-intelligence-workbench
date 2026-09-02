@@ -1,0 +1,80 @@
+{
+  "artifactChecksum": "f16f70af1536091b6522e791250037a9f1343ddd062e90f3211a436aada651fa",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.98,
+      "value": "A-906",
+      "normalisedValue": "A-906",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "asset_id"
+          },
+          "excerpt": "A-906"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "work-order-reference",
+      "confidence": 0.97,
+      "value": "NG-WO-90017",
+      "normalisedValue": "NG-WO-90017",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "work_order"
+          },
+          "excerpt": "NG-WO-90017"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "service-status",
+      "confidence": 0.95,
+      "value": "Completed",
+      "normalisedValue": "Completed",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "status"
+          },
+          "excerpt": "Completed"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains a spreadsheet-formula payload (\"=HYPERLINK(...)\") in a CSV cell; the cell must be extracted and, if ever exported, neutralised as inert text rather than evaluated as a formula."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

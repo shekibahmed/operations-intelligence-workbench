@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "07fe7277a52490f8a2120a47f428237dcc3674b48390d2ce3a381891f6b503f5",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.9,
+      "value": "B-9004",
+      "normalisedValue": "B-9004",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 51,
+            "end": 81
+          },
+          "excerpt": "elevated reject rate on B-9004"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains embedded HTML/script content (a <script> tag and an <img onerror> handler) that must never be rendered or executed; it is extracted and stored as inert text only."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

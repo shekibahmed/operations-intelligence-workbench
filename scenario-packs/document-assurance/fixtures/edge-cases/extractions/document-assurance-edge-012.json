@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "6be0d96dcae74edcc3d583811e7c081f7b43a0db6c558263cd1f23fff8952972",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.9,
+      "value": "VLP-INJ-2026-0905",
+      "normalisedValue": "VLP-INJ-2026-0905",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 38,
+            "end": 67
+          },
+          "excerpt": "sign-off on VLP-INJ-2026-0905"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains a markdown-style link with a javascript: URI and a bare external URL framed as an approval shortcut; links must never be auto-linked or navigated by the application."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

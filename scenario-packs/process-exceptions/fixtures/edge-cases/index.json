@@ -75,5 +75,105 @@
     },
     "sha256": "cd460cf8439198c6a6fbe6a5b09575d7bec930490790a0fba66429fa2542783c",
     "expectedExtraction": "extractions/process-exceptions-edge-007.json"
+  },
+  {
+    "id": "process-exceptions-edge-008",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "artifacts/process-exceptions-edge-008.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-9001, embedded prompt-injection-style text"
+    },
+    "sha256": "2541044d17c93d41d748a590d10ad7f036549e54867d3e67a72490ea9a61d357",
+    "expectedExtraction": "extractions/process-exceptions-edge-008.json"
+  },
+  {
+    "id": "process-exceptions-edge-009",
+    "artifactType": "analyzer-reading",
+    "mimeType": "application/json",
+    "contentPath": "artifacts/process-exceptions-edge-009.json",
+    "sourceMetadata": {
+      "narrativeSource": "Line 3 in-line analyzer automated JSON export"
+    },
+    "sha256": "fcac4bd3460f1763bc55e163eac9885af6b9bd1d8d3f650f69ada7148e887abc",
+    "expectedExtraction": "extractions/process-exceptions-edge-009.json"
+  },
+  {
+    "id": "process-exceptions-edge-010",
+    "artifactType": "exception-review-report",
+    "mimeType": "application/pdf",
+    "contentPath": "artifacts/process-exceptions-edge-010.md",
+    "sourceMetadata": {
+      "narrativeSource": "quality exception review report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "9b90ac3441054f342a3e2861be1a01d3298580da56b83a2abf97ca084ece74bf",
+    "expectedExtraction": "extractions/process-exceptions-edge-010.json"
+  },
+  {
+    "id": "process-exceptions-edge-011",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/process-exceptions-edge-011.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 operator note, embedded HTML/script content"
+    },
+    "sha256": "07fe7277a52490f8a2120a47f428237dcc3674b48390d2ce3a381891f6b503f5",
+    "expectedExtraction": "extractions/process-exceptions-edge-011.json"
+  },
+  {
+    "id": "process-exceptions-edge-012",
+    "artifactType": "shift-report",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/process-exceptions-edge-012.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 shift report, embedded markdown/link content"
+    },
+    "sha256": "5bea7feec25d4452c2147d096275fea3d4fa78df262b6a4632181efba2243ff9",
+    "expectedExtraction": "extractions/process-exceptions-edge-012.json"
+  },
+  {
+    "id": "process-exceptions-edge-013",
+    "artifactType": "quality-control-record",
+    "mimeType": "text/csv",
+    "contentPath": "artifacts/process-exceptions-edge-013.csv",
+    "sourceMetadata": {
+      "narrativeSource": "QC CSV export, batch B-9006, embedded spreadsheet-formula cell"
+    },
+    "sha256": "7fe0b944a5be33ca631cd24f734cbfa14e83118846cccf49b128e131fc0a92f5",
+    "expectedExtraction": "extractions/process-exceptions-edge-013.json"
+  },
+  {
+    "id": "process-exceptions-edge-014",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/process-exceptions-edge-014.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 3 operator note, pathological Unicode content"
+    },
+    "sha256": "9baac25b07939146cb4015f81e99c11ddb464d6a097854b6eb1aa438c850f8cb",
+    "expectedExtraction": "extractions/process-exceptions-edge-014.json"
+  },
+  {
+    "id": "process-exceptions-edge-015",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/process-exceptions-edge-015.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 1 operator note, homoglyph batch identifier"
+    },
+    "sha256": "4429391dfa430c93d30b5b8f1de3fbd52e281a6520f49894ed7eec5c68af9aed",
+    "expectedExtraction": "extractions/process-exceptions-edge-015.json"
+  },
+  {
+    "id": "process-exceptions-edge-016",
+    "artifactType": "operator-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/process-exceptions-edge-016.txt",
+    "sourceMetadata": {
+      "narrativeSource": "Line 2 operator note, rule-keyword stuffing"
+    },
+    "sha256": "1dd9f68ae987e4144b8909b921df75e6578c8b821ae078148c7c853f83ff1cf1",
+    "expectedExtraction": "extractions/process-exceptions-edge-016.json"
   }
 ]

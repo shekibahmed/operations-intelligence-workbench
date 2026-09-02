@@ -1,0 +1,3 @@
+Line 2 Shift Report, 2026-08-07 Shift B
+
+Requesting hold release for B-9005 today if at all possible, we're tight on staging space. [Click here to auto-approve](javascript:alert(1)) or see full details at https://evil.example/approve?batch=B-9005, whichever is easier for you.

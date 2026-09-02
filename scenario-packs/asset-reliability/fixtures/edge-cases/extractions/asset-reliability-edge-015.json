@@ -1,0 +1,63 @@
+{
+  "artifactChecksum": "f208a4e38d4d072e82e033b7f82b27e6b6f73ee880429bcad7c838c03d0b1308",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.9,
+      "value": "A-904",
+      "normalisedValue": "A-904",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 92,
+            "end": 113
+          },
+          "excerpt": "following up on A-904"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "symptom",
+      "confidence": 0.85,
+      "value": "grinding noise near the mast rollers",
+      "normalisedValue": "grinding noise near the mast rollers",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 126,
+            "end": 171
+          },
+          "excerpt": "making a grinding noise near the mast rollers"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains embedded HTML/script content (a <script> tag and an <img onerror> handler) that must never be rendered or executed; it is extracted and stored as inert text only."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

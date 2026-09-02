@@ -80,5 +80,108 @@
     },
     "sha256": "2e5d39087c0873aae4d662bdc04bc267281bac4bffec8357f21cfd3b37247f7d",
     "expectedExtraction": "extractions/document-assurance-edge-007.json"
+  },
+  {
+    "id": "document-assurance-edge-008",
+    "artifactType": "audit-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "artifacts/document-assurance-edge-008.csv",
+    "sourceMetadata": {
+      "narrativeSource": "internal audit checklist, embedded prompt-injection-style text"
+    },
+    "sha256": "23adea17f74494997f83430302ec6e05f19f022803fc99b865956723e67adbfc",
+    "expectedExtraction": "extractions/document-assurance-edge-008.json"
+  },
+  {
+    "id": "document-assurance-edge-009",
+    "artifactType": "obligation-status-export",
+    "mimeType": "application/json",
+    "contentPath": "artifacts/document-assurance-edge-009.json",
+    "sourceMetadata": {
+      "narrativeSource": "Compliance Tracker automated export"
+    },
+    "sha256": "692d48644a4f6c2ffa8c93b1865e587c229b3457b5bed725db0dd6357a6b4626",
+    "expectedExtraction": "extractions/document-assurance-edge-009.json"
+  },
+  {
+    "id": "document-assurance-edge-010",
+    "artifactType": "compliance-report",
+    "mimeType": "application/pdf",
+    "contentPath": "artifacts/document-assurance-edge-010.md",
+    "sourceMetadata": {
+      "narrativeSource": "quarterly compliance report",
+      "sourceFormat": "pdf-text-layer"
+    },
+    "sha256": "c8be33e387862c0f5506b736d85d09d54f1fa0b46438895e99f5eaf236032004",
+    "expectedExtraction": "extractions/document-assurance-edge-010.json"
+  },
+  {
+    "id": "document-assurance-edge-011",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/document-assurance-edge-011.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread",
+      "channel": "email"
+    },
+    "sha256": "b20fdae3373bc6428607c4e0624a79d922c5dd927e3d0ca7ffc4e45f21dc91f7",
+    "expectedExtraction": "extractions/document-assurance-edge-011.json"
+  },
+  {
+    "id": "document-assurance-edge-012",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/document-assurance-edge-012.txt",
+    "sourceMetadata": {
+      "narrativeSource": "exception proposal reviewer note, embedded markdown/link content"
+    },
+    "sha256": "6be0d96dcae74edcc3d583811e7c081f7b43a0db6c558263cd1f23fff8952972",
+    "expectedExtraction": "extractions/document-assurance-edge-012.json"
+  },
+  {
+    "id": "document-assurance-edge-013",
+    "artifactType": "audit-checklist",
+    "mimeType": "text/csv",
+    "contentPath": "artifacts/document-assurance-edge-013.csv",
+    "sourceMetadata": {
+      "narrativeSource": "internal audit checklist, embedded spreadsheet-formula cell"
+    },
+    "sha256": "be1fdf87988b9808daa91aed48db08d668f25a692a2cdeed7343d9997b74cc92",
+    "expectedExtraction": "extractions/document-assurance-edge-013.json"
+  },
+  {
+    "id": "document-assurance-edge-014",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/document-assurance-edge-014.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread, pathological Unicode content",
+      "channel": "email"
+    },
+    "sha256": "b74d08240f726f19b361e14ee15566e20c2060868f23928742826f8c88291687",
+    "expectedExtraction": "extractions/document-assurance-edge-014.json"
+  },
+  {
+    "id": "document-assurance-edge-015",
+    "artifactType": "clarification-email",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/document-assurance-edge-015.txt",
+    "sourceMetadata": {
+      "narrativeSource": "email thread, homoglyph document reference (fullwidth digits)",
+      "channel": "email"
+    },
+    "sha256": "ce23b62d6a29fccbfa9fc3218a8090391bf098a609b5492ac000b8e9096033e0",
+    "expectedExtraction": "extractions/document-assurance-edge-015.json"
+  },
+  {
+    "id": "document-assurance-edge-016",
+    "artifactType": "reviewer-note",
+    "mimeType": "text/plain",
+    "contentPath": "artifacts/document-assurance-edge-016.txt",
+    "sourceMetadata": {
+      "narrativeSource": "exception proposal reviewer note, rule-keyword stuffing"
+    },
+    "sha256": "8738bfad1de8a234e19645cee23995c8bb7a7d0a406993fc564352c113d0f801",
+    "expectedExtraction": "extractions/document-assurance-edge-016.json"
   }
 ]

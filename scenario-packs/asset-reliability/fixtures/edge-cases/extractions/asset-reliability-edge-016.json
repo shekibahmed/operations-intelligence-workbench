@@ -1,0 +1,63 @@
+{
+  "artifactChecksum": "f388723936b9a921b7eb3f0b19b79e09fe7dc552f116a424a227db6075ccbe3b",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "asset-identifier",
+      "confidence": 0.9,
+      "value": "A-905",
+      "normalisedValue": "A-905",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 94,
+            "end": 115
+          },
+          "excerpt": "quick update on A-905"
+        }
+      ]
+    },
+    {
+      "status": "extracted",
+      "schemaKey": "requested-action",
+      "confidence": 0.6,
+      "value": "return to service requested",
+      "normalisedValue": "return to service requested",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 118,
+            "end": 164
+          },
+          "excerpt": "requesting return to service today if possible"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains a markdown-style link with a javascript: URI and a bare external URL framed as an approval shortcut; links must never be auto-linked or navigated by the application."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

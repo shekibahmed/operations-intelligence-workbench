@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "be1fdf87988b9808daa91aed48db08d668f25a692a2cdeed7343d9997b74cc92",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.95,
+      "value": "VLP-INJ-2026-0906",
+      "normalisedValue": "VLP-INJ-2026-0906",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "table-cell",
+            "row": 0,
+            "column": "checklist_item"
+          },
+          "excerpt": "Project Osprey MSA on file (ref VLP-INJ-2026-0906)"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains a spreadsheet-formula payload (\"=HYPERLINK(...)\") in a CSV cell; the cell must be extracted and, if ever exported, neutralised as inert text rather than evaluated as a formula."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

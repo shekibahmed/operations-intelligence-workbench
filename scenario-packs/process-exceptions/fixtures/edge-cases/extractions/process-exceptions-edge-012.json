@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "5bea7feec25d4452c2147d096275fea3d4fa78df262b6a4632181efba2243ff9",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.9,
+      "value": "B-9005",
+      "normalisedValue": "B-9005",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 52,
+            "end": 75
+          },
+          "excerpt": "hold release for B-9005"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact contains a markdown-style link with a javascript: URI and a bare external URL framed as an approval shortcut; links must never be auto-linked or navigated by the application."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

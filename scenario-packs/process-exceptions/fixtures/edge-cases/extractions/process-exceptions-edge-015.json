@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "4429391dfa430c93d30b5b8f1de3fbd52e281a6520f49894ed7eec5c68af9aed",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "batch-identifier",
+      "confidence": 0.55,
+      "value": "В-2205",
+      "normalisedValue": "В-2205",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 42,
+            "end": 64
+          },
+          "excerpt": "status check on В-2205"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact references a batch identifier using homoglyph characters (Cyrillic В, U+0412, in place of Latin B) that visually resembles a real batch ID but is byte-distinct; it must be extracted verbatim and must never be silently exact-matched or auto-linked to the real Latin-lettered batch."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}

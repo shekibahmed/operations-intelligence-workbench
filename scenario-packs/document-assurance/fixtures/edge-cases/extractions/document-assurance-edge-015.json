@@ -1,0 +1,46 @@
+{
+  "artifactChecksum": "ce23b62d6a29fccbfa9fc3218a8090391bf098a609b5492ac000b8e9096033e0",
+  "observations": [
+    {
+      "status": "extracted",
+      "schemaKey": "document-reference",
+      "confidence": 0.55,
+      "value": "VLP-FAL-2026-０１４２",
+      "normalisedValue": "VLP-FAL-2026-０１４２",
+      "evidence": [
+        {
+          "locator": {
+            "kind": "text-range",
+            "start": 195,
+            "end": 228
+          },
+          "excerpt": "status check on VLP-FAL-2026-０１４２"
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    {
+      "code": "suspicious-content-detected",
+      "message": "Artifact references a document identifier using homoglyph characters (fullwidth digits U+FF10/U+FF11/U+FF14/U+FF12 in place of ASCII 0/1/4/2) that visually resembles the real Project Falcon MSA reference VLP-FAL-2026-0142 but is byte-distinct; it must be extracted verbatim and must never be silently exact-matched or auto-linked to the real seeded document entity."
+    }
+  ],
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "processingTrace": {
+    "startedAt": "2026-01-01T00:00:00Z",
+    "completedAt": "2026-01-01T00:00:00Z",
+    "durationMs": 0,
+    "steps": [
+      {
+        "name": "extraction",
+        "status": "completed",
+        "detail": "Fixture-provider lookup by artifact checksum."
+      }
+    ]
+  }
+}
