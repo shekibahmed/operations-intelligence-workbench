@@ -29,8 +29,10 @@ owner request or fold into Wave 4 start.
 three packs, per-dimension sabotage tests, eval step in CI. Wave 4 batch A
 running: OIW-810 (security hardening: rate limiting, upload limits,
 expiry cleanup wiring, product-level isolation/bypass tests; Codex,
-../oiw-core) ∥ OIW-808 (accessibility + responsive audit and fixes incl.
-tablet-drawer debt; Claude m900x, ../oiw-ux). Batch B after: OIW-811
+../oiw-core) ∥ OIW-808 (accessibility + responsive audit; Claude m900x, ../oiw-ux —
+implementation done+lead-verified, remediation run in progress to write
+audit doc/handoff and open the PR after the first session ended its turn
+with a detached scan). Batch B after: OIW-811
 (exports FR-110) ∥ OIW-805 (product-level prompt-injection test set).
 Then Wave 5 (deployment + public launch) — needs owner decisions on
 Vercel/Supabase projects and CTA destination (see PLAN_AMENDMENTS A9).
@@ -80,7 +82,9 @@ Changes require a dedicated contract-change task.
 ## Operating rules learned (keep applying)
 
 - Headless Claude launches: `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`,
-  sequential work, no detached sub-agents.
+  sequential work, no detached sub-agents — AND the agent must not end its
+  turn with detached work (OIW-004b and OIW-808 both lost their finish
+  this way; rule now codified in AGENTS.md Completion Protocol).
 - `codex exec` launches: always `</dev/null`.
 - Lockfile: single owner per batch or integrator-reconciled at merge with a
   frozen-install verification.

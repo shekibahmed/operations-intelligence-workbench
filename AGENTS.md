@@ -102,6 +102,11 @@ A task is not COMPLETE until:
 The agent-run file — not your conversation — is the handoff. Another agent
 must be able to continue from it without your session history.
 
+Headless-session rule: when running non-interactively, never detach work
+to a background process and end your turn expecting to "pick it back up" —
+the session terminates when your turn ends. Run long steps in the
+foreground and finish commit → handoff → push → PR within the same turn.
+
 ## Branch and PR Conventions
 
 - Branch: `agent/<harness>/<task-id>-<slug>` (e.g. `agent/codex/OIW-001-contracts`).
