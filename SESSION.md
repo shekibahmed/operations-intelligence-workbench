@@ -31,8 +31,10 @@ OIW-810 MERGED (security gates closed with test evidence; security-
 reviewer PASS). OIW-808 (accessibility + responsive audit; Claude m900x, ../oiw-ux —
 implementation done+lead-verified, remediation run in progress to write
 audit doc/handoff and open the PR after the first session ended its turn
-with a detached scan). Batch B after: OIW-811
-(exports FR-110) ∥ OIW-805 (product-level prompt-injection test set).
+with a detached scan). Batch B RUNNING (launched early — no path overlap with 808's
+remediation): OIW-811 (exports FR-110; Codex, ../oiw-core) ∥ OIW-805
+(product-level prompt-injection test set; Claude m900x, ../oiw-quality).
+OIW-808 remediation still running in ../oiw-ux.
 Then Wave 5 (deployment + public launch) — needs owner decisions on
 Vercel/Supabase projects and CTA destination (see PLAN_AMENDMENTS A9).
 
