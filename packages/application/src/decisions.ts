@@ -31,6 +31,25 @@ const approvalAuditActions: Record<Approval["outcome"], string> = {
   "more-information-required": "decision-more-information-requested",
 };
 
+const approvalOperations = new Map<string, Promise<void>>();
+
+async function serializeApproval<T>(key: string, operation: () => Promise<T>): Promise<T> {
+  const previous = approvalOperations.get(key) ?? Promise.resolve();
+  let release!: () => void;
+  const current = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const tail = previous.catch(() => undefined).then(() => current);
+  approvalOperations.set(key, tail);
+  await previous.catch(() => undefined);
+  try {
+    return await operation();
+  } finally {
+    release();
+    if (approvalOperations.get(key) === tail) approvalOperations.delete(key);
+  }
+}
+
 export interface HumanSessionIdentity {
   type: "human";
   id: string;
@@ -176,6 +195,20 @@ export class ApprovalService {
       comment: string | null;
     },
   ): Promise<{ approval: Approval; decision: Decision; caseRecord: Case }> {
+    return serializeApproval(`${workspaceId}:${decisionId}`, () =>
+      this.applyExclusive(workspaceId, decisionId, input),
+    );
+  }
+
+  private async applyExclusive(
+    workspaceId: string,
+    decisionId: string,
+    input: {
+      identity: HumanSessionIdentity;
+      outcome: Approval["outcome"];
+      comment: string | null;
+    },
+  ): Promise<{ approval: Approval; decision: Decision; caseRecord: Case }> {
     if (input.identity.type !== "human" || input.identity.id.trim().length === 0) {
       throw new Error("Approval requires an authenticated human session identity");
     }
@@ -188,7 +221,7 @@ export class ApprovalService {
     const approval = await this.repositories.approvals.insert(workspaceId, {
       id: deterministicUuid(
         workspaceId,
-        `approval:${decisionId}:${input.identity.id}:${input.outcome}`,
+        `approval:${decisionId}`,
       ),
       workspaceId,
       decisionId,

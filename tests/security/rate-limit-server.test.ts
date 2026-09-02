@@ -22,7 +22,9 @@ vi.mock("@/lib/server/audit", () => ({
   buildAuditEntry: (...args: unknown[]) => mocks.buildAuditEntry(...args),
 }));
 
-const { enforceGuestRateLimit, GuestRateLimitError } = await import("@/lib/server/rate-limit");
+const { clientAddressForRateLimit, enforceGuestRateLimit, GuestRateLimitError } = await import(
+  "@/lib/server/rate-limit"
+);
 
 const workspace: Workspace = {
   id: "11111111-1111-4111-8111-111111111111",
@@ -85,6 +87,29 @@ afterEach(() => {
 });
 
 describe("web guest rate-limit enforcement", () => {
+  it("ignores spoofable forwarding headers unless a trusted proxy policy selects one", () => {
+    const incoming = new Headers({
+      "x-forwarded-for": "198.51.100.10, 198.51.100.11",
+      "x-real-ip": "198.51.100.12",
+      "x-vercel-forwarded-for": "198.51.100.13",
+    });
+
+    expect(clientAddressForRateLimit(incoming, {})).toBe("unknown");
+    expect(clientAddressForRateLimit(incoming, { VERCEL: "1" })).toBe("198.51.100.13");
+    expect(
+      clientAddressForRateLimit(incoming, { OIW_TRUSTED_PROXY_HEADER: "x-forwarded-for" }),
+    ).toBe("198.51.100.10");
+    expect(clientAddressForRateLimit(incoming, { OIW_TRUSTED_PROXY_HEADER: "none" })).toBe(
+      "unknown",
+    );
+  });
+
+  it("rejects an unsupported trusted proxy header policy", () => {
+    expect(() =>
+      clientAddressForRateLimit(new Headers(), { OIW_TRUSTED_PROXY_HEADER: "client-ip" }),
+    ).toThrow("OIW_TRUSTED_PROXY_HEADER must be");
+  });
+
   it("rejects with 429 semantics, audits once per window and stores only a hashed IP key", async () => {
     await expect(enforceGuestRateLimit("decision", workspace)).resolves.toBeUndefined();
     await expect(enforceGuestRateLimit("decision", workspace)).rejects.toMatchObject({

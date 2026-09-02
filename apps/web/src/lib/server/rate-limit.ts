@@ -89,13 +89,41 @@ function firstForwardedAddress(value: string | null): string | null {
   return first === undefined || first.length === 0 ? null : first.slice(0, 128);
 }
 
+const trustedProxyHeaders = new Set([
+  "x-forwarded-for",
+  "x-real-ip",
+  "x-vercel-forwarded-for",
+]);
+
+/**
+ * Forwarded addresses are trustworthy only when the deployment edge owns
+ * and overwrites the selected header. Vercel receives a safe default; every
+ * other host must opt in to the one header its trusted proxy controls.
+ */
+export function clientAddressForRateLimit(
+  incoming: Headers,
+  environment: Record<string, string | undefined> = process.env,
+): string {
+  const configured = environment["OIW_TRUSTED_PROXY_HEADER"]?.trim().toLowerCase();
+  const header =
+    configured === undefined
+      ? environment["VERCEL"] === "1"
+        ? "x-vercel-forwarded-for"
+        : null
+      : configured === "none"
+        ? null
+        : configured;
+  if (header !== null && !trustedProxyHeaders.has(header)) {
+    throw new Error(
+      "OIW_TRUSTED_PROXY_HEADER must be none, x-vercel-forwarded-for, x-forwarded-for or x-real-ip",
+    );
+  }
+  return header === null ? "unknown" : (firstForwardedAddress(incoming.get(header)) ?? "unknown");
+}
+
 async function privacyPreservingIpKey(): Promise<string> {
   const incoming = await headers();
-  const address =
-    firstForwardedAddress(incoming.get("x-vercel-forwarded-for")) ??
-    firstForwardedAddress(incoming.get("x-real-ip")) ??
-    firstForwardedAddress(incoming.get("x-forwarded-for")) ??
-    "unknown";
+  const address = clientAddressForRateLimit(incoming);
   return createHmac("sha256", ipSalt()).update(address).digest("hex");
 }
 

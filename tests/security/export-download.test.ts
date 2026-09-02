@@ -58,6 +58,47 @@ function session(workspaceId: string) {
 }
 
 describe("export download security boundary", () => {
+  it("rejects an unauthenticated export before lookup, rate limiting or audit", async () => {
+    const candidate = workspace(workspaceAId, "workspace-a");
+    const { repositories, audits } = fakeRepositories(candidate);
+    const enforceRateLimit = vi.fn();
+    const findBySlug = vi.spyOn(repositories.workspaces, "findBySlug");
+
+    const response = await handleExportDownload("workspace-a", "cases", "csv", {
+      repositories: () => repositories,
+      readSessionPayload: async () => null,
+      enforceRateLimit,
+      now: () => new Date("2026-09-02T00:00:00.000Z"),
+    });
+
+    expect(response.status).toBe(404);
+    await expect(response.json()).resolves.toEqual({ error: "Export unavailable." });
+    expect(findBySlug).not.toHaveBeenCalled();
+    expect(enforceRateLimit).not.toHaveBeenCalled();
+    expect(audits).toHaveLength(0);
+  });
+
+  it("rejects an expired workspace export before rate limiting, querying data or audit", async () => {
+    const candidate = {
+      ...workspace(workspaceAId, "workspace-a"),
+      expiresAt: "2026-09-01T23:59:59.999Z",
+    };
+    const { repositories, audits } = fakeRepositories(candidate);
+    const enforceRateLimit = vi.fn();
+
+    const response = await handleExportDownload("workspace-a", "audit", "json", {
+      repositories: () => repositories,
+      readSessionPayload: async () => session(workspaceAId),
+      enforceRateLimit,
+      now: () => new Date("2026-09-02T00:00:00.000Z"),
+    });
+
+    expect(response.status).toBe(404);
+    await expect(response.json()).resolves.toEqual({ error: "Export unavailable." });
+    expect(enforceRateLimit).not.toHaveBeenCalled();
+    expect(audits).toHaveLength(0);
+  });
+
   it("rejects a cross-workspace export before rate limiting, querying data or appending audit", async () => {
     const candidate = workspace(workspaceBId, "workspace-b");
     const { repositories, audits } = fakeRepositories(candidate);

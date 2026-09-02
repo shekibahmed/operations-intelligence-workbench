@@ -1,6 +1,6 @@
 # Release Checklist — M3 / M4
 
-Status: Wave 0 plan. Defines the gate each milestone must clear before being
+Status: Wave 4 security evidence refreshed by OIW-812. Defines the gate each milestone must clear before being
 declared done, per `docs/PRD.md` §36 (release milestones) and §34
 (definition of done). This checklist is additive to, not a replacement for,
 the Definition of Done in PRD §34 — every item there still applies to every
@@ -49,7 +49,10 @@ reduced fixture sets acceptable for packs two and three per A7.
 
 ### Security
 
-- [ ] All ten security gates in `docs/SECURITY.md` §5 are satisfied.
+- [x] Every threat row in `docs/SECURITY.md` §§2–3 has a Closed-with-
+      evidence or Accepted-risk-with-owner/rationale disposition.
+- [ ] All ten public-deployment gates in `docs/SECURITY.md` §5 are satisfied,
+      including the deployment-time checks that cannot close in source CI.
 - [ ] `security-reviewer` subagent has returned PASS on the most recent PR
       touching ingestion, API routes, persistence, rendering, or the
       approval engine.
@@ -58,6 +61,27 @@ reduced fixture sets acceptable for packs two and three per A7.
 - [ ] Rate limiting and TTL expiry verified against the guest-session threat
       analysis in `docs/SECURITY.md` §2 in the actual deployed environment,
       not only in CI.
+- [ ] `OIW_TRUSTED_PROXY_HEADER` matches the deployed edge and the edge strips
+      client-supplied copies; Vercel uses `x-vercel-forwarded-for` per
+      `docs/DEPLOYMENT.md` §4.
+- [ ] The process-local distributed-rate-limit Accepted risk is explicitly
+      acknowledged in the release record, with upstream traffic controls and
+      alerts enabled; otherwise replace it with a shared atomic store before
+      launch.
+- [ ] The hourly `pnpm demo:expire` job is installed, monitored, and proven in
+      Preview with one disposable expired Workspace.
+- [ ] Unauthenticated, expired and cross-Workspace Case/Audit exports return
+      opaque 404 responses; formula-bearing OIW-805 fixtures download with
+      spreadsheet-neutralised CSV cells (automated evidence:
+      `tests/security/export-download.test.ts` and
+      `tests/security/export-injection-fixtures.test.ts`).
+- [ ] Parallel opposing Decision outcomes were exercised on the release
+      commit (`tests/security/approval-concurrency.test.ts`): one outcome and
+      one Approval persisted.
+- [ ] Credential review combines `pnpm architecture:check` with manual diff,
+      full-history and Vercel/Supabase environment inspection. The scanner's
+      generic-token/JWT/Supabase/PostgreSQL coverage is not treated as a
+      substitute for manual review.
 
 ### Accessibility
 
