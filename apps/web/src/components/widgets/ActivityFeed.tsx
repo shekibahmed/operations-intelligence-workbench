@@ -9,10 +9,10 @@ export function ActivityFeed({ entries, auditHref }: { entries: ActivityEntry[];
   return (
     <div aria-labelledby="activity-feed-heading" className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between">
-        <h3 id="activity-feed-heading" className="text-sm font-semibold text-ink">
+        <h2 id="activity-feed-heading" className="text-sm font-semibold text-ink">
           Recent activity
-        </h3>
-        <a href={auditHref} className="text-xs font-medium text-[var(--color-accent)] hover:underline">
+        </h2>
+        <a href={auditHref} className="text-xs font-medium text-[var(--color-accent)] underline">
           View full audit log
         </a>
       </div>
@@ -23,7 +23,7 @@ export function ActivityFeed({ entries, auditHref }: { entries: ActivityEntry[];
               {new Date(entry.timestamp).toLocaleString()}
             </time>
             {entry.href ? (
-              <a href={entry.href} className="text-[var(--color-accent)] hover:underline">
+              <a href={entry.href} className="text-[var(--color-accent)] underline">
                 {entry.summary}
               </a>
             ) : (

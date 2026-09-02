@@ -134,6 +134,7 @@ export function InboxTable({ workspace, rows, packId }: { workspace: string; row
                   type="button"
                   disabled={!RETRYABLE_STATUSES.has(status) || isProcessing}
                   onClick={() => void process(artifact.id)}
+                  aria-label={`${status.startsWith("failed") ? "Retry" : "Process"} artifact from ${sourceName}`}
                 >
                   {status.startsWith("failed") ? "Retry" : "Process"}
                 </Button>

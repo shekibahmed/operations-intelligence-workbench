@@ -9,9 +9,9 @@ export function SeverityBreakdown({ title, tiers }: { title: string; tiers: Seve
   const total = tiers.reduce((sum, tier) => sum + tier.count, 0);
   return (
     <div aria-labelledby="severity-breakdown-heading" className="rounded-lg border border-border bg-surface p-4">
-      <h3 id="severity-breakdown-heading" className="text-sm font-semibold text-ink">
+      <h2 id="severity-breakdown-heading" className="text-sm font-semibold text-ink">
         {title}
-      </h3>
+      </h2>
       <ul className="mt-3 space-y-2">
         {tiers.map((tier) => (
           <li key={tier.key} className="flex items-center gap-2 text-sm">
@@ -23,7 +23,7 @@ export function SeverityBreakdown({ title, tiers }: { title: string; tiers: Seve
               />
             </span>
             {tier.href ? (
-              <a href={tier.href} className="w-8 shrink-0 text-right font-medium text-[var(--color-accent)] hover:underline">
+              <a href={tier.href} className="w-8 shrink-0 text-right font-medium text-[var(--color-accent)] underline">
                 {tier.count}
               </a>
             ) : (

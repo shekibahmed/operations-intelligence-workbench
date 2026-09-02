@@ -19,10 +19,10 @@ export function ListCard({
   return (
     <div aria-labelledby={`list-card-${title}`} className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between">
-        <h3 id={`list-card-${title}`} className="text-sm font-semibold text-ink">
+        <h2 id={`list-card-${title}`} className="text-sm font-semibold text-ink">
           {title}
-        </h3>
-        <a href={viewAllHref} className="text-xs font-medium text-[var(--color-accent)] hover:underline">
+        </h2>
+        <a href={viewAllHref} className="text-xs font-medium text-[var(--color-accent)] underline">
           View all
         </a>
       </div>
@@ -33,7 +33,7 @@ export function ListCard({
           {items.map((item) => (
             <li key={item.key} className="text-sm">
               {item.href ? (
-                <a href={item.href} className="font-medium text-[var(--color-accent)] hover:underline">
+                <a href={item.href} className="font-medium text-[var(--color-accent)] underline">
                   {item.title}
                 </a>
               ) : (

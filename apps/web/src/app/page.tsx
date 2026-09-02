@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/Button";
+import { BUTTON_BASE_CLASSES, VARIANT_CLASSES } from "@/components/ui/Button";
 
 const LENS_SUMMARIES = [
   {
@@ -30,12 +30,12 @@ export default function LandingPage() {
           cases and decisions a human approves — never the other way around.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button variant="primary">
-            <Link href="/demo">See it work</Link>
-          </Button>
-          <Button variant="secondary">
-            <Link href="/adapt">Adapt this workflow</Link>
-          </Button>
+          <Link href="/demo" className={`${BUTTON_BASE_CLASSES} ${VARIANT_CLASSES.primary}`}>
+            See it work
+          </Link>
+          <Link href="/adapt" className={`${BUTTON_BASE_CLASSES} ${VARIANT_CLASSES.secondary}`}>
+            Adapt this workflow
+          </Link>
         </div>
       </section>
 

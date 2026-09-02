@@ -22,7 +22,7 @@ export function CopyableJson({ value }: { value: unknown }) {
       >
         {copied ? "Copied" : "Copy"}
       </Button>
-      <pre className="mt-2 max-h-64 overflow-auto rounded-md border border-border bg-surface-muted p-3 text-xs">
+      <pre tabIndex={0} className="mt-2 max-h-64 overflow-auto rounded-md border border-border bg-surface-muted p-3 text-xs">
         <code>{text}</code>
       </pre>
     </div>

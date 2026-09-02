@@ -86,7 +86,7 @@ export default async function EntityDetailPage({
                 <ul className="flex flex-col gap-1 text-sm">
                   {relatedArtifacts.map((artifact) => (
                     <li key={artifact.id}>
-                      <a href={`${base}/technical/artifacts/${artifact.id}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/technical/artifacts/${artifact.id}`} className="text-[var(--color-accent)] underline">
                         {artifact.artifactType}
                       </a>
                     </li>
@@ -123,7 +123,7 @@ export default async function EntityDetailPage({
                 <ul className="flex flex-col gap-1 text-sm">
                   {openCases.map((entry) => (
                     <li key={entry.id}>
-                      <a href={`${base}/cases/${entry.id}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/cases/${entry.id}`} className="text-[var(--color-accent)] underline">
                         {entry.title}
                       </a>
                     </li>
@@ -141,7 +141,7 @@ export default async function EntityDetailPage({
                 <ul className="flex flex-col gap-1 text-sm">
                   {closedCases.map((entry) => (
                     <li key={entry.id}>
-                      <a href={`${base}/cases/${entry.id}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/cases/${entry.id}`} className="text-[var(--color-accent)] underline">
                         {entry.title}
                       </a>
                     </li>
@@ -159,7 +159,7 @@ export default async function EntityDetailPage({
                 <ul className="flex flex-col gap-2 text-sm">
                   {patternSignals.map((signal) => (
                     <li key={signal.id}>
-                      <a href={`${base}/technical/rules/${signal.rule.id}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/technical/rules/${signal.rule.id}`} className="text-[var(--color-accent)] underline">
                         {resolveLabel(labels, "signalTypes", signal.signalType)}
                       </a>
                       <span className="ml-2 text-xs text-ink-muted">{signal.rationale}</span>
@@ -187,7 +187,7 @@ export default async function EntityDetailPage({
                 <ul className="flex flex-wrap gap-2">
                   {relatedEntities.map((candidate) => (
                     <li key={candidate.id}>
-                      <a href={`${base}/entities/${candidate.id}`} className="rounded-full border border-border px-3 py-1 text-sm text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/entities/${candidate.id}`} className="rounded-full border border-border px-3 py-1 text-sm text-[var(--color-accent)] underline">
                         {candidate.displayName}
                       </a>
                     </li>

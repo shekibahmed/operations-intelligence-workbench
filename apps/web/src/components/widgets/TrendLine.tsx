@@ -22,9 +22,9 @@ export function TrendLine({ title, points, seriesLabel }: { title: string; point
   return (
     <div aria-labelledby="trend-line-heading" className="rounded-lg border border-border bg-surface p-4">
       <div className="flex items-center justify-between">
-        <h3 id="trend-line-heading" className="text-sm font-semibold text-ink">
+        <h2 id="trend-line-heading" className="text-sm font-semibold text-ink">
           {title}
-        </h3>
+        </h2>
         <ProvenanceBadge classification="calculated" />
       </div>
       <svg viewBox={`0 0 ${width} ${height}`} role="presentation" aria-hidden="true" className="mt-3 h-16 w-full">

@@ -53,12 +53,12 @@ export default async function LeadershipOverviewPage({
           <DashboardGrid dashboard={dashboard} values={values} base={base} />
 
           <div className="flex flex-wrap gap-4 border-t border-border pt-4 text-sm">
-            <Link href={`${base}/inbox`} className="font-medium text-[var(--color-accent)] hover:underline">
+            <Link href={`${base}/inbox`} className="font-medium text-[var(--color-accent)] underline">
               View operational queue
             </Link>
             <Link
               href={`${base}/technical/artifacts/${DEFAULT_ARTIFACT_ID}`}
-              className="font-medium text-[var(--color-accent)] hover:underline"
+              className="font-medium text-[var(--color-accent)] underline"
             >
               Inspect how this was derived
             </Link>

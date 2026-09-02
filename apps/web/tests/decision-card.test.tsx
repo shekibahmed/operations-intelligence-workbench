@@ -48,7 +48,7 @@ describe("DecisionCard", () => {
     decideOnDecision.mockResolvedValue({ ok: true, decision: decision({ status: "approved" }) });
     render(<DecisionCard workspace="demo-asset-reliability" data={cardData({ riskLevel: "low" })} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: /Approve/ }));
 
     await waitFor(() => expect(decideOnDecision).toHaveBeenCalledWith("demo-asset-reliability", "decision-1", "approved", ""));
     await waitFor(() => expect(screen.getByText("Status: Approved")).toBeInTheDocument());
@@ -58,9 +58,9 @@ describe("DecisionCard", () => {
     decideOnDecision.mockResolvedValue({ ok: true, decision: decision({ status: "approved", riskLevel: "critical" }) });
     render(<DecisionCard workspace="demo-asset-reliability" data={cardData({ riskLevel: "critical" })} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Approve" }));
+    fireEvent.click(screen.getByRole("button", { name: /Approve/ }));
     const dialog = screen.getByRole("dialog");
-    const confirmButton = within(dialog).getByRole("button", { name: "Approve" });
+    const confirmButton = within(dialog).getByRole("button", { name: /Approve/ });
     expect(confirmButton).toBeDisabled();
 
     fireEvent.change(within(dialog).getByLabelText(/Comment/), { target: { value: "Confirmed unsafe to operate." } });
@@ -76,9 +76,9 @@ describe("DecisionCard", () => {
     decideOnDecision.mockResolvedValue({ ok: false, message: "Could not save this decision." });
     render(<DecisionCard workspace="demo-asset-reliability" data={cardData({ riskLevel: "low" })} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Reject" }));
+    fireEvent.click(screen.getByRole("button", { name: /Reject/ }));
 
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("Could not save this decision."));
-    expect(screen.getByRole("button", { name: "Approve" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Approve/ })).toBeInTheDocument();
   });
 });

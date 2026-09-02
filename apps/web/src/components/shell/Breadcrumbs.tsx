@@ -68,7 +68,7 @@ export function Breadcrumbs({
           <li key={`${crumb.label}-${index}`} className="flex items-center gap-1">
             {index > 0 ? <span aria-hidden="true">/</span> : null}
             {crumb.href ? (
-              <Link href={crumb.href} className="text-[var(--color-accent)] hover:underline">
+              <Link href={crumb.href} className="text-[var(--color-accent)] underline">
                 {crumb.label}
               </Link>
             ) : (

@@ -52,11 +52,15 @@ export default async function AuditExplorerPage({
             <li
               key={entry.id}
               id={entry.id}
+              aria-current={entry.id === highlightedEntryId ? "true" : undefined}
               className={`rounded-md border p-3 text-sm ${entry.id === highlightedEntryId ? "border-[var(--color-accent)]" : "border-border"} bg-surface`}
             >
               <time dateTime={entry.occurredAt} className="block text-xs text-ink-muted">
                 {new Date(entry.occurredAt).toLocaleString()}
               </time>
+              {entry.id === highlightedEntryId ? (
+                <p className="text-xs font-medium text-[var(--color-accent)]">Linked entry</p>
+              ) : null}
               <p className="font-medium text-ink">{entry.action.replace(/-/g, " ")}</p>
               <p className="text-ink-muted">
                 Actor: {entry.actor.type} ({entry.actor.id}) · Subject: {entry.subject.type} {entry.subject.id}

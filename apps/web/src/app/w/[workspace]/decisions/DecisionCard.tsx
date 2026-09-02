@@ -57,9 +57,9 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
       aria-labelledby={`decision-${current.id}`}
       className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4"
     >
-      <h3 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
+      <h2 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
         {proposalLabel}
-      </h3>
+      </h2>
       <Badge tone={RISK_TONE[current.riskLevel]}>Risk: {current.riskLevel}</Badge>
       <p className="text-sm text-ink-muted">{current.rationale}</p>
       {evidenceLinks.length > 0 ? (
@@ -68,7 +68,7 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
           {evidenceLinks.map((link, index) => (
             <span key={link.href}>
               {index > 0 ? ", " : null}
-              <a href={link.href} className="text-[var(--color-accent)] hover:underline">
+              <a href={link.href} className="text-[var(--color-accent)] underline">
                 {link.label}
               </a>
             </span>
@@ -78,7 +78,7 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
       <p className="text-sm">
         Triggering rule:{" "}
         {triggeringRule !== null ? (
-          <a href={triggeringRule.href} className="text-[var(--color-accent)] hover:underline">
+          <a href={triggeringRule.href} className="text-[var(--color-accent)] underline">
             {triggeringRule.label}
           </a>
         ) : (
@@ -99,7 +99,7 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
           {highRisk ? (
             <>
               <ConfirmDialog
-                trigger={<Button type="button" disabled={pending}>Approve</Button>}
+                trigger={<Button type="button" disabled={pending} aria-label={`Approve decision: ${proposalLabel}`}>Approve</Button>}
                 title="Approve this decision?"
                 description="This is a high-risk decision. A comment is required before approving."
                 confirmLabel="Approve"
@@ -107,7 +107,7 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
                 onConfirm={(comment) => void resolve("approved", comment)}
               />
               <ConfirmDialog
-                trigger={<Button type="button" variant="danger" disabled={pending}>Reject</Button>}
+                trigger={<Button type="button" variant="danger" disabled={pending} aria-label={`Reject decision: ${proposalLabel}`}>Reject</Button>}
                 title="Reject this decision?"
                 description="This is a high-risk decision. A comment is required before rejecting."
                 confirmLabel="Reject"
@@ -117,16 +117,26 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
             </>
           ) : (
             <>
-              <Button type="button" disabled={pending} onClick={() => void resolve("approved", "")}>
+              <Button type="button" disabled={pending} onClick={() => void resolve("approved", "")} aria-label={`Approve decision: ${proposalLabel}`}>
                 Approve
               </Button>
-              <Button type="button" variant="danger" disabled={pending} onClick={() => void resolve("rejected", "")}>
+              <Button
+                type="button"
+                variant="danger"
+                disabled={pending}
+                onClick={() => void resolve("rejected", "")}
+                aria-label={`Reject decision: ${proposalLabel}`}
+              >
                 Reject
               </Button>
             </>
           )}
           <ConfirmDialog
-            trigger={<Button type="button" variant="secondary" disabled={pending}>Request more information</Button>}
+            trigger={
+              <Button type="button" variant="secondary" disabled={pending} aria-label={`Request more information: ${proposalLabel}`}>
+                Request more information
+              </Button>
+            }
             title="Request more information?"
             description="Add an optional comment describing what is needed before this decision can be approved or rejected."
             confirmLabel="Request more information"

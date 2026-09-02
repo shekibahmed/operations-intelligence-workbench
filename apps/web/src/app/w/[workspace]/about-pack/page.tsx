@@ -1,4 +1,3 @@
-import { DemoPreviewNotice } from "@/components/shell/DemoPreviewNotice";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
 import { Skeleton } from "@/components/ui/Skeleton";
@@ -6,13 +5,10 @@ import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLens } from "@/lib/resolve-lens";
 import { workspaceBase } from "@/lib/routes";
-import { stubMetricDefinitions } from "@/lib/stub/metrics";
-import { stubRuleTrace } from "@/lib/stub/rule-trace";
 import { getWorkspaceContext } from "@/lib/server/context";
+import { findPackEntry } from "@/lib/server/pack-registry";
 import { minutesRemaining } from "@/lib/session-time";
 import { resolveScreenState } from "@/types/screen-state";
-
-const DASHBOARD_WIDGETS = ["stat-card", "severity-breakdown", "sla-table", "trend-line", "text-impact", "activity-feed", "pending-approvals"];
 
 export default async function AboutPackPage({
   params,
@@ -27,6 +23,13 @@ export default async function AboutPackPage({
   const lens = await resolveLens("about-pack", `${base}/about-pack`, rawSearchParams);
   const state = resolveScreenState(rawSearchParams.state);
   const { workspace, labels } = await getWorkspaceContext(slug);
+  const packEntry = workspace.activePackId !== null ? await findPackEntry(workspace.activePackId) : undefined;
+  const rules = packEntry?.pack.rules ?? [];
+  const metricDefinitions = packEntry === undefined ? [] : [...packEntry.pack.metricDefinitions.values()];
+  const dashboardWidgetTypes =
+    packEntry === undefined
+      ? []
+      : [...new Set(Object.values(packEntry.pack.dashboards).flatMap((dashboard) => dashboard?.widgets.map((widget) => widget.type) ?? []))];
 
   return (
     <WorkspaceShell section="about-pack"
@@ -77,32 +80,48 @@ export default async function AboutPackPage({
             </ul>
           </SectionCard>
 
-          <DemoPreviewNotice />
-
           <SectionCard title="Rules">
-            <a href={`${base}/technical/rules/${stubRuleTrace.ruleId}`} className="text-sm text-[var(--color-accent)] hover:underline">
-              {stubRuleTrace.ruleId} v{stubRuleTrace.ruleVersion}
-            </a>
-            <p className="mt-1 text-sm text-ink-muted">{stubRuleTrace.description}</p>
+            {rules.length === 0 ? (
+              <p className="text-sm text-ink-muted">This pack defines no rules.</p>
+            ) : (
+              <ul className="flex flex-col gap-2 text-sm">
+                {rules.map((rule) => (
+                  <li key={rule.id}>
+                    <a href={`${base}/technical/rules/${rule.id}`} className="text-[var(--color-accent)] underline">
+                      {rule.id} v{rule.version}
+                    </a>
+                    <p className="mt-0.5 text-ink-muted">{rule.description}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
           </SectionCard>
 
           <SectionCard title="Metrics">
-            <ul className="flex flex-col gap-1 text-sm">
-              {stubMetricDefinitions.map((metric) => (
-                <li key={metric.id}>
-                  <span className="font-medium text-ink">{metric.name}</span> — {metric.description}{" "}
-                  <span className="text-xs text-ink-muted">({metric.classification})</span>
-                </li>
-              ))}
-            </ul>
+            {metricDefinitions.length === 0 ? (
+              <p className="text-sm text-ink-muted">This pack defines no metrics.</p>
+            ) : (
+              <ul className="flex flex-col gap-1 text-sm">
+                {metricDefinitions.map((metric) => (
+                  <li key={metric.id}>
+                    <span className="font-medium text-ink">{metric.name}</span> — {metric.description}{" "}
+                    <span className="text-xs text-ink-muted">({metric.classification})</span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </SectionCard>
 
           <SectionCard title="Dashboard definitions">
-            <ul className="flex flex-wrap gap-2 text-sm">
-              {DASHBOARD_WIDGETS.map((widget) => (
-                <li key={widget} className="rounded-full border border-border px-3 py-1">{widget.replace(/-/g, " ")}</li>
-              ))}
-            </ul>
+            {dashboardWidgetTypes.length === 0 ? (
+              <p className="text-sm text-ink-muted">This pack defines no dashboard widgets.</p>
+            ) : (
+              <ul className="flex flex-wrap gap-2 text-sm">
+                {dashboardWidgetTypes.map((widget) => (
+                  <li key={widget} className="rounded-full border border-border px-3 py-1">{widget.replace(/-/g, " ")}</li>
+                ))}
+              </ul>
+            )}
           </SectionCard>
 
           <p className="border-t border-border pt-4 text-sm text-ink-muted">

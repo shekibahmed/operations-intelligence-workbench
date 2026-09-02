@@ -197,7 +197,7 @@ describe("ReviewQueuePanel", () => {
     });
     renderPanel([entry]);
 
-    fireEvent.click(screen.getByRole("button", { name: "Accept this candidate" }));
+    fireEvent.click(screen.getByRole("button", { name: /Accept this candidate/ }));
 
     await waitFor(() =>
       expect(acceptObservation).toHaveBeenCalledWith("demo-asset-reliability", expect.any(String), {

@@ -63,6 +63,7 @@ export function ReviewQueuePanel({
 }) {
   const [queue, setQueue] = useState(entries);
   const [selectedId, setSelectedId] = useState<string | null>(entries[0]?.observation.id ?? null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
   const [showCorrection, setShowCorrection] = useState(false);
@@ -235,25 +236,48 @@ export function ReviewQueuePanel({
   const rawText = selected.rawText ?? "";
 
   return (
-    <div data-tour="tour-review-panel" className="grid grid-cols-1 gap-4 xl:grid-cols-[16rem_1fr_20rem]">
-      <nav aria-label="Review queue" className="rounded-lg border border-border bg-surface p-2">
-        <ul className="flex flex-col gap-1">
-          {queue.map((entry, index) => (
-            <li key={entry.observation.id}>
-              <button
-                type="button"
-                onClick={() => selectItem(entry.observation.id)}
-                aria-current={entry.observation.id === selectedId ? "true" : undefined}
-                className={`w-full rounded-md px-2 py-1.5 text-left text-sm ${
-                  entry.observation.id === selectedId ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)]" : "text-ink hover:bg-surface-muted"
-                }`}
-              >
-                Item {index + 1}: {entry.observation.schemaKey}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+    <div data-tour="tour-review-panel" className="flex flex-col gap-4 xl:grid xl:grid-cols-[16rem_1fr_20rem]">
+      {/*
+        Desktop (≥1280px): the queue list is a permanent left rail, part of
+        the three-column grid. Tablet (<1280px): it becomes a collapsible
+        drawer above the (now vertically stacked) source/detail panes —
+        `xl:contents` drops this wrapper from the box model at desktop width
+        so the toggle button and nav become direct grid children again
+        (UX_SPEC §5.6 tracked tablet-drawer debt).
+      */}
+      <div className="xl:contents">
+        <button
+          type="button"
+          aria-expanded={drawerOpen}
+          aria-controls="review-queue-drawer"
+          onClick={() => setDrawerOpen((value) => !value)}
+          className="rounded-md border border-border px-3 py-1.5 text-left text-sm font-medium text-ink xl:hidden"
+        >
+          {drawerOpen ? "Hide queue" : `Queue (${queue.length} item${queue.length === 1 ? "" : "s"})`}
+        </button>
+        <nav
+          id="review-queue-drawer"
+          aria-label="Review queue"
+          className={`${drawerOpen ? "block" : "hidden"} rounded-lg border border-border bg-surface p-2 xl:block`}
+        >
+          <ul className="flex flex-col gap-1">
+            {queue.map((entry, index) => (
+              <li key={entry.observation.id}>
+                <button
+                  type="button"
+                  onClick={() => selectItem(entry.observation.id)}
+                  aria-current={entry.observation.id === selectedId ? "true" : undefined}
+                  className={`w-full rounded-md px-2 py-1.5 text-left text-sm ${
+                    entry.observation.id === selectedId ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)]" : "text-ink hover:bg-surface-muted"
+                  }`}
+                >
+                  Item {index + 1}: {entry.observation.schemaKey}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
 
       <div className="rounded-lg border border-border bg-surface p-4">
         <h2 ref={headingRef} tabIndex={-1} className="text-sm font-semibold text-ink outline-none">
@@ -325,6 +349,7 @@ export function ReviewQueuePanel({
                     variant="secondary"
                     disabled={pending}
                     onClick={() => void handleAcceptCandidate(candidate.value, candidate.confidence)}
+                    aria-label={`Accept this candidate: ${valueLabel(candidate.value)}`}
                   >
                     Accept this candidate
                   </Button>

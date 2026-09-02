@@ -30,3 +30,21 @@ body {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
+
+/*
+ * Applies everywhere a transition/animation exists (tour spotlight,
+ * skeleton pulse, button/nav hover transitions) rather than only the tour
+ * overlay, since `prefers-reduced-motion` is a standing user preference,
+ * not a per-component opt-in (UX_SPEC/ACCESSIBILITY.md: "reduced-motion
+ * respect for the tour overlay").
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

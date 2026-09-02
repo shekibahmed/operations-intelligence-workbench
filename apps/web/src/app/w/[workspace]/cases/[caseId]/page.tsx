@@ -79,7 +79,7 @@ export default async function CaseDetailPage({
                 <ul className="flex flex-wrap gap-2">
                   {relatedEntities.map((entity) => (
                     <li key={entity.id}>
-                      <a href={`${base}/entities/${entity.id}`} className="rounded-full border border-border px-3 py-1 text-sm text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/entities/${entity.id}`} className="rounded-full border border-border px-3 py-1 text-sm text-[var(--color-accent)] underline">
                         {entity.name}
                       </a>
                     </li>
@@ -95,7 +95,7 @@ export default async function CaseDetailPage({
                 <ul className="flex flex-col gap-2 text-sm">
                   {evidence.map((segment) => (
                     <li key={segment.id}>
-                      <a href={`${base}/technical/artifacts/${segment.artifactId}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/technical/artifacts/${segment.artifactId}`} className="text-[var(--color-accent)] underline">
                         {segment.excerpt ?? segment.id}
                       </a>
                     </li>
@@ -128,7 +128,7 @@ export default async function CaseDetailPage({
                 <ul className="flex flex-col gap-2 text-sm">
                   {signals.map((signal) => (
                     <li key={signal.id}>
-                      <a href={`${base}/technical/rules/${signal.rule.id}`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/technical/rules/${signal.rule.id}`} className="text-[var(--color-accent)] underline">
                         {resolveLabel(labels, "signalTypes", signal.signalType)}
                       </a>
                       <span className="ml-2 text-xs text-ink-muted">Severity: {signal.severity}</span>
@@ -154,7 +154,7 @@ export default async function CaseDetailPage({
                 <ul className="flex flex-col gap-2 text-sm">
                   {decisions.map((decision) => (
                     <li key={decision.id}>
-                      <a href={`${base}/decisions`} className="text-[var(--color-accent)] hover:underline">
+                      <a href={`${base}/decisions`} className="text-[var(--color-accent)] underline">
                         {resolveLabel(labels, "decisionTypes", decision.decisionType)}: {decision.proposal}
                       </a>
                       <span className="ml-2 text-xs text-ink-muted">{decision.status}</span>
@@ -206,7 +206,7 @@ export default async function CaseDetailPage({
         {signals[0] !== undefined ? (
           <a
             href={`${base}/technical/rules/${signals[0].rule.id}`}
-            className="mt-2 inline-block text-sm font-medium text-[var(--color-accent)] hover:underline"
+            className="mt-2 inline-block text-sm font-medium text-[var(--color-accent)] underline"
           >
             View technical trace
           </a>

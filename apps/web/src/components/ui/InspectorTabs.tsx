@@ -38,6 +38,17 @@ export function InspectorTabs({
           Rule trace
         </Tabs.Trigger>
       </Tabs.List>
+      {/*
+        Each Trigger's `aria-controls` always references its matching
+        Content's id, even for the inactive tab — without a real Content
+        element for both values, that reference points at nothing, an
+        invalid ARIA attribute value. The real "panel" per tab is the rest
+        of this route's page (a full navigation, not an in-place switch),
+        so these stay empty and hidden — they exist only to keep the
+        Trigger/Content id pairing valid.
+      */}
+      <Tabs.Content value="artifact" forceMount hidden={active !== "artifact"} />
+      <Tabs.Content value="rule" forceMount hidden={active !== "rule"} />
     </Tabs.Root>
   );
 }

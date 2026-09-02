@@ -17,9 +17,9 @@ export function TextImpactCard({
 }) {
   return (
     <div aria-labelledby={`text-impact-${heading}`} className="rounded-lg border border-border bg-surface p-4">
-      <h3 id={`text-impact-${heading}`} className="text-sm font-semibold text-ink">
+      <h2 id={`text-impact-${heading}`} className="text-sm font-semibold text-ink">
         {heading}
-      </h3>
+      </h2>
       <p className="mt-2 text-sm text-ink-muted">{body}</p>
       {metric ? (
         <div className="mt-3 flex items-baseline gap-2">

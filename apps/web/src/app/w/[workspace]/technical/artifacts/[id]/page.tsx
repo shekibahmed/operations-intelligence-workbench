@@ -196,7 +196,7 @@ export default async function TechnicalArtifactInspectorPage({
                           </p>
                         ) : null}
                         {observation.reviewStatus === "pending" || observation.reviewStatus === "conflicting" ? (
-                          <a href={`${base}/review`} className="text-xs font-medium text-[var(--color-accent)] hover:underline">
+                          <a href={`${base}/review`} className="text-xs font-medium text-[var(--color-accent)] underline">
                             Review this observation
                           </a>
                         ) : null}
@@ -218,7 +218,7 @@ export default async function TechnicalArtifactInspectorPage({
                       <li key={observation.id}>
                         <span className="font-medium text-ink">{observation.schemaKey}</span> resolved to{" "}
                         {entity !== undefined ? (
-                          <a href={`${base}/entities/${entity.id}`} className="text-[var(--color-accent)] hover:underline">
+                          <a href={`${base}/entities/${entity.id}`} className="text-[var(--color-accent)] underline">
                             {entity.displayName}
                           </a>
                         ) : (

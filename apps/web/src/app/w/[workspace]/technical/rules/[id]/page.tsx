@@ -138,7 +138,7 @@ export default async function TechnicalRuleTracePage({
             <ul className="flex flex-col gap-1 text-sm">
               {linkedAuditEntryIds.map((entryId) => (
                 <li key={entryId}>
-                  <a href={`${base}/audit?entry=${entryId}#${entryId}`} className="text-[var(--color-accent)] hover:underline">
+                  <a href={`${base}/audit?entry=${entryId}#${entryId}`} className="text-[var(--color-accent)] underline">
                     {entryId}
                   </a>
                 </li>

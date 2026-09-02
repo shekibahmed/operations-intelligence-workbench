@@ -15,9 +15,9 @@ const RISK_LABEL: Record<SlaRow["risk"], string> = {
 export function SlaTable({ title, rows, emptyMessage }: { title: string; rows: SlaRow[]; emptyMessage: string }) {
   return (
     <div aria-labelledby="sla-table-heading" className="rounded-lg border border-border bg-surface p-4">
-      <h3 id="sla-table-heading" className="text-sm font-semibold text-ink">
+      <h2 id="sla-table-heading" className="text-sm font-semibold text-ink">
         {title}
-      </h3>
+      </h2>
       {rows.length === 0 ? (
         <p className="mt-3 text-sm text-ink-muted">{emptyMessage}</p>
       ) : (
@@ -35,7 +35,7 @@ export function SlaTable({ title, rows, emptyMessage }: { title: string; rows: S
               <tr key={row.key} className="border-t border-border">
                 <td className="py-1">
                   {row.href ? (
-                    <a href={row.href} className="font-medium text-[var(--color-accent)] hover:underline">
+                    <a href={row.href} className="font-medium text-[var(--color-accent)] underline">
                       {row.name}
                     </a>
                   ) : (
