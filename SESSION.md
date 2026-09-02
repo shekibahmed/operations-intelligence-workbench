@@ -65,8 +65,6 @@ Changes require a dedicated contract-change task.
   check but untested under true concurrency — add a concurrency test in
   a later hardening pass.
 
-- Review-queue tablet collapsible drawer (UX_SPEC §5.6) → Wave 4 responsive
-  pass.
 - `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric-service
   seam (by design); presentation extras (sample records, hrefs) derived in
   the adapter — consider promoting into the service at Wave 3/4 if packs
@@ -97,6 +95,9 @@ Changes require a dedicated contract-change task.
 - `codex exec` launches: always `</dev/null`.
 - Lockfile: single owner per batch or integrator-reconciled at merge with a
   frozen-install verification.
+- Resource rule: at most two agents running Playwright/build concurrently
+  on this machine — a third plus a lead build OOM-killed a Next build
+  worker (SIGKILL) during OIW-808 verification.
 - Parallel lanes touching shared pack data: the lead runs the full suite on
   the MERGED tree before any merge (caught the OIW-601×602 conflict).
 - BLOCKED protocol works: five blocked cycles all resolved via bounded
