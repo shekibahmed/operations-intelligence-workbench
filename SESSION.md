@@ -26,10 +26,9 @@ owner request or fold into Wave 4 start.
 
 **WAVE 4 (Hardening) IN PROGRESS — resumed 2026-09-02.** OIW-802 merged
 (PR #29): `pnpm eval` is real — 1.000 on all ten §21.3 dimensions across
-three packs, per-dimension sabotage tests, eval step in CI. Wave 4 batch A
-running: OIW-810 (security hardening: rate limiting, upload limits,
-expiry cleanup wiring, product-level isolation/bypass tests; Codex,
-../oiw-core) ∥ OIW-808 (accessibility + responsive audit; Claude m900x, ../oiw-ux —
+three packs, per-dimension sabotage tests, eval step in CI. Wave 4 batch A:
+OIW-810 MERGED (security gates closed with test evidence; security-
+reviewer PASS). OIW-808 (accessibility + responsive audit; Claude m900x, ../oiw-ux —
 implementation done+lead-verified, remediation run in progress to write
 audit doc/handoff and open the PR after the first session ended its turn
 with a detached scan). Batch B after: OIW-811
@@ -55,6 +54,14 @@ Frozen at **v1.5**: canonical domain (v1.0) + negated/candidates/conflicting
 Changes require a dedicated contract-change task.
 
 ## Tracked debt / deltas
+
+- Security (non-blocking, from OIW-810 review): (a) IP extraction trusts
+  x-forwarded-for on non-Vercel hosts — document as a deployment
+  requirement (trusted-proxy config) in Wave 5; (b) credential scan covers
+  common key shapes only — keep manual review in release checklist;
+  (c) concurrent approvals on one Decision are safe-closed by status
+  check but untested under true concurrency — add a concurrency test in
+  a later hardening pass.
 
 - Review-queue tablet collapsible drawer (UX_SPEC §5.6) → Wave 4 responsive
   pass.
