@@ -93,6 +93,14 @@ test("HTTP direct-object references and URL tampering cannot cross guest workspa
     await pageB.goto(entityHrefA.replace(baseA, baseB));
     await expect(pageB.getByText("This page could not be found.")).toBeVisible();
     await expect(pageB.getByText("Synthetic workspace")).toHaveCount(0);
+
+    const exportAttempt = await pageB.evaluate(async (url) => {
+      const response = await fetch(url, { credentials: "same-origin" });
+      return { status: response.status, body: await response.text() };
+    }, `${baseA}/exports/cases/json`);
+    expect(exportAttempt.status).toBe(404);
+    expect(exportAttempt.body).not.toContain(baseA);
+    expect(exportAttempt.body).not.toContain(artifactHrefA);
   } finally {
     await contextB.close();
   }

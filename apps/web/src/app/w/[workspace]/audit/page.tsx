@@ -1,3 +1,4 @@
+import { ExportControls } from "@/app/w/[workspace]/ExportControls";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
@@ -40,7 +41,10 @@ export default async function AuditExplorerPage({
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
-      <h1 className="text-lg font-semibold text-ink">Audit</h1>
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-lg font-semibold text-ink">Audit</h1>
+        <ExportControls workspace={slug} dataset="audit" />
+      </header>
 
       {state === "error" ? (
         <ErrorState message="Could not load the audit log." />

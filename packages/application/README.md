@@ -122,6 +122,15 @@ only their validated illustrative assumptions and a null value. The service
 does not call any operational repository for those definitions, preventing an
 impact hypothesis from being presented as a measured result.
 
+## Synthetic workspace exports
+
+`WorkspaceExportService` produces streamed JSON or RFC 4180 CSV chunks for
+Workspace-scoped Cases and Audit Entries. Case records include deterministic
+Signal, Action Item, Decision and Approval summaries; Audit exports retain the
+append-only chain's previous/current hash fields. Every file carries a
+synthetic-data notice. CSV text that could be interpreted as a spreadsheet
+formula is apostrophe-prefixed before quoting.
+
 ## Local commands
 
 With Docker PostgreSQL running and migrations applied:

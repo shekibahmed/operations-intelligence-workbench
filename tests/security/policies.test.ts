@@ -103,6 +103,11 @@ describe("public-demo rate-limit policy", () => {
       expect(source, path).toContain(`enforceGuestRateLimit("${mutation}"`);
     }
   });
+
+  it("wires the shared limiter into the audited export download boundary", async () => {
+    const source = await readFile(resolve(process.cwd(), "apps/web/src/lib/server/export-download.ts"), "utf8");
+    expect(source).toContain('enforceRateLimit("export"');
+  });
 });
 
 describe("public artifact input policy", () => {

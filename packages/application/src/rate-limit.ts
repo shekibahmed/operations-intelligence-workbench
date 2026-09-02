@@ -4,7 +4,8 @@ export type GuestMutationKind =
   | "review"
   | "decision"
   | "reset"
-  | "case-action";
+  | "case-action"
+  | "export";
 
 export interface TokenBucketPolicy {
   capacity: number;

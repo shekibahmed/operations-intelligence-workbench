@@ -17,5 +17,6 @@ export * from "./metric-evaluation.js";
 export * from "./artifact-input-policy.js";
 export * from "./rate-limit.js";
 export * from "./workspace-expiry.js";
+export * from "./exports.js";
 
 export const applicationPackageBoundary = "@oiw/application" as const;

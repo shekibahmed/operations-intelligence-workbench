@@ -26,6 +26,7 @@ const DEFAULTS: Record<GuestMutationKind, MutationDefaults> = {
   decision: { sessionCapacity: 20, ipCapacity: 80, refillIntervalMs: 60 * 1_000 },
   reset: { sessionCapacity: 3, ipCapacity: 12, refillIntervalMs: 10 * 60 * 1_000 },
   "case-action": { sessionCapacity: 30, ipCapacity: 120, refillIntervalMs: 60 * 1_000 },
+  export: { sessionCapacity: 10, ipCapacity: 40, refillIntervalMs: 60 * 1_000 },
 };
 
 declare global {

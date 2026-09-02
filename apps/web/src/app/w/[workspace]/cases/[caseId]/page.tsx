@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ActionItemChecklist } from "@/app/w/[workspace]/cases/[caseId]/ActionItemChecklist";
 import { CaseNotes } from "@/app/w/[workspace]/cases/[caseId]/CaseNotes";
 import { getCaseNotes } from "@/app/w/[workspace]/cases/[caseId]/actions";
+import { ExportControls } from "@/app/w/[workspace]/ExportControls";
 import { Badge } from "@/components/ui/Badge";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
@@ -52,8 +53,13 @@ export default async function CaseDetailPage({
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <header data-tour="tour-case-summary">
-        <p className="text-xs uppercase tracking-wide text-ink-muted">{resolveLabel(labels, "caseTypes", caseRecord.caseType)}</p>
-        <h1 className="text-lg font-semibold text-ink">{caseRecord.title}</h1>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-wide text-ink-muted">{resolveLabel(labels, "caseTypes", caseRecord.caseType)}</p>
+            <h1 className="text-lg font-semibold text-ink">{caseRecord.title}</h1>
+          </div>
+          <ExportControls workspace={slug} dataset="cases" />
+        </div>
         <div className="mt-2 flex flex-wrap gap-2">
           <Badge>{resolveLabel(labels, "workflowStates", caseRecord.status)}</Badge>
           <Badge tone={caseRecord.priority === "urgent" ? "critical" : "neutral"}>Priority: {caseRecord.priority}</Badge>

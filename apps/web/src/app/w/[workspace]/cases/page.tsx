@@ -1,5 +1,6 @@
 import type { Case } from "@oiw/contracts";
 
+import { ExportControls } from "@/app/w/[workspace]/ExportControls";
 import { Badge } from "@/components/ui/Badge";
 import { DataTable } from "@/components/ui/DataTable";
 import type { DataTableColumn } from "@/components/ui/DataTable";
@@ -62,7 +63,10 @@ export default async function CaseListPage({
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
-      <h1 className="text-lg font-semibold text-ink">Cases</h1>
+      <header className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-lg font-semibold text-ink">Cases</h1>
+        <ExportControls workspace={slug} dataset="cases" />
+      </header>
 
       {state === "error" ? (
         <ErrorState message="Could not load cases." />
