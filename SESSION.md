@@ -100,6 +100,9 @@ Changes require a dedicated contract-change task.
   turn with detached work (OIW-004b and OIW-808 both lost their finish
   this way; rule now codified in AGENTS.md Completion Protocol).
 - `codex exec` launches: always `</dev/null`.
+- Lead merge procedure: never treat "no checks reported" as green — wait
+  until BOTH `quality` and `e2e` checks exist and pass before merging
+  (OIW-905 merged pre-CI once due to this; docs-only, verified after).
 - Lockfile: single owner per batch or integrator-reconciled at merge with a
   frozen-install verification.
 - Resource rule: at most two agents running Playwright/build concurrently
