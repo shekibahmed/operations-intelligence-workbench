@@ -26,12 +26,27 @@ async function replaceSessionCookie(context: BrowserContext, value: string): Pro
       sameSite: "Lax",
     },
   ]);
+
+  const installed = (await context.cookies("http://127.0.0.1:4300")).find(
+    ({ name }) => name === "oiw_session",
+  );
+  expect(installed?.value).toBe(value);
 }
 
 function decodeWorkspaceId(token: string): string {
   const payload = token.split(".")[1];
   if (payload === undefined) throw new Error("Session token has no payload");
   return (JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as { workspaceId: string }).workspaceId;
+}
+
+function tamperSignature(token: string): string {
+  const [version, payload, signature] = token.split(".");
+  if (version === undefined || payload === undefined || signature === undefined) {
+    throw new Error("Session token does not have three segments");
+  }
+
+  const tamperedSignature = `${signature.startsWith("a") ? "b" : "a"}${signature.slice(1)}`;
+  return `${version}.${payload}.${tamperedSignature}`;
 }
 
 test("HTTP boundary rejects forged, expired and tampered guest cookies without workspace disclosure", async ({ page, context }) => {
@@ -55,15 +70,21 @@ test("HTTP boundary rejects forged, expired and tampered guest cookies without w
     },
     {
       name: "tampered",
-      token: `${cookie!.value.slice(0, -1)}${cookie!.value.endsWith("a") ? "b" : "a"}`,
+      token: tamperSignature(cookie!.value),
     },
   ];
 
   for (const attack of attacks) {
     await test.step(`${attack.name} cookie`, async () => {
       await replaceSessionCookie(context, attack.token);
-      await page.goto(`${base}/overview`);
-      await expect(page).toHaveURL(/\/demo$/);
+      const response = await page.goto(`${base}/overview`);
+      expect(response).not.toBeNull();
+      expect(new URL(response!.url()).pathname).toBe("/demo");
+
+      const rejectedRequest = response!.request().redirectedFrom();
+      expect(rejectedRequest).not.toBeNull();
+      expect(new URL(rejectedRequest!.url()).pathname).toBe(`${base}/overview`);
+      expect((await rejectedRequest!.response())?.status()).toBe(307);
       await expect(page.getByText(/workspace not found/i)).toHaveCount(0);
     });
   }

@@ -50,3 +50,72 @@ jobs:
       - run: pnpm build
       - run: pnpm eval
       - run: pnpm architecture:check
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: oiw
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d oiw"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/oiw
+      SESSION_SECRET: e2e-test-session-secret-not-for-production-use
+      OIW_RATE_LIMIT_IP_SALT: e2e-test-rate-limit-salt-not-for-production-use
+      OIW_TRUSTED_PROXY_HEADER: none
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install Chromium system dependencies
+        run: pnpm --filter @oiw/web exec playwright install-deps chromium
+
+      - name: Install Chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: pnpm --filter @oiw/web exec playwright install chromium
+
+      - run: pnpm db:migrate
+      - run: pnpm build
+      - run: pnpm demo:seed --pack asset-reliability
+
+      - name: Run Playwright three times
+        working-directory: apps/web
+        run: pnpm exec playwright test --repeat-each=3
+
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-artifacts
+          path: apps/web/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
