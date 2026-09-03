@@ -5,131 +5,92 @@
 
 ## Current milestone
 
-**M1 COMPLETE (2026-09-01): the full Asset Reliability vertical slice.**
-Exit criterion (PRD §26 Wave 2) met and continuously enforced: the
-north-star Playwright spec (`apps/web/e2e/north-star.spec.ts`) walks the
-complete PRD §13 visitor journey — scenario selection → seeded workspace →
-artifact processing → evidence-backed review → entity/event/rules/signal →
-critical case → hold-from-service decision → human approval → real
-dashboards → audit trail — with real state assertions, green in CI.
+**ALL P0 CODE COMPLETE — M3 (public launch) GATED ON OWNER DECISIONS.**
+As of 2026-09-03: Waves 0–4 complete and Wave 5 code complete (37 PRs,
+all lead-verified, CI-gated incl. Playwright). No agents running.
 
-**M2 NEUTRALITY PROOF MERGED (PR #24 + #25).** Common lifecycle test
-11/11 across all three packs, wired into pnpm test/CI; one real engine gap
-found+fixed (assembler now honours ADR-010 value discriminators, OIW-703
-PR #25); pack-data fixes adversarially reviewed against narrative (zero
-semantic drift); asset-reliability byte-untouched throughout.
-OIW-702 MERGED (PR #26): all three packs now have full click-through
-guided tours, each with its own Playwright journey (9 e2e specs total) —
-product-owner tours request delivered. M2 tail items remaining: pack
-authoring guide + scaffold template (PRD Wave 3 deliverables) — cut on
-owner request or fold into Wave 4 start.
+Owner decisions required before the remaining (mechanical) launch steps:
+1. Hosting: Vercel project + Supabase project (owner-created, or Supabase
+   provisioned via the connected MCP with cost confirmation); flip repo to
+   public at launch (yes/no).
+2. CTA destination: postgres table (shipped default) | email | form
+   service — email/webhook are interfaces only until chosen.
 
-**WAVE 4 (Hardening) COMPLETE (2026-09-03).** Merged: OIW-802 #29 (eval
-runner, 1.000 all dimensions + sabotage tests), OIW-810 #30 (rate limits,
-input policy, expiry sweep, adversarial HTTP tests), OIW-808 #31 (axe in
-CI-spec, 16 a11y fixes, tablet drawer, keyboard tours), OIW-811 #32
-(exports FR-110 w/ formula neutralisation), OIW-805 #33 (injection matrix
-across formats × payloads × packs), OIW-812 (threat-model sign-off: all
-17 SECURITY.md rows closed/accepted with evidence; DEPLOYMENT.md runbook;
-approval-concurrency test; trusted-proxy policy; credential-scan breadth).
-Suite: 375+ tests, 22 e2e specs, eval 1.000.
+Then, in order: configure env per `docs/DEPLOYMENT.md` → deploy → run
+DEPLOYMENT.md smoke checks against the live URL → enable real branch
+protection once public → hand over live demo link. Launch posts/outreach
+are owner-authored (PRD §38 patterns; walkthroughs provide material).
 
-**WAVE 5 (Public Launch / M3) — NEXT.** OIW-901 MERGED (#35): Playwright is a CI gate (e2e job) and the
-tampered-cookie flake was a real test bug (padding-bit mutation), now
-strict. OIW-905 MERGED (#36: public README per §37, ARCHITECTURE refresh +
-Mermaid diagrams, three §38 walkthroughs, CONTRIBUTING, issue templates;
-quick start executed; one lead fix to a stale CI claim). OIW-904 MERGED (analytics events + assessment CTA; postgres/log
-sinks, email/webhook interfaces; migration 0002). WAVE 5 CODE COMPLETE.
-M3 now GATED ONLY ON OWNER DECISIONS: hosting (Vercel + Supabase, repo
-public) and CTA sink destination; then: deploy per DEPLOYMENT.md, smoke
-checks, branch protection, launch content (owner-authored). Then
-deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
-project (owner-created, or provision via Supabase MCP on request) and
-repo flip to public at launch; (2) CTA submission destination (email /
-Supabase table / form service). Remaining Wave 5 scope per PRD §26:
-analytics events + CTA (FR-120/121), README + architecture diagram +
-walkthroughs, launch content, branch protection once public.
+## Milestones achieved
 
-## Merged tasks (chronological; 23 PRs total, all lead-verified)
+- **M0** Contract freeze (Wave 0) — contracts, UX spec, quality plan,
+  narrative fixtures.
+- **Wave 1** Platform skeleton — DB/persistence, validator/registry, app
+  shell, seed/reset, three validated packs.
+- **M1** Asset Reliability vertical slice (Wave 2) — north-star Playwright
+  journey enforced in CI.
+- **M2** Neutrality proof (Wave 3) — common lifecycle 11/11 across three
+  packs, tours for all three, pack authoring guide + `_template`.
+- **Wave 4** Hardening — eval runner (1.000 all dimensions + sabotage
+  tests), rate limits/input policy/expiry sweep, a11y audit (axe in CI),
+  exports (FR-110), injection matrix, threat-model sign-off (all 17
+  SECURITY.md rows), DEPLOYMENT.md runbook.
+- **Wave 5 code** — Playwright CI gate + flake fix (OIW-901), public
+  README/architecture/walkthroughs (OIW-905), analytics + assessment CTA
+  with pluggable sink + migration 0002 (OIW-904).
 
-Wave 0: OIW-000, 001(#3), 003(#2), 005(#1), 004a(#4)
-Wave 1: OIW-002(#5, contracts v1.1), 101(#7), 103(#6), 201(#8), 004b(#10),
-  107(#11), 105(#9)
-Wave 2 / M1: OIW-210(#14), 108(#13, v1.2), 301(#12), 406(#16), 408(#18),
-  109(v1.3 + seed entities), 110(#19, ambiguity validator), 501(#15, 9/9
-  gold parity), 506(#20, engines; contracts v1.4), 509(#21), 601(#22,
-  metrics v1.5), 602(#23, dashboards + tour + north-star e2e)
+## Merged tasks (37 PRs)
+
+Wave 0: 000, 001(#3), 003(#2), 005(#1), 004a(#4)
+Wave 1: 002(#5), 101(#7), 103(#6), 201(#8), 004b(#10), 107(#11), 105(#9)
+Wave 2: 210(#14), 108(#13), 301(#12), 406(#16), 408(#18), 109, 110(#19),
+  501(#15), 506(#20), 509(#21), 601(#22), 602(#23)
+Wave 3: 701(#24), 703(#25), 702(#26), 705(#27), 706(#28)
+Wave 4: 802(#29), 810(#30), 808(#31), 811(#32), 805(#33), 812
+Wave 5: 901(#35), 905(#36), 904(#37)
 
 ## Contracts
 
-Frozen at **v1.5**: canonical domain (v1.0) + negated/candidates/conflicting
-(v1.1) + ObservationSchemaDefinition (v1.2) + EventDefinition/SeedEntity
-(v1.3) + CaseDefinition (v1.4) + MetricDefinition (v1.5). ADRs 001–012.
-Changes require a dedicated contract-change task.
+Frozen at **v1.5** (ADRs 001–012). Changes require a dedicated
+contract-change task. Migrations: 0000 (schema), 0002 (analytics +
+assessment tables, OIW-904).
 
-## Tracked debt / deltas
+## Tracked debt / accepted risks
 
-- e2e: `accessibility.spec.ts` #main-content 5s visibility wait times
-  out under --workers=2 repeats (12/12 at workers=1; CI single-run green
-  3×) → raise wait / networkidle in a later determinism pass.
-- Accepted risk (SECURITY.md): rate-limit store is process-local; Wave 5
-  deployment notes cover multi-instance implications.
+- `accessibility.spec.ts` #main-content 5s wait times out under
+  `--workers=2` repeats (single-worker + CI green) → raise wait/networkidle.
+- Rate-limit store is process-local (accepted risk, SECURITY.md); multi-
+  instance implications documented in DEPLOYMENT.md.
+- PDF fixtures are text-with-page-markers; binary PDF parsing deferred
+  (A7) — README states this honestly.
+- `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric seam.
+- Email/webhook assessment sinks are interfaces only (owner decision).
 
-- `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric-service
-  seam (by design); presentation extras (sample records, hrefs) derived in
-  the adapter — consider promoting into the service at Wave 3/4 if packs
-  two/three dashboards need the same.
-- PDF fixtures are text-with-page-markers; real PDF binary parsing deferred
-  (A7) — revisit before public launch claims FR-013 fully.
+## Operating rules (keep applying)
 
-## Next integration sequence (AFTER owner check-in)
+- Headless Claude: `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`, sequential,
+  no detached work at turn end (codified in AGENTS.md).
+- `codex exec`: always `</dev/null`.
+- Lead merge procedure: both `quality` and `e2e` checks must EXIST and
+  pass; run the full suite on the merged tree first.
+- Resource rule: max two Playwright/build-heavy agents concurrently; kill
+  orphaned vitest/chrome workers before lead verification (never the
+  owner's own Chromium).
+- Lockfile: single owner per batch or integrator-reconciled.
+- BLOCKED protocol: bounded upstream fix tasks; zero boundary bypasses.
 
-1. Wave 3 / M2: run the same lifecycle on process-exceptions +
-   document-assurance — expect mostly pack-content tasks (their gold sets,
-   expected extractions and event definitions are shipped but never
-   exercised end-to-end; the ambiguity validator already passes them);
-   common lifecycle contract test against every pack (PRD §10.4); pack
-   authoring guide + scaffold template.
-2. Wave 4: evaluation runner + full eval suite, prompt-injection/approval-
-   bypass/workspace-isolation test hardening, accessibility + responsive
-   review, rate limiting, error states, threat-model remediation, exports.
-3. Wave 5: Vercel + hosted Supabase deployment, analytics + CTA, README/
-   walkthroughs, public launch (repo flips public; enable branch protection).
+## Commands expected to pass
 
-## Operating rules learned (keep applying)
-
-- Headless Claude launches: `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`,
-  sequential work, no detached sub-agents — AND the agent must not end its
-  turn with detached work (OIW-004b and OIW-808 both lost their finish
-  this way; rule now codified in AGENTS.md Completion Protocol).
-- `codex exec` launches: always `</dev/null`.
-- Lead merge procedure: never treat "no checks reported" as green — wait
-  until BOTH `quality` and `e2e` checks exist and pass before merging
-  (OIW-905 merged pre-CI once due to this; docs-only, verified after).
-- Lockfile: single owner per batch or integrator-reconciled at merge with a
-  frozen-install verification.
-- Resource rule: at most two agents running Playwright/build concurrently
-  on this machine — a third plus a lead build OOM-killed a Next build
-  worker (SIGKILL) during OIW-808 verification.
-- Parallel lanes touching shared pack data: the lead runs the full suite on
-  the MERGED tree before any merge (caught the OIW-601×602 conflict).
-- BLOCKED protocol works: five blocked cycles all resolved via bounded
-  upstream tasks (OIW-107/108/109/110 + 602-remediation), zero boundary
-  bypasses.
-
-## Commands currently expected to pass
-
-`pnpm install/lint/typecheck/test/build/validate:packs/architecture:check`,
-`pnpm db:migrate`, `pnpm demo:seed --pack asset-reliability` (25 artifacts,
-35 entities), `pnpm demo:reset`, `pnpm eval` (1.000 all dimensions), `(cd apps/web &&
-pnpm test:e2e)` — 9 specs incl. north-star + per-pack tours. CI runs all
-of it per PR.
+`pnpm install/lint/typecheck/test/build/validate:packs/eval/architecture:check`,
+`pnpm db:migrate`, `pnpm demo:seed --pack <id>`, `pnpm demo:reset`,
+`pnpm demo:expire`, `pnpm analytics:summary`, `(cd apps/web && pnpm
+test:e2e)` — 23 specs. CI runs quality + e2e per PR.
 
 ## Repository notes
 
 - Remote: `https://github.com/shekibahmed/operations-intelligence-workbench`
-  (private until M3). Branch protection by convention until public.
-- Worktrees: `../oiw-core`, `../oiw-ux`, `../oiw-packs`, `../oiw-quality`
-  (all clean, on stale task branches — re-point per task at next wave).
-- Accounts: primary Claude (`~/.claude`, lead) + m900x
-  (`~/.claude-m900x`, workers via CLAUDE_CONFIG_DIR); Codex via ChatGPT sub.
+  (private until launch). Branch protection by convention until public.
+- Worktrees `../oiw-core`, `../oiw-ux`, `../oiw-packs`, `../oiw-quality`
+  (clean; on stale task branches — re-point per task).
+- Accounts: primary Claude (lead) + m900x (`~/.claude-m900x`, workers);
+  Codex via ChatGPT sub. OpenCode unusable with Claude Max.
