@@ -274,6 +274,8 @@ hashed-IP/action window because no workspace Audit chain exists yet).
 | Review | 60 | 240 | 1 minute |
 | Decision | 20 | 80 | 1 minute |
 | Reset | 3 | 12 | 10 minutes |
+| Analytics events | 180 per session | 600 per IP | 1 minute |
+| Assessment submission | 3 per session | 12 per IP | 1 hour |
 | Case action / note | 30 | 120 | 1 minute |
 | Export | 10 | 40 | 1 minute |
 

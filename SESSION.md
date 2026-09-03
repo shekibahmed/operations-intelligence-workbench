@@ -38,8 +38,11 @@ Suite: 375+ tests, 22 e2e specs, eval 1.000.
 tampered-cookie flake was a real test bug (padding-bit mutation), now
 strict. OIW-905 MERGED (#36: public README per §37, ARCHITECTURE refresh +
 Mermaid diagrams, three §38 walkthroughs, CONTRIBUTING, issue templates;
-quick start executed; one lead fix to a stale CI claim). RUNNING: OIW-904 (analytics events + assessment CTA with
-pluggable sink; Codex, ../oiw-core — this task owns a migration). Then
+quick start executed; one lead fix to a stale CI claim). OIW-904 MERGED (analytics events + assessment CTA; postgres/log
+sinks, email/webhook interfaces; migration 0002). WAVE 5 CODE COMPLETE.
+M3 now GATED ONLY ON OWNER DECISIONS: hosting (Vercel + Supabase, repo
+public) and CTA sink destination; then: deploy per DEPLOYMENT.md, smoke
+checks, branch protection, launch content (owner-authored). Then
 deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
 project (owner-created, or provision via Supabase MCP on request) and
 repo flip to public at launch; (2) CTA submission destination (email /
