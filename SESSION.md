@@ -34,8 +34,11 @@ across formats × payloads × packs), OIW-812 (threat-model sign-off: all
 approval-concurrency test; trusted-proxy policy; credential-scan breadth).
 Suite: 375+ tests, 22 e2e specs, eval 1.000.
 
-**WAVE 5 (Public Launch / M3) — NEXT.** First task RUNNING (no owner input needed): OIW-901 — Playwright e2e
-job in CI + tampered-cookie flake fix (Codex, ../oiw-core). Then
+**WAVE 5 (Public Launch / M3) — NEXT.** OIW-901 MERGED (#35): Playwright is a CI gate (e2e job) and the
+tampered-cookie flake was a real test bug (padding-bit mutation), now
+strict. RUNNING: OIW-905 (public README/architecture/walkthroughs; m900x,
+../oiw-quality) ∥ OIW-904 (analytics events + assessment CTA with
+pluggable sink; Codex, ../oiw-core — this task owns a migration). Then
 deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
 project (owner-created, or provision via Supabase MCP on request) and
 repo flip to public at launch; (2) CTA submission destination (email /
@@ -62,10 +65,9 @@ Changes require a dedicated contract-change task.
 
 ## Tracked debt / deltas
 
-- e2e: `security.spec.ts` "tampered cookie" sub-step is flaky (passes
-  on rerun; same build) → determinism fix in OIW-901.
-- CI has no Playwright job — e2e enforced only by lead/agent local runs
-  → OIW-901.
+- e2e: `accessibility.spec.ts` #main-content 5s visibility wait times
+  out under --workers=2 repeats (12/12 at workers=1; CI single-run green
+  3×) → raise wait / networkidle in a later determinism pass.
 - Accepted risk (SECURITY.md): rate-limit store is process-local; Wave 5
   deployment notes cover multi-instance implications.
 
