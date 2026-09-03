@@ -1,0 +1,33 @@
+%% OIW canonical lifecycle — object-level view of docs/DOMAIN_MODEL.md "Lifecycle"
+%% and "Correction lifecycle". Rendered inline in docs/ARCHITECTURE.md.
+flowchart TD
+    W["Workspace selects a validated ScenarioPack"] --> S["Source receives an immutable Artifact"]
+    S --> Seg["ArtifactSegment identifies exact evidence"]
+    Seg --> X["Extraction proposes supported, negated\nor insufficient-evidence Observations"]
+    X --> R{"Confident and unambiguous?"}
+    R -->|yes| Acc["Observation accepted"]
+    R -->|no| Rev["Routed to Review Queue:\naccept / correct / reject"]
+    Rev --> Acc
+    Acc --> Ent["Resolves to an Entity"]
+    Ent --> Evt["OperationalEvent assembled"]
+    Evt --> Rules["Deterministic rules evaluate the\nclosed fact catalogue (v1)"]
+    Rules --> Sig["Signal"]
+    Rules --> Case["Case groups the operational response"]
+    Case --> Act["Action Items assign accountable work"]
+    Rules --> Dec["Decision proposed"]
+    Dec --> App["Approval records material human control"]
+    App --> Met["Metrics and lenses read the same state"]
+    Acc --> Audit[("Every material transition appends\nan append-only Audit Entry")]
+    Evt --> Audit
+    Sig --> Audit
+    Case --> Audit
+    Dec --> Audit
+    App --> Audit
+
+    subgraph Correction["Correction after downstream records already exist (ADR-006)"]
+        direction TB
+        C1["Reviewer corrects an accepted Observation"] --> C2["Audit Entry appended"]
+        C2 --> C3["Affected Events/Cases marked\n'required' for re-evaluation"]
+        C3 --> C4["Re-evaluation appends superseding\nderived state and causal audit links —\nnever rewrites history in place"]
+    end
+    Acc -. "post-assembly correction" .-> C1

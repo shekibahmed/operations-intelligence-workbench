@@ -1,0 +1,27 @@
+%% OIW system flow — package-level view of docs/ARCHITECTURE.md "System flow".
+%% Rendered inline in docs/ARCHITECTURE.md; kept here as the editable source.
+flowchart LR
+    Source["Source adapter\n(@oiw/ingestion)"] --> Artifact["Immutable Artifact\n+ ArtifactSegments"]
+    Artifact --> Provider["IntelligenceProvider\nstructured extraction\n(@oiw/intelligence)"]
+    Provider --> Validate["Zod schema validation\n+ confidence/evidence policy\n(@oiw/contracts, @oiw/application)"]
+    Validate -->|"confident, unambiguous"| Accepted["Accepted Observation"]
+    Validate -->|"ambiguous, low-confidence,\nnegated or insufficient"| Review["Human review\n(Review Queue)"]
+    Review --> Accepted
+    Accepted --> EntityRes["Entity resolution\n(exact / alias / ambiguous-to-review)"]
+    EntityRes --> Event["OperationalEvent assembly\n(@oiw/application, per EventDefinition)"]
+    Event --> Rules["Closed-catalogue deterministic rules\n(@oiw/rules)"]
+    Rules --> Signal["Signal"]
+    Rules --> Case["Case + Action Items"]
+    Rules --> Decision["Proposed Decision"]
+    Decision --> Approval["Recorded human Approval"]
+    Signal --> Metrics["Metrics, lenses, dashboards\n(@oiw/application MetricEvaluationService)"]
+    Case --> Metrics
+    Approval --> Metrics
+    Accepted --> Audit[("Append-only Audit Entry\n@oiw/audit")]
+    Event --> Audit
+    Rules --> Audit
+    Decision --> Audit
+    Approval --> Audit
+
+    classDef pack fill:#eef,stroke:#448;
+    class Provider,Rules,Event pack;
