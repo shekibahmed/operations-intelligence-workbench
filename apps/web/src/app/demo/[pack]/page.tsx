@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { GuidedStartActions } from "@/app/demo/[pack]/GuidedStartActions";
+import { AnalyticsPageEvents } from "@/components/analytics/AnalyticsPageEvents";
 import { findPackById } from "@/lib/stub/packs";
 import { resolveScreenState } from "@/types/screen-state";
 
@@ -29,6 +30,9 @@ export default async function GuidedScenarioStartPage({
 
   return (
     <main className="mx-auto flex max-w-2xl flex-col gap-6 px-4 py-10">
+      <AnalyticsPageEvents
+        events={[{ name: "scenario-selected", context: { scenarioId: pack.id } }]}
+      />
       <div>
         <h1 className="text-xl font-semibold text-ink">{pack.name}</h1>
         <p className="mt-2 text-sm text-ink-muted">{pack.problemStatement}</p>

@@ -18,9 +18,15 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { createDatabase } from "./database.js";
 import { createPostgresRepositories } from "./postgres-repositories.js";
+import {
+  createAssessmentSubmissionRepository,
+  createProductAnalyticsRepository,
+} from "./product-analytics.js";
 
 const connection = createDatabase();
 const repositories = createPostgresRepositories(connection.database);
+const analytics = createProductAnalyticsRepository(connection.database);
+const assessments = createAssessmentSubmissionRepository(connection.database);
 const timestamp = "2026-08-31T10:00:00.000Z";
 const checksum = "a".repeat(64);
 
@@ -426,13 +432,15 @@ describe.sequential("Postgres persistence repositories", () => {
     ).toBeNull();
   });
 
-  it("stores workspace scope structurally on every scoped table", async () => {
+  it("stores workspace scope structurally on every canonical operational table", async () => {
     const unscopedTables = await connection.client<{ table_name: string }[]>`
       SELECT tables.table_name
       FROM information_schema.tables AS tables
       WHERE tables.table_schema = 'public'
         AND tables.table_type = 'BASE TABLE'
-        AND tables.table_name NOT IN ('workspaces', '__drizzle_migrations')
+        AND tables.table_name NOT IN (
+          'workspaces', '__drizzle_migrations', 'analytics_events', 'assessment_submissions'
+        )
         AND NOT EXISTS (
           SELECT 1
           FROM information_schema.columns AS columns
@@ -443,6 +451,32 @@ describe.sequential("Postgres persistence repositories", () => {
         )
     `;
     expect(unscopedTables).toEqual([]);
+
+    const engagementScopes = await connection.client<{
+      table_name: string;
+      workspace_nullable: string;
+      session_nullable: string;
+    }[]>`
+      SELECT tables.table_name,
+        workspace_columns.is_nullable AS workspace_nullable,
+        session_columns.is_nullable AS session_nullable
+      FROM information_schema.tables AS tables
+      JOIN information_schema.columns AS workspace_columns
+        ON workspace_columns.table_schema = tables.table_schema
+        AND workspace_columns.table_name = tables.table_name
+        AND workspace_columns.column_name = 'workspace_id'
+      JOIN information_schema.columns AS session_columns
+        ON session_columns.table_schema = tables.table_schema
+        AND session_columns.table_name = tables.table_name
+        AND session_columns.column_name = 'session_id'
+      WHERE tables.table_schema = 'public'
+        AND tables.table_name IN ('analytics_events', 'assessment_submissions')
+      ORDER BY tables.table_name
+    `;
+    expect(engagementScopes).toEqual([
+      { table_name: "analytics_events", workspace_nullable: "YES", session_nullable: "NO" },
+      { table_name: "assessment_submissions", workspace_nullable: "YES", session_nullable: "NO" },
+    ]);
   });
 
   it("finds workspaces by slug and lists only TTL-expired workspaces in stable order", async () => {
@@ -551,5 +585,93 @@ describe.sequential("Postgres persistence repositories", () => {
       other.artifact,
     );
     expect(await repositories.auditEntries.list(other.workspace.id)).toEqual([other.auditEntry]);
+  });
+
+  it("keeps analytics and assessment reads workspace-scoped and event writes idempotent", async () => {
+    const records = createRecordSet("analytics-workspace");
+    const other = createRecordSet("analytics-neighbour");
+    await repositories.workspaces.insert(records.workspace);
+    await repositories.workspaces.insert(other.workspace);
+    const event = {
+      id: randomUUID(),
+      workspaceId: records.workspace.id,
+      sessionId: randomUUID(),
+      name: "cta-opened",
+      context: { scenarioId: "example-pack" },
+      occurredAt: "2026-09-03T08:01:00.000Z",
+    };
+
+    expect(await analytics.insert(event)).toBe(true);
+    expect(await analytics.insert(event)).toBe(false);
+    expect(await analytics.listByWorkspace(records.workspace.id)).toEqual([event]);
+    expect(await analytics.listByWorkspace(other.workspace.id)).toEqual([]);
+    expect(await analytics.listBySession(event.sessionId)).toEqual([event]);
+
+    const submission = {
+      id: randomUUID(),
+      workspaceId: records.workspace.id,
+      sessionId: event.sessionId,
+      organisation: "Example Operations",
+      industry: "Cross-sector",
+      operationalWorkflow: "Exception review",
+      currentSourceSystems: null,
+      approximateInformationVolume: null,
+      mainBottleneck: "Manual triage",
+      currentReportingMethod: null,
+      dataSensitivity: null,
+      desiredResult: "Faster follow-up",
+      contactDetails: "person@example.test",
+      scenarioId: "example-pack",
+      submittedAt: "2026-09-03T08:02:00.000Z",
+    };
+    expect(await assessments.insert(submission)).toEqual(submission);
+    expect(await assessments.listByWorkspace(records.workspace.id)).toEqual([submission]);
+    expect(await assessments.listByWorkspace(other.workspace.id)).toEqual([]);
+
+    const columns = await connection.client<{ column_name: string }[]>`
+      SELECT column_name
+      FROM information_schema.columns
+      WHERE table_name IN ('analytics_events', 'assessment_submissions')
+      ORDER BY column_name
+    `;
+    expect(columns.map((row) => row.column_name)).not.toContain("ip_address");
+    expect(columns.map((row) => row.column_name)).not.toContain("ip");
+  });
+
+  it("summarises engagement and assessment counts without returning submission PII", async () => {
+    const sessionId = randomUUID();
+    await analytics.insert({
+      id: randomUUID(),
+      workspaceId: null,
+      sessionId,
+      name: "landing-page-view",
+      context: { path: "/" },
+      occurredAt: "2026-09-03T08:00:00.000Z",
+    });
+    await assessments.insert({
+      id: randomUUID(),
+      workspaceId: null,
+      sessionId,
+      organisation: "Summary-hidden organisation",
+      industry: "Cross-sector",
+      operationalWorkflow: "Review",
+      currentSourceSystems: null,
+      approximateInformationVolume: null,
+      mainBottleneck: "Triage",
+      currentReportingMethod: null,
+      dataSensitivity: null,
+      desiredResult: "Visibility",
+      contactDetails: "hidden@example.test",
+      scenarioId: null,
+      submittedAt: "2026-09-03T08:02:00.000Z",
+    });
+
+    const summary = await analytics.summary();
+    expect(summary).toEqual({
+      totalEvents: 1,
+      events: [{ name: "landing-page-view", count: 1 }],
+      assessmentSubmissions: 1,
+    });
+    expect(JSON.stringify(summary)).not.toContain("hidden@example.test");
   });
 });

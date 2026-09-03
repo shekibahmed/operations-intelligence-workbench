@@ -1,4 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
+import {
+  createDatabase,
+  createPostgresRepositories,
+  createProductAnalyticsRepository,
+} from "@oiw/persistence";
 
 /**
  * The M1 exit artifact (OIW-602/OIW-804): a single visitor journey through
@@ -218,5 +223,39 @@ test("north-star: PRD §13 asset-reliability journey — scenario selection thro
     await expect(page.getByRole("radio", { name: "Technical" })).toHaveAttribute("aria-checked", "true");
     await expect(page.getByText("Repeat Fault Signals")).toBeVisible();
     await page.screenshot({ path: "e2e/screenshots/north-star-technical-overview-desktop.png", fullPage: true });
+  });
+
+  await test.step("the completed guided tour is measurable through first-party analytics", async () => {
+    const workspaceSlug = base.slice("/w/".length);
+    const connection = createDatabase();
+    try {
+      const workspace = await createPostgresRepositories(connection.database).workspaces.findBySlug(workspaceSlug);
+      if (workspace === null) throw new Error("Guided-tour workspace was not persisted");
+      const analyticsSessionId = (await page.context().cookies()).find(
+        (cookie) => cookie.name === "oiw_analytics_session",
+      )?.value;
+      if (analyticsSessionId === undefined) throw new Error("Analytics session cookie was not issued");
+      const analytics = createProductAnalyticsRepository(connection.database);
+      await expect
+        .poll(async () => (await analytics.listBySession(analyticsSessionId)).map((event) => event.name), {
+          timeout: 5_000,
+        })
+        .toEqual(
+          expect.arrayContaining([
+            "demo-started",
+            "scenario-selected",
+            "artifact-processed",
+            "observation-reviewed",
+            "case-opened",
+            "decision-viewed",
+            "decision-approved",
+            "artifact-opened",
+            "technical-trace-viewed",
+            "tour-completed",
+          ]),
+        );
+    } finally {
+      await connection.close();
+    }
   });
 });

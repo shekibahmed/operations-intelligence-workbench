@@ -96,6 +96,7 @@ describe("public-demo rate-limit policy", () => {
       ["apps/web/src/app/w/[workspace]/review/actions.ts", "review"],
       ["apps/web/src/app/w/[workspace]/decisions/actions.ts", "decision"],
       ["apps/web/src/app/w/[workspace]/cases/[caseId]/actions.ts", "case-action"],
+      ["apps/web/src/app/adapt/actions.ts", "assessment"],
     ];
 
     for (const [path, mutation] of expected) {
@@ -107,6 +108,14 @@ describe("public-demo rate-limit policy", () => {
   it("wires the shared limiter into the audited export download boundary", async () => {
     const source = await readFile(resolve(process.cwd(), "apps/web/src/lib/server/export-download.ts"), "utf8");
     expect(source).toContain('enforceRateLimit("export"');
+  });
+
+  it("rate-limits first-party analytics and accepts no client-supplied workspace scope", async () => {
+    const source = await readFile(resolve(process.cwd(), "apps/web/src/app/api/analytics/route.ts"), "utf8");
+    expect(source).toContain('enforceGuestRateLimit("analytics"');
+    expect(source).not.toContain('raw["workspaceId"]');
+    expect(source).not.toContain('raw["ip"]');
+    expect(source).not.toContain('raw["ipAddress"]');
   });
 });
 

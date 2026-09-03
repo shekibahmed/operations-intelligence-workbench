@@ -17,3 +17,7 @@ function getConnection() {
 export function getRepositories(): PersistenceRepositories {
   return createPostgresRepositories(getConnection().database);
 }
+
+export function getPersistenceDatabase() {
+  return getConnection().database;
+}

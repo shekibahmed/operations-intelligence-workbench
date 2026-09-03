@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { processFixtureArtifacts } from "@/app/w/[workspace]/inbox/actions";
 import { getTourSteps } from "@/lib/tour/steps";
 import { withLens } from "@/lib/routes";
+import { emitProductAnalyticsEvent } from "@/lib/product-analytics";
 
 const STORAGE_KEY = "oiw-tour-state";
 
@@ -144,6 +145,9 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
   function advanceTo(nextIndex: number, path: string | null) {
     writeStoredState({ active: true, index: nextIndex });
     setIndex(nextIndex);
+    if (nextIndex === lastIndex) {
+      void emitProductAnalyticsEvent("tour-completed", { scenarioId: packId });
+    }
     if (path !== null) router.push(withLens(path, steps![nextIndex]!.lens));
   }
 

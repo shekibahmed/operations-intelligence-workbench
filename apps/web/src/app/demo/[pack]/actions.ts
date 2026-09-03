@@ -8,6 +8,7 @@ import { getRepositories } from "@/lib/server/db";
 import { findPackEntry } from "@/lib/server/pack-registry";
 import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { setSessionCookie } from "@/lib/server/session";
+import { tryRecordProductAnalyticsEvent } from "@/lib/server/product-analytics";
 
 export type StartEntry = "tour" | "free";
 
@@ -37,6 +38,11 @@ export async function startGuestWorkspace(packId: string, entry: StartEntry): Pr
   }
 
   await setSessionCookie(workspace.id);
+  await tryRecordProductAnalyticsEvent({
+    workspace,
+    name: "demo-started",
+    context: { scenarioId: packEntry.id, entry },
+  });
 
   const base = `/w/${workspace.slug}`;
   redirect(entry === "tour" ? `${base}/inbox?lens=operations&tour=1` : `${base}/overview?lens=leadership`);

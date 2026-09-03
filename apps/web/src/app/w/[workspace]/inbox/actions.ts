@@ -9,6 +9,7 @@ import { toActionFailure, type ActionFailure } from "@/lib/server/action-error";
 import { getRepositories } from "@/lib/server/db";
 import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { requireWorkspace } from "@/lib/server/workspace";
+import { tryRecordProductAnalyticsEvent } from "@/lib/server/product-analytics";
 
 export type ProcessArtifactActionResult =
   | { ok: true; status: Artifact["processingStatus"]; observationCount: number }
@@ -31,6 +32,11 @@ export async function processArtifactAction(
     if (result.artifact.processingStatus === "processed" || result.artifact.processingStatus === "needs-review") {
       await tryAdvanceArtifact(workspace, artifactId);
     }
+    await tryRecordProductAnalyticsEvent({
+      workspace,
+      name: "artifact-processed",
+      context: { subjectId: artifactId },
+    });
     return {
       ok: true,
       status: result.artifact.processingStatus,
@@ -71,6 +77,11 @@ export async function processFixtureArtifacts(
       if (result.artifact.processingStatus === "processed" || result.artifact.processingStatus === "needs-review") {
         await tryAdvanceArtifact(workspace, artifact.id);
       }
+      await tryRecordProductAnalyticsEvent({
+        workspace,
+        name: "artifact-processed",
+        context: { subjectId: artifact.id },
+      });
     }
     return { ok: true };
   } catch (error) {

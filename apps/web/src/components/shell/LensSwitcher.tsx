@@ -4,6 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { LENS_COOKIE, LENS_LABEL, LENSES } from "@/lib/lens";
 import type { Lens } from "@/lib/lens";
+import { emitProductAnalyticsEvent } from "@/lib/product-analytics";
 
 /**
  * Segmented control: Leadership / Operations / Technical (UX_SPEC §1.2). A
@@ -17,6 +18,7 @@ export function LensSwitcher({ activeLens }: { activeLens: Lens }) {
   const searchParams = useSearchParams();
 
   function selectLens(lens: Lens) {
+    if (lens !== activeLens) void emitProductAnalyticsEvent("lens-switched", { lens });
     const params = new URLSearchParams(searchParams.toString());
     params.set("lens", lens);
     document.cookie = `${LENS_COOKIE}=${lens}; path=/; max-age=86400; SameSite=Lax`;

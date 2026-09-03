@@ -14,6 +14,7 @@ import { findPackEntry } from "@/lib/server/pack-registry";
 import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { readSessionPayload } from "@/lib/server/session";
 import { requireWorkspace } from "@/lib/server/workspace";
+import { tryRecordProductAnalyticsEvent } from "@/lib/server/product-analytics";
 
 export type ReviewActionResult =
   | { ok: true; observation: Observation }
@@ -104,6 +105,11 @@ async function runReviewAction(
     if (result === null) return { ok: false, message: "This observation could not be found." };
     await syncArtifactProcessingStatus(repositories, workspace.id, result.artifactId);
     await tryAdvanceArtifact(workspace, result.artifactId);
+    await tryRecordProductAnalyticsEvent({
+      workspace,
+      name: "observation-reviewed",
+      context: { subjectId: observationId },
+    });
     return { ok: true, observation: result };
   } catch (error) {
     return toActionFailure(error, "Could not save this review action.");
@@ -288,6 +294,11 @@ export async function correctObservation(
     if (result === null) return { ok: false, message: "This observation could not be found." };
     await syncArtifactProcessingStatus(repositories, workspace.id, result.artifactId);
     await tryAdvanceArtifact(workspace, result.artifactId);
+    await tryRecordProductAnalyticsEvent({
+      workspace,
+      name: "observation-reviewed",
+      context: { subjectId: observationId },
+    });
     return { ok: true, observation: result };
   } catch (error) {
     return toActionFailure(error, "Could not save this correction.");

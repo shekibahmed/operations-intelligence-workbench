@@ -27,6 +27,8 @@ const DEFAULTS: Record<GuestMutationKind, MutationDefaults> = {
   reset: { sessionCapacity: 3, ipCapacity: 12, refillIntervalMs: 10 * 60 * 1_000 },
   "case-action": { sessionCapacity: 30, ipCapacity: 120, refillIntervalMs: 60 * 1_000 },
   export: { sessionCapacity: 10, ipCapacity: 40, refillIntervalMs: 60 * 1_000 },
+  analytics: { sessionCapacity: 180, ipCapacity: 600, refillIntervalMs: 60 * 1_000 },
+  assessment: { sessionCapacity: 3, ipCapacity: 12, refillIntervalMs: 60 * 60 * 1_000 },
 };
 
 declare global {
@@ -191,12 +193,15 @@ export async function enforceGuestRateLimit(
   mutation: GuestMutationKind,
   workspace?: Workspace,
   cost = 1,
+  sessionKeyOverride?: string,
 ): Promise<void> {
   const [payload, ipKey] = await Promise.all([readSessionPayload(), privacyPreservingIpKey()]);
   const decision = await rateLimiter().check({
     mutation,
     ipKey,
-    ...(payload === null ? {} : { sessionKey: payload.sessionId }),
+    ...(sessionKeyOverride === undefined && payload === null
+      ? {}
+      : { sessionKey: sessionKeyOverride ?? payload!.sessionId }),
     cost,
   });
   if (decision.allowed) return;

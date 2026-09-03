@@ -1,8 +1,8 @@
 import { BUTTON_BASE_CLASSES, VARIANT_CLASSES } from "@/components/ui/Button";
 
 /**
- * "Adapt this workflow" CTA (UX_SPEC §9). No tracking — amendment A7 defers
- * FR-120/121; this is a plain link to `/adapt` with the active pack as the
+ * "Adapt this workflow" CTA (UX_SPEC §9). The destination records the
+ * first-party CTA-open event and this link supplies the active pack as the
  * pre-fill for "Scenario being viewed". A real `<a>` styled like `Button`,
  * not a `<button>` wrapping an `<a>` — nesting interactive elements is
  * invalid markup that axe-core (and some assistive tech) reject outright.

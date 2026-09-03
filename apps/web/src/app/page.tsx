@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { AnalyticsPageEvents } from "@/components/analytics/AnalyticsPageEvents";
 import { BUTTON_BASE_CLASSES, VARIANT_CLASSES } from "@/components/ui/Button";
 
 const LENS_SUMMARIES = [
@@ -20,6 +21,7 @@ const LENS_SUMMARIES = [
 export default function LandingPage() {
   return (
     <main className="mx-auto flex max-w-4xl flex-col gap-10 px-4 py-16">
+      <AnalyticsPageEvents events={[{ name: "landing-page-view" }]} />
       <section>
         <h1 className="text-3xl font-semibold text-ink">
           Turn scattered operational information into governed, explainable action.

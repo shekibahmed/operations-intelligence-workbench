@@ -1,34 +1,44 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useActionState, useId } from "react";
 
+import {
+  submitAssessment,
+  type AssessmentFormState,
+} from "@/app/adapt/actions";
 import { Button } from "@/components/ui/Button";
+
+const INITIAL_ASSESSMENT_FORM_STATE: AssessmentFormState = {
+  status: "idle",
+  message: "",
+  fieldErrors: {},
+};
 
 const FIELDS = [
   { name: "organisation", label: "Organisation", type: "text", required: true },
   { name: "industry", label: "Industry", type: "text", required: true },
-  { name: "workflow", label: "Operational workflow", type: "text", required: true },
-  { name: "sourceSystems", label: "Current source systems", type: "text", required: false },
-  { name: "volume", label: "Approximate information volume", type: "text", required: false },
-  { name: "bottleneck", label: "Main bottleneck", type: "text", required: true },
-  { name: "reportingMethod", label: "Current reporting method", type: "text", required: false },
+  { name: "operationalWorkflow", label: "Operational workflow", type: "text", required: true },
+  { name: "currentSourceSystems", label: "Current source systems", type: "text", required: false },
+  { name: "approximateInformationVolume", label: "Approximate information volume", type: "text", required: false },
+  { name: "mainBottleneck", label: "Main bottleneck", type: "text", required: true },
+  { name: "currentReportingMethod", label: "Current reporting method", type: "text", required: false },
   { name: "dataSensitivity", label: "Data sensitivity", type: "text", required: false },
   { name: "desiredResult", label: "Desired result", type: "text", required: true },
-  { name: "contact", label: "Contact details", type: "text", required: true },
-  { name: "scenario", label: "Scenario being viewed", type: "text", required: false },
+  { name: "contactDetails", label: "Contact details", type: "text", required: true },
 ] as const;
 
-/**
- * Form fields per PRD §23.2. Submission has no real backend in Wave 1
- * (non-goal); this simulates the default/submitting/success/error states
- * UX_SPEC §5.15 requires, with no event tracking (amendment A7).
- */
-export function AdaptForm({ scenario, forcedState }: { scenario: string; forcedState?: "submitting" | "error" | undefined }) {
+export function AdaptForm({
+  scenario,
+  scenarioOptions,
+  forcedState,
+}: {
+  scenario: string;
+  scenarioOptions: Array<{ id: string; name: string }>;
+  forcedState?: "submitting" | "error" | undefined;
+}) {
   const formId = useId();
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const effectiveStatus = forcedState ?? status;
+  const [state, formAction, pending] = useActionState(submitAssessment, INITIAL_ASSESSMENT_FORM_STATE);
+  const effectiveStatus = forcedState ?? (pending ? "submitting" : state.status);
 
   if (effectiveStatus === "success") {
     return (
@@ -39,35 +49,20 @@ export function AdaptForm({ scenario, forcedState }: { scenario: string; forcedS
     );
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const nextErrors: Record<string, string> = {};
-    for (const field of FIELDS) {
-      if (field.required && !String(data.get(field.name) ?? "").trim()) {
-        nextErrors[field.name] = `${field.label} is required.`;
-      }
-    }
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    setStatus("submitting");
-    window.setTimeout(() => {
-      setStatus("success");
-    }, 400);
-  }
-
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form action={formAction} noValidate>
       {effectiveStatus === "error" ? (
         <p role="alert" className="mb-4 rounded-md border border-[var(--color-critical-ink)] bg-[var(--color-critical-surface)] p-3 text-sm text-[var(--color-critical-ink)]">
-          Submission failed. Your entered values have been kept — please try again.
+          {forcedState === "error"
+            ? "Submission failed. Your entered values have been kept — please try again."
+            : state.message}
         </p>
       ) : null}
       <div className="flex flex-col gap-4">
         {FIELDS.map((field) => {
           const fieldId = `${formId}-${field.name}`;
           const errorId = `${fieldId}-error`;
+          const error = state.fieldErrors[field.name];
           return (
             <div key={field.name}>
               <label htmlFor={fieldId} className="block text-sm font-medium text-ink">
@@ -77,19 +72,44 @@ export function AdaptForm({ scenario, forcedState }: { scenario: string; forcedS
                 id={fieldId}
                 name={field.name}
                 type="text"
-                defaultValue={field.name === "scenario" ? scenario : undefined}
-                aria-describedby={errors[field.name] ? errorId : undefined}
-                aria-invalid={errors[field.name] ? true : undefined}
+                required={field.required}
+                disabled={effectiveStatus === "submitting"}
+                aria-describedby={error ? errorId : undefined}
+                aria-invalid={error ? true : undefined}
                 className="mt-1 w-full rounded-md border border-border p-2 text-sm"
               />
-              {errors[field.name] ? (
+              {error ? (
                 <p id={errorId} className="mt-1 text-xs text-[var(--color-critical-ink)]">
-                  {errors[field.name]}
+                  {error}
                 </p>
               ) : null}
             </div>
           );
         })}
+        <div>
+          <label htmlFor={`${formId}-scenarioId`} className="block text-sm font-medium text-ink">
+            Scenario being viewed
+          </label>
+          <select
+            id={`${formId}-scenarioId`}
+            name="scenarioId"
+            defaultValue={scenario}
+            disabled={effectiveStatus === "submitting"}
+            aria-describedby={state.fieldErrors.scenarioId ? `${formId}-scenarioId-error` : undefined}
+            aria-invalid={state.fieldErrors.scenarioId ? true : undefined}
+            className="mt-1 w-full rounded-md border border-border p-2 text-sm"
+          >
+            <option value="">No scenario selected</option>
+            {scenarioOptions.map((option) => (
+              <option key={option.id} value={option.id}>{option.name}</option>
+            ))}
+          </select>
+          {state.fieldErrors.scenarioId ? (
+            <p id={`${formId}-scenarioId-error`} className="mt-1 text-xs text-[var(--color-critical-ink)]">
+              {state.fieldErrors.scenarioId}
+            </p>
+          ) : null}
+        </div>
       </div>
       <Button variant="primary" type="submit" className="mt-6" disabled={effectiveStatus === "submitting"}>
         {effectiveStatus === "submitting" ? "Submitting…" : "Submit"}

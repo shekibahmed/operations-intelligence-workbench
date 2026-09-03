@@ -8,6 +8,7 @@ import { getRepositories } from "@/lib/server/db";
 import { enforceGuestRateLimit } from "@/lib/server/rate-limit";
 import { readSessionPayload } from "@/lib/server/session";
 import { requireWorkspace } from "@/lib/server/workspace";
+import { tryRecordProductAnalyticsEvent } from "@/lib/server/product-analytics";
 
 export type DecisionActionResult = { ok: true; decision: Decision } | ActionFailure;
 
@@ -59,6 +60,13 @@ export async function decideOnDecision(
       outcome,
       comment: trimmedComment.length > 0 ? trimmedComment : null,
     });
+    if (outcome === "approved") {
+      await tryRecordProductAnalyticsEvent({
+        workspace,
+        name: "decision-approved",
+        context: { subjectId: decisionId, outcome },
+      });
+    }
     return { ok: true, decision: result.decision };
   } catch (error) {
     return toActionFailure(error, "Could not save this decision.");

@@ -131,6 +131,19 @@ append-only chain's previous/current hash fields. Every file carries a
 synthetic-data notice. CSV text that could be interpreted as a spreadsheet
 formula is apostrophe-prefixed before quoting.
 
+## Product analytics and workflow assessments
+
+`ProductAnalyticsService` accepts only the PRD §23.1 event catalogue and a
+closed, bounded context shape. Arbitrary browser properties and query-bearing
+paths are rejected so contact data cannot drift into analytics. Event IDs make
+same-origin client retries idempotent at the persistence boundary.
+
+`AssessmentSubmissionService` validates and normalises every PRD §23.2 field,
+then writes through `SubmissionSink`. `PostgresSubmissionSink` delegates to a
+storage port and `LogSubmissionSink` supports a deliberate server-log
+destination. `EmailSubmissionSink` and `WebhookSubmissionSink` are extension
+interfaces only: neither sends a message or performs a network call.
+
 ## Local commands
 
 With Docker PostgreSQL running and migrations applied:

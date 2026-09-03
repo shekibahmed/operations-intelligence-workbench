@@ -583,3 +583,52 @@ export const auditEntries = pgTable(
     index("audit_entries_workspace_occurred_idx").on(table.workspaceId, table.occurredAt),
   ],
 );
+
+export const analyticsEvents = pgTable(
+  "analytics_events",
+  {
+    id: uuid("id").primaryKey(),
+    workspaceId: uuid("workspace_id").references(() => workspaces.id, { onDelete: "set null" }),
+    sessionId: text("session_id").notNull(),
+    name: text("name").notNull(),
+    context: jsonb("context").$type<unknown>().notNull(),
+    occurredAt: zonedTimestamp("occurred_at").notNull(),
+  },
+  (table) => [
+    scopedIndex("analytics_events_workspace_occurred_idx").on(table.workspaceId, table.occurredAt),
+    index("analytics_events_session_occurred_idx").on(table.sessionId, table.occurredAt),
+    index("analytics_events_name_occurred_idx").on(table.name, table.occurredAt),
+    check(
+      "analytics_events_name_allowed",
+      sql`${table.name} in ('landing-page-view', 'scenario-selected', 'demo-started', 'artifact-opened', 'artifact-processed', 'observation-reviewed', 'case-opened', 'decision-viewed', 'decision-approved', 'technical-trace-viewed', 'lens-switched', 'tour-completed', 'cta-opened', 'assessment-submitted')`,
+    ),
+  ],
+);
+
+export const assessmentSubmissions = pgTable(
+  "assessment_submissions",
+  {
+    id: uuid("id").primaryKey(),
+    workspaceId: uuid("workspace_id").references(() => workspaces.id, { onDelete: "set null" }),
+    sessionId: text("session_id").notNull(),
+    organisation: text("organisation").notNull(),
+    industry: text("industry").notNull(),
+    operationalWorkflow: text("operational_workflow").notNull(),
+    currentSourceSystems: text("current_source_systems"),
+    approximateInformationVolume: text("approximate_information_volume"),
+    mainBottleneck: text("main_bottleneck").notNull(),
+    currentReportingMethod: text("current_reporting_method"),
+    dataSensitivity: text("data_sensitivity"),
+    desiredResult: text("desired_result").notNull(),
+    contactDetails: text("contact_details").notNull(),
+    scenarioId: text("scenario_id"),
+    submittedAt: zonedTimestamp("submitted_at").notNull(),
+  },
+  (table) => [
+    scopedIndex("assessment_submissions_workspace_submitted_idx").on(
+      table.workspaceId,
+      table.submittedAt,
+    ),
+    index("assessment_submissions_submitted_idx").on(table.submittedAt),
+  ],
+);

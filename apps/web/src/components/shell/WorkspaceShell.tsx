@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { AnalyticsPageEvents, type AnalyticsPageEventDefinition } from "@/components/analytics/AnalyticsPageEvents";
 import { Breadcrumbs } from "@/components/shell/Breadcrumbs";
 import { LensCookieSync } from "@/components/shell/LensCookieSync";
 import { MobileNavDrawer } from "@/components/shell/MobileNavDrawer";
@@ -38,8 +39,21 @@ export function WorkspaceShell({
   defaultRuleId: string;
   children: ReactNode;
 }) {
+  const analyticsEvents: AnalyticsPageEventDefinition[] = [];
+  if (section === "cases-detail") analyticsEvents.push({ name: "case-opened" });
+  if (section === "decisions") analyticsEvents.push({ name: "decision-viewed" });
+  if (section === "technical-artifacts") {
+    analyticsEvents.push({ name: "artifact-opened" }, { name: "technical-trace-viewed" });
+  }
+  if (section === "technical-rules") analyticsEvents.push({ name: "technical-trace-viewed" });
+  const contextualEvents = analyticsEvents.map((event) => ({
+    ...event,
+    context: { ...event.context, scenarioId: packId, lens },
+  }));
+
   return (
     <div className="flex min-h-screen flex-col">
+      <AnalyticsPageEvents events={contextualEvents} />
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-10 focus:bg-surface focus:p-2">
         Skip to main content
       </a>

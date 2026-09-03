@@ -84,6 +84,7 @@ All values are server-only. Do not create `NEXT_PUBLIC_` copies of secrets.
 | `OIW_RATE_LIMIT_IP_SALT` | Required for deployment | Independent random high-entropy HMAC salt for privacy-preserving IP bucket keys. Do not reuse it outside rate limiting. |
 | `OIW_TRUSTED_PROXY_HEADER` | Required explicitly for deployment | Set `x-vercel-forwarded-for` on Vercel. Allowed values are `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, or `none`. An invalid value fails closed. |
 | `SCENARIO_PACKS_DIR` | Normally unset | Override only if the runtime working directory differs from `apps/web`; it must resolve to the deployed read-only `scenario-packs/` directory. |
+| `OIW_ASSESSMENT_SINK` | Optional | `postgres` (default) stores submissions in the migrated first-party table. `log` writes the submitted form record to server logs. No email or webhook delivery is implemented. |
 
 When the runtime exposes `VERCEL=1`, the code defaults to
 `x-vercel-forwarded-for`. Set `OIW_TRUSTED_PROXY_HEADER` explicitly so the
@@ -107,8 +108,35 @@ OIW_RATE_LIMIT_<MUTATION>_REFILL_INTERVAL_MS
 ```
 
 `<MUTATION>` is one of `WORKSPACE_CREATE`, `ARTIFACT_PROCESS`, `REVIEW`,
-`DECISION`, `RESET`, `CASE_ACTION`, or `EXPORT`. Values must be positive
+`DECISION`, `RESET`, `CASE_ACTION`, `EXPORT`, `ANALYTICS`, or `ASSESSMENT`. Values must be positive
 integers; invalid values fail closed when that policy is used.
+
+### Analytics and assessment sink
+
+Product analytics is first-party: the browser posts allow-listed events to the
+same-origin `/api/analytics` route and no third-party tracking script is loaded.
+The `oiw_analytics_session` cookie is an anonymous UUID used to connect events
+that occur before and after Workspace creation. It is `HttpOnly`,
+`SameSite=Lax`, `Secure` in production and expires after 30 days. Workspace
+scope is always derived from the separately signed guest session. IP addresses
+are HMAC-derived only for rate-limit buckets and are never written to either
+new table.
+
+Keep `OIW_ASSESSMENT_SINK=postgres` unless server logs are the intentionally
+chosen destination. The `log` sink contains the form fields, including contact
+details, so log access and retention must be treated as personal-data storage.
+Email and webhook extension interfaces exist, but there is no outbound delivery
+implementation or network call in this release. A future destination must add
+its own security review and deployment configuration.
+
+Run the aggregate-only admin report from a trusted environment:
+
+```bash
+pnpm analytics:summary
+```
+
+The command prints counts by event and the total assessment-submission count;
+it never prints organisation, workflow or contact fields.
 
 ### TTL and cleanup
 
@@ -197,6 +225,10 @@ For each environment:
    three packs.
 9. Confirm HTTPS redirects/enforcement at the edge and no mixed-content
    requests. Do not promote if TLS or secure-cookie checks fail.
+10. Complete one guided tour and one assessment submission. Run
+    `pnpm analytics:summary` against the environment and confirm tour, CTA and
+    submission counts increased without raw IP or assessment contents in the
+    report.
 
 ## 8. Rotation, rollback and incident notes
 

@@ -35,8 +35,11 @@ command at a shared or production database.
 
 ## Workspace scoping
 
-Every persisted table except the Workspace root itself carries a non-null,
-indexed `workspace_id`. Link tables carry the same scope, and composite
+Every canonical operational table except the Workspace root itself carries a non-null,
+indexed `workspace_id`. The analytics and assessment tables added by OIW-904
+carry a non-null anonymous `session_id` and an indexed, nullable `workspace_id`
+because landing-page engagement and direct assessment enquiries can precede
+Workspace creation. Link tables carry the same scope, and composite
 foreign keys prevent relationships from crossing workspace boundaries.
 Repository methods require `workspaceId` for every read and write; detail
 lookups return `null` when an ID belongs to a different workspace.
@@ -79,3 +82,16 @@ rollback restores the trigger automatically.
 
 PostgreSQL normalises timestamps to UTC when records are hydrated, preserving
 the contracts' offset-aware ISO 8601 requirement.
+
+## Product analytics and assessments
+
+Migration `0002` adds only `analytics_events` and `assessment_submissions`.
+Both retain an anonymous first-party session ID and an optional Workspace
+reference; deleting an expired Workspace clears the reference without deleting
+the aggregate engagement or assessment record. Neither table has an IP-address
+column. Analytics context is an application-validated closed object and cannot
+contain arbitrary form or contact data.
+
+Guest-facing code has insert-only adapters. Workspace-scoped list methods exist
+for isolation tests; the admin summary reports event and submission counts only
+and never returns assessment contents.
