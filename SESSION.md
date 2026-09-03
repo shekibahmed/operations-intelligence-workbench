@@ -36,8 +36,9 @@ Suite: 375+ tests, 22 e2e specs, eval 1.000.
 
 **WAVE 5 (Public Launch / M3) — NEXT.** OIW-901 MERGED (#35): Playwright is a CI gate (e2e job) and the
 tampered-cookie flake was a real test bug (padding-bit mutation), now
-strict. RUNNING: OIW-905 (public README/architecture/walkthroughs; m900x,
-../oiw-quality) ∥ OIW-904 (analytics events + assessment CTA with
+strict. OIW-905 MERGED (#36: public README per §37, ARCHITECTURE refresh +
+Mermaid diagrams, three §38 walkthroughs, CONTRIBUTING, issue templates;
+quick start executed; one lead fix to a stale CI claim). RUNNING: OIW-904 (analytics events + assessment CTA with
 pluggable sink; Codex, ../oiw-core — this task owns a migration). Then
 deployment tasks GATED ON OWNER DECISIONS: (1) Vercel project + Supabase
 project (owner-created, or provision via Supabase MCP on request) and
