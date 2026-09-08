@@ -1,7 +1,7 @@
 # Task OIW-004a: Synthetic Narrative Content for Three Packs
 
 ## Owner
-Claude Code (Sonnet, m900x account)
+Claude Code (Sonnet, second account)
 
 ## Branch
 `agent/claude/OIW-004a-narrative-fixtures`

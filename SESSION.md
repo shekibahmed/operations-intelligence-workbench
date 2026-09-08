@@ -5,21 +5,34 @@
 
 ## Current milestone
 
-**ALL P0 CODE COMPLETE — M3 (public launch) GATED ON OWNER DECISIONS.**
-As of 2026-09-03: Waves 0–4 complete and Wave 5 code complete (37 PRs,
-all lead-verified, CI-gated incl. Playwright). No agents running.
+**M3 REACHED (repository public, 2026-09-08) — ALL P0 CODE COMPLETE.
+HOSTING DEFERRED BY OWNER DECISION.**
 
-Owner decisions required before the remaining (mechanical) launch steps:
-1. Hosting: Vercel project + Supabase project (owner-created, or Supabase
-   provisioned via the connected MCP with cost confirmation); flip repo to
-   public at launch (yes/no).
-2. CTA destination: postgres table (shipped default) | email | form
-   service — email/webhook are interfaces only until chosen.
+Waves 0–5 complete (37 lead-verified, CI-gated PRs in the private
+development repo). No agents running. No open tasks.
 
-Then, in order: configure env per `docs/DEPLOYMENT.md` → deploy → run
-DEPLOYMENT.md smoke checks against the live URL → enable real branch
-protection once public → hand over live demo link. Launch posts/outreach
-are owner-authored (PRD §38 patterns; walkthroughs provide material).
+Owner decisions taken on 2026-09-08:
+1. Repository is public; history rewritten to noreply identities (see
+   Repository notes).
+2. Hosted demo is **deferred** until buyer outreach begins. Chosen target
+   when it happens: container host (Google Cloud Run or equivalent) plus
+   Neon Postgres — the app reads Scenario Packs from the filesystem at
+   runtime, so edge runtimes (Cloudflare Workers) and file-tracing-based
+   serverless hosts are poor fits; see `docs/DEPLOYMENT.md` (Vercel/Supabase
+   runbook, still valid as an alternative) and the 2026-09-08 hosting
+   analysis in the lead thread.
+3. CTA destination remains the shipped Postgres table; email/webhook
+   remain interfaces only.
+
+Open follow-ups (create task packets when picked up):
+- Hosting task: Dockerfile + `output: "standalone"`, env-configurable DB
+  pool size (`packages/persistence/src/database.ts` hardcodes `max: 10`),
+  `outputFileTracingIncludes` for `scenario-packs/` if a serverless host is
+  ever used, keepalive/expiry GitHub Actions job, DEPLOYMENT.md §2–§4
+  rewrite for the chosen host.
+- Old private repo `operations-intelligence-workbench-old-private`: keep
+  (holds PR review history and agent branches); archive read-only when
+  comfortable; never delete.
 
 ## Milestones achieved
 
@@ -35,11 +48,15 @@ are owner-authored (PRD §38 patterns; walkthroughs provide material).
   tests), rate limits/input policy/expiry sweep, a11y audit (axe in CI),
   exports (FR-110), injection matrix, threat-model sign-off (all 17
   SECURITY.md rows), DEPLOYMENT.md runbook.
-- **Wave 5 code** — Playwright CI gate + flake fix (OIW-901), public
+- **Wave 5** — Playwright CI gate + flake fix (OIW-901), public
   README/architecture/walkthroughs (OIW-905), analytics + assessment CTA
   with pluggable sink + migration 0002 (OIW-904).
+- **M3** Public repository (2026-09-08) — pre-publication audit clean
+  (gitleaks full history: 2 verified false positives; no real data; CI has
+  no secrets, `pull_request` trigger, `contents: read`); root
+  `SECURITY.md`; repo security features and branch protection enabled.
 
-## Merged tasks (37 PRs)
+## Merged tasks (37 PRs, numbers refer to the old private repo)
 
 Wave 0: 000, 001(#3), 003(#2), 005(#1), 004a(#4)
 Wave 1: 002(#5), 101(#7), 103(#6), 201(#8), 004b(#10), 107(#11), 105(#9)
@@ -65,9 +82,20 @@ assessment tables, OIW-904).
   (A7) — README states this honestly.
 - `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric seam.
 - Email/webhook assessment sinks are interfaces only (owner decision).
+- DB client pool `max: 10` is hardcoded; must become configurable before
+  any serverless/pooled-connection host.
 
 ## Operating rules (keep applying)
 
+- **Public repo.** Everything pushed — commits, branches, PR bodies — is
+  public. Synthetic data only; no absolute local paths, machine or account
+  nicknames in committed docs.
+- **Identity.** Commit only as `149814333+shekibahmed@users.noreply.github.com`
+  (set locally and globally). GitHub blocks pushes exposing the personal
+  address.
+- **`main` is protected.** No force-push or deletion; changes land via PR
+  with `quality` and `e2e` passing — this now includes lead-thread docs
+  commits.
 - Headless Claude: `CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`, sequential,
   no detached work at turn end (codified in AGENTS.md).
 - `codex exec`: always `</dev/null`.
@@ -89,8 +117,15 @@ test:e2e)` — 23 specs. CI runs quality + e2e per PR.
 ## Repository notes
 
 - Remote: `https://github.com/shekibahmed/operations-intelligence-workbench`
-  (private until launch). Branch protection by convention until public.
-- Worktrees `../oiw-core`, `../oiw-ux`, `../oiw-packs`, `../oiw-quality`
-  (clean; on stale task branches — re-point per task).
-- Accounts: primary Claude (lead) + m900x (`~/.claude-m900x`, workers);
-  Codex via ChatGPT sub. OpenCode unusable with Claude Max.
+  — **public** since 2026-09-08. History rewritten with
+  `git filter-repo --mailmap` (trees, messages, dates identical; all SHAs
+  changed). Pre-2026-09-08 SHAs, `agent/*` branch names, `../oiw-*`
+  worktree paths and `refs/t3/checkpoints/*` are all invalid.
+- Old repo: `shekibahmed/operations-intelligence-workbench-old-private`
+  (private) — holds the 38 `agent/*` branches and the 37 PRs referenced by
+  `(#N)` in commit messages.
+- Worktrees: none. Recreate per task from the new `main` as
+  `../oiw-<name>` on `agent/<harness>/<id>-<slug>`.
+- Accounts: primary Claude (lead) + a second Claude Max account for
+  workers (`CLAUDE_CONFIG_DIR` pointed at its own config dir); Codex via
+  ChatGPT subscription. OpenCode unusable with Claude Max.

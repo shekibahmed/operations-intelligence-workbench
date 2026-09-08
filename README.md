@@ -6,12 +6,12 @@
 > behaviour is supplied through configurable Scenario Packs rather than
 > hardcoded application forks.
 
-**Status:** Wave 4 (hardening) is complete and Wave 5 (public launch) is in
-progress on `main`. The three-pack neutrality proof, evaluation suite,
-security hardening and accessibility pass are all merged and continuously
-enforced in CI. The repository itself is still private and there is no
-hosted public demo yet — both are gated on owner deployment decisions
-(`SESSION.md`). Every command below runs against a local clone today.
+**Status:** all P0 scope (Waves 0–5) is complete on `main`. The three-pack
+neutrality proof, evaluation suite, security hardening, accessibility pass,
+exports, product analytics and the assessment CTA are merged and continuously
+enforced in CI. The repository is public. There is no hosted demo yet: hosting
+is deliberately deferred until buyer outreach begins (see Roadmap), so every
+command below runs against a local clone.
 
 - Product specification: [`docs/PRD.md`](docs/PRD.md)
 - Approved plan amendments: [`docs/PLAN_AMENDMENTS.md`](docs/PLAN_AMENDMENTS.md)
@@ -208,15 +208,15 @@ tracked debt):
 - **No live intelligence provider is wired in.** The `IntelligenceProvider`
   interface supports one (PRD FR-021, P1), but the public demonstration
   runs entirely on the deterministic fixture provider.
-- **The `/adapt` CTA form has no backend yet.** It renders and validates
-  correctly (idle/submitting/success/error states) but does not persist a
-  submission or emit an analytics event; the submission destination and
-  engagement-analytics events (FR-120/FR-121) are gated on an owner decision
-  before Wave 5 launch.
-- **No hosted public deployment exists yet.** Vercel/Supabase provisioning
-  and the repository's flip to public are both Wave 5 items gated on owner
-  action; see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the runbook
-  that will be executed once those decisions are made.
+- **The `/adapt` CTA stores submissions in Postgres only.** The form and
+  engagement analytics (FR-120/FR-121) are implemented; submissions land in a
+  first-party table (`OIW_ASSESSMENT_SINK=postgres`, default) or the server
+  log. Email and webhook delivery exist as interfaces without an
+  implementation, pending an owner decision on the destination.
+- **No hosted public deployment exists yet.** Hosting is deferred until
+  outreach to buyers starts; the repository is fully usable from a local
+  clone. [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) is the runbook for when a
+  hosted demo is stood up.
 
 ## How can an organisation adapt it?
 
@@ -252,12 +252,28 @@ not yet built; tracked as roadmap, not shipped.
 
 ## Roadmap
 
-Wave 5 (public launch, PRD §26) remaining items, per `SESSION.md`: CI
-Playwright job (in progress), Vercel + hosted Supabase deployment and the
-repository's flip to public (gated on owner decisions), analytics events and
-a wired-up CTA destination (FR-120/FR-121, gated on an owner decision), and
-launch/outreach content (owner-authored). See PRD §14.2/§14.3 for the P1
-(post-three-pack) and P2 (client-pilot) capability backlog beyond that.
+All P0 code from PRD §26 Waves 0–5 is merged. What remains is owner-driven:
+
+- **Hosted demo.** Deferred by decision until buyer outreach begins. The app
+  is plain Node.js + Postgres with no host-specific dependency; see
+  [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+- **CTA destination.** Postgres storage ships today; email/webhook delivery
+  is an interface awaiting a destination choice.
+- **Launch and outreach content.** Owner-authored, drawing on
+  [`docs/walkthroughs/`](docs/walkthroughs/) and PRD §38.
+
+See PRD §14.2/§14.3 for the P1 (post-three-pack) and P2 (client-pilot)
+capability backlog beyond that.
+
+## Project history
+
+This repository was published on 2026-09-08 with a rewritten history: commit
+contents, messages and dates are unchanged from the private development repo,
+but author identities were normalised. The pull-request numbers cited in
+commit messages (`(#N)`) refer to that private development repository and do
+not resolve here. Each task's rationale, verification and hand-off record is
+preserved in [`docs/agent-runs/`](docs/agent-runs/) and
+[`docs/tasks/`](docs/tasks/).
 
 ## Licence
 

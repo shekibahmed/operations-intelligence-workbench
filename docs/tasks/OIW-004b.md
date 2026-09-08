@@ -1,7 +1,7 @@
 # Task OIW-004b: Schema-Bound Scenario Pack Content
 
 ## Owner
-Claude Code (Sonnet, m900x account)
+Claude Code (Sonnet, second account)
 
 ## Branch
 `agent/claude/OIW-004b-scenario-packs`
