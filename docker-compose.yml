@@ -15,5 +15,24 @@ services:
     volumes:
       - oiw-postgres-data:/var/lib/postgresql/data
 
+  # Full-container demo: create a `.env` next to this file (see
+  # `.env.example`) with POSTGRES_USER / POSTGRES_PASSWORD, run
+  # `docker compose up -d postgres && pnpm db:migrate`, then
+  # `docker compose up --build web`. For day-to-day development `pnpm dev`
+  # on the host is faster; this service exists to prove the deployment
+  # story end to end.
+  web:
+    build: .
+    profiles: ["full-demo"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:?your-.env-must-define-POSTGRES_USER}:${POSTGRES_PASSWORD:?your-.env-must-define-POSTGRES_PASSWORD}@postgres:5432/oiw
+      SESSION_SECRET: ${SESSION_SECRET:?your-.env-must-define-SESSION_SECRET}
+      OIW_RATE_LIMIT_STORE: postgres
+    ports:
+      - "3000:3000"
+
 volumes:
   oiw-postgres-data:
