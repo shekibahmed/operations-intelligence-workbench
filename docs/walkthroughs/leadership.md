@@ -23,18 +23,19 @@ alarming. There is no system connecting them, no evidence trail, and no
 forcing function that surfaces the pattern to a decision-maker before it
 recurs.
 
-![Artifacts arriving in the inbox, before processing](../../apps/web/e2e/screenshots/north-star-tour-inbox-arrival-desktop.png)
+![The Inbox before processing: unprocessed artifacts, all 'Received' with 0 observations, with the tour's arrival step open](../../apps/web/e2e/screenshots/north-star-tour-inbox-arrival-desktop.png)
 
 ## After
 
 The platform extracts structured fields from the informal report
 (asset ID, component, symptom, severity suggestion) with cited evidence and
-a confidence score. One field — the asset identifier — comes back ambiguous
+a confidence score. One field — the previous-repair-reference
+("brake work done in spring", 70% confidence) — comes back ambiguous
 and is routed to a human reviewer rather than guessed; the reviewer
-confirms it in seconds, with the original text and the alternative
-candidate both visible.
+confirms it in seconds, with the original text, the highlighted evidence
+span, and the extracted value all visible.
 
-![The Review Queue: original text, extracted value, alternative candidate, evidence and confidence, side by side](../../apps/web/e2e/screenshots/review-populated-desktop.png)
+![The Review Queue: queue list, raw source with the evidence span highlighted, and observation detail (previous-repair-reference, 70% confidence, Pending review) side by side](../../apps/web/e2e/screenshots/review-populated-desktop.png)
 
 With that observation confirmed, a deterministic rule checks the asset's
 recent history and finds a second occurrence of a safety-critical fault. The
@@ -42,11 +43,11 @@ result: a critical-severity Signal, a Reliability Case with an owner and due
 date, and a proposed decision to hold the asset from service — awaiting a
 named person's explicit approval, not an automatic action.
 
-![The Decision Centre: the hold-from-service decision awaiting approval](../../apps/web/e2e/screenshots/decision-centre-desktop.png)
+![The Decision Centre (on-page heading 'Decisions'; shown here on a freshly seeded workspace with 'No decisions pending approval' — the hold-from-service proposal appears in this list once the rule fires)](../../apps/web/e2e/screenshots/decision-centre-desktop.png)
 
 The moment that approval is recorded, every dashboard reading it updates:
 
-![Leadership Overview after the approval: critical cases, asset availability, pending work, repeat-fault count and risk summary all reflect the single approval just made](../../apps/web/e2e/screenshots/north-star-leadership-overview-desktop.png)
+![Overview under the Leadership lens after the approval: Critical Signals 2, Open Reliability Cases 1, Repeat Fault Trend, and the approval recorded in Recent activity](../../apps/web/e2e/screenshots/north-star-leadership-overview-desktop.png)
 
 ## Operational control
 

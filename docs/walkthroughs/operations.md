@@ -14,7 +14,7 @@ the wrong way. It arrives in the inbox as raw text, alongside a QC
 confirmation record, an escalation email, and half a dozen other artifacts
 that, read individually, don't yet show a pattern.
 
-![The inbox with the operator note pinned, before processing](../../apps/web/e2e/screenshots/process-exceptions-tour-inbox-arrival-desktop.png)
+![The Inbox before processing: Tomas Reyes's operator note among unprocessed artifacts, all 'Received' with 0 observations, with the tour's arrival step open](../../apps/web/e2e/screenshots/process-exceptions-tour-inbox-arrival-desktop.png)
 
 ## Review
 
@@ -24,7 +24,7 @@ investigation." Rather than guessing a root cause, the platform routes that
 field to a human reviewer, who sees the original text, the extracted value
 and the evidence span before accepting it.
 
-![The Review Queue showing the unresolved reported-cause field, evidence highlighted in the source text](../../apps/web/e2e/screenshots/review-populated-desktop.png)
+![The Review Queue: raw source with the evidence span highlighted beside the observation detail (field, extracted value, confidence, status) — pictured on the Asset Reliability previous-repair-reference item at 70% confidence and Pending review, the suite's only populated Review Queue capture; the reported-cause item takes the same review path](../../apps/web/e2e/screenshots/review-populated-desktop.png)
 
 ## Case
 
@@ -34,7 +34,7 @@ Case is created automatically, linking the KM-LOT-448 pattern across both
 batches, the backlog, and every piece of supporting evidence gathered so
 far.
 
-![The Case List showing the created Exception Case](../../apps/web/e2e/screenshots/case-list-desktop.png)
+![The Case List (on-page heading 'Cases'; shown here on a freshly seeded workspace with 'No cases yet' — the Exception Case appears here once its rule fires)](../../apps/web/e2e/screenshots/case-list-desktop.png)
 
 ## Owner
 
@@ -57,7 +57,7 @@ because it stops shipment of potentially affected product — and it does not
 execute until a supervisor/QC approver explicitly approves it, with a
 required comment.
 
-![The Decision Centre: Hold Affected Output awaiting supervisor/QC approval](../../apps/web/e2e/screenshots/decision-centre-desktop.png)
+![The Decision Centre (on-page heading 'Decisions'; shown here on a freshly seeded workspace with 'No decisions pending approval' — the Hold Affected Output proposal appears in this list once the rule fires)](../../apps/web/e2e/screenshots/decision-centre-desktop.png)
 
 ## Closure
 
@@ -72,7 +72,7 @@ attempted without a recorded Approval is rejected (ADR-005, ADR-011).
 Once the hold decision is approved, the same underlying state is visible
 from a different angle:
 
-![Leadership Overview after the approval: open exceptions, critical signals and pending decisions reflect the single approval just made](../../apps/web/e2e/screenshots/process-exceptions-tour-leadership-overview-desktop.png)
+![Overview under the Leadership lens after the approval: Open Exceptions 3, Critical Signals 6, Pending Decisions 0, and the approval recorded in Recent activity](../../apps/web/e2e/screenshots/process-exceptions-tour-leadership-overview-desktop.png)
 
 This is the same pack-neutral mechanism the Asset Reliability walkthrough
 uses for a different vocabulary — "exception" and "batch" here,
