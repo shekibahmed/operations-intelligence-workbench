@@ -9,7 +9,7 @@ declare global {
   var __oiwDbConnection: ReturnType<typeof createDatabase> | undefined;
 }
 
-function getConnection() {
+export function getConnection() {
   globalThis.__oiwDbConnection ??= createDatabase();
   return globalThis.__oiwDbConnection;
 }

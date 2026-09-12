@@ -170,6 +170,9 @@ importers:
 
   packages/persistence:
     dependencies:
+      '@oiw/application':
+        specifier: workspace:*
+        version: link:../application
       '@oiw/contracts':
         specifier: workspace:*
         version: link:../contracts
