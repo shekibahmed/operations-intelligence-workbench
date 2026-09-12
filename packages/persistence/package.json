@@ -9,7 +9,7 @@
   "dependencies": {
     "@oiw/application": "workspace:*",
     "@oiw/contracts": "workspace:*",
-    "drizzle-orm": "^0.44.5",
+    "drizzle-orm": "^0.45.2",
     "postgres": "^3.4.7"
   }
 }
