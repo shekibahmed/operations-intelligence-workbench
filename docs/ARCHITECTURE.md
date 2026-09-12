@@ -253,9 +253,13 @@ only the application layer
 `requires workspace scope for every read and write`). Guest workspaces expire
 by a 24-hour absolute TTL and are deleted by the scheduled `pnpm demo:expire`
 cleanup path. Rate limits combine the session reference and a
-privacy-conscious IP-derived key (dual session/IP token buckets). Full threat
-analysis, including the accepted process-local rate-limit-store risk, is
-`docs/SECURITY.md` §2–§3.
+privacy-conscious IP-derived key (dual session/IP token buckets). The
+default store is process-local; multi-instance deployments select the
+shared atomic store with `OIW_RATE_LIMIT_STORE=postgres`
+(`PostgresTokenBucketStore`, applied by migration `0003`). Full threat
+analysis, including the residual accepted-risk position on the
+process-local default, is `docs/SECURITY.md` §2–§3 (see §3.9 and
+`docs/DEPLOYMENT.md` §5).
 
 ## Dashboards and metrics (amendment A5)
 
