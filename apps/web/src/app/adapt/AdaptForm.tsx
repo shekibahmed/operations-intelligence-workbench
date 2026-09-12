@@ -7,6 +7,7 @@ import {
   type AssessmentFormState,
 } from "@/app/adapt/actions";
 import { Button } from "@/components/ui/Button";
+import { FIRM } from "@/lib/firm";
 
 const INITIAL_ASSESSMENT_FORM_STATE: AssessmentFormState = {
   status: "idle",
@@ -45,6 +46,13 @@ export function AdaptForm({
       <div role="status" className="rounded-md border border-border bg-surface p-4 text-sm">
         <p className="font-medium text-ink">Thanks — we&apos;ll follow up shortly.</p>
         <p className="mt-1 text-ink-muted">You&apos;re welcome to keep exploring the demonstration.</p>
+        <p className="mt-2 text-ink-muted">
+          In a hurry? Email{" "}
+          <a href={`mailto:${FIRM.email}`} className="text-ink underline">
+            {FIRM.email}
+          </a>{" "}
+          — it comes straight to the team that built this.
+        </p>
       </div>
     );
   }

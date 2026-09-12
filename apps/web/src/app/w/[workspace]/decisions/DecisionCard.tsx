@@ -66,7 +66,7 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
         <p className="text-sm">
           Evidence:{" "}
           {evidenceLinks.map((link, index) => (
-            <span key={link.href}>
+            <span key={`${link.href}-${index}`}>
               {index > 0 ? ", " : null}
               <a href={link.href} className="text-[var(--color-accent)] underline">
                 {link.label}

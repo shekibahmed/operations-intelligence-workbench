@@ -1,5 +1,6 @@
 import { AdaptForm } from "@/app/adapt/AdaptForm";
 import { AnalyticsPageEvents } from "@/components/analytics/AnalyticsPageEvents";
+import { FIRM } from "@/lib/firm";
 import { findPackById, stubPacks } from "@/lib/stub/packs";
 import { resolveScreenState } from "@/types/screen-state";
 
@@ -34,6 +35,21 @@ export default async function AdaptCtaPage({
         The demonstration uses synthetic data. This assessment stores only the organisation,
         workflow and contact details you choose to provide so we can respond to your enquiry.
         Do not submit confidential operational records.
+      </p>
+      <p className="rounded-md border border-border bg-surface p-3 text-sm text-ink-muted">
+        Prefer to reach us directly? This platform is built and maintained by{" "}
+        <a href={FIRM.site} className="font-medium text-ink hover:underline" rel="noopener noreferrer">
+          {FIRM.name}
+        </a>{" "}
+        — an AI consultancy. Email{" "}
+        <a href={`mailto:${FIRM.email}`} className="text-ink underline">
+          {FIRM.email}
+        </a>{" "}
+        or WhatsApp{" "}
+        <a href={FIRM.whatsapp} className="text-ink underline" rel="noopener noreferrer">
+          {FIRM.whatsappDisplay}
+        </a>
+        .
       </p>
       <AdaptForm
         scenario={scenario}
