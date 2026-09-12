@@ -121,7 +121,9 @@ test("root and marketing routes render without a session", async ({ page }) => {
   await expect(page.getByText(/Turn scattered operational information/)).toBeVisible();
 
   await page.goto("/adapt");
-  await expect(page.getByText(/Adapt this workflow/)).toBeVisible();
+  // The phrase appears in the header CTA, the eyebrow, the h1 and the
+  // footer nav — assert on the page heading specifically.
+  await expect(page.getByRole("heading", { name: /Adapt this workflow/ })).toBeVisible();
 });
 
 test("screenshots of changed screens", async ({ page }) => {

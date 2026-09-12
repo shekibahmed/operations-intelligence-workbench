@@ -267,8 +267,10 @@ export function ReviewQueuePanel({
                   type="button"
                   onClick={() => selectItem(entry.observation.id)}
                   aria-current={entry.observation.id === selectedId ? "true" : undefined}
-                  className={`w-full rounded-md px-2 py-1.5 text-left text-sm ${
-                    entry.observation.id === selectedId ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)]" : "text-ink hover:bg-surface-muted"
+                  className={`w-full rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors ${
+                    entry.observation.id === selectedId
+                      ? "bg-[var(--color-accent-soft)] font-medium text-[var(--color-accent-soft-ink)]"
+                      : "text-ink hover:bg-surface-muted"
                   }`}
                 >
                   Item {index + 1}: {entry.observation.schemaKey}
@@ -279,7 +281,7 @@ export function ReviewQueuePanel({
         </nav>
       </div>
 
-      <div className="rounded-lg border border-border bg-surface p-4">
+      <div className="rounded-xl border border-border bg-surface p-5 shadow-card">
         <h2 ref={headingRef} tabIndex={-1} className="text-sm font-semibold text-ink outline-none">
           Raw source
         </h2>
@@ -297,7 +299,7 @@ export function ReviewQueuePanel({
         )}
       </div>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4">
+      <div className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 shadow-card">
         <h2 className="text-sm font-semibold text-ink">Observation detail</h2>
         <dl className="text-sm">
           <dt className="font-medium text-ink-muted">Field</dt>

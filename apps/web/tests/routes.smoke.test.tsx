@@ -155,7 +155,9 @@ describe("route smoke tests — every §19 route renders without throwing", () =
     setRoute("/demo");
     const element = await ScenarioSelectorPage({ searchParams: Promise.resolve({}) });
     render(element);
-    expect(screen.getByText("Asset Reliability")).toBeInTheDocument();
+    // The pack name appears in its card heading and in the footer's
+    // scenario-pack nav — assert on at least one rather than uniqueness.
+    expect(screen.getAllByText("Asset Reliability").length).toBeGreaterThan(0);
   });
 
   it("R3 guided scenario start", async () => {

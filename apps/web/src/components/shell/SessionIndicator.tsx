@@ -25,8 +25,11 @@ export function SessionIndicator({ workspace, minutesRemaining }: { workspace: s
   }
 
   return (
-    <div className="flex items-center gap-2 text-xs text-ink-muted">
-      <span>Guest session · {minutesRemaining} min remaining</span>
+    <div className="flex items-center gap-2.5 text-xs text-ink-muted">
+      <span className="hidden items-center gap-1.5 rounded-lg border border-border bg-surface px-2.5 py-1.5 shadow-card sm:flex">
+        <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[var(--color-ok-ink)]" />
+        Guest session · {minutesRemaining} min remaining
+      </span>
       <ConfirmDialog
         trigger={
           <Button variant="secondary" type="button" disabled={pending}>
