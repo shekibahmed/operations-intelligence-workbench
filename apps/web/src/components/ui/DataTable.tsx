@@ -27,12 +27,12 @@ export function DataTable<T>({
     <table className="w-full border-collapse text-sm">
       <caption className="sr-only">{caption}</caption>
       <thead>
-        <tr className="border-b border-border text-left text-xs uppercase tracking-wide text-ink-muted">
+        <tr className="border-b border-border text-left text-xs font-medium uppercase tracking-[0.08em] text-ink-faint">
           {columns.map((column) => (
             <th
               key={column.key}
               scope="col"
-              className={`px-2 py-2 ${column.collapseOnTablet ? "hidden xl:table-cell" : ""}`}
+              className={`px-3 py-2.5 ${column.collapseOnTablet ? "hidden xl:table-cell" : ""}`}
             >
               {column.header}
             </th>
@@ -44,14 +44,17 @@ export function DataTable<T>({
           const key = rowKey(row);
           const href = rowHref?.(row);
           return (
-            <tr key={key} className="border-b border-border last:border-0">
+            <tr key={key} className="border-b border-border transition-colors last:border-0 hover:bg-surface-muted/60">
               {columns.map((column) => (
                 <td
                   key={column.key}
-                  className={`px-2 py-2 align-top ${column.collapseOnTablet ? "hidden xl:table-cell" : ""}`}
+                  className={`px-3 py-2.5 align-top ${column.collapseOnTablet ? "hidden xl:table-cell" : ""}`}
                 >
                   {href && column === columns[0] ? (
-                    <a href={href} className="font-medium text-[var(--color-accent)] underline-offset-2 hover:underline">
+                    <a
+                      href={href}
+                      className="font-medium text-[var(--color-accent)] underline-offset-2 hover:underline"
+                    >
                       {column.render(row)}
                     </a>
                   ) : (
@@ -60,7 +63,7 @@ export function DataTable<T>({
                 </td>
               ))}
               {collapsedColumns.length > 0 ? (
-                <td className="px-2 py-2 align-top xl:hidden">
+                <td className="px-3 py-2.5 align-top xl:hidden">
                   <details>
                     <summary className="cursor-pointer text-xs text-ink-muted">More details</summary>
                     <dl className="mt-1 space-y-1">
