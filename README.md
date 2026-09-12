@@ -6,6 +6,12 @@
 > behaviour is supplied through configurable Scenario Packs rather than
 > hardcoded application forks.
 
+[![CI](https://github.com/shekibahmed/operations-intelligence-workbench/actions/workflows/ci.yml/badge.svg)](https://github.com/shekibahmed/operations-intelligence-workbench/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A522-green?logo=node.js)
+![pnpm](https://img.shields.io/badge/pnpm-11-orange?logo=pnpm)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
+
 **Status:** all P0 scope (Waves 0–5) is complete on `main`. The three-pack
 neutrality proof, evaluation suite, security hardening, accessibility pass,
 exports, product analytics and the assessment CTA are merged and continuously
@@ -54,6 +60,31 @@ carrying its own full guided tour (`apps/web/e2e/process-exceptions-tour.spec.ts
 | [Asset Reliability](scenario-packs/asset-reliability/README.md) | A recurring brake fault on asset A-142 at the fictional Northgate Distribution Center, from an informal chat report through a safety-critical repeat occurrence | Removing an asset from service |
 | [Process Exceptions](scenario-packs/process-exceptions/README.md) | A viscosity deviation on supplier lot KM-LOT-448 at the fictional Rivermill Processing Plant, escalating across two batches to a cross-batch pattern | Holding affected output |
 | [Document Assurance](scenario-packs/document-assurance/README.md) | A liability-cap conflict in the fictional Project Falcon Master Services Agreement, from contract execution to a formally proposed exception | Accepting a tracked exception |
+
+### What it looks like
+
+The guided tour walks every visitor through the same journey; these are real
+screens from it (synthetic data only):
+
+![Leadership overview dashboard after an approval: critical signals, open cases, pending decisions, repeat-fault trend and an explicitly labelled hypothetical downtime estimate](docs/screenshots/leadership-dashboard.png)
+
+Ambiguous extractions are routed to a human Review Queue with the exact
+evidence span, confidence and extractor identity — never silently accepted:
+
+![Review queue showing the raw source text with the cited evidence span underlined, and the extracted field's value, 70% confidence, extractor version and Accept/Correct/Reject actions](docs/screenshots/review-queue.png)
+
+Because rules and providers may only *propose* decisions, every high-risk
+outcome waits for a recorded human approval — and says which rule put it
+there:
+
+| Decision awaiting approval | Rule trace | Case with evidence |
+|---|---|---|
+| ![Critical-risk decision card citing its evidence segments, triggering rule and required approver](docs/screenshots/decision-card.png) | ![Fact evaluation and the passing condition tree behind the proposal](docs/screenshots/rule-trace.png) | ![The created case with linked evidence, action items and approval history](docs/screenshots/case-detail.png) |
+
+Every step lands in an append-only audit trail with actor, subject and
+timestamp:
+
+![Audit explorer listing decision approved, rule evaluated and artifact advanced entries with actor and subject](docs/screenshots/audit-explorer.png)
 
 ## Why is the platform industry-neutral?
 
@@ -226,13 +257,38 @@ on the landing page, Scenario Selector and the guided tour's final step),
 which opens `/adapt` — a scoped-conversation intake form (PRD §23.2)
 pre-filled with whichever scenario the visitor was viewing
 (`docs/UX_SPEC.md` §9). Run the app locally and visit `/adapt` to see it
-today; note the limitation above (no backend yet). Beyond the CTA, PRD §36
+today; note the limitation above (no backend yet). You can also skip the
+form entirely and contact the team directly — see the next section.
+
+Beyond the CTA, PRD §36
 defines an M4 "Client
 Adaptation Kit" (discovery questionnaire, pack-scoping worksheet,
 entity-mapping template, source-inventory template, rule-definition
 template, approval-policy template, pilot success-metric template,
 deployment-decision template) as the next milestone after public launch —
 not yet built; tracked as roadmap, not shipped.
+
+## Who builds this — and how can they help you?
+
+OIW is designed, built and maintained by
+[Kaamchor](https://bekaamchor.com) — an AI consultancy whose pitch is
+*"Let AI do the grunt work, so you can run the business."* Kaamchor builds
+AI agents that execute workflows, coordinate systems and keep operations
+moving — exactly the pattern this workbench demonstrates: evidence-backed
+extraction, deterministic rules, human approval, and a full audit trail.
+
+If you watched the demo and thought "our operational information lives in
+exactly this kind of mess", that conversation is the point of this
+repository. Reach out:
+
+- **Website:** [bekaamchor.com](https://bekaamchor.com)
+- **Email:** [hello@bekaamchor.com](mailto:hello@bekaamchor.com)
+- **WhatsApp:** [+91 84040 29692](https://wa.me/918404029692)
+- **LinkedIn:** [linkedin.com/company/bekaamchor](https://www.linkedin.com/company/bekaamchor)
+
+A good first message names one operational workflow where information gets
+lost between source systems — the assessment form on `/adapt` is structured
+around exactly that conversation.
 
 ## Documentation map
 

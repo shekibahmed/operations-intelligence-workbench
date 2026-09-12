@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or commercial enquiry
+    url: https://bekaamchor.com
+    about: Questions about adapting this platform to your organisation, or anything that isn't a bug or a scenario-pack proposal.
+  - name: Security vulnerability
+    url: https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/SECURITY.md
+    about: Please report security vulnerabilities privately as described in SECURITY.md — do not open a public issue.

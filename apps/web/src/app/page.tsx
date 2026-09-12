@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { AnalyticsPageEvents } from "@/components/analytics/AnalyticsPageEvents";
 import { BUTTON_BASE_CLASSES, VARIANT_CLASSES } from "@/components/ui/Button";
+import { FIRM } from "@/lib/firm";
 
 const LENS_SUMMARIES = [
   {
@@ -53,7 +54,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="flex flex-wrap gap-4 border-t border-border pt-6 text-sm text-ink-muted">
+      <footer className="flex flex-wrap items-center gap-4 border-t border-border pt-6 text-sm text-ink-muted">
         <Link href="/demo" className="hover:underline">
           Try the demonstration
         </Link>
@@ -66,6 +67,16 @@ export default function LandingPage() {
         >
           Public repository
         </a>
+        <span className="ml-auto">
+          Built by{" "}
+          <a href={FIRM.site} className="font-medium text-ink hover:underline">
+            {FIRM.name}
+          </a>{" "}
+          —{" "}
+          <a href={`mailto:${FIRM.email}`} className="hover:underline">
+            {FIRM.email}
+          </a>
+        </span>
       </footer>
     </main>
   );
