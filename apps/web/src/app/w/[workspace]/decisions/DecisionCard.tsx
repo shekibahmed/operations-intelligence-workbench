@@ -55,13 +55,15 @@ export function DecisionCard({ workspace, data }: { workspace: string; data: Dec
     <article
       data-tour="tour-decision-card"
       aria-labelledby={`decision-${current.id}`}
-      className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4"
+      className="flex flex-col gap-2 rounded-xl border border-border bg-surface p-5 shadow-card"
     >
-      <h2 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
-        {proposalLabel}
-      </h2>
-      <Badge tone={RISK_TONE[current.riskLevel]}>Risk: {current.riskLevel}</Badge>
-      <p className="text-sm text-ink-muted">{current.rationale}</p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 id={`decision-${current.id}`} className="text-sm font-semibold text-ink">
+          {proposalLabel}
+        </h2>
+        <Badge tone={RISK_TONE[current.riskLevel]}>Risk: {current.riskLevel}</Badge>
+      </div>
+      <p className="text-sm leading-relaxed text-ink-muted">{current.rationale}</p>
       {evidenceLinks.length > 0 ? (
         <p className="text-sm">
           Evidence:{" "}

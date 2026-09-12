@@ -5,12 +5,14 @@ import {
   InMemoryTokenBucketStore,
   type GuestMutationKind,
   type TokenBucketPolicy,
+  type TokenBucketStore,
 } from "@oiw/application";
+import { PostgresTokenBucketStore } from "@oiw/persistence";
 import type { Workspace } from "@oiw/contracts";
 
 import { UserFacingActionError } from "@/lib/server/action-error";
 import { buildAuditEntry } from "@/lib/server/audit";
-import { getRepositories } from "@/lib/server/db";
+import { getConnection, getRepositories } from "@/lib/server/db";
 import { readSessionPayload } from "@/lib/server/session";
 
 interface MutationDefaults {
@@ -33,6 +35,7 @@ const DEFAULTS: Record<GuestMutationKind, MutationDefaults> = {
 
 declare global {
   var __oiwGuestRateLimitStore: InMemoryTokenBucketStore | undefined;
+  var __oiwGuestRateLimitPostgresStore: PostgresTokenBucketStore | undefined;
   var __oiwGuestRateLimitAuditWindows: Map<string, number> | undefined;
   var __oiwDevRateLimitSalt: string | undefined;
 }
@@ -66,7 +69,21 @@ export function guestRateLimitPolicy(
   return { capacity, refillTokens: capacity, refillIntervalMs, denialAuditIntervalMs: refillIntervalMs };
 }
 
-function rateLimitStore(): InMemoryTokenBucketStore {
+/**
+ * `OIW_RATE_LIMIT_STORE` selects the token-bucket backend: `memory` (the
+ * default, process-local, right for single-instance deployments) or
+ * `postgres` (shared and atomic across instances, required before running
+ * more than one web instance — SECURITY.md §3.9).
+ */
+function rateLimitStore(): TokenBucketStore {
+  const mode = (process.env.OIW_RATE_LIMIT_STORE ?? "memory").trim().toLowerCase();
+  if (mode === "postgres") {
+    globalThis.__oiwGuestRateLimitPostgresStore ??= new PostgresTokenBucketStore(getConnection().client);
+    return globalThis.__oiwGuestRateLimitPostgresStore;
+  }
+  if (mode !== "memory") {
+    throw new Error(`OIW_RATE_LIMIT_STORE must be "memory" or "postgres" (got "${mode}")`);
+  }
   globalThis.__oiwGuestRateLimitStore ??= new InMemoryTokenBucketStore();
   return globalThis.__oiwGuestRateLimitStore;
 }

@@ -22,6 +22,13 @@
       "when": 1788395721024,
       "tag": "0002_loving_riptide",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789230124854,
+      "tag": "0003_spotty_marvel_apes",
+      "breakpoints": true
     }
   ]
 }

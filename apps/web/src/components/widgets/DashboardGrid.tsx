@@ -84,7 +84,7 @@ function DashboardWidgetView({ widget, value, base }: { widget: DashboardWidget;
     case "trend-line": {
       if (value.kind !== "series") return null;
       const periods = typeof widget.parameters["periods"] === "number" ? widget.parameters["periods"] : value.points.length;
-      return <TrendLine title={widget.title} seriesLabel={widget.title} points={value.points.slice(-periods)} />;
+      return <TrendLine title={widget.title} seriesLabel="Count" points={value.points.slice(-periods)} />;
     }
     case "sla-table": {
       if (value.kind !== "rows") return null;

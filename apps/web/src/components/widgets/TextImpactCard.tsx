@@ -16,14 +16,17 @@ export function TextImpactCard({
   metric?: { value: string; classification: MetricClassification } | undefined;
 }) {
   return (
-    <div aria-labelledby={`text-impact-${heading}`} className="rounded-lg border border-border bg-surface p-4">
+    <div
+      aria-labelledby={`text-impact-${heading}`}
+      className="rounded-xl border border-border bg-surface p-5 shadow-card"
+    >
       <h2 id={`text-impact-${heading}`} className="text-sm font-semibold text-ink">
         {heading}
       </h2>
-      <p className="mt-2 text-sm text-ink-muted">{body}</p>
+      <p className="mt-2 text-sm leading-relaxed text-ink-muted">{body}</p>
       {metric ? (
         <div className="mt-3 flex items-baseline gap-2">
-          <span className="text-lg font-semibold text-ink">{metric.value}</span>
+          <span className="text-xl font-semibold tabular-nums tracking-tight text-ink">{metric.value}</span>
           <ProvenanceBadge classification={metric.classification} />
         </div>
       ) : null}

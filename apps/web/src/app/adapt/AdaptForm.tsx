@@ -28,6 +28,9 @@ const FIELDS = [
   { name: "contactDetails", label: "Contact details", type: "text", required: true },
 ] as const;
 
+const INPUT_CLASSES =
+  "mt-1.5 w-full rounded-lg border bg-surface px-3 py-2 text-sm text-ink shadow-card placeholder:text-ink-faint focus:border-[var(--color-accent)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/20 disabled:cursor-not-allowed disabled:bg-surface-muted";
+
 export function AdaptForm({
   scenario,
   scenarioOptions,
@@ -43,9 +46,16 @@ export function AdaptForm({
 
   if (effectiveStatus === "success") {
     return (
-      <div role="status" className="rounded-md border border-border bg-surface p-4 text-sm">
-        <p className="font-medium text-ink">Thanks — we&apos;ll follow up shortly.</p>
-        <p className="mt-1 text-ink-muted">You&apos;re welcome to keep exploring the demonstration.</p>
+      <div role="status" className="rounded-lg border border-border bg-surface p-5 text-sm">
+        <p className="flex items-center gap-2 font-medium text-ink">
+          <span aria-hidden="true" className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-ok-surface)] text-[var(--color-ok-ink)]">
+            <svg viewBox="0 0 20 20" width={13} height={13}>
+              <path d="m4.5 10.5 3.5 3.5 7.5-8" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+          Thanks — we&apos;ll follow up shortly.
+        </p>
+        <p className="mt-2 text-ink-muted">You&apos;re welcome to keep exploring the demonstration.</p>
         <p className="mt-2 text-ink-muted">
           In a hurry? Email{" "}
           <a href={`mailto:${FIRM.email}`} className="text-ink underline">
@@ -84,7 +94,7 @@ export function AdaptForm({
                 disabled={effectiveStatus === "submitting"}
                 aria-describedby={error ? errorId : undefined}
                 aria-invalid={error ? true : undefined}
-                className="mt-1 w-full rounded-md border border-border p-2 text-sm"
+                className={`${INPUT_CLASSES} ${error ? "border-[var(--color-critical-ink)]" : "border-border"}`}
               />
               {error ? (
                 <p id={errorId} className="mt-1 text-xs text-[var(--color-critical-ink)]">
@@ -105,7 +115,7 @@ export function AdaptForm({
             disabled={effectiveStatus === "submitting"}
             aria-describedby={state.fieldErrors.scenarioId ? `${formId}-scenarioId-error` : undefined}
             aria-invalid={state.fieldErrors.scenarioId ? true : undefined}
-            className="mt-1 w-full rounded-md border border-border p-2 text-sm"
+            className={`${INPUT_CLASSES} ${state.fieldErrors.scenarioId ? "border-[var(--color-critical-ink)]" : "border-border"}`}
           >
             <option value="">No scenario selected</option>
             {scenarioOptions.map((option) => (

@@ -438,8 +438,14 @@ describe.sequential("Postgres persistence repositories", () => {
       FROM information_schema.tables AS tables
       WHERE tables.table_schema = 'public'
         AND tables.table_type = 'BASE TABLE'
+        -- rate_limit_buckets is the shared rate-limit store; its keys are
+        -- IP-derived or session identifiers resolved BEFORE any workspace
+        -- exists, so it deliberately carries no workspace scope (SECURITY.md
+        -- §3.9). analytics_events / assessment_submissions hold an optional
+        -- workspace reference and are checked separately below.
         AND tables.table_name NOT IN (
-          'workspaces', '__drizzle_migrations', 'analytics_events', 'assessment_submissions'
+          'workspaces', '__drizzle_migrations', 'analytics_events',
+          'assessment_submissions', 'rate_limit_buckets'
         )
         AND NOT EXISTS (
           SELECT 1

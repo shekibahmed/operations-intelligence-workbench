@@ -297,8 +297,7 @@ the table above is a pointer into it, not a duplicate.
 TypeScript sources for prohibited industry terms and committed-credential
 patterns, and rejects direct Scenario Pack imports from core packages. CI
 (`.github/workflows/ci.yml`) runs lint, type-check, unit/integration tests,
-build, `pnpm eval` and `pnpm architecture:check` on every pull request
-against a fresh, migrated Postgres service container — see `docs/EVALUATION.md`
-for the full testing pyramid and `docs/SECURITY.md` §4 for the CI database
-strategy. CI does not yet run the Playwright suite (`apps/web/e2e/`);
-tracked in `SESSION.md` as in-progress work.
+build, `pnpm eval`, `pnpm architecture:check` and the full Playwright suite
+against a fresh, migrated Postgres service container on every pull request —
+see `docs/EVALUATION.md` for the full testing pyramid and `docs/SECURITY.md`
+§4 for the CI database strategy.

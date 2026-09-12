@@ -17,7 +17,7 @@ export function SectionCard({
 }) {
   const headingId = `section-heading-${id ?? slugify(title)}`;
   return (
-    <section aria-labelledby={headingId} className="rounded-lg border border-border bg-surface p-4">
+    <section aria-labelledby={headingId} className="rounded-xl border border-border bg-surface p-5 shadow-card">
       <div className="mb-3 flex items-center justify-between gap-2">
         <h2 id={headingId} className="text-sm font-semibold text-ink">
           {title}

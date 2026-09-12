@@ -25,11 +25,11 @@ Owner decisions taken on 2026-09-08:
    remain interfaces only.
 
 Open follow-ups (create task packets when picked up):
-- Hosting task: Dockerfile + `output: "standalone"`, env-configurable DB
-  pool size (`packages/persistence/src/database.ts` hardcodes `max: 10`),
-  `outputFileTracingIncludes` for `scenario-packs/` if a serverless host is
-  ever used, keepalive/expiry GitHub Actions job, DEPLOYMENT.md §2–§4
-  rewrite for the chosen host.
+- Hosting task: Dockerfile + `NEXT_OUTPUT=standalone` image and the compose
+  `web` service now exist (OIW-907); remaining: env-configurable DB pool is
+  done (`DATABASE_POOL_MAX`), so what's left is keepalive/expiry GitHub
+  Actions job and DEPLOYMENT.md §2–§4 rewrite for the chosen host when the
+  owner picks one.
 - Old private repo `operations-intelligence-workbench-old-private`: keep
   (holds PR review history and agent branches); archive read-only when
   comfortable; never delete.
@@ -55,6 +55,14 @@ Open follow-ups (create task packets when picked up):
   (gitleaks full history: 2 verified false positives; no real data; CI has
   no secrets, `pull_request` trigger, `contents: read`); root
   `SECURITY.md`; repo security features and branch protection enabled.
+- **Post-publication polish (OIW-907, 2026-09-12)** — public funnel
+  redesign: visual identity (Inter vendored, refreshed tokens, brand mark,
+  favicon, OG/Twitter cards), landing/scenario/adapt pages rebuilt, shell +
+  dashboard widget restyle, all seven README screenshots regenerated from
+  the real tour (harness: `REGEN_SCREENSHOTS=1 pnpm test:e2e --grep
+  regenerate`), shared Postgres rate-limit store (`OIW_RATE_LIMIT_STORE`,
+  migration 0003), `DATABASE_POOL_MAX`, Dockerfile + compose `web` service,
+  security headers.
 
 ## Merged tasks (37 PRs, numbers refer to the old private repo)
 
@@ -65,6 +73,7 @@ Wave 2: 210(#14), 108(#13), 301(#12), 406(#16), 408(#18), 109, 110(#19),
 Wave 3: 701(#24), 703(#25), 702(#26), 705(#27), 706(#28)
 Wave 4: 802(#29), 810(#30), 808(#31), 811(#32), 805(#33), 812
 Wave 5: 901(#35), 905(#36), 904(#37)
+Post-publication: 907 (this repo)
 
 ## Contracts
 
@@ -76,14 +85,18 @@ assessment tables, OIW-904).
 
 - `accessibility.spec.ts` #main-content 5s wait times out under
   `--workers=2` repeats (single-worker + CI green) → raise wait/networkidle.
-- Rate-limit store is process-local (accepted risk, SECURITY.md); multi-
-  instance implications documented in DEPLOYMENT.md.
+- Rate-limit store defaults to process-local memory (accepted for the
+  single-instance demo, SECURITY.md §3.9); multi-instance deployments set
+  `OIW_RATE_LIMIT_STORE=postgres` (shared atomic store, migration 0003).
 - PDF fixtures are text-with-page-markers; binary PDF parsing deferred
   (A7) — README states this honestly.
 - `apps/web/src/lib/server/metrics.ts` remains the single UI↔metric seam.
 - Email/webhook assessment sinks are interfaces only (owner decision).
-- DB client pool `max: 10` is hardcoded; must become configurable before
-  any serverless/pooled-connection host.
+- Next 16 + postgres.js: aborted in-flight renders (navigating away mid-
+  mutation) log "destination stream closed early" and can stall DB-backed
+  renders temporarily on `next start`; identical pre- and post-OIW-907,
+  CI e2e unaffected — investigate with a minimal repro if ever seen in
+  real use.
 
 ## Operating rules (keep applying)
 

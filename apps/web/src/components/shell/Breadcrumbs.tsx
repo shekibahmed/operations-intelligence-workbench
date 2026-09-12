@@ -66,13 +66,20 @@ export function Breadcrumbs({
       <ol className="flex flex-wrap items-center gap-1 text-sm text-ink-muted">
         {crumbs.map((crumb, index) => (
           <li key={`${crumb.label}-${index}`} className="flex items-center gap-1">
-            {index > 0 ? <span aria-hidden="true">/</span> : null}
+            {index > 0 ? (
+              <span aria-hidden="true" className="text-ink-faint">
+                /
+              </span>
+            ) : null}
             {crumb.href ? (
-              <Link href={crumb.href} className="text-[var(--color-accent)] underline">
+              <Link
+                href={crumb.href}
+                className="rounded-sm font-medium text-[var(--color-accent)] underline-offset-2 hover:underline"
+              >
                 {crumb.label}
               </Link>
             ) : (
-              <span aria-current={index === crumbs.length - 1 ? "page" : undefined} className={index === crumbs.length - 1 ? "text-ink" : undefined}>
+              <span aria-current={index === crumbs.length - 1 ? "page" : undefined} className={index === crumbs.length - 1 ? "font-medium text-ink" : undefined}>
                 {crumb.label}
               </span>
             )}

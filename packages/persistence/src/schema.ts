@@ -632,3 +632,18 @@ export const assessmentSubmissions = pgTable(
     index("assessment_submissions_submitted_idx").on(table.submittedAt),
   ],
 );
+
+/**
+ * Shared token-bucket state for guest rate limiting (SECURITY.md §3.9).
+ * Keys are pre-workspace (IP-derived or session identifiers), so this table
+ * deliberately has no workspace foreign key. Only selected when
+ * `OIW_RATE_LIMIT_STORE=postgres`; the process-local in-memory store remains
+ * the default for single-instance deployments.
+ */
+export const rateLimitBuckets = pgTable("rate_limit_buckets", {
+  bucketKey: text("bucket_key").primaryKey(),
+  tokens: doublePrecision("tokens").notNull(),
+  refilledAtMs: doublePrecision("refilled_at_ms").notNull(),
+  denialReportedAtMs: doublePrecision("denial_reported_at_ms"),
+  touchedAtMs: doublePrecision("touched_at_ms").notNull(),
+});

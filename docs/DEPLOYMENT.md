@@ -163,17 +163,26 @@ routes rather than shell commands; using it would require a separately scoped,
 
 ## 5. Known deployment constraint: distributed rate limiting
 
-The current `InMemoryTokenBucketStore` is process-local. On multiple Vercel
+The default `InMemoryTokenBucketStore` is process-local. On multiple
 instances, each instance has its own allowance, so the configured numbers are
-not a global ceiling. `docs/SECURITY.md` records this as an Accepted risk for
-the synthetic, no-upload public demo. Before production promotion, the owner
-must:
+not a global ceiling. Two supported configurations:
+
+- **Single instance (the public demonstration):** the default memory store is
+  correct; no action needed.
+- **Multiple instances:** set `OIW_RATE_LIMIT_STORE=postgres` so all
+  instances share the atomic `rate_limit_buckets` table (applied by
+  `pnpm db:migrate`; exact under concurrency per
+  `postgres-rate-limit-store.test.ts`). The store uses the same
+  `DATABASE_URL` connection pool as the app; size `DATABASE_POOL_MAX`
+  accordingly.
+
+`docs/SECURITY.md` records the residual acceptance for the synthetic,
+no-upload public demo. Before production promotion, the owner must:
 
 - acknowledge that acceptance in the release record;
-- enable appropriate Vercel/platform traffic controls and alerts;
+- enable appropriate platform traffic controls and alerts;
 - keep the demo synthetic and the upload/manual-create surface disabled; and
-- open a shared atomic `TokenBucketStore` task before higher-volume or any
-  client-data deployment.
+- re-review limits before higher-volume or any client-data deployment.
 
 ## 6. Pre-deployment verification
 

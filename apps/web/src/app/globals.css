@@ -1,19 +1,42 @@
 @import "tailwindcss";
 
 @theme {
+  /*
+   * Design tokens — one semantic palette shared by the marketing pages and
+   * the workspace shell. Values are chosen so every text/background pair
+   * used by components clears WCAG AA (the axe e2e gate blocks serious
+   * contrast violations); when adjusting, re-check with the accessibility
+   * spec (`pnpm test:e2e -- accessibility`).
+   */
   --color-surface: #ffffff;
-  --color-surface-muted: #f4f5f7;
-  --color-border: #d7dbe1;
-  --color-ink: #16181d;
-  --color-ink-muted: #565d6b;
+  --color-surface-muted: #f5f6f8;
+  --color-border: #e4e7ec;
+  --color-border-strong: #cdd3dd;
+  --color-ink: #12151c;
+  --color-ink-muted: #575f6e;
+  /* Faint ink must still clear WCAG AA (4.5:1) on both surface and
+   * surface-muted — axe blocks serious contrast violations in CI. */
+  --color-ink-faint: #667085;
   --color-accent: #1f4fd8;
+  --color-accent-hover: #1a41b5;
+  --color-accent-soft: #edf2fe;
+  --color-accent-soft-ink: #1a41b5;
   --color-accent-ink: #ffffff;
-  --color-warn-surface: #fef3e7;
-  --color-warn-ink: #8a4b06;
-  --color-critical-surface: #fdeceb;
-  --color-critical-ink: #932016;
-  --color-ok-surface: #e8f5ec;
-  --color-ok-ink: #1c6b34;
+  --color-warn-surface: #fdf3e2;
+  --color-warn-ink: #8a4a06;
+  --color-critical-surface: #fdecea;
+  --color-critical-ink: #99201a;
+  --color-ok-surface: #e5f5ea;
+  --color-ok-ink: #196b31;
+
+  --font-sans:
+    var(--font-inter, "Inter"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(16 20 28 / 0.05);
+  --shadow-card-hover: 0 6px 20px -4px rgb(16 20 28 / 0.12), 0 2px 6px -2px rgb(16 20 28 / 0.06);
+  --shadow-pop: 0 16px 40px -12px rgb(16 20 28 / 0.24);
+  --shadow-btn: 0 1px 2px rgb(31 79 216 / 0.35);
 }
 
 html,
@@ -22,13 +45,33 @@ body {
   color: var(--color-ink);
 }
 
+body {
+  font-feature-settings: "cv05" 1; /* Inter: open 5 so it never reads as an S in tables */
+  text-rendering: optimizeLegibility;
+}
+
 * {
   box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-hover);
 }
 
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* Evidence-span highlight (Review Queue, Technical Inspector). Conveys the
+ * span by background + underline, never colour alone (UX_SPEC §16.3). */
+mark {
+  background: var(--color-warn-surface);
+  color: inherit;
+  border-radius: 0.25rem;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 /*

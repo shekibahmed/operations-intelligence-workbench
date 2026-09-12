@@ -26,7 +26,7 @@ export function LensSwitcher({ activeLens }: { activeLens: Lens }) {
   }
 
   return (
-    <div role="radiogroup" aria-label="Lens" className="inline-flex rounded-md border border-border p-0.5">
+    <div role="radiogroup" aria-label="Lens" className="inline-flex rounded-lg border border-border bg-surface-muted p-0.5 shadow-card">
       {LENSES.map((lens) => (
         <button
           key={lens}
@@ -34,8 +34,10 @@ export function LensSwitcher({ activeLens }: { activeLens: Lens }) {
           role="radio"
           aria-checked={lens === activeLens}
           onClick={() => selectLens(lens)}
-          className={`rounded px-3 py-1 text-sm font-medium transition ${
-            lens === activeLens ? "bg-[var(--color-accent)] text-[var(--color-accent-ink)]" : "text-ink-muted hover:text-ink"
+          className={`rounded-md px-3 py-1 text-sm font-medium transition ${
+            lens === activeLens
+              ? "bg-surface text-ink shadow-card"
+              : "text-ink-muted hover:text-ink"
           }`}
         >
           {LENS_LABEL[lens]}
