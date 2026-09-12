@@ -66,12 +66,12 @@ carrying its own full guided tour (`apps/web/e2e/process-exceptions-tour.spec.ts
 The guided tour walks every visitor through the same journey; these are real
 screens from it (synthetic data only):
 
-![Leadership overview dashboard after an approval: critical signals, open cases, pending decisions, repeat-fault trend and an explicitly labelled hypothetical downtime estimate](docs/screenshots/leadership-dashboard.png)
+![Asset Reliability Leadership dashboard after an approval: Leadership/Operations/Technical lens switcher, guest-session chip, Reset demo and Adapt this workflow actions, a synthetic-data band, Critical Signals 2, Open Reliability Cases 1 and Pending Decisions 0 cards each badged Calculated, Cases by Severity with a Critical bar of 1, a Repeat Fault Trend (Weekly) table showing Period Sep 7 Count 3, empty Overdue and At-Risk Actions and Pending decisions sections, recent activity with an approval entry, and an Estimated Downtime Exposure of about 24h badged Hypothetical with a note that it is a hypothetical estimate, not an observed measurement](docs/screenshots/leadership-dashboard.png)
 
 Ambiguous extractions are routed to a human Review Queue with the exact
 evidence span, confidence and extractor identity — never silently accepted:
 
-![Review queue showing the raw source text with the cited evidence span underlined, and the extracted field's value, 70% confidence, extractor version and Accept/Correct/Reject actions](docs/screenshots/review-queue.png)
+![Review Queue item for field previous-repair-reference showing the raw chat source with the evidence span underlined, the extracted value "brake work done in spring", Confidence 70%, Status Pending review, extractor fixture-intelligence-provider@1.0.0, linked entity None, and Accept, Correct, Reject, Mark insufficient evidence, Link entity, Create entity and Add reviewer note actions](docs/screenshots/review-queue.png)
 
 Because rules and providers may only *propose* decisions, every high-risk
 outcome waits for a recorded human approval — and says which rule put it
@@ -79,12 +79,17 @@ there:
 
 | Decision awaiting approval | Rule trace | Case with evidence |
 |---|---|---|
-| ![Critical-risk decision card citing its evidence segments, triggering rule and required approver](docs/screenshots/decision-card.png) | ![Fact evaluation and the passing condition tree behind the proposal](docs/screenshots/rule-trace.png) | ![The created case with linked evidence, action items and approval history](docs/screenshots/case-detail.png) |
+| ![Decision "Remove From Service: remove-from-service" with a critical-risk badge, evidence links, triggering rule safety-critical-removal-approval v1.0.0, required approver Asset Removal Approval, and Approve, Reject and Request more information actions](docs/screenshots/decision-card.png) | ![Fact evaluation and the passing condition tree behind the proposal](docs/screenshots/rule-trace.png) | ![The created case with linked evidence, action items and approval history](docs/screenshots/case-detail.png) |
 
 Every step lands in an append-only audit trail with actor, subject and
 timestamp:
 
-![Audit explorer listing decision approved, rule evaluated and artifact advanced entries with actor and subject](docs/screenshots/audit-explorer.png)
+![Audit explorer listing "case decision outcome recorded", "decision approved", "artifact operationally advanced" and "rule evaluated" entries each with Actor and Subject lines, and Export CSV and Export JSON buttons](docs/screenshots/audit-explorer.png)
+
+A first-time visitor starts at the scenario selector, which offers the three
+packs side by side before any workspace exists:
+
+![Choose a scenario screen with Asset Reliability, Process Exception Management and Document Assurance pack cards, each with a guided tour of about five minutes, and a synthetic-data notice that each choice opens an isolated workspace](docs/screenshots/scenario-selector.png)
 
 ## Why is the platform industry-neutral?
 
