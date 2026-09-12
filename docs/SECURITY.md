@@ -149,7 +149,7 @@ every row below — none are marked informational-only.
 | **Threat** | A guest (or script) exhausts shared public-demo resources — CPU via expensive parsing/rule evaluation, storage via unbounded artifact submission, or connection/request budget via flooding — degrading the demo for other visitors. |
 | **Mitigation** | Rate limiting keyed on session + IP (A4, §2); file type/size restrictions (PRD §16.4); workspace TTL expiry bounds storage growth; PDF/CSV parsing runs with a bounded timeout (§3.1); pagination/virtualisation for large fixture sets (PRD §16.2) bounds per-request rendering cost; no unbounded recursive/self-referential rule chains — rule execution is a single deterministic pass over the closed fact catalogue (A2), not an open-ended loop. |
 | **Verifying test** | Rate-limit integration test (§2); ingestion test with an oversized/maximum-count submission asserts rejection, not degraded processing of all requests. |
-| **Disposition** | **Accepted risk (Wave 5 deployment owner).** OIW-810 closes per-process session/IP limiting and input/count bounds (`tests/security/policies.test.ts`, `rate-limit-server.test.ts`), and OIW-812 prevents unconfigured proxy headers from influencing IP identity. The token store is still process-local, so total allowance can multiply across Vercel instances. This is accepted for the synthetic, no-upload demonstration; `docs/DEPLOYMENT.md` requires explicit acknowledgement and upstream platform controls, and a shared atomic store is required before higher-volume or client-data use. |
+| **Disposition** | **Accepted risk (Wave 5 deployment owner).** OIW-810 closes per-process session/IP limiting and input/count bounds (`tests/security/policies.test.ts`, `rate-limit-server.test.ts`), and OIW-812 prevents unconfigured proxy headers from influencing IP identity. The default token store is process-local, so total allowance can multiply across instances; setting `OIW_RATE_LIMIT_STORE=postgres` selects the shared, concurrency-exact `PostgresTokenBucketStore` for multi-instance deployments. The memory default remains accepted for the single-instance synthetic, no-upload demonstration; `docs/DEPLOYMENT.md` §5 documents both configurations, and explicit acknowledgement plus upstream platform controls are still required before higher-volume or client-data use. |
 
 ### 3.10 Unsafe external write-back
 
@@ -259,13 +259,19 @@ code gaps.
 
 ### Public-demo rate-limit defaults
 
-P0 uses a process-local token-bucket store behind `TokenBucketStore`. Every
-mutation consumes both a session bucket (when a valid guest cookie exists)
-and a privacy-HMAC IP bucket. Raw IP addresses are never stored. Rejections
-return a 429-shaped action result/error, perform no requested operational
-mutation, and append at most one `guest-rate-limit-exceeded` Audit Entry per
-workspace/action window (pre-session creation floods are logged once per
-hashed-IP/action window because no workspace Audit chain exists yet).
+P0 uses a token-bucket store behind the `TokenBucketStore` port. The default
+`OIW_RATE_LIMIT_STORE=memory` keeps buckets process-local; setting
+`OIW_RATE_LIMIT_STORE=postgres` selects the shared, atomic
+`PostgresTokenBucketStore` (`packages/persistence`,
+`postgres-rate-limit-store.test.ts` proves exactness under concurrent
+consumers), which is required whenever more than one web instance runs.
+Either way, every mutation consumes both a session bucket (when a valid guest
+cookie exists) and a privacy-HMAC IP bucket. Raw IP addresses are never
+stored. Rejections return a 429-shaped action result/error, perform no
+requested operational mutation, and append at most one
+`guest-rate-limit-exceeded` Audit Entry per workspace/action window
+(pre-session creation floods are logged once per hashed-IP/action window
+because no workspace Audit chain exists yet).
 
 | Mutation | Session capacity | IP capacity | Refill interval |
 |---|---:|---:|---:|
