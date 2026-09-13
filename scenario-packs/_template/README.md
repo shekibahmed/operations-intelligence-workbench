@@ -56,33 +56,19 @@ minimum that proves the checksum workflow (amendment A1) end to end.
 
 ## Why this pack is excluded from `/demo`
 
-`buildPackRegistry` (`packages/scenario-sdk/src/registry.ts`) enumerates
-every directory under `scenario-packs/` with no name-based filter, so
-this pack loads into `registry.loaded` exactly like a real pack — running
-`pnpm validate:packs` today reports **4 loaded, 0 invalid, 0 skipped**.
-It does not currently reach `/demo`, because the Scenario Selector
+Underscore-prefixed directories are template scaffolds, not real packs:
+`buildPackRegistry` (`packages/scenario-sdk/src/registry.ts`) skips them
+into `registry.skipped`, so running `pnpm validate:packs` today reports
+**3 loaded, 0 invalid, 0 skipped, plus 1 template** — this pack never
+enters the lifecycle suite or the demo. It does not reach `/demo`
+either, because the Scenario Selector
 (`apps/web/src/app/demo/page.tsx`) and Guided Scenario Start
 (`apps/web/src/app/demo/[pack]/page.tsx`) both render from the curated,
 hand-maintained `stubPacks` list in `apps/web/src/lib/stub/packs.ts`
 rather than from the live registry — this pack was never added there, so
-it cannot appear. This is a pre-existing property of the current UI, not
-a mechanism this task added.
-
-That said, **any registry-driven consumer is exposed today**, and this is
-a real, confirmed defect, not a hypothetical one:
-`packages/application/test/common-lifecycle.integration.test.ts` builds
-the registry directly from `scenario-packs/` and asserts
-`registry.loaded.map(({id}) => id)` equals exactly the three real pack
-ids with `registry.skipped`/`registry.invalid` both empty. With this
-pack present, that assertion fails (verbatim evidence in
-`docs/agent-runs/OIW-705.md`). There is no existing convention in
-`buildPackRegistry`/`loadPackFromDirectory` to exclude a directory by
-name (no underscore/dot-prefix skip, no denylist, no manifest
-"internal"/"template" flag) — adding one requires editing
-`packages/scenario-sdk` or the application test, both outside this
-task's Owned Paths (`packages/*` is a Prohibited Path). See
-`docs/agent-runs/OIW-705.md` for the requested resolution; this pack's
-own content does not change once that lands.
+it cannot appear. When you copy this template into a real pack
+directory (no leading underscore), follow the selector registration
+checklist in `docs/PACK_AUTHORING.md` §12 to make it tryable.
 
 ## Authoring order this pack followed
 

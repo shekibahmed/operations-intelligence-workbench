@@ -4,6 +4,7 @@ import { DecisionCard } from "@/app/w/[workspace]/decisions/DecisionCard";
 import type { DecisionCardData } from "@/app/w/[workspace]/decisions/DecisionCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
+import { DetailVisitMarker } from "@/components/conversion/DetailVisitMarker";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
 import { resolveLabel } from "@/lib/pack-labels";
@@ -87,6 +88,7 @@ export default async function DecisionCentrePage({
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
+      <DetailVisitMarker />
       <h1 className="text-lg font-semibold text-ink">Decisions</h1>
 
       {state === "error" ? (

@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 
-import { TOUR_STEPS_BY_PACK, TOUR_TARGET_FIXTURE_IDS, getTourSteps } from "@/lib/tour/steps";
+import {
+  TOUR_ACTIVATION_STEP_ID,
+  TOUR_MILESTONES,
+  TOUR_STEPS_BY_PACK,
+  TOUR_TARGET_FIXTURE_IDS,
+  getActivationStepCount,
+  getTourSteps,
+  tourMilestoneStatuses,
+} from "@/lib/tour/steps";
 
 const BASE = "/w/workspace-1";
 
@@ -114,5 +122,44 @@ describe("getTourSteps", () => {
 
   it("returns undefined for a pack with no configured tour", () => {
     expect(getTourSteps("not-a-real-pack")).toBeUndefined();
+  });
+});
+
+describe("activation split", () => {
+  it("ends the activation path at the decision approval for every pack", () => {
+    for (const packId of Object.keys(TOUR_STEPS_BY_PACK)) {
+      const steps = getTourSteps(packId)!;
+      expect(getActivationStepCount(packId)).toBe(
+        steps.findIndex((step) => step.id === TOUR_ACTIVATION_STEP_ID) + 1,
+      );
+      expect(getActivationStepCount(packId)).toBeLessThan(steps.length);
+    }
+  });
+
+  it("returns 0 for a pack with no configured tour", () => {
+    expect(getActivationStepCount("not-a-real-pack")).toBe(0);
+  });
+
+  it("milestones use pack-agnostic labels so core stays neutral", () => {
+    expect(TOUR_MILESTONES.map((milestone) => milestone.label)).toEqual([
+      "Process raw input",
+      "Confirm uncertain fact",
+      "Approve decision",
+    ]);
+  });
+
+  it("marks milestones done/current/todo as the tour advances", () => {
+    const statusesAtStart = tourMilestoneStatuses("asset-reliability", 0).map(({ status }) => status);
+    expect(statusesAtStart).toEqual(["current", "todo", "todo"]);
+
+    const statusesMidTour = tourMilestoneStatuses("asset-reliability", 3).map(({ status }) => status);
+    expect(statusesMidTour).toEqual(["done", "done", "current"]);
+
+    const statusesAfterActivation = tourMilestoneStatuses("asset-reliability", 8).map(({ status }) => status);
+    expect(statusesAfterActivation).toEqual(["done", "done", "done"]);
+  });
+
+  it("returns no milestones for a pack with no configured tour", () => {
+    expect(tourMilestoneStatuses("not-a-real-pack", 0)).toEqual([]);
   });
 });
