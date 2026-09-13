@@ -12,7 +12,9 @@ predates `PLAN_AMENDMENTS.md` and the real implementation in places (see
 Read alongside this guide:
 
 - `scenario-packs/_template/` — a scaffold pack that loads validly today.
-  Copy it and follow §3 below in order.
+  Start from it with `pnpm pack:scaffold <pack-id> --name "<Name>" --description "<...>"`,
+  which copies the template, renames the identifier prefix, and verifies
+  every fixture checksum — then follow §3 below in order.
 - `packages/contracts/src/configuration.ts` — the frozen manifest, rule,
   workflow, case and observation/event schemas (the actual source of
   truth; this guide describes it in prose).
@@ -444,3 +446,26 @@ hand-maintained list (`apps/web/src/lib/stub/packs.ts`), not from
 See `scenario-packs/_template/README.md`'s "Why this pack is excluded
 from /demo" for the related, already-confirmed registry-enumeration
 concern this creates for any non-demo pack directory.
+
+### Selector registration checklist
+
+When the pack is ready for the public selector, open a separate,
+`apps/web`-owned change (product-experience track review) that:
+
+1. Adds one card to `stubPacks` in `apps/web/src/lib/stub/packs.ts`
+   (`id` matching the manifest id, plus name, problem statement, source
+   types, example output, estimated minutes, and all three lens
+   summaries). The landing page (`apps/web/src/app/page.tsx`), the
+   assessment scenario options (`apps/web/src/app/adapt/page.tsx`), and
+   the guided start (`apps/web/src/app/demo/[pack]/page.tsx`) all read
+   from this list, so one entry covers all four.
+2. Adds the pack's ten-step tour to `apps/web/src/lib/tour/steps.ts`
+   (`TOUR_STEPS_BY_PACK` entry plus `TOUR_TARGET_FIXTURE_IDS` pinned
+   fixture) — without it the overlay stays hidden and the demo has no
+   guided path. `apps/web/tests/selector-packs.test.ts` fails until both
+   this and the previous step resolve to the live registry.
+3. Confirms `pnpm validate:packs`, the common-lifecycle suite (which
+   picks up every loaded pack automatically via
+   `describe.each(registry.loaded)`), `pnpm eval --pack <id>`, and
+   `pnpm architecture:check` are all green with the new directory in
+   place.
