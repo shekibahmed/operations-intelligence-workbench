@@ -361,3 +361,52 @@ export const TOUR_TARGET_FIXTURE_IDS: Readonly<Record<string, string>> = {
 export function tourTargetFixtureId(packId: string): string | undefined {
   return TOUR_TARGET_FIXTURE_IDS[packId];
 }
+
+/**
+ * Phase A activation split (value-traction plan U1): the short activation
+ * path ends at the first decision approval, with dashboard, trace, and CTA
+ * steps as progressive follow-ups. The full ten-step list above is unchanged
+ * so existing tours keep working; these helpers frame it without forking it.
+ */
+export const TOUR_ACTIVATION_STEP_ID = "decision-approval";
+
+export interface TourMilestone {
+  id: string;
+  label: string;
+  stepId: string;
+}
+
+/** Pack-agnostic milestones — no industry nouns, so core stays neutral. */
+export const TOUR_MILESTONES: readonly TourMilestone[] = [
+  { id: "process", label: "Process raw input", stepId: "inbox-process" },
+  { id: "review", label: "Confirm uncertain fact", stepId: "review-ambiguity" },
+  { id: "approve", label: "Approve decision", stepId: TOUR_ACTIVATION_STEP_ID },
+];
+
+export function getActivationStepCount(packId: string): number {
+  const steps = getTourSteps(packId);
+  if (steps === undefined) return 0;
+  const activationIndex = steps.findIndex((step) => step.id === TOUR_ACTIVATION_STEP_ID);
+  return activationIndex === -1 ? steps.length : activationIndex + 1;
+}
+
+export type TourMilestoneStatus = "done" | "current" | "todo";
+
+export function tourMilestoneStatuses(
+  packId: string,
+  currentIndex: number,
+): readonly { milestone: TourMilestone; status: TourMilestoneStatus }[] {
+  const steps = getTourSteps(packId);
+  if (steps === undefined) return [];
+  let currentAssigned = false;
+  return TOUR_MILESTONES.map((milestone) => {
+    const milestoneIndex = steps.findIndex((step) => step.id === milestone.stepId);
+    if (milestoneIndex === -1) return { milestone, status: "todo" as const };
+    if (currentIndex > milestoneIndex) return { milestone, status: "done" as const };
+    if (!currentAssigned) {
+      currentAssigned = true;
+      return { milestone, status: "current" as const };
+    }
+    return { milestone, status: "todo" as const };
+  });
+}
