@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DashboardGrid } from "@/components/widgets/DashboardGrid";
+import { DemoSummary } from "@/components/tour/DemoSummary";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
@@ -62,6 +63,10 @@ export default async function LeadershipOverviewPage({
             >
               Inspect how this was derived
             </Link>
+          </div>
+
+          <div className="mt-4">
+            <DemoSummary packName={labels.packName} scenarioId={labels.packId} />
           </div>
         </>
       )}
