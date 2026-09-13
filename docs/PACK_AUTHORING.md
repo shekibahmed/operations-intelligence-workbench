@@ -444,3 +444,26 @@ hand-maintained list (`apps/web/src/lib/stub/packs.ts`), not from
 See `scenario-packs/_template/README.md`'s "Why this pack is excluded
 from /demo" for the related, already-confirmed registry-enumeration
 concern this creates for any non-demo pack directory.
+
+### Selector registration checklist
+
+When the pack is ready for the public selector, open a separate,
+`apps/web`-owned change (product-experience track review) that:
+
+1. Adds one card to `stubPacks` in `apps/web/src/lib/stub/packs.ts`
+   (`id` matching the manifest id, plus name, problem statement, source
+   types, example output, estimated minutes, and all three lens
+   summaries). The landing page (`apps/web/src/app/page.tsx`), the
+   assessment scenario options (`apps/web/src/app/adapt/page.tsx`), and
+   the guided start (`apps/web/src/app/demo/[pack]/page.tsx`) all read
+   from this list, so one entry covers all four.
+2. Adds the pack's ten-step tour to `apps/web/src/lib/tour/steps.ts`
+   (`TOUR_STEPS_BY_PACK` entry plus `TOUR_TARGET_FIXTURE_IDS` pinned
+   fixture) — without it the overlay stays hidden and the demo has no
+   guided path. `apps/web/tests/selector-packs.test.ts` fails until both
+   this and the previous step resolve to the live registry.
+3. Confirms `pnpm validate:packs`, the common-lifecycle suite (which
+   picks up every loaded pack automatically via
+   `describe.each(registry.loaded)`), `pnpm eval --pack <id>`, and
+   `pnpm architecture:check` are all green with the new directory in
+   place.

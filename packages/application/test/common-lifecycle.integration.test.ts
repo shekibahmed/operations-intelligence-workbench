@@ -92,11 +92,14 @@ beforeAll(async () => {
   expect(
     registry.skipped.filter((entry) => !/\/_[^/]+$/.test(entry.directory)),
   ).toEqual([]);
-  expect(registry.loaded.map(({ id }) => id)).toEqual([
-    "asset-reliability",
-    "document-assurance",
-    "process-exceptions",
-  ]);
+  // The three proof packs must always be present, in registry (sorted)
+  // order — but the suite must not forbid a fourth pack. New packs are
+  // picked up automatically by `describe.each(registry.loaded)` below.
+  const loadedIds = registry.loaded.map(({ id }) => id);
+  expect(loadedIds).toEqual(
+    expect.arrayContaining(["asset-reliability", "document-assurance", "process-exceptions"]),
+  );
+  expect([...loadedIds].sort((a, b) => a.localeCompare(b))).toEqual(loadedIds);
   await adminConnection.client.unsafe(`CREATE DATABASE "${databaseName}"`);
   testConnection = createDatabase(testDatabaseUrl.toString());
   await migrateIsolatedDatabase();
