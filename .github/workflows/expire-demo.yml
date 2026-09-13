@@ -1,0 +1,44 @@
+name: Expire demo workspaces
+
+on:
+  schedule:
+    # At least hourly per docs/DEPLOYMENT.md (TTL and cleanup).
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      before:
+        description: "Optional ISO cutoff override, forwarded as --before (empty = default TTL cutoff)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  expire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Expire guest workspaces
+        run: |
+          if [ -n "${{ github.event.inputs.before }}" ]; then
+            pnpm demo:expire --before "${{ github.event.inputs.before }}"
+          else
+            pnpm demo:expire
+          fi
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
