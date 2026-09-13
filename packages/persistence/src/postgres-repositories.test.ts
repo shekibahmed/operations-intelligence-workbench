@@ -680,4 +680,37 @@ describe.sequential("Postgres persistence repositories", () => {
     });
     expect(JSON.stringify(summary)).not.toContain("hidden@example.test");
   });
+
+  it("reports funnel aggregates by scenario without session-level data", async () => {
+    const sessionId = randomUUID();
+    const funnelEvents = [
+      { name: "demo-started", context: { scenarioId: "example-pack", entry: "tour" } },
+      { name: "tour-completed", context: { scenarioId: "example-pack" } },
+      { name: "decision-approved", context: { scenarioId: "example-pack", outcome: "approved" } },
+      { name: "cta-opened", context: { scenarioId: "example-pack" } },
+      { name: "tour-completed", context: { scenarioId: "other-pack" } },
+      { name: "landing-page-view", context: { path: "/" } },
+    ];
+    for (const [index, event] of funnelEvents.entries()) {
+      await analytics.insert({
+        id: randomUUID(),
+        workspaceId: null,
+        sessionId,
+        name: event.name,
+        context: event.context,
+        occurredAt: `2026-09-03T08:${String(index).padStart(2, "0")}:00.000Z`,
+      });
+    }
+
+    const funnel = await analytics.funnelByScenario();
+    // landing-page-view is outside the funnel stages, so it never appears.
+    expect(funnel).toEqual([
+      { scenario: "example-pack", name: "cta-opened", count: 1 },
+      { scenario: "example-pack", name: "decision-approved", count: 1 },
+      { scenario: "example-pack", name: "demo-started", count: 1 },
+      { scenario: "example-pack", name: "tour-completed", count: 1 },
+      { scenario: "other-pack", name: "tour-completed", count: 1 },
+    ]);
+    expect(JSON.stringify(funnel)).not.toContain(sessionId);
+  });
 });

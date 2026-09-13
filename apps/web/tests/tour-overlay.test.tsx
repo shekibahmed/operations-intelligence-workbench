@@ -4,7 +4,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { TourOverlay } from "@/components/tour/TourOverlay";
 
-const processFixtureArtifacts = vi.fn(async (..._args: unknown[]) => ({ ok: true as const }));
+const processFixtureArtifacts = vi.fn(
+  async (..._args: unknown[]): Promise<{ ok: true } | { ok: false; message: string }> => ({ ok: true as const }),
+);
 
 vi.mock("@/app/w/[workspace]/inbox/actions", () => ({
   processFixtureArtifacts: (...args: unknown[]) => processFixtureArtifacts(...args),
@@ -90,5 +92,36 @@ describe("TourOverlay", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Exit tour" }));
     await waitFor(() => expect(screen.queryByTestId("tour-panel")).not.toBeInTheDocument());
+  });
+
+  it("shows the activation framing and milestone checklist on the first step", async () => {
+    window.history.pushState({}, "", `${BASE}/inbox?tour=1`);
+    render(<TourOverlay workspace="workspace-1" base={BASE} packId="asset-reliability" />);
+
+    await waitFor(() => expect(screen.getByTestId("tour-panel")).toBeInTheDocument());
+    expect(screen.getByText(/Activation step 1 of 7/)).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Tour progress" })).toBeInTheDocument();
+    expect(screen.getByText("Process raw input")).toBeInTheDocument();
+  });
+
+  it("keeps the visitor on the same step with a retry message when fixture processing fails", async () => {
+    window.sessionStorage.setItem("oiw-tour-state", JSON.stringify({ active: true, index: 2 }));
+    window.history.pushState({}, "", `${BASE}/review`);
+    vi.mocked(usePathname).mockReturnValue(`${BASE}/review`);
+    processFixtureArtifacts.mockResolvedValueOnce({ ok: false as const, message: "Processing failed unexpectedly." });
+    render(<TourOverlay workspace="workspace-1" base={BASE} packId="asset-reliability" />);
+
+    await waitFor(() => expect(screen.getByText("Review uncertainty")).toBeInTheDocument());
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+
+    await waitFor(() => expect(screen.getByRole("alert")).toBeInTheDocument());
+    expect(screen.getByText(/Your place in the tour is kept/)).toBeInTheDocument();
+    expect(screen.getByText("Review uncertainty")).toBeInTheDocument();
+    expect(processFixtureArtifacts).toHaveBeenCalledWith("workspace-1", [
+      "asset-reliability-demo-002",
+      "asset-reliability-demo-003",
+      "asset-reliability-demo-004",
+      "asset-reliability-demo-005",
+    ]);
   });
 });
