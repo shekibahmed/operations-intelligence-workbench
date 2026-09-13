@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { processFixtureArtifacts } from "@/app/w/[workspace]/inbox/actions";
-import { getTourSteps } from "@/lib/tour/steps";
+import { getActivationStepCount, getTourSteps, tourMilestoneStatuses } from "@/lib/tour/steps";
 import { withLens } from "@/lib/routes";
 import { emitProductAnalyticsEvent } from "@/lib/product-analytics";
 
@@ -64,6 +64,7 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
   const [index, setIndex] = useState<number | null>(null);
   const [target, setTarget] = useState<DOMRect | null>(null);
   const [pending, setPending] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const initializedReload = useRef(false);
 
@@ -142,7 +143,12 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
   const step = steps[index];
   if (step === undefined) return null;
 
+  const activationCount = getActivationStepCount(packId);
+  const activationReached = activationCount > 0 && index >= activationCount;
+  const milestones = tourMilestoneStatuses(packId, index);
+
   function advanceTo(nextIndex: number, path: string | null) {
+    setFailure(null);
     writeStoredState({ active: true, index: nextIndex });
     setIndex(nextIndex);
     if (nextIndex === lastIndex) {
@@ -154,8 +160,17 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
   async function goNext() {
     if (step!.beforeNext !== undefined) {
       setPending(true);
-      await processFixtureArtifacts(workspace, step!.beforeNext.fixtureIds);
+      setFailure(null);
+      const result = await processFixtureArtifacts(workspace, step!.beforeNext.fixtureIds);
       setPending(false);
+      if (result.ok === false) {
+        setFailure(
+          result.status === 429 && typeof result.retryAfterSeconds === "number"
+            ? `${result.message} Try again in about ${result.retryAfterSeconds} seconds — your place in the tour is kept.`
+            : `${result.message} Your place in the tour is kept — try again.`,
+        );
+        return;
+      }
     }
     const nextIndex = Math.min(index! + 1, lastIndex);
     if (step!.next.kind === "same-page") {
@@ -171,6 +186,7 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
 
   function goBack() {
     const prevIndex = Math.max(index! - 1, 0);
+    setFailure(null);
     writeStoredState({ active: true, index: prevIndex });
     setIndex(prevIndex);
   }
@@ -201,11 +217,37 @@ export function TourOverlay({ workspace, base, packId }: { workspace: string; ba
         <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
           Guided tour · Step {index + 1} of {steps.length}
         </p>
+        <p className="mt-1 text-xs text-ink-muted">
+          {activationReached
+            ? "Activation complete — these last steps are follow-ups you can explore freely."
+            : `Activation step ${Math.min(index + 1, activationCount)} of ${activationCount} — reach one approval.`}
+        </p>
         <h2 id="tour-panel-heading" className="mt-1 text-sm font-semibold text-ink">
           {step.title}
         </h2>
         <p className="mt-2 text-sm text-ink-muted">{step.body}</p>
         {step.actionHint !== undefined ? <p className="mt-2 text-xs font-medium text-ink">{step.actionHint}</p> : null}
+        <ol aria-label="Tour progress" className="mt-3 space-y-1">
+          {milestones.map(({ milestone, status }) => (
+            <li
+              key={milestone.id}
+              aria-current={status === "current" ? "step" : undefined}
+              className="flex items-center gap-2 text-xs"
+            >
+              <span aria-hidden="true" className="inline-block w-4 text-center">
+                {status === "done" ? "✓" : status === "current" ? "→" : "·"}
+              </span>
+              <span className={status === "done" ? "text-ink-muted line-through" : status === "current" ? "font-medium text-ink" : "text-ink-muted"}>
+                {milestone.label}
+              </span>
+            </li>
+          ))}
+        </ol>
+        {failure !== null ? (
+          <p role="alert" className="mt-2 text-xs font-medium text-ink">
+            {failure}
+          </p>
+        ) : null}
         <div className="pointer-events-auto mt-3 flex flex-wrap items-center justify-between gap-2">
           <div className="flex gap-2">
             <button

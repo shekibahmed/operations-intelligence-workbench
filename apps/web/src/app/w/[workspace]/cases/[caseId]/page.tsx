@@ -7,6 +7,7 @@ import { ExportControls } from "@/app/w/[workspace]/ExportControls";
 import { Badge } from "@/components/ui/Badge";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { SectionCard } from "@/components/ui/SectionCard";
+import { DetailVisitMarker } from "@/components/conversion/DetailVisitMarker";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { buildCaseDetailView } from "@/lib/case-detail";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
@@ -52,6 +53,7 @@ export default async function CaseDetailPage({
       defaultArtifactId={DEFAULT_ARTIFACT_ID}
       defaultRuleId={DEFAULT_RULE_ID}
     >
+      <DetailVisitMarker />
       <header data-tour="tour-case-summary">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
