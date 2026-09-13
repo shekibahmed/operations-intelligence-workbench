@@ -12,7 +12,7 @@
     "id": "subject-002",
     "entityType": "template-subject",
     "displayName": "SUB-002",
-    "externalReference": "SUB002",
+    "externalReference": "SUB-002",
     "aliases": ["SUB002"],
     "attributes": { "category": "general" },
     "status": "active"

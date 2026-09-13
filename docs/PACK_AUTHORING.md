@@ -12,7 +12,9 @@ predates `PLAN_AMENDMENTS.md` and the real implementation in places (see
 Read alongside this guide:
 
 - `scenario-packs/_template/` — a scaffold pack that loads validly today.
-  Copy it and follow §3 below in order.
+  Start from it with `pnpm pack:scaffold <pack-id> --name "<Name>" --description "<...>"`,
+  which copies the template, renames the identifier prefix, and verifies
+  every fixture checksum — then follow §3 below in order.
 - `packages/contracts/src/configuration.ts` — the frozen manifest, rule,
   workflow, case and observation/event schemas (the actual source of
   truth; this guide describes it in prose).
