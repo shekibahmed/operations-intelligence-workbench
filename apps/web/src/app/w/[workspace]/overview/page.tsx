@@ -3,6 +3,7 @@ import Link from "next/link";
 import { WorkspaceShell } from "@/components/shell/WorkspaceShell";
 import { DashboardGrid } from "@/components/widgets/DashboardGrid";
 import { DemoSummary } from "@/components/tour/DemoSummary";
+import { EngagedAdaptBanner } from "@/components/conversion/EngagedAdaptBanner";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { DEFAULT_ARTIFACT_ID, DEFAULT_RULE_ID } from "@/lib/nav-defaults";
@@ -44,6 +45,10 @@ export default async function LeadershipOverviewPage({
       defaultRuleId={DEFAULT_RULE_ID}
     >
       <h1 className="text-lg font-semibold text-ink">Overview</h1>
+
+      <div className="mt-4">
+        <EngagedAdaptBanner scenario={labels.packId} packName={labels.packName} />
+      </div>
 
       {state === "error" ? (
         <ErrorState message="Could not load the overview." />

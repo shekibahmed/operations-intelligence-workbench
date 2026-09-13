@@ -1,4 +1,4 @@
-import { asc, count, desc, eq } from "drizzle-orm";
+import { asc, count, desc, eq, inArray, sql } from "drizzle-orm";
 
 import type { PersistenceDatabase } from "./database.js";
 import { analyticsEvents, assessmentSubmissions } from "./schema.js";
@@ -35,6 +35,25 @@ export interface AnalyticsSummary {
   events: Array<{ name: string; count: number }>;
   assessmentSubmissions: number;
 }
+
+export interface FunnelByScenarioRow {
+  scenario: string;
+  name: string;
+  count: number;
+}
+
+/**
+ * Funnel stages for the demo-to-assessment conversion loop (value-traction
+ * plan U3). Aggregate counts only — no session-level data leaves the query,
+ * and only the existing closed context key `scenarioId` is read.
+ */
+export const FUNNEL_EVENT_NAMES = [
+  "demo-started",
+  "tour-completed",
+  "decision-approved",
+  "cta-opened",
+  "assessment-submitted",
+] as const;
 
 function normalizeEvent(row: typeof analyticsEvents.$inferSelect): StoredAnalyticsEvent {
   return { ...row, occurredAt: new Date(row.occurredAt).toISOString() };
@@ -90,6 +109,17 @@ export function createProductAnalyticsRepository(database: PersistenceDatabase) 
         events: grouped,
         assessmentSubmissions: submissions[0]?.count ?? 0,
       };
+    },
+
+    async funnelByScenario(): Promise<FunnelByScenarioRow[]> {
+      const scenario = sql<string>`coalesce(${analyticsEvents.context}->>'scenarioId', '(none)')`;
+      const rows = await database
+        .select({ scenario, name: analyticsEvents.name, count: count() })
+        .from(analyticsEvents)
+        .where(inArray(analyticsEvents.name, [...FUNNEL_EVENT_NAMES]))
+        .groupBy(scenario, analyticsEvents.name)
+        .orderBy(asc(scenario), asc(analyticsEvents.name));
+      return rows;
     },
   };
 }
