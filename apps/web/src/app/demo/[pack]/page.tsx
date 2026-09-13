@@ -58,7 +58,11 @@ export default async function GuidedScenarioStartPage({
             </svg>
             <p>
               Selecting an entry point below creates an isolated synthetic workspace — nothing
-              here affects any other visitor.
+              here affects any other visitor. This guided demo runs on fixed sample data: there
+              is no upload here, so nothing confidential can enter it. To try your own
+              operational data, run the project locally and author fixtures
+              (see <span className="font-medium">docs/PACK_AUTHORING.md</span>), or describe
+              your workflow through the assessment form.
             </p>
           </div>
 

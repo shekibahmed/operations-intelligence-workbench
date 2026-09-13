@@ -5,72 +5,76 @@ not authorize client data, live operational connectors, authentication/SSO or
 external write-back. Those require the client-deployment threat-model addendum
 described in `docs/SECURITY.md` §6.
 
-The supported target is Vercel plus a Supabase-hosted plain PostgreSQL
-database. Supabase Auth, Storage and RLS are not used on the P0 critical path
-(Plan Amendment A4).
+The supported target is a container host (Google Cloud Run or equivalent)
+plus a Neon-hosted plain PostgreSQL database. The app reads Scenario Packs
+from the filesystem at runtime, so edge runtimes and file-tracing-based
+serverless hosts are poor fits; the previous Vercel plus Supabase runbook is
+retained as Appendix A for teams that already run there. Supabase Auth,
+Storage and RLS are not used on the P0 critical path (Plan Amendment A4).
 
 ## 1. Preconditions
 
 - The release commit passes the command chain in §6 and the security launch
   checks in `docs/quality/RELEASE_CHECKLIST.md`.
 - The deployment contains synthetic Scenario Pack data only.
-- The operator has a Supabase project, a Vercel project linked to this GitHub
-  repository, and permission to manage both projects' secrets.
-- Production and Preview use separate databases. Never point a Preview
-  deployment at the production database.
+- The operator has a container-host project, a Neon project, and permission
+  to manage both projects' secrets and service settings.
+- Preview and Production use separate services and databases. Never point a
+  Preview service at the production database.
 - Node.js 22 and pnpm 11.25.0 are selected to match CI.
 
-## 2. Create and migrate Supabase PostgreSQL
+## 2. Create and migrate Neon PostgreSQL
 
-1. Create a Supabase project and retain its database password in the team's
-   secret manager. In the project dashboard, select **Connect** and copy the
-   Session pooler URI (port 5432). Supabase documents the available connection
-   modes in its [Postgres connection guide](https://supabase.com/docs/guides/database/connecting-to-postgres).
-2. Use the Session pooler for the current application. The repository's
-   `postgres` client is process-cached and currently uses prepared statements;
-   Supabase transaction mode (port 6543) does not support prepared statements.
-   Moving to transaction mode therefore requires a separate persistence change
-   that sets `prepare: false` and reruns the full database suite.
-3. Add `sslmode=require` to the URI if it is not already present. A placeholder
-   shape is:
+1. Create a Neon project in the same region as the planned container
+   service and retain its database password in the team's secret manager.
+2. Copy the **direct (unpooled)** connection string, not the pooled one.
+   Neon's pooled endpoint runs PgBouncer in transaction mode, which does
+   not support prepared statements; this repository's `postgres` client
+   currently uses prepared statements, so the pooled endpoint fails. Use
+   the direct host with `sslmode=require`. A placeholder shape is:
 
-   ```text
-   postgresql://postgres.[PROJECT-REF]:[DATABASE-PASSWORD]@aws-[REGION].pooler.supabase.com:5432/postgres?sslmode=require
-   ```
+    ```text
+    postgresql://[USER]:[DATABASE-PASSWORD]@[DIRECT-HOST]/[DB]?sslmode=require
+    ```
 
-4. From a trusted operator machine or one-off release job, check out the exact
+3. From a trusted operator machine or one-off release job, check out the exact
    release commit, install with `pnpm install --frozen-lockfile`, set
    `DATABASE_URL` to the target URI, and run:
 
-   ```bash
-   pnpm db:migrate
-   ```
+    ```bash
+    pnpm db:migrate
+    ```
 
-5. Run `pnpm db:migrate` again and confirm it is clean/idempotent. Never run
-   `pnpm db:reset` against Supabase; that command is for disposable local
+4. Run `pnpm db:migrate` again and confirm it is clean/idempotent. Never run
+   `pnpm db:reset` against Neon; that command is for disposable local
    databases only.
 
 The application creates and seeds a guest Workspace on demand, so production
 does not need `pnpm demo:seed` before first use.
 
-## 3. Configure Vercel
+## 3. Deploy the container
 
-1. Import the GitHub repository into Vercel. Set the project Root Directory to
-   `apps/web`, keep the Next.js framework preset, and enable **Include source
-   files outside of the Root Directory** so workspace packages and
-   `scenario-packs/` are available. See Vercel's
-   [monorepo guide](https://vercel.com/docs/monorepos) and
-   [monorepo FAQ](https://vercel.com/docs/monorepos/monorepo-faq).
-2. Keep install/build commands on their detected pnpm defaults unless the
-   preview build proves they were overridden incorrectly. The deploy must build
-   `@oiw/web` and its workspace dependencies from the root lockfile.
-3. Set the variables in §4 independently for Preview and Production. Vercel
-   applies variable changes only to subsequent deployments; redeploy after any
-   change. See [Vercel environment variables](https://vercel.com/docs/environment-variables).
-4. Deploy Preview first. Inspect build and function logs, then complete §7.
-5. Promote/deploy the same reviewed commit to Production only after the Preview
-   checks pass. Vercel's CLI sequence is documented in its
-   [deployment guide](https://vercel.com/docs/projects/deploy-from-cli).
+1. Build the image from the repository root and push it to the host's
+   container registry:
+
+    ```bash
+    docker build -t oiw-web .
+    ```
+
+   The `Dockerfile` already bakes the Next.js standalone output plus the
+   read-only `scenario-packs/` directory the app reads at runtime
+   (`SCENARIO_PACKS_DIR=/app/scenario-packs`).
+2. Create the service from that image. The standalone server listens on
+   `$PORT`, which Cloud Run sets automatically — no image change is
+   needed. Cap cost and database connections: set max instances low
+   (3 is plenty for the synthetic demo) and keep the default concurrency
+   unless load review says otherwise. Place the service in the same
+   region as the Neon project.
+3. Set the variables in §4 independently for Preview and Production.
+   Redeploy after any change; variable edits never apply retroactively.
+4. Deploy Preview first. Inspect build and runtime logs, then complete §7.
+5. Promote the same reviewed image to Production only after the Preview
+   checks pass. Never promote by rebuilding from a different commit.
 
 ## 4. Runtime configuration
 
@@ -78,24 +82,26 @@ All values are server-only. Do not create `NEXT_PUBLIC_` copies of secrets.
 
 | Variable | Requirement | Value / purpose |
 |---|---|---|
-| `DATABASE_URL` | Required | Supabase Session pooler URI from §2. Use a different database/project per environment. |
+| `DATABASE_URL` | Required | Neon direct (unpooled) URI from §2. Use a different project/branch per environment. |
 | `SESSION_SECRET` | Required | Random high-entropy value of at least 32 bytes. Signs guest session tokens. |
 | `SESSION_SECRET_PREVIOUS` | Optional, rotation only | Previous signing secret accepted temporarily while cookies issued under it expire. Remove after 24 hours. |
 | `OIW_RATE_LIMIT_IP_SALT` | Required for deployment | Independent random high-entropy HMAC salt for privacy-preserving IP bucket keys. Do not reuse it outside rate limiting. |
-| `OIW_TRUSTED_PROXY_HEADER` | Required explicitly for deployment | Set `x-vercel-forwarded-for` on Vercel. Allowed values are `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, or `none`. An invalid value fails closed. |
-| `SCENARIO_PACKS_DIR` | Normally unset | Override only if the runtime working directory differs from `apps/web`; it must resolve to the deployed read-only `scenario-packs/` directory. |
+| `OIW_TRUSTED_PROXY_HEADER` | Required explicitly for deployment | Set `x-forwarded-for` on Cloud Run (the platform edge appends the viewer address there). Allowed values are `x-vercel-forwarded-for`, `x-forwarded-for`, `x-real-ip`, or `none`. An invalid value fails closed. |
+| `OIW_RATE_LIMIT_STORE` | Required for deployment | Always `postgres` on hosted services: revisions overlap during deploys, so the process-local default would silently multiply allowances. |
+| `DATABASE_POOL_MAX` | Required for deployment | Small bound (5 is plenty with max instances at 3) so scaled instances stay below the database connection ceiling. Must be a positive integer. |
+| `SCENARIO_PACKS_DIR` | Normally unset | Override only if the runtime working directory differs from the baked `/app/scenario-packs` copy. |
 | `OIW_ASSESSMENT_SINK` | Optional | `postgres` (default) stores submissions in the migrated first-party table. `log` writes the submitted form record to server logs. No email or webhook delivery is implemented. |
 
-When the runtime exposes `VERCEL=1`, the code defaults to
-`x-vercel-forwarded-for`. Set `OIW_TRUSTED_PROXY_HEADER` explicitly so the
-trust decision does not depend on system-variable exposure. Vercel documents that
-this header remains stable when another proxy overwrites `x-forwarded-for` in
-its [request-header reference](https://vercel.com/docs/headers/request-headers).
-
-For non-Vercel hosting, the default is to ignore all forwarded IP headers and
-place requests in the `unknown` IP bucket. Set a header only when a trusted edge
-proxy strips any client-supplied copy and writes the authoritative value. Never
-select `x-forwarded-for` merely because a request happens to contain it.
+Set `OIW_TRUSTED_PROXY_HEADER` explicitly so the trust decision does not
+depend on system-variable exposure. Known residual on Cloud Run: the edge
+appends the viewer address to any client-supplied `X-Forwarded-For` chain
+rather than overwriting it, and the app reads the leftmost entry — so a
+determined visitor could rotate IP buckets. Accepted for the synthetic demo
+because every bucket is additionally bound to the signed session cookie;
+revisit before any higher-volume or client-data deployment, and never select
+`x-forwarded-for` merely because a request happens to contain it. With no
+header configured the default is to ignore all forwarded headers and place
+requests in the `unknown` IP bucket.
 
 ### Rate-limit overrides
 
@@ -135,8 +141,9 @@ Run the aggregate-only admin report from a trusted environment:
 pnpm analytics:summary
 ```
 
-The command prints counts by event and the total assessment-submission count;
-it never prints organisation, workflow or contact fields.
+The command prints counts by event, funnel aggregates by scenario, and the
+total assessment-submission count; it never prints organisation, workflow
+or contact fields.
 
 ### TTL and cleanup
 
@@ -146,20 +153,18 @@ constants, not environment variables in P0, so changing them requires a tested
 application change; this avoids accidentally configuring a cookie to outlive
 its Workspace.
 
-Schedule the following at least hourly from a trusted runner with production
-`DATABASE_URL`:
-
-```bash
-pnpm install --frozen-lockfile
-pnpm demo:expire
-```
-
-The job deletes only expired `public-demo` Workspaces. Do not expose it as an
-unauthenticated HTTP endpoint. Record job success/failure in the deployment's
-operations log and alert if two consecutive runs fail. Vercel Cron calls HTTP
-routes rather than shell commands; using it would require a separately scoped,
-`CRON_SECRET`-protected Route Handler, which is not part of Wave 4. See
-[Vercel Cron security guidance](https://vercel.com/docs/cron-jobs/manage-cron-jobs).
+Expiry runs from the scheduled
+[`.github/workflows/expire-demo.yml`](../.github/workflows/expire-demo.yml)
+workflow (hourly, plus manual dispatch with an optional `--before`
+override). Before going live, set the repository's `DATABASE_URL` secret to
+the production Neon URI so the job can reach it. The job deletes only
+expired `public-demo` Workspaces. Do not expose it as an unauthenticated
+HTTP endpoint. Record job success/failure in the deployment's operations
+log and alert if two consecutive runs fail. (Cron-via-HTTP products such
+as Vercel Cron call routes rather than shell commands; using one would
+require a separately scoped, `CRON_SECRET`-protected Route Handler, which
+is not part of this runbook. See
+[Vercel Cron security guidance](https://vercel.com/docs/cron-jobs/manage-cron-jobs).)
 
 ## 5. Known deployment constraint: distributed rate limiting
 
@@ -167,12 +172,14 @@ The default `InMemoryTokenBucketStore` is process-local. On multiple
 instances, each instance has its own allowance, so the configured numbers are
 not a global ceiling. Two supported configurations:
 
-- **Single instance (the public demonstration):** the default memory store is
-  correct; no action needed.
-- **Multiple instances:** set `OIW_RATE_LIMIT_STORE=postgres` so all
+- **Local single process (development, `pnpm dev`):** the default memory
+  store is correct; no action needed.
+- **Hosted (always):** set `OIW_RATE_LIMIT_STORE=postgres` so all
   instances share the atomic `rate_limit_buckets` table (applied by
   `pnpm db:migrate`; exact under concurrency per
-  `postgres-rate-limit-store.test.ts`). The store uses the same
+  `postgres-rate-limit-store.test.ts`). Hosted revisions overlap during
+  deploys even with min instances at zero, so the shared store is required
+  from the first deployment, not only at scale. The store uses the same
   `DATABASE_URL` connection pool as the app; size `DATABASE_POOL_MAX`
   accordingly.
 
@@ -236,8 +243,8 @@ For each environment:
    requests. Do not promote if TLS or secure-cookie checks fail.
 10. Complete one guided tour and one assessment submission. Run
     `pnpm analytics:summary` against the environment and confirm tour, CTA and
-    submission counts increased without raw IP or assessment contents in the
-    report.
+    submission counts — including the funnel-by-scenario breakdown —
+    increased without raw IP or assessment contents in the report.
 
 ## 8. Rotation, rollback and incident notes
 
@@ -249,9 +256,23 @@ For each environment:
 - Application rollback is safe only while database migrations remain backward
   compatible. This runbook does not authorize schema rollback or
   `pnpm db:reset` in production.
-- If secret exposure is suspected, rotate first, then inspect Vercel/Supabase
-  access logs and repository history. Do not paste secret values into issues,
-  PRs or agent-run files.
+- If secret exposure is suspected, rotate first, then inspect the host and
+  database provider access logs and repository history. Do not paste secret
+  values into issues, PRs or agent-run files.
 - If expiry or isolation fails, disable public access until the cause is fixed;
   synthetic-only scope reduces confidentiality impact but does not make a
   workspace-boundary failure acceptable.
+
+## Appendix A. Alternative: Vercel plus Supabase
+
+For teams that already run on Vercel and Supabase, the previous runbook
+still applies with these substitutions: use the Supabase Session pooler URI
+(port 5432, `sslmode=require`) — never transaction mode (port 6543), which
+does not support the prepared statements this repository's client uses.
+Set the Vercel project Root Directory to `apps/web` with **Include source
+files outside of the Root Directory** enabled so workspace packages and
+`scenario-packs/` are available, keep the detected pnpm install/build
+commands, and set `OIW_TRUSTED_PROXY_HEADER=x-vercel-forwarded-for`. The
+code defaults to that header when `VERCEL=1` is exposed, but set it
+explicitly so the trust decision never depends on system-variable
+exposure. All other sections (§4–§8) apply unchanged.
