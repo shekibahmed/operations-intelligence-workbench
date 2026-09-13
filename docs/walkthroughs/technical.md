@@ -18,7 +18,7 @@ core packages never import a `scenario-packs/` directory directly. Full
 package-boundary map, system-flow and lifecycle diagrams:
 [`docs/ARCHITECTURE.md`](../ARCHITECTURE.md).
 
-![Project Falcon's MSA arriving in the inbox, before processing](../../apps/web/e2e/screenshots/document-assurance-tour-inbox-arrival-desktop.png)
+![The Inbox before processing: the Project Falcon MSA and related artifacts, all 'Received' with 0 observations, with the tour's arrival step open](../../apps/web/e2e/screenshots/document-assurance-tour-inbox-arrival-desktop.png)
 
 ## Contracts
 
@@ -44,7 +44,7 @@ artifact — Vantage's counsel replying with a date range instead of a locked
 renewal date — is exactly the kind of ambiguity the platform routes to
 review instead of resolving silently.
 
-![The Review Queue showing the unresolved due-date field, evidence highlighted in the source](../../apps/web/e2e/screenshots/review-populated-desktop.png)
+![The Review Queue: raw source with the evidence span highlighted beside the observation detail (field, extracted value, confidence, status) — pictured on the Asset Reliability previous-repair-reference item at 70% confidence and Pending review, the suite's only populated Review Queue capture; the due-date item takes the same review path](../../apps/web/e2e/screenshots/review-populated-desktop.png)
 
 ## Provenance
 
@@ -64,9 +64,15 @@ Operational Event fields, Observation lookups by schema key, and four
 core-computed aggregates — with no pack-specific fact kind representable
 (amendment A2). Nadia's formal exception proposal, citing the MSA's
 liability cap against the internal policy's higher figure, makes one such
-rule's condition true. The resulting trace is directly inspectable:
+rule's condition true. That trace is directly inspectable in the
+Technical inspector's Rules tab — rule identity and version, fact values,
+per-clause evaluation, and outcome — exercised step by step in the
+north-star tour (`apps/web/e2e/north-star.spec.ts`); no tour spec captures
+that tab as a screenshot file, so the frame below shows the suite's
+captured Technical-lens Overview from the same Asset Reliability workspace
+instead:
 
-![The Technical Inspector's rule trace: the condition tree and both evaluated clauses](../../apps/web/e2e/screenshots/north-star-technical-overview-desktop.png)
+![Overview under the Technical lens (Critical Signals, Repeat Fault Signals, Recent activity) — the suite's captured Technical-lens frame; the Rules tab's condition tree and evaluated clauses are asserted in the tour but have no captured screenshot file](../../apps/web/e2e/screenshots/north-star-technical-overview-desktop.png)
 
 ## Approvals
 

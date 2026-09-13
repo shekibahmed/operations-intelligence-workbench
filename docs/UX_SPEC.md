@@ -264,6 +264,13 @@ route is outside the workspace shell).
   CTA buttons are real `<button>`/`<a>` elements with visible focus states;
   no content conveyed by colour alone.
 
+- **Deviation (2026-09-13, OIW-907 expansion — recorded, not rewritten):**
+  the shipped landing page (`apps/web/src/app/page.tsx`) keeps every
+  element above and adds a pipeline grid, a capability grid, a
+  scenario-pack section, a quick-start block, and a firm CTA. This spec
+  stays normative; the expansion ships as this note plus a PR note (see
+  `docs/agent-runs/OIW-907.md` "Assumptions and deviations").
+
 ### 5.2 R2 — Scenario Selector (`/demo`)
 
 Wireframe: `docs/ux/01-scenario-selector.md`. Lens: All (pre-lens; no

@@ -102,11 +102,19 @@ report, while the current report supplies the still-missing evidence fact.
   prior (terminated) session left `events/checklist-filed.schema.json`
   requiring an observation `checklist-status` with no corresponding
   observation schema file; this task adds it.
-- **No `tours/`.** Tours are an explicit OIW-004b non-goal, deferred to
-  the tour framework task. `manifest.yaml` therefore omits the `tours`
-  field, even though it is required (non-optional) by contracts v1.1's
-  `ScenarioPackManifestSchema` — flagged as a contract/validator
-  mismatch for OIW-103 reconciliation rather than worked around here.
+- **No `tours/` in this pack — the guided tour lives in app code, and it
+  exists.** This pack has a full guided tour: `TOUR_STEPS_BY_PACK` in
+  `apps/web/src/lib/tour/steps.ts` carries a `document-assurance` step
+  list (added under OIW-702), scripted in `docs/DEMO_SCRIPT.md` ("Full
+  Guided Demonstration — Document Assurance") and exercised by
+  `apps/web/e2e/document-assurance-tour.spec.ts`. Tour steps are
+  implemented per pack in the web app rather than as `tours/` manifest
+  content, so `manifest.yaml` intentionally omits the `tours` field. That
+  field is optional in `@oiw/contracts`
+  (`packages/contracts/src/configuration.ts` — "Optional until the tour
+  framework lands"), so the omission validates cleanly; the OIW-004b
+  "deferred, non-goal" note and the OIW-103 mismatch flag no longer
+  apply.
 - **No `metrics/` directory.** The pack's metric definitions live in
   `dashboards/metrics.json` (still referenced from `manifest.yaml`'s
   `metrics` array, which contracts v1.1 requires) rather than a separate

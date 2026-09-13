@@ -244,7 +244,7 @@ export default function LandingPage() {
                 </div>
                 <Image
                   src="/screenshots/leadership-dashboard.png"
-                  alt="The Leadership dashboard after an approval: critical signals, open cases, pending decisions, a repeat-fault trend and an explicitly labelled hypothetical downtime estimate."
+                  alt="The Asset Reliability Leadership dashboard after an approval: Leadership, Operations and Technical lens switcher, Critical Signals 2, Open Reliability Cases 1 and Pending Decisions 0 cards badged Calculated, a repeat-fault trend, and an Estimated Downtime Exposure of about 24 hours badged Hypothetical."
                   width={1440}
                   height={900}
                   priority
