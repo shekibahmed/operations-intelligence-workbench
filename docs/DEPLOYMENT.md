@@ -153,11 +153,12 @@ constants, not environment variables in P0, so changing them requires a tested
 application change; this avoids accidentally configuring a cookie to outlive
 its Workspace.
 
-Expiry runs from the scheduled
+Expiry runs from the
 [`.github/workflows/expire-demo.yml`](../.github/workflows/expire-demo.yml)
-workflow (hourly, plus manual dispatch with an optional `--before`
-override). Before going live, set the repository's `DATABASE_URL` secret to
-the production Neon URI so the job can reach it. The job deletes only
+workflow (manual dispatch with an optional `--before` override). The hourly
+schedule is commented out in the workflow file. Before going live, set the
+repository's `DATABASE_URL` secret to the production Neon URI and restore
+the `schedule` trigger so the job runs at least hourly. The job deletes only
 expired `public-demo` Workspaces. Do not expose it as an unauthenticated
 HTTP endpoint. Record job success/failure in the deployment's operations
 log and alert if two consecutive runs fail. (Cron-via-HTTP products such

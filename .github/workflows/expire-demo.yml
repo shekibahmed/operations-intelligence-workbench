@@ -1,9 +1,11 @@
 name: Expire demo workspaces
 
 on:
-  schedule:
-    # At least hourly per docs/DEPLOYMENT.md (TTL and cleanup).
-    - cron: "17 * * * *"
+  # Manual only. The hourly schedule is disabled until a production
+  # DATABASE_URL secret exists; without it every scheduled run fails and
+  # sends a failure alert. Re-enable by restoring the schedule trigger:
+  #   schedule:
+  #     - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       before:
@@ -33,8 +35,14 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # scripts/expire-demo.ts imports built package output (dist/).
+      - run: pnpm build
+
       - name: Expire guest workspaces
         run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::error::DATABASE_URL secret is not set"; exit 1
+          fi
           if [ -n "${{ github.event.inputs.before }}" ]; then
             pnpm demo:expire --before "${{ github.event.inputs.before }}"
           else
