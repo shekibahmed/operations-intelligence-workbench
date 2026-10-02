@@ -11,6 +11,7 @@ import { promisify } from "node:util";
 import { ExtractionResultSchema, RuleDefinitionSchema } from "../../packages/contracts/src/index.js";
 
 import { createDatabase } from "../../packages/persistence/src/database.js";
+import { assembleCasebook } from "./evidence.js";
 
 const exec = promisify(execFile);
 const root = resolve(import.meta.dirname, "../..");
@@ -210,6 +211,19 @@ export async function capture(): Promise<void> {
   requireThat(uncertain?.confidence === sources.excerpt.confidence && uncertain.evidence.some((entry) => entry.excerpt === sources.excerpt.text), "Frozen extraction does not support the selected confidence and excerpt");
   requireThat(JSON.stringify(extraction.provider) === JSON.stringify(sources.provider) && extraction.provider.deterministic === true, "Frozen extraction identity mismatch");
   const story = object(JSON.parse(await readFile(resolve(root, packDirectory, "case.json"), "utf8")), "case presentation");
+  const evidencePaths = new Set(sources.files.map((file) => file.path));
+  for (const capability of list(story.capabilities, "capabilities")) {
+    requireThat(Array.isArray(capability.paths) && capability.paths.length > 0, "Capability evidence paths are missing");
+    for (const path of capability.paths) evidencePaths.add(string(path, "capability path"));
+  }
+  for (const path of evidencePaths) {
+    try {
+      const { stdout: kind } = await exec("git", ["cat-file", "-t", `${captureRevision}:${path}`], { cwd: root });
+      requireThat(kind.trim() === "blob", "Evidence must be a file");
+    } catch {
+      throw new Error(`Evidence path missing at capture revision: ${path}`);
+    }
+  }
   const selection = object(story.capture, "capture selection");
   const ruleFile = sources.files.find((file) => file.id === "approval-rule");
   requireThat(ruleFile !== undefined, "Frozen approval rule missing");
@@ -221,9 +235,7 @@ export async function capture(): Promise<void> {
   const databaseName = `oiw_casebook_${process.pid}_${randomUUID().replaceAll("-", "").slice(0, 10)}`;
   const admin = createDatabase(adminUrl);
   url.pathname = `/${databaseName}`;
-  const staging = await mkdtemp(resolve(tmpdir(), "oiw-casebook-capture-"));
-  const port = await unusedPort();
-  const env = { ...process.env, SCENARIO_PACKS_DIR: resolve(root, "scenario-packs"), DATABASE_URL: url.toString(), SESSION_SECRET: randomUUID() + randomUUID(), CASEBOOK_CAPTURE: "1", CASEBOOK_CAPTURE_PORT: String(port), CASEBOOK_CAPTURE_RAW: resolve(staging, "raw.json"), OIW_RATE_LIMIT_STORE: "memory" };
+  let staging: string | undefined;
   let server: ChildProcess | undefined;
   let created = false;
   let interrupted = false;
@@ -231,6 +243,9 @@ export async function capture(): Promise<void> {
   process.on("SIGINT", interrupt);
   process.on("SIGTERM", interrupt);
   try {
+    staging = await mkdtemp(resolve(tmpdir(), "oiw-casebook-capture-"));
+    const port = await unusedPort();
+    const env = { ...process.env, SCENARIO_PACKS_DIR: resolve(root, "scenario-packs"), DATABASE_URL: url.toString(), SESSION_SECRET: randomUUID() + randomUUID(), CASEBOOK_CAPTURE: "1", CASEBOOK_CAPTURE_PORT: String(port), CASEBOOK_CAPTURE_RAW: resolve(staging, "raw.json"), OIW_RATE_LIMIT_STORE: "memory" };
     await admin.client.unsafe(`CREATE DATABASE "${databaseName}"`);
     created = true;
     await run("pnpm", ["db:migrate"], env);
@@ -256,7 +271,7 @@ export async function capture(): Promise<void> {
     requireThat(projection.review.excerpt === sources.excerpt.text && projection.review.fieldKey === sources.excerpt.fieldKey && projection.review.displayedConfidence === `${sources.excerpt.confidence * 100}%`, "Observed review does not match frozen extraction");
     const { stdout: finalDirty } = await exec("git", ["status", "--porcelain"], { cwd: root });
     requireThat(finalDirty.trim() === "", "Capture inputs changed during execution");
-    await saveRecording(resolve(root, packDirectory, "recording.json"), raw, {
+    const metadata = {
       schemaVersion: 1,
       capturedAt: new Date().toISOString(),
       sourceRevision: captureRevision,
@@ -267,17 +282,25 @@ export async function capture(): Promise<void> {
       provider: sources.provider,
       inputs,
       automation: { method: "Playwright exercising authenticated human-governed UI", disclosure: "Synthetic scripted review and approval; no maintenance lead was consulted. No physical execution or measured business impact is established." },
-    });
+    };
+    assembleCasebook(story, sources, { ...metadata, ...projection });
+    await saveRecording(resolve(root, packDirectory, "recording.json"), raw, metadata);
     console.log("Validated casebook recording saved. Temporary private export files will be removed.");
   } finally {
-    process.off("SIGINT", interrupt);
-    process.off("SIGTERM", interrupt);
-    await stop(server);
     try {
-      if (created) await admin.client.unsafe(`DROP DATABASE "${databaseName}" WITH (FORCE)`);
+      await stop(server);
+      try {
+        if (created) await admin.client.unsafe(`DROP DATABASE "${databaseName}" WITH (FORCE)`);
+      } finally {
+        try {
+          await admin.close();
+        } finally {
+          if (staging !== undefined) await rm(staging, { recursive: true, force: true });
+        }
+      }
     } finally {
-      await admin.close();
-      await rm(staging, { recursive: true, force: true });
+      process.off("SIGINT", interrupt);
+      process.off("SIGTERM", interrupt);
     }
   }
 }
