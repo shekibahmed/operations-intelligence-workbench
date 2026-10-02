@@ -9,13 +9,16 @@
 HOSTING DEFERRED BY OWNER DECISION.**
 
 Waves 0–5 complete (37 lead-verified, CI-gated PRs in the private
-development repo). OIW-908 implementation is COMPLETE on its dedicated Codex branch;
-[PR #11](https://github.com/shekibahmed/operations-intelligence-workbench/pull/11) is open and unmerged.
+development repo). OIW-908 is COMPLETE and merged into `main` through
+[PR #11](https://github.com/shekibahmed/operations-intelligence-workbench/pull/11)
+on 2026-10-02 UTC (merge commit `94fabae`).
 U1–U4, local verification and both full review rounds are complete, including independent
 Claude review. Capture follow-up fixes and all 493 tests pass;
 [GitHub CI](https://github.com/shekibahmed/operations-intelligence-workbench/actions/runs/37030671723) confirms both quality and e2e
 (87 browser passes, nine intentional skips). Target-posture monitoring reached looks-ready
-with zero backlog after 372 quiet seconds. Final merge and hosting remain owner decisions.
+with zero backlog after 372 quiet seconds. The final publication head also passed
+[CI run 37032973185](https://github.com/shekibahmed/operations-intelligence-workbench/actions/runs/37032973185)
+with the same totals; final monitoring stopped after 357 quiet seconds. Hosting remains deferred.
 The lead owns SESSION and integration; units ran in dependency order.
 
 Owner decisions taken on 2026-09-08:
@@ -80,7 +83,7 @@ Wave 2: 210(#14), 108(#13), 301(#12), 406(#16), 408(#18), 109, 110(#19),
 Wave 3: 701(#24), 703(#25), 702(#26), 705(#27), 706(#28)
 Wave 4: 802(#29), 810(#30), 808(#31), 811(#32), 805(#33), 812
 Wave 5: 901(#35), 905(#36), 904(#37)
-Post-publication: 907 (this repo)
+Post-publication (this repo): 907, 908 (#11)
 
 ## Contracts
 
