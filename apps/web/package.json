@@ -9,7 +9,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:casebook": "playwright test --config playwright.casebook.config.ts"
   },
   "dependencies": {
     "@oiw/application": "workspace:*",
