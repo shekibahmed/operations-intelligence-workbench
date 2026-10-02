@@ -9,7 +9,8 @@
 HOSTING DEFERRED BY OWNER DECISION.**
 
 Waves 0–5 complete (37 lead-verified, CI-gated PRs in the private
-development repo). No agents running. No open tasks.
+development repo). OIW-908 is active: public evidence casebook on its dedicated Codex branch.
+The lead owns SESSION and integration; units run in dependency order.
 
 Owner decisions taken on 2026-09-08:
 1. Repository is public; history rewritten to noreply identities (see
