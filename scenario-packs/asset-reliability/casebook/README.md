@@ -74,8 +74,8 @@ refresh evidence. Capture is always a separate, intentional maintainer action.
    with permission to create and drop databases, then run:
 
    ```bash
-   # Replace every placeholder; this is not a usable credential or default URL.
-   CASEBOOK_ADMIN_DATABASE_URL='postgresql://<admin-user>:<admin-password>@<db-host>:<db-port>/<admin-database>' pnpm casebook:capture
+   # Replace the placeholder with your isolated PostgreSQL administrator URL.
+   CASEBOOK_ADMIN_DATABASE_URL='<your-isolated-postgres-admin-URL>' pnpm casebook:capture
    ```
 
    Keep real credentials outside repository files. Capture needs active admin
