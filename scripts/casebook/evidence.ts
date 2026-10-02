@@ -280,9 +280,9 @@ export async function loadCasebook(definitionPath: string): Promise<CasebookDocu
   const recording = recordingInput as Recording;
   // Bind the actual frozen data consumed here. Harness hashes describe capture-time inputs,
   // not a requirement that later code remains byte-identical. No git/history/network reads.
-  for (const [locationPath, bytes] of [[location, definitionText], [resolve(directory, "sources.json"), sourcesText]]) {
-    const input = recording.inputs.find((entry) => entry.path === relative(root, locationPath!).replaceAll("\\", "/"));
-    requireThat(input && input.sha256 === sha256(bytes!), `Capture input checksum mismatch: ${relative(root, locationPath!)}`);
+  for (const [locationPath, bytes] of [[location, definitionText], [resolve(directory, "sources.json"), sourcesText]] as const) {
+    const input = recording.inputs.find((entry) => entry.path === relative(root, locationPath).replaceAll("\\", "/"));
+    requireThat(input && input.sha256 === sha256(bytes), `Capture input checksum mismatch: ${relative(root, locationPath)}`);
   }
   return document;
 }
