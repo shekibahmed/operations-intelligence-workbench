@@ -9,10 +9,13 @@
 HOSTING DEFERRED BY OWNER DECISION.**
 
 Waves 0–5 complete (37 lead-verified, CI-gated PRs in the private
-development repo). OIW-908 is active: public evidence casebook on its dedicated Codex branch.
+development repo). OIW-908 implementation is COMPLETE on its dedicated Codex branch;
+[PR #11](https://github.com/shekibahmed/operations-intelligence-workbench/pull/11) is open and unmerged.
 U1–U4, local verification and both full review rounds are complete, including independent
-Claude review. Capture follow-up fixes and all 493 tests pass; PR publication and CI remain
-in progress.
+Claude review. Capture follow-up fixes and all 493 tests pass;
+[GitHub CI](https://github.com/shekibahmed/operations-intelligence-workbench/actions/runs/37030671723) confirms both quality and e2e
+(87 browser passes, nine intentional skips). Target-posture monitoring reached looks-ready
+with zero backlog after 372 quiet seconds. Final merge and hosting remain owner decisions.
 The lead owns SESSION and integration; units ran in dependency order.
 
 Owner decisions taken on 2026-09-08:
@@ -141,8 +144,9 @@ test:e2e)` — 23 specs. CI runs quality + e2e per PR.
 - Old repo: `shekibahmed/operations-intelligence-workbench-old-private`
   (private) — holds the 38 `agent/*` branches and the 37 PRs referenced by
   `(#N)` in commit messages.
-- Worktrees: none. Recreate per task from the new `main` as
-  `../oiw-<name>` on `agent/<harness>/<id>-<slug>`.
+- Worktrees: OIW-908 has an isolated task worktree on
+  `agent/codex/OIW-908-public-evidence-casebook`. Recreate later tasks from
+  the new `main` as `../oiw-<name>` on `agent/<harness>/<id>-<slug>`.
 - Accounts: primary Claude (lead) + a second Claude Max account for
   workers (`CLAUDE_CONFIG_DIR` pointed at its own config dir); Codex via
   ChatGPT subscription. OpenCode unusable with Claude Max.
