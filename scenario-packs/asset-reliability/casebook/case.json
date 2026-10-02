@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "id": "a-142-repeat-fault",
+  "title": "A-142: from scattered brake reports to a governed decision",
+  "question": "When a reported brake fault repeats and becomes safety-critical, what evidence supports holding the asset from service, and who authorizes the decision?",
+  "summary": "Follow six synthetic reports through an evidence-backed review, a deterministic repeat-event rule and a recorded approval. Inspect the implementation behind each step before considering a workflow pilot.",
+  "attribution": "Built by Shekib and the Kaamchor team.",
+  "disclosures": [
+    "Synthetic demonstration only: every organisation, person and operational report in this case is fictional.",
+    "Deterministic fixture intelligence returns authored, checksum-bound extraction objects. The 70% confidence is authored fixture data, not a measured live-model result.",
+    "The recording uses Playwright to exercise the application's authenticated human-governed review and approval controls. No maintenance lead was consulted.",
+    "Recorded approval authorizes a proposed decision. It does not establish physical removal, completed repairs, production deployment or measured savings."
+  ],
+  "sources": [
+    {
+      "fileId": "asset-reliability-demo-002",
+      "date": "2026-04-06",
+      "label": "Earlier completed brake work",
+      "context": "The maintenance CSV reports brake pad replacement and a responsive pedal after repair. Completion belongs to this earlier work order, not closure of the later case."
+    },
+    {
+      "fileId": "asset-reliability-demo-001",
+      "date": "2026-05-18",
+      "label": "Grinding and spongy pedal reported",
+      "context": "The operator describes a recurring symptom and vaguely recalls spring brake work. The previous-repair reference is the field sent to review."
+    },
+    {
+      "fileId": "asset-reliability-demo-003",
+      "date": "2026-05-21",
+      "label": "Follow-up inspection",
+      "context": "The report describes uneven pad wear and fluid weeping, recommending a full diagnostic. This PDF fixture is text with page markers, not binary PDF parsing."
+    },
+    {
+      "fileId": "asset-reliability-demo-004",
+      "date": "2026-06-02",
+      "label": "Brakes fail to hold on the yard ramp",
+      "context": "The operator reports rollback under load and parking the asset. This is authored source content, separately inspectable from the application's recorded state."
+    },
+    {
+      "fileId": "asset-reliability-demo-005",
+      "date": "2026-06-02",
+      "label": "Supervisor requests a hold from service",
+      "context": "The email assembles the dated history and asks for review and sign-off before return to service."
+    },
+    {
+      "fileId": "asset-reliability-demo-006",
+      "date": "2026-06-03",
+      "label": "Authored repair update: further work remains",
+      "context": "The source reports tow, lockout and parts awaiting arrival. It is frozen narrative evidence; the capture does not claim to perform those physical actions or to complete this repair."
+    }
+  ],
+  "stages": [
+    {
+      "id": "review",
+      "title": "Keep uncertainty inspectable",
+      "explanation": "The vague spring repair reference carries authored 70% confidence and its original passage. The review queue shows it pending; the scripted visitor accepts it through the real UI, and an observation-accepted audit records the transition."
+    },
+    {
+      "id": "rule",
+      "title": "Evaluate an explicit repeat-event rule",
+      "explanation": "The predicate requires a safety-critical severity observation AND at least two related events within 1,440 hours (60 days). The related-event aggregate counts related events; it does not require every counted event to be safety-critical. The displayed resolved count is captured from the real rule trace."
+    },
+    {
+      "id": "proposal",
+      "title": "Propose work without authorizing it",
+      "explanation": "The matched rule proposes a critical-risk remove-from-service decision under the Asset Removal Approval policy. The pending export establishes its awaiting-approval state before the scripted visitor acts."
+    },
+    {
+      "id": "approval",
+      "title": "Record the governed authorization",
+      "explanation": "The approval dialog disables confirmation until a comment is supplied. The synthetic script supplies an explicit demonstration comment. The Approval, Decision and approval audit must share consistent references, outcome and time."
+    },
+    {
+      "id": "remaining",
+      "title": "Keep authorization and completion distinct",
+      "explanation": "The final export supplies the open case and actual action-item states. No action completion, repair outcome or business benefit is inferred from the approved Decision."
+    }
+  ],
+  "capabilities": [
+    {
+      "title": "Evidence-backed extraction",
+      "explanation": "Checksum-bound fixtures, validated output and original evidence spans keep every derived observation inspectable.",
+      "paths": [
+        "packages/intelligence/src/fixture-provider.ts",
+        "packages/intelligence/test/intelligence.test.ts",
+        "scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-001.json"
+      ]
+    },
+    {
+      "title": "Human review at the uncertainty boundary",
+      "explanation": "A pending field is accepted through a session-scoped UI action that preserves review history and appends audit evidence.",
+      "paths": [
+        "apps/web/src/app/w/[workspace]/review/actions.ts",
+        "apps/web/e2e/north-star.spec.ts"
+      ]
+    },
+    {
+      "title": "Explainable deterministic policy",
+      "explanation": "A pack-owned predicate evaluates severity and related-event history separately, with the resolved aggregate visible in the rule inspector.",
+      "paths": [
+        "scenario-packs/asset-reliability/rules/approval.rules.json",
+        "packages/rules/src/engine.ts",
+        "packages/rules/src/engine.test.ts"
+      ]
+    },
+    {
+      "title": "Approval separated from execution",
+      "explanation": "The application persists a distinct Approval before updating a Decision; capture verifies that linkage and preserves outstanding case work.",
+      "paths": [
+        "packages/application/src/decisions.ts",
+        "packages/application/src/case-lifecycle.test.ts",
+        "apps/web/e2e/casebook-capture.spec.ts"
+      ]
+    },
+    {
+      "title": "One configurable operational architecture",
+      "explanation": "Scenario Packs supply domain vocabulary, schemas and policy while the shared lifecycle and export services remain neutral.",
+      "paths": [
+        "docs/ARCHITECTURE.md",
+        "packages/application/src/exports.ts",
+        "packages/test-support/src/lifecycle-pipeline.ts"
+      ]
+    }
+  ],
+  "capture": {
+    "ruleId": "safety-critical-removal-approval",
+    "ruleVersion": "1.0.0",
+    "approvalComment": "Synthetic automated approval for demonstration only. Authorize the proposed A-142 hold; no maintenance lead was consulted and no physical work is performed by this script."
+  }
+}
