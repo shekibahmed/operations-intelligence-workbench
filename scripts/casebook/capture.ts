@@ -175,7 +175,7 @@ async function unusedPort(): Promise<number> {
   return address.port;
 }
 async function stop(child: ChildProcess | undefined): Promise<void> {
-  if (!child || child.exitCode !== null) return;
+  if (!child || child.exitCode !== null || child.signalCode !== null) return;
   await new Promise<void>((accept) => {
     const force = setTimeout(() => child.kill("SIGKILL"), 5_000);
     child.once("exit", () => { clearTimeout(force); accept(); });
@@ -223,7 +223,7 @@ export async function capture(): Promise<void> {
   url.pathname = `/${databaseName}`;
   const staging = await mkdtemp(resolve(tmpdir(), "oiw-casebook-capture-"));
   const port = await unusedPort();
-  const env = { ...process.env, DATABASE_URL: url.toString(), SESSION_SECRET: randomUUID() + randomUUID(), CASEBOOK_CAPTURE: "1", CASEBOOK_CAPTURE_PORT: String(port), CASEBOOK_CAPTURE_RAW: resolve(staging, "raw.json"), OIW_RATE_LIMIT_STORE: "memory" };
+  const env = { ...process.env, SCENARIO_PACKS_DIR: resolve(root, "scenario-packs"), DATABASE_URL: url.toString(), SESSION_SECRET: randomUUID() + randomUUID(), CASEBOOK_CAPTURE: "1", CASEBOOK_CAPTURE_PORT: String(port), CASEBOOK_CAPTURE_RAW: resolve(staging, "raw.json"), OIW_RATE_LIMIT_STORE: "memory" };
   let server: ChildProcess | undefined;
   let created = false;
   let interrupted = false;
@@ -250,7 +250,7 @@ export async function capture(): Promise<void> {
       });
     });
     await run(process.execPath, [resolve(root, "apps/web/node_modules/@playwright/test/cli.js"), "test", "--config", "playwright.casebook-capture.config.ts"], env, resolve(root, "apps/web"));
-    requireThat(!interrupted && server.exitCode === null, "Capture server did not remain owned and running");
+    requireThat(!interrupted && server.exitCode === null && server.signalCode === null, "Capture server did not remain owned and running");
     const raw = JSON.parse(await readFile(env.CASEBOOK_CAPTURE_RAW, "utf8")) as unknown;
     const projection = projectCapture(raw);
     requireThat(projection.review.excerpt === sources.excerpt.text && projection.review.fieldKey === sources.excerpt.fieldKey && projection.review.displayedConfidence === `${sources.excerpt.confidence * 100}%`, "Observed review does not match frozen extraction");
