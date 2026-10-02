@@ -7,7 +7,7 @@
 > hardcoded application forks.
 
 [![CI](https://github.com/shekibahmed/operations-intelligence-workbench/actions/workflows/ci.yml/badge.svg)](https://github.com/shekibahmed/operations-intelligence-workbench/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A522-green?logo=node.js)
 ![pnpm](https://img.shields.io/badge/pnpm-11-orange?logo=pnpm)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
@@ -363,4 +363,4 @@ preserved in [`docs/agent-runs/`](docs/agent-runs/) and
 
 ## Licence
 
-Apache-2.0 — see [`LICENSE`](LICENSE).
+MIT — see [`LICENSE`](LICENSE).

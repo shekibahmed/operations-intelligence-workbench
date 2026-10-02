@@ -145,7 +145,7 @@ const TRUST_CHIPS = [
   "Demo journey enforced in CI",
   "Evaluation suite scores 1.000",
   "axe-audited accessibility",
-  "Apache-2.0 open source",
+  "MIT open source",
 ];
 
 const PACK_ICONS: ComponentType<SVGProps<SVGSVGElement>>[] = [IconTrendUp, IconZap, IconFiles];

@@ -9,7 +9,7 @@
 **Primary coding harnesses:** Codex, Claude Code, OpenCode  
 **Initial deployment:** Vercel + Supabase  
 **Default public-data policy:** Synthetic data only  
-**Provisional open-source licence:** Apache-2.0  
+**Provisional open-source licence:** MIT
 **Primary interface:** Responsive web application  
 **Architecture:** Modular monolith with configurable scenario packs  
 
