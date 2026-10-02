@@ -149,6 +149,9 @@ describe("route smoke tests — every §19 route renders without throwing", () =
     setRoute("/");
     render(<LandingPage />);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
+    const casebookLink = screen.getByRole("link", { name: "Read the evidence casebook" });
+    expect(casebookLink.tagName).toBe("A");
+    expect(casebookLink).toHaveAttribute("href", "/casebook/a-142-repeat-fault.html");
   });
 
   it("R2 scenario selector", async () => {

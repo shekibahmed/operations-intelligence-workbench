@@ -205,6 +205,12 @@ export default function LandingPage() {
                 Adapt this workflow
               </Link>
             </div>
+            <a
+              href="/casebook/a-142-repeat-fault.html"
+              className="mt-5 rounded-md text-sm font-medium text-[var(--color-accent-soft-ink)] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
+            >
+              Read the evidence casebook
+            </a>
             <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-ink-muted">
               {TRUST_CHIPS.map((chip) => (
                 <li key={chip} className="flex items-center gap-1.5">

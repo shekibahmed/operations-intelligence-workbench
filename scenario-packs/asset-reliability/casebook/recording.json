@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-10-02T13:27:05.950Z",
+  "sourceRevision": "2360e1e12c9e70f446957ba4e0b95c78f823dbb2",
+  "evidenceRevision": "d39191038fbe626e6afdd4a54b3a87d2e98cb0e9",
+  "captureRevision": "2360e1e12c9e70f446957ba4e0b95c78f823dbb2",
+  "harness": {
+    "id": "oiw-casebook-ui-capture",
+    "version": "1.0.0",
+    "revision": "2360e1e12c9e70f446957ba4e0b95c78f823dbb2"
+  },
+  "pack": {
+    "id": "asset-reliability",
+    "version": "1.0.0"
+  },
+  "provider": {
+    "providerId": "fixture-intelligence-provider",
+    "providerVersion": "1.0.0",
+    "model": null,
+    "deterministic": true
+  },
+  "inputs": [
+    {
+      "path": "scenario-packs/asset-reliability/casebook/case.json",
+      "sha256": "a8aba708c526dcf7014b3586db5851211c260497544ec84810c345ebb008ad9c"
+    },
+    {
+      "path": "scenario-packs/asset-reliability/casebook/sources.json",
+      "sha256": "0cc5c8d13be17b56528e1ecb5016df0342dfbea2379180f34e798358600e1ecd"
+    },
+    {
+      "path": "scripts/casebook/capture.ts",
+      "sha256": "e17bb37ba5850b5eb80b987d67ea770461c40cedfcfbc4d9da469d2cf96e2d03"
+    },
+    {
+      "path": "apps/web/playwright.casebook-capture.config.ts",
+      "sha256": "722692d2ee79bed8ef708b2241ced1ecfc36b14024a6c64ed28dd39f59ba3800"
+    },
+    {
+      "path": "apps/web/e2e/casebook-capture.spec.ts",
+      "sha256": "8fa96a244ac40eb15366abd4141cf3e5946a4ccc6881083ba6a497f6a2a08e5b"
+    }
+  ],
+  "automation": {
+    "method": "Playwright exercising authenticated human-governed UI",
+    "disclosure": "Synthetic scripted review and approval; no maintenance lead was consulted. No physical execution or measured business impact is established."
+  },
+  "review": {
+    "ref": "observation-1",
+    "fieldKey": "previous-repair-reference",
+    "displayedConfidence": "70%",
+    "excerpt": "it had brake work done back in the spring",
+    "before": "pending",
+    "after": "accepted",
+    "queueCleared": true,
+    "auditRef": "audit-1"
+  },
+  "rule": {
+    "id": "safety-critical-removal-approval",
+    "version": "1.0.0",
+    "matched": true,
+    "severityValue": "safety-critical",
+    "relatedEventCount": 4,
+    "withinHours": 1440,
+    "minimumRelatedEvents": 2,
+    "eventRef": "event-1",
+    "selection": "The Rule Inspector displayed its latest matched evaluation. This does not identify the initial evaluation that first created the idempotent decision proposal.",
+    "relatedEventRefs": [
+      "related-event-1",
+      "related-event-2",
+      "related-event-3",
+      "related-event-4"
+    ],
+    "auditRef": "audit-2"
+  },
+  "proposal": {
+    "ref": "decision-1",
+    "caseRef": "case-1",
+    "decisionType": "remove-from-service",
+    "proposal": "remove-from-service",
+    "riskLevel": "critical",
+    "approvalPolicyId": "asset-removal-approval",
+    "status": "awaiting-approval",
+    "commentRequired": true,
+    "auditRef": "audit-3"
+  },
+  "approval": {
+    "ref": "approval-1",
+    "decisionRef": "decision-1",
+    "outcome": "approved",
+    "comment": "Synthetic automated approval for demonstration only. Authorize the proposed A-142 hold; no maintenance lead was consulted and no physical work is performed by this script.",
+    "approvedAt": "2026-10-02T13:27:04.313Z",
+    "actor": "Scripted visitor exercising human-governed UI",
+    "auditRef": "audit-4"
+  },
+  "case": {
+    "ref": "case-1",
+    "title": "Reliability Case: inspection-completed",
+    "caseType": "reliability-case",
+    "status": "open",
+    "severity": "critical",
+    "priority": "urgent",
+    "owner": "maintenance-team",
+    "dueAt": "2026-10-07T13:26:59.704Z",
+    "decisionStatus": "approved",
+    "actionItems": [
+      {
+        "ref": "action-1",
+        "actionType": "completion-inspection",
+        "title": "Schedule inspection for recurring fault",
+        "assignee": "maintenance-team",
+        "status": "open",
+        "dueAt": "2026-10-07T13:26:59.704Z",
+        "completedAt": null
+      }
+    ]
+  },
+  "audit": {
+    "qualification": "Selected export projection with public aliases; this does not independently verify the original audit hash chain.",
+    "entries": [
+      {
+        "ref": "audit-1",
+        "action": "observation-accepted",
+        "occurredAt": "2026-10-02T13:26:59.407Z",
+        "subjectRef": "observation-1",
+        "actorType": "human"
+      },
+      {
+        "ref": "audit-2",
+        "action": "rule-evaluated",
+        "occurredAt": "2026-10-02T13:27:00.639Z",
+        "subjectRef": "event-1",
+        "actorType": "system"
+      },
+      {
+        "ref": "audit-3",
+        "action": "decision-proposed",
+        "occurredAt": "2026-10-02T13:27:00.075Z",
+        "subjectRef": "decision-1",
+        "actorType": "system"
+      },
+      {
+        "ref": "audit-4",
+        "action": "decision-approved",
+        "occurredAt": "2026-10-02T13:27:04.313Z",
+        "subjectRef": "decision-1",
+        "actorType": "human"
+      }
+    ]
+  }
+}

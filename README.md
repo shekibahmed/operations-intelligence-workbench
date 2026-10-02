@@ -24,6 +24,31 @@ command below runs against a local clone.
 - Current project state: [`SESSION.md`](SESSION.md)
 - Agent operating rules: [`AGENTS.md`](AGENTS.md)
 
+## Read the evidence casebook — no setup
+
+Start with the [recorded A-142 evidence casebook](apps/web/public/casebook/a-142-repeat-fault.html):
+one synthetic case connecting original reports, uncertain extraction, scripted
+review, deterministic rules, a proposed decision, recorded approval and remaining
+work. It shows the engineering behind OIW, built by Shekib and
+[Kaamchor](https://bekaamchor.com), with links to the supporting implementation.
+
+On GitHub, that link opens the file's **source view**, not a rendered website.
+Select **Raw**, then save the raw file as `a-142-repeat-fault.html` using your
+browser's **Save page as** command, or use GitHub's **Download raw file** button.
+Open the saved `.html` file in a browser to read it. The relative link follows
+the branch you are viewing, including a pull-request branch. From a local clone,
+open `apps/web/public/casebook/a-142-repeat-fault.html` directly in a browser.
+
+Reading needs no installation, database, sign-in, app session or API keys; the
+evidence and styles are embedded and remain readable offline. Outbound code and
+contact links need internet access. This is a recorded fixture demonstration;
+its scripted approval establishes authorization in the synthetic app, not
+physical execution, completed repair or measured customer results.
+
+The [interactive demo quick start](#how-do-i-run-the-demo) below is a separate
+setup path. Maintainers can find generation, checking and intentional refresh
+instructions in the [casebook README](scenario-packs/asset-reliability/casebook/README.md).
+
 ## What operational problem does this solve?
 
 Operational information routinely goes missing between the moment someone

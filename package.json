@@ -10,7 +10,7 @@
     "pnpm": ">=10.0.0"
   },
   "scripts": {
-    "build": "pnpm --recursive --if-present run build",
+    "build": "pnpm casebook:check && pnpm --recursive --if-present run build",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx packages/persistence/scripts/migrate.ts",
     "db:reset": "tsx packages/persistence/scripts/reset.ts",
@@ -28,7 +28,10 @@
     "validate:packs": "tsx scripts/validate-packs.ts",
     "pack:scaffold": "tsx scripts/pack-scaffold.ts",
     "architecture:check": "tsx scripts/architecture-check.ts",
-    "analytics:summary": "tsx scripts/analytics-summary.ts"
+    "analytics:summary": "tsx scripts/analytics-summary.ts",
+    "casebook:capture": "tsx scripts/casebook/capture.ts",
+    "casebook:build": "tsx scripts/casebook/build.ts --definition scenario-packs/asset-reliability/casebook/case.json",
+    "casebook:check": "tsx scripts/casebook/build.ts --definition scenario-packs/asset-reliability/casebook/case.json --check"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",

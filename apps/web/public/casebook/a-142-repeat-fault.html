@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Follow six synthetic reports through an evidence-backed review, a deterministic repeat-event rule and a recorded approval. Inspect the implementation behind each step before considering a workflow pilot.">
+<title>A-142: from scattered brake reports to a governed decision | Evidence casebook</title>
+<style>
+:root{color-scheme:light;--ink:#12151c;--muted:#575f6e;--blue:#1f4fd8;--line:#e4e7ec;--soft:#f5f6f8;--tint:#edf2fe}
+*{box-sizing:border-box}html{scroll-padding-top:1.5rem}body{margin:0;background:white;color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--blue);text-underline-offset:3px;overflow-wrap:anywhere}a:hover{color:#1a41b5}a:focus-visible,summary:focus-visible{outline:3px solid var(--blue);outline-offset:5px;border-radius:2px}h1,h2,h3,p,ol,ul,dl,blockquote{margin-top:0}h1{font-size:clamp(2.3rem,5vw,4rem);line-height:1.08;letter-spacing:-.045em;max-width:19ch;margin-bottom:1.4rem}h2{font-size:clamp(1.65rem,3vw,2.2rem);line-height:1.2;letter-spacing:-.025em}h3{font-size:1.15rem;line-height:1.4}p:last-child{margin-bottom:0}small{font-size:.8rem}.shell{max-width:1180px;margin:auto;padding:0 36px}.brand{display:flex;justify-content:space-between;gap:24px;align-items:center;padding:24px 0;border-bottom:1px solid var(--line);font-size:.85rem}.brand strong{letter-spacing:.02em}.eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:20px}.hero{padding:65px 0 36px;max-width:940px}.question{font-size:1.25rem;line-height:1.6;max-width:65ch}.muted,.reference{color:var(--muted)}.disclosures{background:var(--tint);border-left:4px solid var(--blue);padding:26px 28px;font-size:.94rem}.disclosures h2{font-size:1rem;letter-spacing:0;margin-bottom:12px}.disclosures ul{margin-bottom:0;padding-left:20px}.disclosures li+li{margin-top:8px}.navigation{padding:27px 0;border-bottom:1px solid var(--line)}.navigation ol{display:flex;flex-wrap:wrap;gap:10px 22px;list-style:none;padding:0;margin:0;font-size:.87rem}.layout{display:grid;grid-template-columns:165px minmax(0,1fr);column-gap:44px}.rail{padding-top:50px;font-size:.85rem;color:var(--muted)}.rail p{max-width:16ch}.content{min-width:0}.section{padding:48px 0;border-bottom:1px solid var(--line)}.section-heading{display:flex;gap:16px;align-items:baseline}.number{font:700 .85rem/1.4 system-ui;color:var(--blue)}.lead{max-width:76ch;color:var(--muted)}.source-list{padding:0;list-style:none;margin-bottom:0}.source-card{border:1px solid var(--line);border-radius:10px;padding:24px;margin-top:20px;background:white}.source-card time{font-size:.8rem;color:var(--muted)}.source-card h3{margin:5px 0 10px}.source-card p{font-size:.94rem}blockquote{margin:20px 0 16px;padding:16px 20px;border-left:3px solid var(--blue);background:var(--soft);white-space:pre-wrap;overflow-wrap:anywhere;font-size:.95rem}blockquote p{margin:0}.support{font-size:.8rem;color:var(--muted);margin-top:16px}.facts{margin:22px 0 0;border-top:1px solid var(--line)}.facts>div{display:grid;grid-template-columns:minmax(145px,1fr) minmax(0,2fr);gap:22px;padding:13px 0;border-bottom:1px solid var(--line)}dt{font-size:.85rem;color:var(--muted)}dd{margin:0;font-weight:600;overflow-wrap:anywhere;white-space:pre-wrap}.reference{display:block;font:400 .74rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;margin-top:5px;overflow-wrap:anywhere}.qualification{margin-top:20px;font-size:.93rem;border-left:3px solid var(--line);padding-left:18px}.capability{margin-top:26px}.capability ul{padding-left:20px;font-size:.83rem}.capability li+li{margin-top:5px}details{margin:18px 0;border:1px solid var(--line);border-radius:8px;padding:16px 20px}summary{cursor:pointer;font-weight:600;overflow-wrap:anywhere}details[open] summary{margin-bottom:18px}pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;font:.8rem/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--soft);padding:18px;border-radius:5px}.hashes li{margin:12px 0;overflow-wrap:anywhere}.hashes{list-style:none;padding:0}.next{background:var(--tint);padding:32px;border-radius:12px;margin-top:30px}.buttons{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0}.buttons a{display:inline-block;padding:12px 18px;background:var(--blue);color:white;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9rem}.buttons a+a{background:white;color:var(--blue);border:1px solid var(--blue)}footer{padding:30px 0 42px;color:var(--muted);font-size:.8rem}.skip{position:absolute;top:8px;left:8px;transform:translateY(-200%);background:white;padding:12px;z-index:1}.skip:focus{transform:none}::selection{background:var(--tint)}@media(max-width:760px){.shell{padding:0 22px}.hero{padding-top:40px}.layout{display:block}.rail{display:none}.brand{align-items:flex-start}.brand span{max-width:16ch;text-align:right}.section{padding:36px 0}.source-card{padding:20px}.facts>div{grid-template-columns:1fr;gap:4px}.disclosures{padding:22px}.next{padding:24px}.navigation ol{gap:12px 18px}h1{max-width:100%}}@media print{.shell{max-width:none;padding:0}.layout{display:block}.rail,.skip{display:none}details{break-inside:avoid}.section{padding:25px 0}.buttons a{border:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the case</a>
+<div class="shell">
+<header class="brand"><strong>Operations Intelligence Workbench</strong><span>Recorded evidence casebook</span></header>
+<main id="main">
+<div class="hero"><p class="eyebrow">One case · Inspectable evidence · Governed decisions</p><h1>A-142: from scattered brake reports to a governed decision</h1><p class="question">When a reported brake fault repeats and becomes safety-critical, what evidence supports holding the asset from service, and who authorizes the decision?</p><p class="muted">Follow six synthetic reports through an evidence-backed review, a deterministic repeat-event rule and a recorded approval. Inspect the implementation behind each step before considering a workflow pilot.</p></div>
+<aside class="disclosures" aria-labelledby="limits-heading"><h2 id="limits-heading">What this demonstration establishes</h2><ul><li>Synthetic demonstration only: every organisation, person and operational report in this case is fictional.</li><li>Deterministic fixture intelligence returns authored, checksum-bound extraction objects. The 70% confidence is authored fixture data, not a measured live-model result.</li><li>The recording uses Playwright to exercise the application&#39;s authenticated human-governed review and approval controls. No maintenance lead was consulted.</li><li>Recorded approval authorizes a proposed decision. It does not establish physical removal, completed repairs, production deployment or measured savings.</li></ul></aside>
+<nav class="navigation" aria-label="Casebook sections"><ol><li><a href="#sources">Sources</a></li><li><a href="#review">Keep uncertainty inspectable</a></li><li><a href="#rule">Evaluate an explicit repeat-event rule</a></li><li><a href="#proposal">Propose work without authorizing it</a></li><li><a href="#approval">Record the governed authorization</a></li><li><a href="#remaining">Keep authorization and completion distinct</a></li><li><a href="#capabilities">Engineering</a></li><li><a href="#provenance">Provenance</a></li><li><a href="#next-steps">Next steps</a></li></ol></nav>
+<div class="layout"><aside class="rail"><p>Read the evidence.<br>Follow the judgment.<br>Inspect the engineering.</p><p>Source passages and recorded outcomes are embedded in this file.</p></aside><div class="content">
+<section class="section" id="sources" aria-labelledby="sources-heading"><div class="section-heading"><span class="number">01</span><h2 id="sources-heading">The original sources</h2></div><p class="lead">Authored synthetic reports. Their dates describe the example history, separately from the later application capture.</p><ol class="source-list"><li class="source-card" id="source-asset-reliability-demo-002"><time datetime="2026-04-06">2026-04-06</time><h3>Earlier completed brake work</h3><p>The maintenance CSV reports brake pad replacement and a responsive pedal after repair. Completion belongs to this earlier work order, not closure of the later case.</p><blockquote><p>Bled and adjusted brake lines after install</p></blockquote><blockquote><p>Brake pad replacement (front and rear)</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-002">asset-reliability-demo-002</a> · <a href="#evidence-asset-reliability-demo-002-extraction">asset-reliability-demo-002-extraction</a></p></li><li class="source-card" id="source-asset-reliability-demo-001"><time datetime="2026-05-18">2026-05-18</time><h3>Grinding and spongy pedal reported</h3><p>The operator describes a recurring symptom and vaguely recalls spring brake work. The previous-repair reference is the field sent to review.</p><blockquote><p>getting a grinding noise when I brake hard, and the pedal feels spongy</p></blockquote><blockquote><p>it had brake work done back in the spring</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-001">asset-reliability-demo-001</a> · <a href="#evidence-asset-reliability-demo-001-extraction">asset-reliability-demo-001-extraction</a></p></li><li class="source-card" id="source-asset-reliability-demo-003"><time datetime="2026-05-21">2026-05-21</time><h3>Follow-up inspection</h3><p>The report describes uneven pad wear and fluid weeping, recommending a full diagnostic. This PDF fixture is text with page markers, not binary PDF parsing.</p><blockquote><p>fluid weeping visible at a
+fitting on the hydraulic brake line</p></blockquote><blockquote><p>work order FIS-4471) following a
+similar soft-pedal complaint</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-003">asset-reliability-demo-003</a> · <a href="#evidence-asset-reliability-demo-003-extraction">asset-reliability-demo-003-extraction</a></p></li><li class="source-card" id="source-asset-reliability-demo-004"><time datetime="2026-06-02">2026-06-02</time><h3>Brakes fail to hold on the yard ramp</h3><p>The operator reports rollback under load and parking the asset. This is authored source content, separately inspectable from the application&#39;s recorded state.</p><blockquote><p>the brakes did not hold, it started rolling backward</p></blockquote><blockquote><p>nearly rolled into the rack at the bottom</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-004">asset-reliability-demo-004</a> · <a href="#evidence-asset-reliability-demo-004-extraction">asset-reliability-demo-004-extraction</a></p></li><li class="source-card" id="source-asset-reliability-demo-005"><time datetime="2026-06-02">2026-06-02</time><h3>Supervisor requests a hold from service</h3><p>The email assembles the dated history and asks for review and sign-off before return to service.</p><blockquote><p>formally
+requesting that A-142 be held from service effective immediately</p></blockquote><blockquote><p>this was close and it happened on an incline with
+people working nearby</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-005">asset-reliability-demo-005</a> · <a href="#evidence-asset-reliability-demo-005-extraction">asset-reliability-demo-005-extraction</a></p></li><li class="source-card" id="source-asset-reliability-demo-006"><time datetime="2026-06-03">2026-06-03</time><h3>Authored repair update: further work remains</h3><p>The source reports tow, lockout and parts awaiting arrival. It is frozen narrative evidence; the capture does not claim to perform those physical actions or to complete this repair.</p><blockquote><p>Not to be
+returned to the floor without sign-off per Priya&#39;s request</p></blockquote><blockquote><p>Asset: A-142 (Talbrook TF-40 electric forklift)</p></blockquote><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-006">asset-reliability-demo-006</a> · <a href="#evidence-asset-reliability-demo-006-extraction">asset-reliability-demo-006-extraction</a></p></li></ol></section>
+<section class="section" id="review" aria-labelledby="review-heading"><div class="section-heading"><span class="number">02</span><h2 id="review-heading">Keep uncertainty inspectable</h2></div><p class="lead">The vague spring repair reference carries authored 70% confidence and its original passage. The review queue shows it pending; the scripted visitor accepts it through the real UI, and an observation-accepted audit records the transition.</p><blockquote><p>it had brake work done back in the spring</p><small><a href="#evidence-asset-reliability-demo-001">Read the complete supporting original</a></small></blockquote><dl class="facts"><div><dt>Field under review</dt><dd>previous-repair-reference<small class="reference">recording.review.fieldKey</small></dd></div><div><dt>Authored confidence</dt><dd>70%<small class="reference">frozen extraction → recording.review.displayedConfidence</small></dd></div><div><dt>Recorded transition</dt><dd>pending → accepted<small class="reference">recording.review.before / after</small></dd></div><div><dt>Review queue cleared</dt><dd>true<small class="reference">recording.review.queueCleared</small></dd></div><div><dt>Acceptance audit</dt><dd>audit-1 · observation-accepted · 2026-10-02T13:26:59.407Z<small class="reference">recording.audit.entries</small></dd></div></dl><p class="qualification">Synthetic scripted review and approval; no maintenance lead was consulted. No physical execution or measured business impact is established.</p><p class="support">Embedded support: <a href="#evidence-asset-reliability-demo-001">asset-reliability-demo-001</a> · <a href="#evidence-asset-reliability-demo-001-extraction">asset-reliability-demo-001-extraction</a></p></section>
+<section class="section" id="rule" aria-labelledby="rule-heading"><div class="section-heading"><span class="number">03</span><h2 id="rule-heading">Evaluate an explicit repeat-event rule</h2></div><p class="lead">The predicate requires a safety-critical severity observation AND at least two related events within 1,440 hours (60 days). The related-event aggregate counts related events; it does not require every counted event to be safety-critical. The displayed resolved count is captured from the real rule trace.</p><dl class="facts"><div><dt>Rule / version</dt><dd>safety-critical-removal-approval / 1.0.0<small class="reference">recording.rule.id / version</small></dd></div><div><dt>Severity observation</dt><dd>safety-critical<small class="reference">recording.rule.severityValue</small></dd></div><div><dt>Resolved related-event count</dt><dd>4<small class="reference">recording.rule.relatedEventCount</small></dd></div><div><dt>Required minimum</dt><dd>2<small class="reference">frozen rule → recording.rule.minimumRelatedEvents</small></dd></div><div><dt>Window</dt><dd>1440 hours (60 days)<small class="reference">frozen rule → recording.rule.withinHours</small></dd></div><div><dt>Matched</dt><dd>true<small class="reference">recording.rule.matched</small></dd></div><div><dt>Related event aliases</dt><dd>related-event-1, related-event-2, related-event-3, related-event-4<small class="reference">recording.rule.relatedEventRefs</small></dd></div><div><dt>Evaluation audit</dt><dd>audit-2 · 2026-10-02T13:27:00.639Z<small class="reference">recording.rule.auditRef → recording.audit.entries</small></dd></div></dl><p class="qualification">The Rule Inspector displayed its latest matched evaluation. This does not identify the initial evaluation that first created the idempotent decision proposal.</p><p class="support">Embedded support: <a href="#evidence-approval-rule">approval-rule</a></p></section>
+<section class="section" id="proposal" aria-labelledby="proposal-heading"><div class="section-heading"><span class="number">04</span><h2 id="proposal-heading">Propose work without authorizing it</h2></div><p class="lead">The matched rule proposes a critical-risk remove-from-service decision under the Asset Removal Approval policy. The pending export establishes its awaiting-approval state before the scripted visitor acts.</p><dl class="facts"><div><dt>Proposal</dt><dd>remove-from-service<small class="reference">recording.proposal.proposal</small></dd></div><div><dt>Risk / policy</dt><dd>critical / asset-removal-approval<small class="reference">recording.proposal.riskLevel / approvalPolicyId</small></dd></div><div><dt>Before authorization</dt><dd>awaiting-approval<small class="reference">recording.proposal.status</small></dd></div><div><dt>Comment required</dt><dd>true<small class="reference">recording.proposal.commentRequired</small></dd></div><div><dt>Proposal / case aliases</dt><dd>decision-1 / case-1<small class="reference">recording.proposal.ref / caseRef</small></dd></div><div><dt>Proposal audit</dt><dd>audit-3 · 2026-10-02T13:27:00.075Z<small class="reference">recording.proposal.auditRef → recording.audit.entries</small></dd></div></dl><p class="support">Embedded support: <a href="#evidence-approval-rule">approval-rule</a></p></section>
+<section class="section" id="approval" aria-labelledby="approval-heading"><div class="section-heading"><span class="number">05</span><h2 id="approval-heading">Record the governed authorization</h2></div><p class="lead">The approval dialog disables confirmation until a comment is supplied. The synthetic script supplies an explicit demonstration comment. The Approval, Decision and approval audit must share consistent references, outcome and time.</p><dl class="facts"><div><dt>Outcome</dt><dd>approved<small class="reference">recording.approval.outcome</small></dd></div><div><dt>Approval / decision aliases</dt><dd>approval-1 / decision-1<small class="reference">recording.approval.ref / decisionRef</small></dd></div><div><dt>Actor</dt><dd>Scripted visitor exercising human-governed UI<small class="reference">recording.approval.actor</small></dd></div><div><dt>Approval comment</dt><dd>Synthetic automated approval for demonstration only. Authorize the proposed A-142 hold; no maintenance lead was consulted and no physical work is performed by this script.<small class="reference">recording.approval.comment</small></dd></div><div><dt>Approved at</dt><dd>2026-10-02T13:27:04.313Z<small class="reference">recording.approval.approvedAt</small></dd></div><div><dt>Approval audit</dt><dd>audit-4 · decision-approved · 2026-10-02T13:27:04.313Z<small class="reference">recording.approval.auditRef → recording.audit.entries</small></dd></div></dl><p class="qualification">Selected export projection with public aliases; this does not independently verify the original audit hash chain.</p></section>
+<section class="section" id="remaining" aria-labelledby="remaining-heading"><div class="section-heading"><span class="number">06</span><h2 id="remaining-heading">Keep authorization and completion distinct</h2></div><p class="lead">The final export supplies the open case and actual action-item states. No action completion, repair outcome or business benefit is inferred from the approved Decision.</p><dl class="facts"><div><dt>Recorded case</dt><dd>Reliability Case: inspection-completed<small class="reference">recording.case.title</small></dd></div><div><dt>Case status</dt><dd>open<small class="reference">recording.case.status</small></dd></div><div><dt>Severity / priority</dt><dd>critical / urgent<small class="reference">recording.case.severity / priority</small></dd></div><div><dt>Owner</dt><dd>maintenance-team<small class="reference">recording.case.owner</small></dd></div><div><dt>Due at</dt><dd>2026-10-07T13:26:59.704Z<small class="reference">recording.case.dueAt</small></dd></div><div><dt>Decision status</dt><dd>approved<small class="reference">recording.case.decisionStatus</small></dd></div><div><dt>Action 1</dt><dd>action-1 · Schedule inspection for recurring fault<small class="reference">recording.case.actionItems[0].ref / title</small></dd></div><div><dt>Assigned to / status</dt><dd>maintenance-team / open<small class="reference">recording.case.actionItems[0].assignee / status</small></dd></div><div><dt>Action due at</dt><dd>2026-10-07T13:26:59.704Z<small class="reference">recording.case.actionItems[0].dueAt</small></dd></div><div><dt>Completed at</dt><dd>Not recorded<small class="reference">recording.case.actionItems[0].completedAt</small></dd></div></dl><p class="qualification">Synthetic scripted review and approval; no maintenance lead was consulted. No physical execution or measured business impact is established.</p></section>
+<section class="section" id="capabilities" aria-labelledby="capabilities-heading"><h2 id="capabilities-heading">Inspect the engineering</h2><p class="lead">Each capability below has implementation or verification evidence at the recorded application revision.</p><article class="capability"><h3>Evidence-backed extraction</h3><p>Checksum-bound fixtures, validated output and original evidence spans keep every derived observation inspectable.</p><ul><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/intelligence/src/fixture-provider.ts">packages/intelligence/src/fixture-provider.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/intelligence/test/intelligence.test.ts">packages/intelligence/test/intelligence.test.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-001.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-001.json</a></li></ul></article><article class="capability"><h3>Human review at the uncertainty boundary</h3><p>A pending field is accepted through a session-scoped UI action that preserves review history and appends audit evidence.</p><ul><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/apps/web/src/app/w/%5Bworkspace%5D/review/actions.ts">apps/web/src/app/w/[workspace]/review/actions.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/apps/web/e2e/north-star.spec.ts">apps/web/e2e/north-star.spec.ts</a></li></ul></article><article class="capability"><h3>Explainable deterministic policy</h3><p>A pack-owned predicate evaluates severity and related-event history separately, with the resolved aggregate visible in the rule inspector.</p><ul><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/rules/approval.rules.json">scenario-packs/asset-reliability/rules/approval.rules.json</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/rules/src/engine.ts">packages/rules/src/engine.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/rules/src/engine.test.ts">packages/rules/src/engine.test.ts</a></li></ul></article><article class="capability"><h3>Approval separated from execution</h3><p>The application persists a distinct Approval before updating a Decision; capture verifies that linkage and preserves outstanding case work.</p><ul><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/application/src/decisions.ts">packages/application/src/decisions.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/application/src/case-lifecycle.test.ts">packages/application/src/case-lifecycle.test.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/apps/web/e2e/casebook-capture.spec.ts">apps/web/e2e/casebook-capture.spec.ts</a></li></ul></article><article class="capability"><h3>One configurable operational architecture</h3><p>Scenario Packs supply domain vocabulary, schemas and policy while the shared lifecycle and export services remain neutral.</p><ul><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/docs/ARCHITECTURE.md">docs/ARCHITECTURE.md</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/application/src/exports.ts">packages/application/src/exports.ts</a></li><li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/packages/test-support/src/lifecycle-pipeline.ts">packages/test-support/src/lifecycle-pipeline.ts</a></li></ul></article></section>
+<section class="section" id="provenance" aria-labelledby="provenance-heading"><h2 id="provenance-heading">A historical record, with explicit limits</h2><p class="lead">This file describes the recorded revision. Later publication or repository changes do not turn it into evidence about newer code.</p><dl class="facts"><div><dt>Application source revision</dt><dd>2360e1e12c9e70f446957ba4e0b95c78f823dbb2<small class="reference">recording.sourceRevision</small></dd></div><div><dt>Frozen evidence revision</dt><dd>d39191038fbe626e6afdd4a54b3a87d2e98cb0e9<small class="reference">recording.evidenceRevision → sources.sourceRevision</small></dd></div><div><dt>Captured at</dt><dd>2026-10-02T13:27:05.950Z<small class="reference">recording.capturedAt</small></dd></div><div><dt>Pack / version</dt><dd>asset-reliability / 1.0.0<small class="reference">recording.pack</small></dd></div><div><dt>Extraction provider / version</dt><dd>fixture-intelligence-provider / 1.0.0<small class="reference">recording.provider</small></dd></div><div><dt>Model / deterministic</dt><dd>No live model / true<small class="reference">recording.provider.model / deterministic</small></dd></div><div><dt>Capture harness / version</dt><dd>oiw-casebook-ui-capture / 1.0.0<small class="reference">recording.harness</small></dd></div><div><dt>Harness revision</dt><dd>2360e1e12c9e70f446957ba4e0b95c78f823dbb2<small class="reference">recording.harness.revision</small></dd></div><div><dt>Method</dt><dd>Playwright exercising authenticated human-governed UI<small class="reference">recording.automation.method</small></dd></div><div><dt>Selected audit qualification</dt><dd>Selected export projection with public aliases; this does not independently verify the original audit hash chain.<small class="reference">recording.audit.qualification</small></dd></div></dl><details><summary>Capture-time input checksums</summary><p>These hashes identify inputs used by the capture. Later harness changes do not rewrite the historical recording.</p><ul class="hashes"><li>scenario-packs/asset-reliability/casebook/case.json<code class="reference">SHA-256 a8aba708c526dcf7014b3586db5851211c260497544ec84810c345ebb008ad9c</code></li><li>scenario-packs/asset-reliability/casebook/sources.json<code class="reference">SHA-256 0cc5c8d13be17b56528e1ecb5016df0342dfbea2379180f34e798358600e1ecd</code></li><li>scripts/casebook/capture.ts<code class="reference">SHA-256 e17bb37ba5850b5eb80b987d67ea770461c40cedfcfbc4d9da469d2cf96e2d03</code></li><li>apps/web/playwright.casebook-capture.config.ts<code class="reference">SHA-256 722692d2ee79bed8ef708b2241ced1ecfc36b14024a6c64ed28dd39f59ba3800</code></li><li>apps/web/e2e/casebook-capture.spec.ts<code class="reference">SHA-256 8fa96a244ac40eb15366abd4141cf3e5946a4ccc6881083ba6a497f6a2a08e5b</code></li></ul></details></section>
+<section class="section" id="evidence" aria-labelledby="evidence-heading"><h2 id="evidence-heading">Embedded supporting originals</h2><p class="lead">Complete frozen text, extraction objects and policy definitions are available below without a network connection. Repository links pin the recorded application revision; the older frozen-evidence revision is disclosed above.</p><details id="evidence-asset-reliability-demo-001"><summary>asset-reliability-demo-001 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-001.txt">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-001.txt</a></p><p class="reference">SHA-256 3600e161c47d04d432d5e8aae640da71f2f4ae7902eed1d6e0f2b175e537e33b</p><pre>[Northgate Facilities Maintenance Chat - #zone-c-shipping]
+
+Dana Osei, 2026-05-18 09:14
+something&#39;s off with A-142&#39;s brakes today. getting a grinding noise when I brake hard, and the pedal feels spongy, like it&#39;s got more travel than usual before it actually grabs. noticed it a couple times this morning moving pallets near the shipping doors.
+
+Dana Osei, 2026-05-18 09:15
+it&#39;s still stopping, just doesn&#39;t feel right. wasn&#39;t like this last week. I know it had brake work done back in the spring so figured someone should take a look before it gets worse
+
+Dana Osei, 2026-05-18 09:16
+going to keep using it carefully for now but wanted to flag it early
+</pre></details><details id="evidence-asset-reliability-demo-001-extraction"><summary>asset-reliability-demo-001-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-001.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-001.json</a></p><p class="reference">SHA-256 30d2c754b6b8b96b35041539ec36164d1d1045f74ee3f4c167937fed108152a7</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;3600e161c47d04d432d5e8aae640da71f2f4ae7902eed1d6e0f2b175e537e33b&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 109,
+            &quot;end&quot;: 123
+          },
+          &quot;excerpt&quot;: &quot;A-142&#39;s brakes&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;component&quot;,
+      &quot;confidence&quot;: 0.82,
+      &quot;value&quot;: &quot;brake assembly&quot;,
+      &quot;normalisedValue&quot;: &quot;brakes&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 117,
+            &quot;end&quot;: 129
+          },
+          &quot;excerpt&quot;: &quot;brakes today&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;symptom&quot;,
+      &quot;confidence&quot;: 0.86,
+      &quot;value&quot;: &quot;grinding noise when braking hard, spongy pedal with more travel than usual&quot;,
+      &quot;normalisedValue&quot;: &quot;grinding noise when braking hard, spongy pedal with more travel than usual&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 131,
+            &quot;end&quot;: 201
+          },
+          &quot;excerpt&quot;: &quot;getting a grinding noise when I brake hard, and the pedal feels spongy&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;reporter&quot;,
+      &quot;confidence&quot;: 0.96,
+      &quot;value&quot;: &quot;Dana Osei&quot;,
+      &quot;normalisedValue&quot;: &quot;Dana Osei&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 60,
+            &quot;end&quot;: 87
+          },
+          &quot;excerpt&quot;: &quot;Dana Osei, 2026-05-18 09:14&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;date-reported&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;2026-05-18&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-05-18&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 71,
+            &quot;end&quot;: 87
+          },
+          &quot;excerpt&quot;: &quot;2026-05-18 09:14&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;previous-repair-reference&quot;,
+      &quot;confidence&quot;: 0.7,
+      &quot;value&quot;: &quot;brake work done in spring&quot;,
+      &quot;normalisedValue&quot;: &quot;brake work done in spring&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 455,
+            &quot;end&quot;: 496
+          },
+          &quot;excerpt&quot;: &quot;it had brake work done back in the spring&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-asset-reliability-demo-002"><summary>asset-reliability-demo-002 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-002.csv">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-002.csv</a></p><p class="reference">SHA-256 77a052efd7640d69905979019f6ffbf3bce7ed7c2a1893a0f14c974b3e396fab</p><pre>asset_id,work_order,service_date,technician,description,status
+A-142,FIS-4471,2026-04-06,Tobias Krantz,Brake pad replacement (front and rear) on customer-reported soft pedal feel. Old pads worn near minimum thickness. Bled and adjusted brake lines after install. Test-drove unit in yard, pedal firm and responsive after repair.,Completed
+</pre></details><details id="evidence-asset-reliability-demo-002-extraction"><summary>asset-reliability-demo-002-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-002.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-002.json</a></p><p class="reference">SHA-256 bd1a4173c181b8d5fd0a5bf18b69917e9bec40387e0b941665e372ceee96f6a8</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;77a052efd7640d69905979019f6ffbf3bce7ed7c2a1893a0f14c974b3e396fab&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.98,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;asset_id&quot;
+          },
+          &quot;excerpt&quot;: &quot;A-142&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;work-order-reference&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;FIS-4471&quot;,
+      &quot;normalisedValue&quot;: &quot;FIS-4471&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;work_order&quot;
+          },
+          &quot;excerpt&quot;: &quot;FIS-4471&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;service-date&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;2026-04-06&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-04-06&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;service_date&quot;
+          },
+          &quot;excerpt&quot;: &quot;2026-04-06&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;technician&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;Tobias Krantz&quot;,
+      &quot;normalisedValue&quot;: &quot;Tobias Krantz&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;technician&quot;
+          },
+          &quot;excerpt&quot;: &quot;Tobias Krantz&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;service-provider-reference&quot;,
+      &quot;confidence&quot;: 0.6,
+      &quot;value&quot;: &quot;Ferrow Industrial Services&quot;,
+      &quot;normalisedValue&quot;: &quot;Ferrow Industrial Services&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;description&quot;
+          },
+          &quot;excerpt&quot;: &quot;Bled and adjusted brake lines after install&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;component&quot;,
+      &quot;confidence&quot;: 0.85,
+      &quot;value&quot;: &quot;brake pads (front and rear)&quot;,
+      &quot;normalisedValue&quot;: &quot;brake-pads&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;description&quot;
+          },
+          &quot;excerpt&quot;: &quot;Brake pad replacement (front and rear)&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;service-status&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;Completed&quot;,
+      &quot;normalisedValue&quot;: &quot;Completed&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;table-cell&quot;,
+            &quot;row&quot;: 0,
+            &quot;column&quot;: &quot;status&quot;
+          },
+          &quot;excerpt&quot;: &quot;Completed&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-asset-reliability-demo-003"><summary>asset-reliability-demo-003 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-003.md">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-003.md</a></p><p class="reference">SHA-256 7a0c6485927db6363eccd030387df0949fd4a55a2d76edfef5728777fdffd782</p><pre>--- page 1 ---
+
+NORTHGATE FACILITIES
+Follow-Up Equipment Inspection Report
+
+Asset: A-142 (Talbrook TF-40 electric forklift)
+Location: Zone C - Shipping
+Inspection Date: 2026-05-21
+Inspector: Lena Fischer, Northgate Facilities
+
+Purpose: Follow-up inspection prompted by operator-reported brake grinding
+noise and spongy pedal feel (reported 2026-05-18).
+
+Background:
+Unit had a full front and rear brake pad replacement performed by Ferrow
+Industrial Services on 2026-04-06 (work order FIS-4471) following a
+similar soft-pedal complaint at that time. This inspection is intended to
+determine whether the current complaint represents a recurrence or a
+separate issue.
+
+--- page 2 ---
+
+Findings:
+
+Brake pedal travel is noticeably longer than spec before engagement,
+consistent with the operator&#39;s description. Some grinding is audible
+during hard braking, most pronounced at low speed. Visual inspection of
+the brake assembly shows the recently replaced pads are wearing unevenly
+- more material loss on the inboard side than expected for six weeks of
+service. There is also a small amount of fluid weeping visible at a
+fitting on the hydraulic brake line near the left rear wheel, not enough
+to call it an active leak yet, but enough to note.
+
+Given that this is the second brake complaint on this unit in under two
+months, and the pad wear pattern is not consistent with normal use, this
+looks more like a recurring issue than an isolated one - possibly a
+sticking caliper or a slow line leak causing uneven pad wear and reduced
+pedal firmness. Recommend a more thorough diagnostic beyond a simple pad
+swap.
+
+--- page 3 ---
+
+Recommendation:
+
+Follow-up diagnostic and repair should be scheduled within 5 business
+days (by 2026-05-26) given the safety-relevant nature of a braking
+system and the recurrence pattern. Unit may continue in service in the
+interim only with caution and should be pulled immediately if the
+operator reports any loss of braking effectiveness, not just noise or
+feel.
+
+Inspector signature: Lena Fischer
+Report filed: 2026-05-21
+
+--- page 4 ---
+
+[End of report]
+</pre></details><details id="evidence-asset-reliability-demo-003-extraction"><summary>asset-reliability-demo-003-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-003.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-003.json</a></p><p class="reference">SHA-256 0e95fb24ac6e39f46cf5ccb4cae41a022a83018ac7a39d7945a211f3c422aef1</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;7a0c6485927db6363eccd030387df0949fd4a55a2d76edfef5728777fdffd782&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 1
+          },
+          &quot;excerpt&quot;: &quot;Asset: A-142 (Talbrook TF-40 electric forklift)&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;inspector&quot;,
+      &quot;confidence&quot;: 0.96,
+      &quot;value&quot;: &quot;Lena Fischer&quot;,
+      &quot;normalisedValue&quot;: &quot;Lena Fischer&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 1
+          },
+          &quot;excerpt&quot;: &quot;Inspector: Lena Fischer, Northgate Facilities&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;date-reported&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;2026-05-21&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-05-21&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 1
+          },
+          &quot;excerpt&quot;: &quot;Inspection Date: 2026-05-21&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;inspection-finding&quot;,
+      &quot;confidence&quot;: 0.9,
+      &quot;value&quot;: &quot;uneven pad wear and fluid weeping at a brake-line fitting&quot;,
+      &quot;normalisedValue&quot;: &quot;uneven pad wear and fluid weeping at a brake-line fitting&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 2
+          },
+          &quot;excerpt&quot;: &quot;the recently replaced pads are wearing unevenly&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;component&quot;,
+      &quot;confidence&quot;: 0.85,
+      &quot;value&quot;: &quot;brake assembly / hydraulic line fitting&quot;,
+      &quot;normalisedValue&quot;: &quot;brake assembly / hydraulic line fitting&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 2
+          },
+          &quot;excerpt&quot;: &quot;fluid weeping visible at a\nfitting on the hydraulic brake line&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;previous-repair-reference&quot;,
+      &quot;confidence&quot;: 0.85,
+      &quot;value&quot;: &quot;FIS-4471, 2026-04-06 brake pad replacement&quot;,
+      &quot;normalisedValue&quot;: &quot;FIS-4471, 2026-04-06 brake pad replacement&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 1
+          },
+          &quot;excerpt&quot;: &quot;work order FIS-4471) following a\nsimilar soft-pedal complaint&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;recommendation&quot;,
+      &quot;confidence&quot;: 0.9,
+      &quot;value&quot;: &quot;diagnostic and repair within 5 business days (by 2026-05-26)&quot;,
+      &quot;normalisedValue&quot;: &quot;diagnostic and repair within 5 business days (by 2026-05-26)&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 3
+          },
+          &quot;excerpt&quot;: &quot;scheduled within 5 business\ndays (by 2026-05-26)&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;follow-up-due-date&quot;,
+      &quot;confidence&quot;: 0.88,
+      &quot;value&quot;: &quot;2026-05-26&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-05-26&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;page&quot;,
+            &quot;page&quot;: 3
+          },
+          &quot;excerpt&quot;: &quot;by 2026-05-26&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-asset-reliability-demo-004"><summary>asset-reliability-demo-004 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-004.txt">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-004.txt</a></p><p class="reference">SHA-256 a47023c48901deee5d39e2013dfc58f4dea0584420891a8c0337f92e4c319473</p><pre>[Northgate Facilities Maintenance Chat - #yard]
+
+Owen Vasquez, 2026-06-02 14:37
+need someone from maintenance NOW. was bringing A-142 up the yard ramp with a load and the brakes did not hold, it started rolling backward and I nearly rolled into the rack at the bottom before I got it stopped with the parking brake. that is not a &quot;feels spongy&quot; problem anymore, the brakes flat out did not hold on the incline
+
+Owen Vasquez, 2026-06-02 14:39
+I pulled it and parked it at the bottom of the ramp, not moving it again until someone looks at it. this could have gone a lot worse, there were people near the bottom of that ramp
+
+Owen Vasquez, 2026-06-02 14:40
+I know it had a follow-up flagged after the inspection a couple weeks back, this needs to jump the line
+</pre></details><details id="evidence-asset-reliability-demo-004-extraction"><summary>asset-reliability-demo-004-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-004.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-004.json</a></p><p class="reference">SHA-256 72e7383e46e64769b58bb576548c4efa5d3b787d28585525cf02935c3f6bbfb2</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;a47023c48901deee5d39e2013dfc58f4dea0584420891a8c0337f92e4c319473&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 119,
+            &quot;end&quot;: 150
+          },
+          &quot;excerpt&quot;: &quot;bringing A-142 up the yard ramp&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;component&quot;,
+      &quot;confidence&quot;: 0.88,
+      &quot;value&quot;: &quot;brakes&quot;,
+      &quot;normalisedValue&quot;: &quot;brakes&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 167,
+            &quot;end&quot;: 190
+          },
+          &quot;excerpt&quot;: &quot;the brakes did not hold&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;symptom&quot;,
+      &quot;confidence&quot;: 0.92,
+      &quot;value&quot;: &quot;brakes did not hold on an incline under load, unit rolled backward&quot;,
+      &quot;normalisedValue&quot;: &quot;brakes did not hold on an incline under load, unit rolled backward&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 167,
+            &quot;end&quot;: 219
+          },
+          &quot;excerpt&quot;: &quot;the brakes did not hold, it started rolling backward&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;severity-indicator&quot;,
+      &quot;confidence&quot;: 0.85,
+      &quot;value&quot;: &quot;safety-critical&quot;,
+      &quot;normalisedValue&quot;: &quot;safety-critical&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 226,
+            &quot;end&quot;: 267
+          },
+          &quot;excerpt&quot;: &quot;nearly rolled into the rack at the bottom&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;reporter&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;Owen Vasquez&quot;,
+      &quot;normalisedValue&quot;: &quot;Owen Vasquez&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 49,
+            &quot;end&quot;: 79
+          },
+          &quot;excerpt&quot;: &quot;Owen Vasquez, 2026-06-02 14:37&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;date-reported&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;2026-06-02&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-06-02&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 63,
+            &quot;end&quot;: 79
+          },
+          &quot;excerpt&quot;: &quot;2026-06-02 14:37&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-asset-reliability-demo-005"><summary>asset-reliability-demo-005 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-005.txt">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-005.txt</a></p><p class="reference">SHA-256 1e28325c988fc35341b03fb3ed06a046bac56d6d3ed2249980b5e32edb571c2d</p><pre>From: Priya Nandakumar &lt;p.nandakumar@northgatedc.example&gt;
+To: maintenance@northgatedc.example; safety@northgatedc.example
+Subject: URGENT - A-142 brake failure on yard ramp, requesting hold from service
+Date: 2026-06-02
+
+Team,
+
+Escalating this immediately. This afternoon Owen Vasquez was operating
+A-142 on the yard ramp with a load and reported that the brakes did not
+hold, causing the unit to roll backward toward the storage rack at the
+bottom before he was able to stop it using the parking brake. No injuries
+and no contact, but this was close and it happened on an incline with
+people working nearby.
+
+This is not the first flag on this unit&#39;s brakes. For reference:
+
+- 2026-04-06: brake pad replacement by Ferrow Industrial Services after a
+  soft-pedal complaint.
+- 2026-05-18: operator reported grinding and spongy pedal again.
+- 2026-05-21: follow-up inspection found uneven pad wear and fluid
+  weeping at a line fitting, recommended a full diagnostic within 5
+  business days.
+- 2026-06-02 (today): brake failure to hold on an incline under load.
+
+Given the pattern and the severity of today&#39;s incident, I am formally
+requesting that A-142 be held from service effective immediately, pending
+a full review and sign-off before it goes back on the floor. Please do
+not return this unit to service without that review regardless of any
+quick fix that gets applied - I want the full history looked at, not
+just today&#39;s symptom.
+
+Owen has parked the unit at the bottom of the yard ramp. Please have
+maintenance move it under power-off/tow only if it needs to be relocated.
+
+Priya Nandakumar
+Shift Supervisor, Northgate Distribution Center
+</pre></details><details id="evidence-asset-reliability-demo-005-extraction"><summary>asset-reliability-demo-005-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-005.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-005.json</a></p><p class="reference">SHA-256 5a5494a4c8e4399bdec37df1191efc0c1a378101b6defed597b4f7c43f161ca0</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;1e28325c988fc35341b03fb3ed06a046bac56d6d3ed2249980b5e32edb571c2d&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 140,
+            &quot;end&quot;: 172
+          },
+          &quot;excerpt&quot;: &quot;A-142 brake failure on yard ramp&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;reporter&quot;,
+      &quot;confidence&quot;: 0.96,
+      &quot;value&quot;: &quot;Priya Nandakumar&quot;,
+      &quot;normalisedValue&quot;: &quot;Priya Nandakumar&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 6,
+            &quot;end&quot;: 57
+          },
+          &quot;excerpt&quot;: &quot;Priya Nandakumar &lt;p.nandakumar@northgatedc.example&gt;&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;date-reported&quot;,
+      &quot;confidence&quot;: 0.94,
+      &quot;value&quot;: &quot;2026-06-02&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-06-02&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 203,
+            &quot;end&quot;: 219
+          },
+          &quot;excerpt&quot;: &quot;Date: 2026-06-02&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;requested-action&quot;,
+      &quot;confidence&quot;: 0.93,
+      &quot;value&quot;: &quot;hold from service pending review&quot;,
+      &quot;normalisedValue&quot;: &quot;hold from service pending review&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 1123,
+            &quot;end&quot;: 1196
+          },
+          &quot;excerpt&quot;: &quot;formally\nrequesting that A-142 be held from service effective immediately&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;severity-indicator&quot;,
+      &quot;confidence&quot;: 0.87,
+      &quot;value&quot;: &quot;safety-critical&quot;,
+      &quot;normalisedValue&quot;: &quot;safety-critical&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 536,
+            &quot;end&quot;: 607
+          },
+          &quot;excerpt&quot;: &quot;this was close and it happened on an incline with\npeople working nearby&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;previous-repair-reference&quot;,
+      &quot;confidence&quot;: 0.85,
+      &quot;value&quot;: &quot;2026-04-06 brake pad replacement by Ferrow Industrial Services&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-04-06 brake pad replacement by Ferrow Industrial Services&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 678,
+            &quot;end&quot;: 741
+          },
+          &quot;excerpt&quot;: &quot;2026-04-06: brake pad replacement by Ferrow Industrial Services&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-asset-reliability-demo-006"><summary>asset-reliability-demo-006 · artifact</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-006.txt">scenario-packs/asset-reliability/fixtures/demo/artifacts/asset-reliability-demo-006.txt</a></p><p class="reference">SHA-256 64f55f04ba24edad111dd06c4c20dc37bf23020f0ff4b246e269172ac73de6bc</p><pre>Repair Update - Zone C / Yard
+
+Asset: A-142 (Talbrook TF-40 electric forklift)
+Date: 2026-06-03
+Logged by: Marcus Ibe
+
+Picking this one up per Priya&#39;s email yesterday. Towed A-142 in from the
+bottom of the yard ramp this morning and got it into a bay in the
+Maintenance area. Pulled the wheels to get a look at the brake assembly
+before doing anything else.
+
+Assigning this to myself for the full diagnostic Lena&#39;s report called
+for. Not doing a quick turnaround on this one - given the ramp incident
+and the repeat history I want to trace the hydraulic line fully and
+check the caliper before anything gets reassembled. Ordered a replacement
+caliper and line fitting kit in case that&#39;s what we&#39;re looking at, should
+be in within a few days.
+
+Status: A-142 is OUT OF SERVICE, tagged and locked out. Not to be
+returned to the floor without sign-off per Priya&#39;s request. Awaiting
+parts and a decision on scope of repair before proceeding further.
+</pre></details><details id="evidence-asset-reliability-demo-006-extraction"><summary>asset-reliability-demo-006-extraction · extraction</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-006.json">scenario-packs/asset-reliability/fixtures/demo/extractions/asset-reliability-demo-006.json</a></p><p class="reference">SHA-256 c23c3f51110b9b0a6d39ed6d5928055df09a85cb2503d88fa6ac6003eef16cf9</p><pre>{
+  &quot;artifactChecksum&quot;: &quot;64f55f04ba24edad111dd06c4c20dc37bf23020f0ff4b246e269172ac73de6bc&quot;,
+  &quot;observations&quot;: [
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;asset-identifier&quot;,
+      &quot;confidence&quot;: 0.97,
+      &quot;value&quot;: &quot;A-142&quot;,
+      &quot;normalisedValue&quot;: &quot;A-142&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 31,
+            &quot;end&quot;: 78
+          },
+          &quot;excerpt&quot;: &quot;Asset: A-142 (Talbrook TF-40 electric forklift)&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;technician&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;Marcus Ibe&quot;,
+      &quot;normalisedValue&quot;: &quot;Marcus Ibe&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 96,
+            &quot;end&quot;: 117
+          },
+          &quot;excerpt&quot;: &quot;Logged by: Marcus Ibe&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;date-reported&quot;,
+      &quot;confidence&quot;: 0.94,
+      &quot;value&quot;: &quot;2026-06-03&quot;,
+      &quot;normalisedValue&quot;: &quot;2026-06-03&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 79,
+            &quot;end&quot;: 95
+          },
+          &quot;excerpt&quot;: &quot;Date: 2026-06-03&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;current-operating-status&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;value&quot;: &quot;out-of-service&quot;,
+      &quot;normalisedValue&quot;: &quot;out-of-service&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 751,
+            &quot;end&quot;: 797
+          },
+          &quot;excerpt&quot;: &quot;A-142 is OUT OF SERVICE, tagged and locked out&quot;
+        }
+      ]
+    },
+    {
+      &quot;status&quot;: &quot;extracted&quot;,
+      &quot;schemaKey&quot;: &quot;requested-action&quot;,
+      &quot;confidence&quot;: 0.92,
+      &quot;value&quot;: &quot;not to be returned to the floor without sign-off&quot;,
+      &quot;normalisedValue&quot;: &quot;not to be returned to the floor without sign-off&quot;,
+      &quot;evidence&quot;: [
+        {
+          &quot;locator&quot;: {
+            &quot;kind&quot;: &quot;text-range&quot;,
+            &quot;start&quot;: 799,
+            &quot;end&quot;: 867
+          },
+          &quot;excerpt&quot;: &quot;Not to be\nreturned to the floor without sign-off per Priya&#39;s request&quot;
+        }
+      ]
+    }
+  ],
+  &quot;warnings&quot;: [],
+  &quot;provider&quot;: {
+    &quot;providerId&quot;: &quot;fixture-intelligence-provider&quot;,
+    &quot;providerVersion&quot;: &quot;1.0.0&quot;,
+    &quot;model&quot;: null,
+    &quot;deterministic&quot;: true
+  },
+  &quot;processingTrace&quot;: {
+    &quot;startedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;completedAt&quot;: &quot;2026-01-01T00:00:00Z&quot;,
+    &quot;durationMs&quot;: 0,
+    &quot;steps&quot;: [
+      {
+        &quot;name&quot;: &quot;extraction&quot;,
+        &quot;status&quot;: &quot;completed&quot;,
+        &quot;detail&quot;: &quot;Fixture-provider lookup by artifact checksum.&quot;
+      }
+    ]
+  }
+}
+</pre></details><details id="evidence-approval-rule"><summary>approval-rule · rule</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/rules/approval.rules.json">scenario-packs/asset-reliability/rules/approval.rules.json</a></p><p class="reference">SHA-256 73c0eceb66aa35e77e096091780053cb16cde6974cb7894c6925706dfceb968b</p><pre>[
+  {
+    &quot;id&quot;: &quot;safety-critical-removal-approval&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;Propose a remove-from-service decision, requiring human approval, when an asset has a safety-critical fault and at least one other related event in the preceding 60 days (a repeat, not a first-time, safety-critical occurrence). This is the rule that drives the A-142 hold-from-service decision in the primary demo storyline.&quot;,
+    &quot;when&quot;: {
+      &quot;all&quot;: [
+        {
+          &quot;fact&quot;: { &quot;kind&quot;: &quot;observation&quot;, &quot;schemaKey&quot;: &quot;severity-indicator&quot;, &quot;field&quot;: &quot;value&quot; },
+          &quot;operator&quot;: &quot;equals&quot;,
+          &quot;value&quot;: &quot;safety-critical&quot;
+        },
+        {
+          &quot;fact&quot;: { &quot;kind&quot;: &quot;aggregate&quot;, &quot;aggregate&quot;: &quot;related-event-count&quot;, &quot;withinHours&quot;: 1440 },
+          &quot;operator&quot;: &quot;greater-than-or-equal&quot;,
+          &quot;value&quot;: 2
+        }
+      ]
+    },
+    &quot;then&quot;: [
+      {
+        &quot;type&quot;: &quot;propose-decision&quot;,
+        &quot;definitionId&quot;: &quot;remove-from-service&quot;,
+        &quot;parameters&quot;: {
+          &quot;decisionType&quot;: &quot;remove-from-service&quot;,
+          &quot;approvalPolicyId&quot;: &quot;asset-removal-approval&quot;,
+          &quot;riskLevel&quot;: &quot;critical&quot;,
+          &quot;rationale&quot;: &quot;Repeat safety-critical fault on a braking or other safety-relevant component; asset must not return to service without explicit human sign-off.&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;id&quot;: &quot;structural-integrity-removal-approval&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;,
+    &quot;description&quot;: &quot;Propose a remove-from-service decision, requiring human approval, when an inspector flags a possible structural defect even without confirmed measurement evidence. The evidence-quality caveat must be preserved on the proposed decision rather than stripped out, since this decision rests on thin evidence by the inspector&#39;s own account.&quot;,
+    &quot;when&quot;: {
+      &quot;fact&quot;: { &quot;kind&quot;: &quot;observation&quot;, &quot;schemaKey&quot;: &quot;requested-action&quot;, &quot;field&quot;: &quot;value&quot; },
+      &quot;operator&quot;: &quot;equals&quot;,
+      &quot;value&quot;: &quot;remove-from-service-out-of-caution&quot;
+    },
+    &quot;then&quot;: [
+      {
+        &quot;type&quot;: &quot;propose-decision&quot;,
+        &quot;definitionId&quot;: &quot;remove-from-service&quot;,
+        &quot;parameters&quot;: {
+          &quot;decisionType&quot;: &quot;remove-from-service&quot;,
+          &quot;approvalPolicyId&quot;: &quot;asset-removal-approval&quot;,
+          &quot;riskLevel&quot;: &quot;high&quot;,
+          &quot;rationale&quot;: &quot;Inspector-flagged possible structural defect on the overhead guard, explicitly unconfirmed and without measurement or photo evidence; route to a human decision-maker rather than auto-executing.&quot;,
+          &quot;evidenceQuality&quot;: &quot;unconfirmed&quot;
+        }
+      },
+      {
+        &quot;type&quot;: &quot;flag-review&quot;,
+        &quot;definitionId&quot;: &quot;thin-evidence-decision-review&quot;,
+        &quot;parameters&quot;: { &quot;reason&quot;: &quot;High-risk decision proposal rests on unconfirmed, unmeasured evidence.&quot; }
+      }
+    ]
+  }
+]
+</pre></details><details id="evidence-pack-manifest"><summary>pack-manifest · manifest</summary><p><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/2360e1e12c9e70f446957ba4e0b95c78f823dbb2/scenario-packs/asset-reliability/manifest.yaml">scenario-packs/asset-reliability/manifest.yaml</a></p><p class="reference">SHA-256 674b48e0a29a4966e785ec4a3863f5be706a00965bd7de6fef369483e525bb03</p><pre>schemaVersion: &quot;1.0&quot;
+id: asset-reliability
+version: &quot;1.0.0&quot;
+name: &quot;Asset Reliability&quot;
+description: &gt;
+  Converts fault reports, inspection notes, maintenance records and service
+  updates from the Northgate Distribution Center into evidence-backed
+  reliability cases, tracking recurring faults across time and gating any
+  removal from service behind an explicit human approval.
+labels: labels.json
+entityTypes:
+  - id: asset
+    displayName: &quot;Asset&quot;
+    schema: schemas/entities/asset.schema.json
+  - id: component
+    displayName: &quot;Component&quot;
+    schema: schemas/entities/component.schema.json
+  - id: location
+    displayName: &quot;Location&quot;
+    schema: schemas/entities/location.schema.json
+  - id: service-provider
+    displayName: &quot;Service Provider&quot;
+    schema: schemas/entities/service-provider.schema.json
+eventTypes:
+  - id: fault-reported
+    displayName: &quot;Fault Reported&quot;
+    schema: schemas/events/fault-reported.schema.json
+  - id: maintenance-completed
+    displayName: &quot;Maintenance Completed&quot;
+    schema: schemas/events/maintenance-completed.schema.json
+  - id: inspection-completed
+    displayName: &quot;Inspection Completed&quot;
+    schema: schemas/events/inspection-completed.schema.json
+  - id: repair-scheduled
+    displayName: &quot;Repair Scheduled&quot;
+    schema: schemas/events/repair-scheduled.schema.json
+  - id: escalation-raised
+    displayName: &quot;Escalation Raised&quot;
+    schema: schemas/events/escalation-raised.schema.json
+  - id: status-changed
+    displayName: &quot;Status Changed&quot;
+    schema: schemas/events/status-changed.schema.json
+  - id: diagnostic-completed
+    displayName: &quot;Diagnostic Completed&quot;
+    schema: schemas/events/diagnostic-completed.schema.json
+  - id: sensor-reading-logged
+    displayName: &quot;Sensor Reading Logged&quot;
+    schema: schemas/events/sensor-reading-logged.schema.json
+  - id: fleet-summary-reported
+    displayName: &quot;Fleet Summary Reported&quot;
+    schema: schemas/events/fleet-summary-reported.schema.json
+observationSchemas:
+  - schemas/observations/asset-identifier.schema.json
+  - schemas/observations/symptom.schema.json
+  - schemas/observations/component.schema.json
+  - schemas/observations/severity-indicator.schema.json
+  - schemas/observations/date-reported.schema.json
+  - schemas/observations/reporter.schema.json
+  - schemas/observations/current-operating-status.schema.json
+  - schemas/observations/previous-repair-reference.schema.json
+  - schemas/observations/work-order-reference.schema.json
+  - schemas/observations/service-date.schema.json
+  - schemas/observations/technician.schema.json
+  - schemas/observations/inspector.schema.json
+  - schemas/observations/inspection-finding.schema.json
+  - schemas/observations/recommendation.schema.json
+  - schemas/observations/follow-up-due-date.schema.json
+  - schemas/observations/requested-action.schema.json
+  - schemas/observations/service-provider-reference.schema.json
+  - schemas/observations/related-asset-reference.schema.json
+  - schemas/observations/install-batch.schema.json
+  - schemas/observations/downtime-hours.schema.json
+  - schemas/observations/repeat-fault-count.schema.json
+  - schemas/observations/sensor-reading.schema.json
+  - schemas/observations/service-status.schema.json
+seedEntities: seed/entities.json
+caseDefinitions:
+  - schemas/cases/reliability-case.schema.json
+workflows:
+  default: workflows/default.workflow.json
+rules:
+  - rules/severity.rules.json
+  - rules/escalation.rules.json
+  - rules/approval.rules.json
+metrics:
+  - dashboards/metrics.json
+dashboards:
+  leadership: dashboards/leadership.json
+  operations: dashboards/operations.json
+  technical: dashboards/technical.json
+fixtures:
+  smoke: fixtures/smoke
+  demo: fixtures/demo
+  edgeCases: fixtures/edge-cases
+evaluationSets:
+  - evaluations/smoke.gold.json
+  - evaluations/demo.gold.json
+  - evaluations/edge-cases.gold.json
+# NOTE(OIW-004b): contracts v1.1 ScenarioPackManifestSchema requires a `tours`
+# field (tours.leadership mandatory). Tours are an explicit OIW-004b non-goal
+# (deferred to the tour framework task), so this field is intentionally
+# omitted; manifest.yaml will fail strict schema validation on this field
+# until contracts/OIW-103 make `tours` optional or a follow-up task adds
+# tour content. See docs/agent-runs/OIW-004b.md.
+defaultLens: leadership
+defaultFixtureSet: demo
+</pre></details></section>
+<section class="section" id="next-steps" aria-labelledby="next-steps-heading"><div class="next"><h2 id="next-steps-heading">Explore a workflow pilot</h2><p>Inspect how this case works, or discuss the sources, review boundaries and approval controls in your own workflow.</p><div class="buttons"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/tree/2360e1e12c9e70f446957ba4e0b95c78f823dbb2">Inspect the implementation</a><a href="mailto:hello@bekaamchor.com">Discuss a workflow pilot</a></div><p><a href="https://bekaamchor.com">Kaamchor</a> · <a href="mailto:hello@bekaamchor.com">hello@bekaamchor.com</a></p><p class="muted">Built by Shekib and the Kaamchor team.</p></div></section>
+</div></div>
+</main>
+<footer>Recorded synthetic evidence. Reading this file does not change operational state. All essential content is available without scripts, an application session or a database.</footer>
+</div>
+</body>
+</html>
