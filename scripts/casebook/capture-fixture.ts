@@ -11,4 +11,3 @@ export function exportsInput(approvalComment = "Synthetic automated approval for
     stages: { fieldKey: "previous-repair-reference", confidence: "70%", excerpt: "it had brake work done back in the spring", pendingStatus: "Pending review", queueCleared: true, ruleId: "safety-critical-removal-approval", ruleVersion: "1.0.0", ruleEventId: "event-private", severityValue: "safety-critical", aggregateValue: 4, commentRequired: true, approvalComment },
   };
 }
-
