@@ -80,3 +80,10 @@ built by the packs track but requires core-track review before merge.
   private until M3, public at launch.
 - Licence: Apache-2.0.
 - CTA submission destination: deferred to Wave 5.
+
+## A10 — MIT licence (2026-10-03)
+
+The owner requested replacing Apache-2.0 with MIT. This supersedes the
+licence decision in A9. The repository licence, package metadata, public
+website and release checklist now declare MIT. Vendored third-party
+licences retain their original terms.

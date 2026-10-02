@@ -106,7 +106,7 @@ reduced fixture sets acceptable for packs two and three per A7.
 - [ ] Repository visibility changed from private to public only after every
       other item in this checklist is complete (amendment A9: "private until
       M3, public at launch").
-- [ ] Licence file present and correct (Apache-2.0, amendment A9).
+- [ ] Licence file present and correct (MIT, amendment A10).
 
 ### Content (PRD §38)
 

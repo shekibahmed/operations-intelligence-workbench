@@ -121,7 +121,7 @@ export function MarketingFooter() {
             <a href={FIRM.site} className="font-medium text-ink-muted hover:text-ink">
               {FIRM.name}
             </a>{" "}
-            · Apache-2.0
+            · MIT
           </p>
           <p>The demonstration uses synthetic operational information only.</p>
         </div>

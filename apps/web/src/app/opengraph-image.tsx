@@ -71,7 +71,7 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", gap: 16 }}>
-          {["Three scenario packs", "Evaluation suite 1.000", "Apache-2.0 open source"].map(
+          {["Three scenario packs", "Evaluation suite 1.000", "MIT open source"].map(
             (chip) => (
               <div
                 key={chip}
