@@ -68,8 +68,8 @@ test("capture the source-bound synthetic governed case", async ({ page }) => {
   await page.waitForURL(new RegExp(`${base}/decisions`));
   const card = page.locator('[data-tour="tour-decision-card"]');
   await expect(card.getByText("Risk: critical")).toBeVisible();
-  await expect(card.getByText("Status: Awaiting approval")).toBeVisible();
-  await card.getByRole("button", { name: "Approve", exact: true }).click();
+  await expect(card.getByRole("button", { name: /Approve decision:/ })).toBeVisible();
+  await card.getByRole("button", { name: /Approve decision:/ }).click();
   const dialog = page.getByRole("dialog").filter({ hasText: "Approve this decision?" });
   const confirm = dialog.getByRole("button", { name: "Approve", exact: true });
   await expect(confirm).toBeDisabled();
