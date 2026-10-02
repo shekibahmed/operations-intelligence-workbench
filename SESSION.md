@@ -10,8 +10,9 @@ HOSTING DEFERRED BY OWNER DECISION.**
 
 Waves 0–5 complete (37 lead-verified, CI-gated PRs in the private
 development repo). OIW-908 is active: public evidence casebook on its dedicated Codex branch.
-U1–U4 and local verification are complete. Local code review findings are fixed and verified;
-authorized cross-model follow-up, PR publication and CI remain in progress.
+U1–U4, local verification and both full review rounds are complete, including independent
+Claude review. Capture follow-up fixes and all 493 tests pass; PR publication and CI remain
+in progress.
 The lead owns SESSION and integration; units ran in dependency order.
 
 Owner decisions taken on 2026-09-08:
