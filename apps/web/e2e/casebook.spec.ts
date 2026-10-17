@@ -83,6 +83,13 @@ async function expectAccount(page: Page) {
   await expect(page.locator("#next-steps")).toContainText("hello@bekaamchor.com");
   await expect(page.locator("#next-steps")).toContainText("Built by Shekib and the Kaamchor team");
   await expect(page.locator("script, link[rel=stylesheet], img, iframe, form, button")).toHaveCount(0);
+  // Optional music is opt-in presentation: one unplayed, non-preloading player inside a closed disclosure.
+  const audio = page.locator("audio");
+  await expect(audio).toHaveCount(1);
+  await expect(audio).toHaveAttribute("preload", "none");
+  await expect(audio).not.toHaveAttribute("autoplay", /.*/);
+  expect(await audio.evaluate((element) => element.closest("details")?.open)).toBe(false);
+  await expect(page.locator("aside.music summary")).toHaveText("Optional background music (off)");
 }
 
 async function expectNoOverflow(page: Page) {

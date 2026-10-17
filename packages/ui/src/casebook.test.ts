@@ -29,6 +29,18 @@ describe("standalone casebook presentation", () => {
     expect(renderCasebook(document())).toBe(html);
   });
 
+  it("offers optional background music that is off, unloaded and script-free", () => {
+    const html = renderCasebook(document());
+    expect(html.match(/<audio/g)).toHaveLength(1);
+    expect(html).toContain('preload="none"');
+    expect(html).not.toMatch(/autoplay/i);
+    expect(html).toContain("Optional background music (off)");
+    expect(html).toContain('src="../media/ambience.mp3"');
+    expect(html.indexOf("</main>")).toBeLessThan(html.indexOf('<aside class="music"'));
+    expect(html.indexOf("</aside>")).toBeLessThan(html.indexOf("<footer>"));
+    expect(html).not.toMatch(/<button|<script/);
+  });
+
   it("displays untrusted source and presentation strings as text", () => {
     const input = document();
     const attack = '</pre></style><script>alert("x")</script><img src=x onerror="boom"> &';
