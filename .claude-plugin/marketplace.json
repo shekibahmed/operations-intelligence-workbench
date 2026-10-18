@@ -1,0 +1,20 @@
+{
+  "name": "oiw",
+  "owner": {
+    "name": "Operations Intelligence Workbench maintainers",
+    "url": "https://github.com/shekibahmed/operations-intelligence-workbench"
+  },
+  "metadata": {
+    "description": "Claude Code plugins for authoring and checking Operations Intelligence Workbench Scenario Packs."
+  },
+  "plugins": [
+    {
+      "name": "oiw-pack-authoring",
+      "source": "./plugins/oiw-pack-authoring",
+      "description": "Guides Claude Code through scaffolding, authoring, validating and evaluating a neutral Scenario Pack in an OIW checkout.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": ["scenario-pack", "pack-authoring", "evaluation", "fixtures"]
+    }
+  ]
+}
