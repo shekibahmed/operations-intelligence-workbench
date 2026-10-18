@@ -31,6 +31,8 @@
     "analytics:summary": "tsx scripts/analytics-summary.ts",
     "casebook:capture": "tsx scripts/casebook/capture.ts",
     "casebook:build": "tsx scripts/casebook/build.ts --definition scenario-packs/asset-reliability/casebook/case.json",
+    "media:capture": "tsx scripts/media/capture.ts",
+    "media:encode": "tsx scripts/media/encode.ts",
     "casebook:check": "tsx scripts/casebook/build.ts --definition scenario-packs/asset-reliability/casebook/case.json --check",
     "site:build": "tsx scripts/site/build.ts"
   },
