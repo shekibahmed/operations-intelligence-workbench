@@ -190,8 +190,8 @@ export interface ScenarioPackIdentity {
 /**
  * Reads every loadable pack identity straight from `scenario-packs/<dir>/manifest.yaml`,
  * so no ID is ever hard-coded in this check. Underscore-prefixed directories are
- * scaffolding (`_template`), not packs. A pack directory with an unreadable or
- * id-less manifest fails closed rather than being skipped.
+ * scaffolding (`_template`), not packs. A pack directory with an unreadable (other
+ * than absent) or id-less manifest fails closed rather than being skipped.
  */
 export async function loadScenarioPackIdentities(
   packsDirectory: string,
@@ -203,8 +203,12 @@ export async function loadScenarioPackIdentities(
     let manifest: string;
     try {
       manifest = await readFile(join(packsDirectory, entry.name, "manifest.yaml"), "utf8");
-    } catch {
-      continue; // narrative-only directories have no manifest and are not packs
+    } catch (error) {
+      // Narrative-only directories have no manifest and are not packs. Any other
+      // failure (EACCES, EISDIR, ...) on an existing manifest must not silently
+      // drop that pack from the scan.
+      if ((error as NodeJS.ErrnoException).code === "ENOENT") continue;
+      throw error;
     }
     const match = /^id:\s*["']?([A-Za-z0-9][A-Za-z0-9._-]*)["']?\s*(?:#.*)?$/mu.exec(manifest);
     if (match === null) throw new Error(`${entry.name}/manifest.yaml has no top-level "id:" line`);

@@ -68,6 +68,13 @@ describe("pack identities are read from manifests, never hard-coded", () => {
     await expect(loadScenarioPackIdentities(join(root, "scenario-packs"))).rejects.toThrow(/no top-level "id:"/u);
   });
 
+  it("fails closed when an existing manifest cannot be read (not just missing)", async () => {
+    // A directory named manifest.yaml makes readFile fail with EISDIR, not ENOENT.
+    const root = await skeleton();
+    await mkdir(join(root, "scenario-packs/unreadable/manifest.yaml"), { recursive: true });
+    await expect(loadScenarioPackIdentities(join(root, "scenario-packs"))).rejects.toThrow(/EISDIR/u);
+  });
+
   it("finds every real pack in this repository", async () => {
     const identities = await loadScenarioPackIdentities(join(repositoryRoot, "scenario-packs"));
     expect(identities.length).toBeGreaterThanOrEqual(3);

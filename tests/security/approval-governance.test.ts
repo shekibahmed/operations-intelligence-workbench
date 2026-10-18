@@ -229,9 +229,14 @@ describe("(a) an Approval for Decision X never authorises Decision Y", () => {
 
     // The repository refuses to re-insert the captured Approval record (same id)
     // against Y: the primary key is the Approval id.
-    await expect(
-      repositories.approvals.insert(workspaceId, { ...first.approval, decisionId: decisionY }),
-    ).rejects.toThrow();
+    // Drizzle wraps the driver error, so the PostgreSQL code is on `cause`.
+    const replayError = await repositories.approvals
+      .insert(workspaceId, { ...first.approval, decisionId: decisionY })
+      .then(
+        () => null,
+        (error: unknown) => error as { cause?: { code?: string } },
+      );
+    expect(replayError?.cause?.code).toBe("23505");
     expect(await statusOf(workspaceId, decisionY)).toBe("awaiting-approval");
 
     // Y can only be approved by its own, distinct Approval record.
@@ -392,15 +397,19 @@ describe("(b) an Approval needs an identified human approver", () => {
     },
   );
 
-  it("application layer rejects an absent identity", async () => {
+  it("application layer fails closed on an absent identity (TypeError, not the identity guard)", async () => {
     const { workspaceId, decisionX } = await seedScenario();
+    // ApprovalService reads identity.type before its explicit human-identity
+    // guard, so an undefined identity throws a TypeError instead of reaching
+    // the guard message. It still fails closed; this pins that outcome and
+    // does not claim the guard handles undefined (reported in the agent run).
     await expect(
       approvalService().apply(workspaceId, decisionX, {
         identity: undefined as never,
         outcome: "approved",
         comment: "No identity at all.",
       }),
-    ).rejects.toThrow();
+    ).rejects.toThrow(TypeError);
     expect(await repositories.approvals.list(workspaceId)).toEqual([]);
     expect(await statusOf(workspaceId, decisionX)).toBe("awaiting-approval");
   });
@@ -417,7 +426,7 @@ describe("(b) an Approval needs an identified human approver", () => {
         comment: null,
         approvedAt: timestamp,
       }),
-    ).rejects.toThrow();
+    ).rejects.toThrow(/approver/iu);
     expect(await repositories.approvals.list(workspaceId)).toEqual([]);
   });
 
@@ -436,16 +445,50 @@ describe("(b) an Approval needs an identified human approver", () => {
 });
 
 /**
- * Characterisation of what the database does NOT itself enforce. These pin
- * today's behaviour so docs/SECURITY.md 3.7 cannot claim more than the
- * schema delivers: they describe a writer with direct database privileges
- * (the application exposes no path to any of them, see the repository-API
- * test above). If a migration closes one of these gaps the matching test
- * must be inverted and the docs tightened.
+ * Known database-level gaps. Each test below states the behaviour the
+ * database SHOULD have and is marked `it.fails`: it passes today only
+ * because the database does not yet enforce it. They are tracked gaps, not
+ * endorsed behaviour. The application exposes no path to any of them (see the
+ * repository-API test above), but the application database role could run the
+ * same SQL, so a privileged-writer threat model is not a separate one.
+ *
+ * The rejection assertions are deliberately message-agnostic: a future
+ * migration may word its error any way, and a mismatched message must not keep
+ * a closed gap marked as open.
+ *
+ * When a migration closes a gap (a CHECK on approver content and an
+ * append-only trigger on approvals), the matching `it.fails` starts failing;
+ * change it to `it` and tighten docs/SECURITY.md 3.7 in the same change.
  */
-describe("database-level limits (characterisation, not endorsement)", () => {
-  it("the schema has no CHECK on approver content: a raw empty-string approver row is accepted", async () => {
+describe("known database-level gaps (it.fails: expected to fail until a migration lands)", () => {
+  async function approveXThenGetApproval() {
+    const scenario = await seedScenario();
+    const { approval } = await approvalService().apply(scenario.workspaceId, scenario.decisionX, {
+      identity: { type: "human", id: "reviewer-a" },
+      outcome: "approved",
+      comment: "Evidence reviewed for X only.",
+    });
+    return { ...scenario, approval };
+  }
+
+  it.fails("the database rejects a raw approvals row with an empty approver", async () => {
     const { workspaceId, decisionX } = await seedScenario();
+    await expect(
+      insertRawApproval({
+        id: randomUUID(),
+        workspaceId,
+        decisionId: decisionX,
+        approver: "",
+        outcome: "approved",
+      }),
+    ).rejects.toThrow();
+  });
+
+  it.fails("the database rejects approving a Decision on the strength of an empty-approver row", async () => {
+    const { workspaceId, decisionX } = await seedScenario();
+    // Today the empty-approver row is accepted, and it satisfies the
+    // decisions_require_human_approval trigger (which checks outcome and
+    // decision id only), so the Decision can be approved with no human identity.
     await insertRawApproval({
       id: randomUUID(),
       workspaceId,
@@ -453,27 +496,30 @@ describe("database-level limits (characterisation, not endorsement)", () => {
       approver: "",
       outcome: "approved",
     });
-    expect(
-      (await sql(`SELECT count(*)::int AS n FROM approvals WHERE workspace_id = $1`, [workspaceId]))[0]?.["n"],
-    ).toBe(1);
+    await expect(
+      sql(`UPDATE decisions SET status = 'approved' WHERE id = $1 AND workspace_id = $2`, [
+        decisionX,
+        workspaceId,
+      ]),
+    ).rejects.toThrow(/approved Decision requires a matching human Approval/u);
   });
 
-  it("the approvals table is not append-only: a privileged writer can re-point an Approval at another Decision", async () => {
-    const { workspaceId, decisionX, decisionY } = await seedScenario();
-    const { approval } = await approvalService().apply(workspaceId, decisionX, {
-      identity: { type: "human", id: "reviewer-a" },
-      outcome: "approved",
-      comment: "Evidence reviewed for X only.",
-    });
-    await sql(`UPDATE approvals SET decision_id = $1 WHERE id = $2 AND workspace_id = $3`, [
-      decisionY,
-      approval.id,
-      workspaceId,
-    ]);
-    await sql(`UPDATE decisions SET status = 'approved' WHERE id = $1 AND workspace_id = $2`, [
-      decisionY,
-      workspaceId,
-    ]);
-    expect(await statusOf(workspaceId, decisionY)).toBe("approved");
+  it.fails("the database rejects re-pointing an Approval at another Decision (replay)", async () => {
+    const { workspaceId, decisionY, approval } = await approveXThenGetApproval();
+    await expect(
+      sql(`UPDATE approvals SET decision_id = $1 WHERE id = $2 AND workspace_id = $3`, [
+        decisionY,
+        approval.id,
+        workspaceId,
+      ]),
+    ).rejects.toThrow();
+  });
+
+  it.fails("the database rejects deleting an Approval after its Decision was approved", async () => {
+    const { workspaceId, decisionX, approval } = await approveXThenGetApproval();
+    await expect(
+      sql(`DELETE FROM approvals WHERE id = $1 AND workspace_id = $2`, [approval.id, workspaceId]),
+    ).rejects.toThrow();
+    expect(await statusOf(workspaceId, decisionX)).toBe("approved");
   });
 });

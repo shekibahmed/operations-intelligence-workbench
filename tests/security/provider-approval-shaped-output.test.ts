@@ -1,7 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import { dirname, resolve, sep } from "node:path";
 
+import ts from "typescript";
 import type { ExtractionRequest, ExtractionResult } from "@oiw/contracts";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -42,6 +43,7 @@ let pipeline: LifecyclePipeline;
 let pack: LoadedScenarioPack;
 let fixtureProvider: FixtureIntelligenceProvider;
 let template: LoadedFixtureArtifact;
+let injectionFixtures: LoadedFixtureArtifact[];
 let workspaceId: string;
 
 /** Wraps a provider and rewrites the (otherwise valid) result a hostile model might return. */
@@ -134,7 +136,7 @@ async function snapshot() {
 
 async function runHostile(
   label: string,
-  provider: HostileProvider,
+  provider: HostileProvider | FixtureIntelligenceProvider,
   artifact: LoadedFixtureArtifact = hostileArtifact(label),
 ) {
   const before = await snapshot();
@@ -171,6 +173,11 @@ beforeAll(async () => {
   const edgeCases = await loadFixtureSet(pack, "edge-cases");
   if (edgeCases.status !== "loaded") throw new Error("edge-cases fixture set did not load");
   template = edgeCases.fixtureSet.artifacts.find(({ id }) => id === "asset-reliability-edge-006")!;
+  // The shared injection-matrix fixtures (see docs/quality/INJECTION_TEST_MATRIX.md and
+  // injection/product-injection-matrix.test.ts select them the same way).
+  injectionFixtures = edgeCases.fixtureSet.artifacts.filter((fixture) =>
+    fixture.extraction.warnings.some((warning) => warning.code === "suspicious-content-detected"),
+  );
 
   // Build the real primary storyline so a critical Decision is genuinely awaiting approval.
   const demo = await loadFixtureSet(pack, "demo");
@@ -230,19 +237,42 @@ describe("structural: provider contracts carry no approval channel", () => {
 
   it("keeps the intelligence package unable to reach approvals, persistence or the application layer", async () => {
     const directory = resolve(repositoryRoot, "packages/intelligence/src");
-    const files = (await readdir(directory)).filter((name) => name.endsWith(".ts") && !name.endsWith(".test.ts"));
+    const files = (await readdir(directory, { recursive: true })).filter(
+      (name) => name.endsWith(".ts") && !name.endsWith(".test.ts"),
+    );
     expect(files.length).toBeGreaterThan(0);
     for (const file of files) {
       const source = await readFile(resolve(directory, file), "utf8");
       expect(source, `${file} references approvals`).not.toMatch(/approval/iu);
-      expect(source, `${file} imports persistence or application code`).not.toMatch(
-        /@oiw\/(?:persistence|application)/u,
-      );
+      // Every import, re-export and dynamic import specifier, parsed rather than grepped.
+      const specifiers = ts.preProcessFile(source, true, true).importedFiles.map(({ fileName }) => fileName);
+      for (const specifier of specifiers) {
+        expect(specifier, `${file} imports persistence or application code`).not.toMatch(
+          /^@oiw\/(?:persistence|application)(?:\/|$)/u,
+        );
+        if (specifier.startsWith(".")) {
+          // A relative import may not leave the package source tree, so it cannot
+          // reach ../../persistence/src or ../../application/src either.
+          const resolved = resolve(directory, dirname(file), specifier);
+          expect(
+            resolved === directory || resolved.startsWith(`${directory}${sep}`),
+            `${file} imports "${specifier}" outside packages/intelligence/src`,
+          ).toBe(true);
+        }
+      }
     }
   });
 });
 
 describe("behavioural: hostile provider output through the real pipeline and database", () => {
+  it("runs every shared injection-matrix fixture without creating an Approval or approving a Decision", async () => {
+    // Same selection as the product injection matrix, so the two suites cannot drift.
+    expect(injectionFixtures.length).toBeGreaterThan(0);
+    for (const fixture of injectionFixtures) {
+      await runHostile(fixture.id, fixtureProvider, fixture);
+    }
+  });
+
   it("rejects approval-shaped top-level fields and persists nothing from that result", async () => {
     const { result } = await runHostile(
       "top-level-fields",
