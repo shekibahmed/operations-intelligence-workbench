@@ -12,6 +12,9 @@ consultancy destinations from `apps/web/src/lib/firm.ts`. Story, source excerpts
 and capability explanations live in this pack. The generic renderer and landing
 entry do not contain the scenario narrative.
 
+The optional background music at the end of the page is presentation, not recorded
+evidence.
+
 ## Inputs and historical identity
 
 - `case.json` supplies the presentation, evidence references and capture selection.

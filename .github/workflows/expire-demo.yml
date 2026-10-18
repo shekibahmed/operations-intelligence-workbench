@@ -1,11 +1,12 @@
 name: Expire demo workspaces
 
 on:
-  # Manual only. The hourly schedule is disabled until a production
-  # DATABASE_URL secret exists; without it every scheduled run fails and
-  # sends a failure alert. Re-enable by restoring the schedule trigger:
-  #   schedule:
-  #     - cron: "17 * * * *"
+  # Hourly. With no `DATABASE_URL` secret the run is a successful no-op, so
+  # an unconfigured fork or a pre-hosting repository does not send failure
+  # alerts. GitHub disables scheduled workflows in a public repository after
+  # 60 days without repository activity (re-enable in the Actions tab).
+  schedule:
+    - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       before:
@@ -21,32 +22,52 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      # The secret is scoped to the steps that need it, never the whole job,
+      # so dependency install scripts cannot read it.
+      - name: Check configuration
+        id: config
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::notice::DATABASE_URL secret is not set; nothing to expire."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.config.outputs.enabled == 'true'
 
       - uses: pnpm/action-setup@v4
+        if: steps.config.outputs.enabled == 'true'
         with:
           version: 11.25.0
           run_install: false
 
       - uses: actions/setup-node@v4
+        if: steps.config.outputs.enabled == 'true'
         with:
           node-version: 22
           cache: pnpm
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install
+        if: steps.config.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
 
       # scripts/expire-demo.ts imports built package output (dist/).
-      - run: pnpm build
+      - name: Build packages
+        if: steps.config.outputs.enabled == 'true'
+        run: pnpm build
 
       - name: Expire guest workspaces
+        if: steps.config.outputs.enabled == 'true'
         run: |
-          if [ -z "$DATABASE_URL" ]; then
-            echo "::error::DATABASE_URL secret is not set"; exit 1
-          fi
-          if [ -n "${{ github.event.inputs.before }}" ]; then
-            pnpm demo:expire --before "${{ github.event.inputs.before }}"
+          if [ -n "$BEFORE" ]; then
+            pnpm demo:expire --before "$BEFORE"
           else
             pnpm demo:expire
           fi
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BEFORE: ${{ github.event.inputs.before }}
