@@ -25,10 +25,11 @@ Drafts for announcing Operations Intelligence Workbench. Nothing here has been p
 5. `LINKEDIN.md` with `carousels/`: after Show HN.
 6. `REDDIT.md`: last, spaced out per subreddit rules.
 
-## Pending placeholders and URLs (expected)
+## Pending placeholders and URLs (link-checked 2026-10-18)
 
-- `<LIVE_DEMO_URL>`: no hosted demo yet.
-- GitHub Pages site and casebook (shekibahmed.github.io/operations-intelligence-workbench): 404, no Pages workflow. The repo-file casebook link is used instead.
+- Pages site, casebook and `#walkthroughs` anchor: PR #21 is merged and all three returned 200 on 2026-10-18. Several drafts (SHOW_HN, LINKEDIN, ARTICLE, REDDIT, LISTINGS, CHECKLIST) still say "not live (404)" and use repo-path fallbacks. Update those lines before posting, then re-run the link check.
+- Demo host (`operations-intelligence-workbench.onrender.com`, `/demo`, `/llms.txt`): 200 on 2026-10-18. Check the demo is warm before posting.
 - Release `v0.1.0`: 404, not yet cut.
-- MCP Registry search for `oiw-mcp-server`: not published; `packages/mcp-server` does not exist yet.
-- `<NPM_PACKAGE>` and other angle-bracket placeholders: fill in at submission.
+- `http://localhost:3000/demo` is a local example, not checkable.
+- `<NPM_PACKAGE>` and other angle-bracket placeholders: fill in at submission. The `$(uname` mcp-publisher URL is a shell template and is not a real link.
+- `<LIVE_DEMO_URL>` appears only in CHECKLIST.md as a reminder of what to replace.
