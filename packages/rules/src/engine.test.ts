@@ -198,3 +198,64 @@ describe("condition evaluation", () => {
     ]);
   });
 });
+
+describe("repeat-threshold semantics (related-event-count >= 2)", () => {
+  const threshold = {
+    fact: {
+      kind: "aggregate",
+      aggregate: "related-event-count",
+      withinHours: 1440,
+    },
+    operator: "greater-than-or-equal",
+    value: 2,
+  } as const;
+  const other = (suffix: string, occurredAt: string, entityIds?: string[]) =>
+    event(`40000000-0000-4000-8000-0000000001${suffix}`, "example-reported", occurredAt, entityIds);
+  const withEvents = (others: OperationalEvent[]) => ({
+    ...context,
+    events: [...others, currentEvent],
+  });
+
+  it("does not count the triggering event: the event alone yields zero", () => {
+    const trace = evaluateCondition(threshold, withEvents([]));
+    expect(trace.result).toBe(false);
+    expect(trace).toMatchObject({ fact: { value: 0 } });
+  });
+
+  it("does not match with one other related event", () => {
+    const trace = evaluateCondition(
+      threshold,
+      withEvents([other("01", "2026-05-30T00:00:00.000Z")]),
+    );
+    expect(trace.result).toBe(false);
+    expect(trace).toMatchObject({ fact: { value: 1 } });
+  });
+
+  it("matches with two other related events and never lists the trigger", () => {
+    const trace = evaluateCondition(
+      threshold,
+      withEvents([
+        other("01", "2026-05-30T00:00:00.000Z"),
+        other("02", "2026-05-01T00:00:00.000Z"),
+      ]),
+    );
+    expect(trace.result).toBe(true);
+    expect(trace).toMatchObject({ fact: { value: 2 } });
+    const ids = (trace as unknown as { fact: { relatedEventIds: string[] } }).fact.relatedEventIds;
+    expect(ids).toHaveLength(2);
+    expect(ids).not.toContain(currentEvent.id);
+  });
+
+  it("does not count another event outside the 1440 hour window or on another Entity", () => {
+    const trace = evaluateCondition(
+      threshold,
+      withEvents([
+        other("01", "2026-05-30T00:00:00.000Z"),
+        other("02", "2026-03-01T00:00:00.000Z"),
+        other("03", "2026-05-29T00:00:00.000Z", ["20000000-0000-4000-8000-000000000099"]),
+      ]),
+    );
+    expect(trace.result).toBe(false);
+    expect(trace).toMatchObject({ fact: { value: 1 } });
+  });
+});

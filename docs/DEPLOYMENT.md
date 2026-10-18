@@ -418,20 +418,33 @@ the Render dashboard (**Environment**), then run
 
 `NEXT_PUBLIC_SITE_URL` is read when `next build` runs: it controls the
 `Strict-Transport-Security` header (`apps/web/next.config.ts`) and the
-absolute URLs in `robots.txt` and `sitemap.xml`. Render converts a Docker
-service's environment variables into Docker build arguments, but a build
-argument only reaches `next build` if the `Dockerfile` declares it with
-`ARG`. The current `Dockerfile` declares none, so on Render the variable is
-present at runtime but not at build time. Verified on a local
-`docker build`: the baked `robots.txt` lists
-`Sitemap: http://localhost:3000/sitemap.xml`, and no HSTS header is baked.
-Consequences until the `Dockerfile` is changed (follow-up; it needs
-`ARG NEXT_PUBLIC_SITE_URL` and a matching `ENV` in the build stage, and must
-not gain an `ARG` for `DATABASE_URL` or any other secret, because build
-arguments can end up in image layers): the app does not send HSTS itself
-(Render's edge terminates TLS and redirects HTTP to HTTPS), and the sitemap
-URLs point at localhost. Neither affects the demo's function or the
-session-cookie `Secure` attribute (driven by `NODE_ENV`).
+absolute URLs in `robots.txt` and `sitemap.xml`. Both route files are
+prerendered as static content, so their URLs are fixed at build time, not
+read per request. Render passes a Docker service's environment variables to
+`docker build` as build arguments, and a build argument only reaches
+`next build` if the `Dockerfile` declares it. The `Dockerfile` therefore
+declares `ARG NEXT_PUBLIC_SITE_URL` (default `http://localhost:3000`, the
+application's own fallback, so a plain `docker build -t oiw-web .` still
+works) with a matching `ENV` in the build stage; the final image stage does
+not carry it. An empty value is treated as unset. It must not gain an `ARG` for
+`DATABASE_URL` or any other secret, because build arguments can end up in
+image layers.
+
+Set `NEXT_PUBLIC_SITE_URL` on the Render service (§9.2) and trigger a new
+deploy; changing it requires a rebuild, not just a restart. Before this
+`ARG` existed, the live demo printed the localhost fallback in
+`robots.txt` (`Sitemap: http://localhost:3000/sitemap.xml`) and every
+`sitemap.xml` `<loc>`, and sent no HSTS header of its own (Render's edge
+redirects HTTP to HTTPS regardless). To check a build locally:
+
+```bash
+docker build --build-arg NEXT_PUBLIC_SITE_URL=https://example.test -t oiw-web .
+docker run --rm --entrypoint cat oiw-web apps/web/.next/server/app/robots.txt.body
+docker run --rm --entrypoint grep oiw-web -c Strict-Transport-Security apps/web/.next/routes-manifest.json
+```
+
+Neither the old nor the new behaviour affects the session-cookie `Secure`
+attribute, which is driven by `NODE_ENV`.
 
 ### 9.5 Rate-limit identity on Render
 

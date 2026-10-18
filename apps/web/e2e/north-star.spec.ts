@@ -35,9 +35,22 @@ test("north-star: PRD §13 asset-reliability journey — scenario selection thro
   const base = await test.step("scenario selection creates a real, isolated workspace and starts the guided tour", async () => {
     await page.goto("/demo");
     await expect(page.getByRole("heading", { name: "Asset Reliability" })).toBeVisible();
+    // The first visit mints the analytics-session cookie in whichever request
+    // reaches the server first. Wait for the page's own scenario-selected
+    // beacon to complete before starting the tour, otherwise the click's
+    // server action and the beacon race cookie-less and each mints its own
+    // session, splitting this journey's events across two sessions.
+    const scenarioSelectedBeacon = page.waitForResponse(
+      (response) => {
+        const request = response.request();
+        if (!response.url().endsWith("/api/analytics") || request.method() !== "POST") return false;
+        return (request.postDataJSON() as { name?: string } | null)?.name === "scenario-selected";
+      },
+    );
     await page.getByRole("link", { name: "Start with Asset Reliability" }).click();
 
     await expect(page).toHaveURL(/\/demo\/asset-reliability/);
+    expect((await scenarioSelectedBeacon).status()).toBe(202);
     await expect(page.getByRole("button", { name: "Start guided tour" })).toBeVisible();
     await page.getByRole("button", { name: "Start guided tour" }).click();
 

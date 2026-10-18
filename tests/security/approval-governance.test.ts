@@ -445,22 +445,13 @@ describe("(b) an Approval needs an identified human approver", () => {
 });
 
 /**
- * Known database-level gaps. Each test below states the behaviour the
- * database SHOULD have and is marked `it.fails`: it passes today only
- * because the database does not yet enforce it. They are tracked gaps, not
- * endorsed behaviour. The application exposes no path to any of them (see the
- * repository-API test above), but the application database role could run the
- * same SQL, so a privileged-writer threat model is not a separate one.
- *
- * The rejection assertions are deliberately message-agnostic: a future
- * migration may word its error any way, and a mismatched message must not keep
- * a closed gap marked as open.
- *
- * When a migration closes a gap (a CHECK on approver content and an
- * append-only trigger on approvals), the matching `it.fails` starts failing;
- * change it to `it` and tighten docs/SECURITY.md 3.7 in the same change.
+ * Database enforcement of Approval integrity (OIW-918 recorded these as
+ * `it.fails` gaps; OIW-919 migration 0004 closes them, see ADR-013). The
+ * rejection assertions are message-agnostic where the exact wording is not the
+ * point; the append-only and blank-approver messages are pinned elsewhere in
+ * `packages/persistence/src/postgres-repositories.test.ts`.
  */
-describe("known database-level gaps (it.fails: expected to fail until a migration lands)", () => {
+describe("database enforcement of Approval integrity (migration 0004)", () => {
   async function approveXThenGetApproval() {
     const scenario = await seedScenario();
     const { approval } = await approvalService().apply(scenario.workspaceId, scenario.decisionX, {
@@ -471,7 +462,24 @@ describe("known database-level gaps (it.fails: expected to fail until a migratio
     return { ...scenario, approval };
   }
 
-  it.fails("the database rejects a raw approvals row with an empty approver", async () => {
+  it.each(["", "   ", "\t\n", "\u00a0"])(
+    "the database rejects a raw approvals row with a blank approver (%j)",
+    async (approver) => {
+      const { workspaceId, decisionX } = await seedScenario();
+      await expect(
+        insertRawApproval({
+          id: randomUUID(),
+          workspaceId,
+          decisionId: decisionX,
+          approver,
+          outcome: "approved",
+        }),
+      ).rejects.toThrow(/approvals_approver_not_blank/u);
+      expect(await repositories.approvals.list(workspaceId)).toEqual([]);
+    },
+  );
+
+  it("a blank-approver row cannot be used to approve a Decision with no human identity", async () => {
     const { workspaceId, decisionX } = await seedScenario();
     await expect(
       insertRawApproval({
@@ -482,44 +490,34 @@ describe("known database-level gaps (it.fails: expected to fail until a migratio
         outcome: "approved",
       }),
     ).rejects.toThrow();
-  });
-
-  it.fails("the database rejects approving a Decision on the strength of an empty-approver row", async () => {
-    const { workspaceId, decisionX } = await seedScenario();
-    // Today the empty-approver row is accepted, and it satisfies the
-    // decisions_require_human_approval trigger (which checks outcome and
-    // decision id only), so the Decision can be approved with no human identity.
-    await insertRawApproval({
-      id: randomUUID(),
-      workspaceId,
-      decisionId: decisionX,
-      approver: "",
-      outcome: "approved",
-    });
     await expect(
       sql(`UPDATE decisions SET status = 'approved' WHERE id = $1 AND workspace_id = $2`, [
         decisionX,
         workspaceId,
       ]),
     ).rejects.toThrow(/approved Decision requires a matching human Approval/u);
+    expect(await statusOf(workspaceId, decisionX)).toBe("awaiting-approval");
   });
 
-  it.fails("the database rejects re-pointing an Approval at another Decision (replay)", async () => {
-    const { workspaceId, decisionY, approval } = await approveXThenGetApproval();
+  it("the database rejects re-pointing an Approval at another Decision (replay)", async () => {
+    const { workspaceId, decisionX, decisionY, approval } = await approveXThenGetApproval();
     await expect(
       sql(`UPDATE approvals SET decision_id = $1 WHERE id = $2 AND workspace_id = $3`, [
         decisionY,
         approval.id,
         workspaceId,
       ]),
-    ).rejects.toThrow();
+    ).rejects.toThrow(/Approvals are append-only/u);
+    expect((await repositories.approvals.list(workspaceId))[0]?.decisionId).toBe(decisionX);
+    expect(await statusOf(workspaceId, decisionY)).toBe("awaiting-approval");
   });
 
-  it.fails("the database rejects deleting an Approval after its Decision was approved", async () => {
+  it("the database rejects deleting an Approval after its Decision was approved", async () => {
     const { workspaceId, decisionX, approval } = await approveXThenGetApproval();
     await expect(
       sql(`DELETE FROM approvals WHERE id = $1 AND workspace_id = $2`, [approval.id, workspaceId]),
-    ).rejects.toThrow();
+    ).rejects.toThrow(/Approvals are append-only/u);
+    expect(await repositories.approvals.list(workspaceId)).toHaveLength(1);
     expect(await statusOf(workspaceId, decisionX)).toBe("approved");
   });
 });
