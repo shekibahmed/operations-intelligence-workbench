@@ -14,6 +14,10 @@ import type {
   Workspace,
 } from "@oiw/contracts";
 import { randomUUID } from "node:crypto";
+import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
+import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 import { createDatabase } from "./database.js";
@@ -223,7 +227,10 @@ function createRecordSet(slug: string): RecordSet {
   };
 }
 
-async function insertRecordSet(records: RecordSet): Promise<void> {
+async function insertRecordSet(
+  records: RecordSet,
+  options: { withApproval?: boolean } = {},
+): Promise<void> {
   const workspaceId = records.workspace.id;
   await repositories.workspaces.insert(records.workspace);
   await repositories.sources.insert(workspaceId, records.source);
@@ -236,7 +243,9 @@ async function insertRecordSet(records: RecordSet): Promise<void> {
   await repositories.cases.insert(workspaceId, records.caseRecord);
   await repositories.actionItems.insert(workspaceId, records.actionItem);
   await repositories.decisions.insert(workspaceId, records.decision);
-  await repositories.approvals.insert(workspaceId, records.approval);
+  if (options.withApproval !== false) {
+    await repositories.approvals.insert(workspaceId, records.approval);
+  }
   await repositories.auditEntries.insert(workspaceId, records.auditEntry);
 }
 
@@ -712,5 +721,238 @@ describe.sequential("Postgres persistence repositories", () => {
       { scenario: "other-pack", name: "tour-completed", count: 1 },
     ]);
     expect(JSON.stringify(funnel)).not.toContain(sessionId);
+  });
+});
+
+const insertApprovalSql = `INSERT INTO approvals (id, workspace_id, decision_id, approver, outcome, comment, approved_at)
+  VALUES ($1, $2, $3, $4, 'approved', NULL, $5)`;
+const blankApprovers = [
+  ["empty string", ""],
+  ["spaces", "   "],
+  ["tab and newline", "\t\r\n"],
+  ["non-breaking space", "\u00a0"],
+  ["zero-width space", "\u200b"],
+  ["mixed whitespace", " \u00a0\t\u200b\ufeff "],
+] as const;
+
+describe.sequential("OIW-919 database-level Approval hardening", () => {
+  async function insertUnapproved(slug: string): Promise<RecordSet> {
+    const records = createRecordSet(slug);
+    await insertRecordSet(records, { withApproval: false });
+    return records;
+  }
+
+  function insertApproval(records: RecordSet, approver: string) {
+    return connection.client.unsafe(insertApprovalSql, [
+      randomUUID(),
+      records.workspace.id,
+      records.decision.id,
+      approver,
+      timestamp,
+    ]);
+  }
+
+  async function approvalCount(workspaceId: string): Promise<number> {
+    return (await repositories.approvals.list(workspaceId)).length;
+  }
+
+  it.each(blankApprovers)("rejects a blank approver (%s) at the database", async (_label, approver) => {
+    const records = await insertUnapproved("blank-approver");
+    await expect(insertApproval(records, approver)).rejects.toThrow("approvals_approver_not_blank");
+    expect(await approvalCount(records.workspace.id)).toBe(0);
+    await expect(insertApproval(records, "session-reviewer-1")).resolves.toBeDefined();
+    expect(await approvalCount(records.workspace.id)).toBe(1);
+  });
+
+  it("does not let a blank approver satisfy the human-approval trigger even with the CHECK absent", async () => {
+    const records = await insertUnapproved("trigger-defence-in-depth");
+    // DDL is transactional: drop the CHECK, plant the blank row, and prove the
+    // Decision trigger still refuses to treat it as a human Approval. Rolled back.
+    await expect(
+      connection.client.begin(async (transaction) => {
+        await transaction.unsafe('ALTER TABLE approvals DROP CONSTRAINT "approvals_approver_not_blank"');
+        await transaction.unsafe(insertApprovalSql, [
+          randomUUID(),
+          records.workspace.id,
+          records.decision.id,
+          "  ",
+          timestamp,
+        ]);
+        await transaction.unsafe("UPDATE decisions SET status = 'approved' WHERE id = $1", [
+          records.decision.id,
+        ]);
+      }),
+    ).rejects.toThrow("An approved Decision requires a matching human Approval");
+    expect(await approvalCount(records.workspace.id)).toBe(0);
+    const constraints = await connection.client<{ conname: string }[]>`
+      SELECT conname FROM pg_constraint WHERE conname = 'approvals_approver_not_blank'`;
+    expect(constraints).toHaveLength(1);
+  });
+
+  it("rejects every UPDATE of a recorded Approval", async () => {
+    const records = createRecordSet("approval-update");
+    await insertRecordSet(records);
+    const id = records.approval.id;
+
+    await expect(
+      connection.client`UPDATE approvals SET approver = 'someone-else' WHERE id = ${id}`,
+    ).rejects.toThrow("Approvals are append-only");
+    await expect(
+      connection.client`UPDATE approvals SET outcome = 'rejected' WHERE id = ${id}`,
+    ).rejects.toThrow("Approvals are append-only");
+    await expect(
+      connection.client`UPDATE approvals SET comment = comment WHERE id = ${id}`,
+    ).rejects.toThrow("Approvals are append-only");
+    expect(await repositories.approvals.findById(records.workspace.id, id)).toEqual(records.approval);
+  });
+
+  it("rejects ad-hoc DELETE of a recorded Approval and ignores any session setting", async () => {
+    const records = createRecordSet("approval-delete");
+    await insertRecordSet(records);
+    const id = records.approval.id;
+
+    await expect(connection.client`DELETE FROM approvals WHERE id = ${id}`).rejects.toThrow(
+      "Approvals are append-only",
+    );
+    await expect(
+      connection.client`DELETE FROM approvals WHERE workspace_id = ${records.workspace.id}`,
+    ).rejects.toThrow("Approvals are append-only");
+    // No transaction-scoped purge switch exists: a GUC cannot open the gate.
+    await expect(
+      connection.client.begin(async (transaction) => {
+        await transaction.unsafe("SET LOCAL oiw.allow_governance_purge = 'on'");
+        await transaction.unsafe("DELETE FROM approvals WHERE id = $1", [id]);
+      }),
+    ).rejects.toThrow("Approvals are append-only");
+    expect(await repositories.approvals.findById(records.workspace.id, id)).toEqual(records.approval);
+  });
+
+  it("still removes Approvals when the whole Decision, Case or Workspace is removed", async () => {
+    const byDecision = createRecordSet("cascade-decision");
+    const byCase = createRecordSet("cascade-case");
+    const byWorkspace = createRecordSet("cascade-workspace");
+    const survivor = createRecordSet("cascade-survivor");
+    for (const records of [byDecision, byCase, byWorkspace, survivor]) await insertRecordSet(records);
+
+    await connection.client`DELETE FROM decisions WHERE id = ${byDecision.decision.id}`;
+    expect(await approvalCount(byDecision.workspace.id)).toBe(0);
+
+    await connection.client`DELETE FROM cases WHERE id = ${byCase.caseRecord.id}`;
+    expect(await approvalCount(byCase.workspace.id)).toBe(0);
+
+    expect(await repositories.workspaces.delete(byWorkspace.workspace.id)).toBe(true);
+    expect(await approvalCount(byWorkspace.workspace.id)).toBe(0);
+
+    expect(await repositories.approvals.list(survivor.workspace.id)).toEqual([survivor.approval]);
+  });
+
+  it("keeps demo reset working: clearForReset removes the Case tree including Approvals", async () => {
+    const records = createRecordSet("reset-clears-approvals");
+    await insertRecordSet(records);
+    const resetAudit = {
+      ...records.auditEntry,
+      id: randomUUID(),
+      action: "workspace-reset",
+      entryHash: "d".repeat(64),
+    };
+
+    expect(await repositories.workspaces.clearForReset(records.workspace.id, resetAudit)).toBe(true);
+    expect(await approvalCount(records.workspace.id)).toBe(0);
+    expect(await repositories.decisions.findById(records.workspace.id, records.decision.id)).toBeNull();
+    expect(await repositories.auditEntries.findById(records.workspace.id, resetAudit.id)).toEqual(resetAudit);
+  });
+
+  it("keeps test and db:reset style cleanup working (TRUNCATE does not fire row triggers)", async () => {
+    const records = createRecordSet("truncate");
+    await insertRecordSet(records);
+    await connection.client.unsafe("TRUNCATE TABLE workspaces CASCADE");
+    expect(await approvalCount(records.workspace.id)).toBe(0);
+  });
+});
+
+describe.sequential("OIW-919 migration 0004 applies to a database holding existing data", () => {
+  const migrationsDirectory = resolve(import.meta.dirname, "../../../db/migrations");
+  const scratchName = `oiw919_upgrade_${process.pid}_${randomUUID().replaceAll("-", "").slice(0, 8)}`;
+  const scratchUrl = new URL(process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/oiw");
+  scratchUrl.pathname = `/${scratchName}`;
+  let scratch: ReturnType<typeof createDatabase>;
+  let priorMigrations: string;
+
+  beforeAll(async () => {
+    await connection.client.unsafe(`CREATE DATABASE "${scratchName}"`);
+    scratch = createDatabase(scratchUrl.toString());
+    // Build a migrations folder that stops before 0004: the schema the live demo has today.
+    priorMigrations = await mkdtemp(join(tmpdir(), "oiw919-prior-"));
+    await cp(migrationsDirectory, priorMigrations, { recursive: true });
+    const journalPath = join(priorMigrations, "meta", "_journal.json");
+    const journal = JSON.parse(await readFile(journalPath, "utf8")) as {
+      entries: { tag: string }[];
+    };
+    journal.entries = journal.entries.filter((entry) => !entry.tag.startsWith("0004_"));
+    await writeFile(journalPath, JSON.stringify(journal));
+    await migrate(scratch.database, { migrationsFolder: priorMigrations });
+  });
+
+  afterAll(async () => {
+    if (scratch !== undefined) await scratch.close();
+    await connection.client.unsafe(`DROP DATABASE IF EXISTS "${scratchName}" WITH (FORCE)`);
+    if (priorMigrations !== undefined) await rm(priorMigrations, { recursive: true, force: true });
+  });
+
+  it("migrates a guest workspace with an approved Decision and audit rows, twice, without losing data", async () => {
+    const scratchRepositories = createPostgresRepositories(scratch.database);
+    const kept = createRecordSet("upgrade-guest");
+    const records = { ...kept, workspace: { ...kept.workspace, mode: "public-demo" as const, expiresAt: "2026-09-02T00:00:00.000Z" } };
+    const workspaceId = records.workspace.id;
+    await scratchRepositories.workspaces.insert(records.workspace);
+    for (const [repository, record] of [
+      [scratchRepositories.sources, records.source],
+      [scratchRepositories.artifacts, records.artifact],
+      [scratchRepositories.artifactSegments, records.segment],
+      [scratchRepositories.entities, records.entity],
+      [scratchRepositories.observations, records.observation],
+      [scratchRepositories.operationalEvents, records.event],
+      [scratchRepositories.signals, records.signal],
+      [scratchRepositories.cases, records.caseRecord],
+      [scratchRepositories.actionItems, records.actionItem],
+      [scratchRepositories.decisions, records.decision],
+    ] as const) {
+      await (repository as { insert(scope: string, value: unknown): Promise<unknown> }).insert(workspaceId, record);
+    }
+    await scratchRepositories.approvals.insert(workspaceId, records.approval);
+    await scratchRepositories.decisions.update(workspaceId, records.decision.id, {
+      ...records.decision,
+      status: "approved",
+      decidedAt: timestamp,
+    });
+    await scratchRepositories.auditEntries.insert(workspaceId, records.auditEntry);
+
+    // Old schema really lacks the hardening: a blank approver is accepted today.
+    await scratch.client.unsafe(insertApprovalSql, [randomUUID(), workspaceId, records.decision.id, "", timestamp]);
+    await scratch.client.unsafe("DELETE FROM approvals WHERE approver = ''");
+
+    await migrate(scratch.database, { migrationsFolder: migrationsDirectory });
+    await migrate(scratch.database, { migrationsFolder: migrationsDirectory });
+
+    const applied = await scratch.client<{ count: string }[]>`SELECT count(*)::text AS count FROM drizzle.__drizzle_migrations`;
+    expect(Number(applied[0]?.count)).toBe(5);
+    expect(await scratchRepositories.approvals.list(workspaceId)).toEqual([records.approval]);
+    expect((await scratchRepositories.decisions.findById(workspaceId, records.decision.id))?.status).toBe("approved");
+    expect(await scratchRepositories.auditEntries.list(workspaceId)).toEqual([records.auditEntry]);
+
+    await expect(
+      scratch.client.unsafe(insertApprovalSql, [randomUUID(), workspaceId, records.decision.id, " ", timestamp]),
+    ).rejects.toThrow("approvals_approver_not_blank");
+    await expect(
+      scratch.client`UPDATE approvals SET approver = 'x' WHERE id = ${records.approval.id}`,
+    ).rejects.toThrow("Approvals are append-only");
+    await expect(scratch.client`DELETE FROM approvals WHERE id = ${records.approval.id}`).rejects.toThrow(
+      "Approvals are append-only",
+    );
+
+    // Workspace expiry on the migrated database removes the approved Decision's Approval and audit rows.
+    expect(await scratchRepositories.workspaces.delete(workspaceId)).toBe(true);
+    expect(await scratchRepositories.approvals.list(workspaceId)).toEqual([]);
+    expect(await scratchRepositories.auditEntries.list(workspaceId)).toEqual([]);
   });
 });
