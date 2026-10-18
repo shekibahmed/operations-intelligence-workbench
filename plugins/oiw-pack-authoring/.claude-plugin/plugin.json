@@ -1,0 +1,13 @@
+{
+  "name": "oiw-pack-authoring",
+  "version": "0.1.0",
+  "description": "Guides Claude Code through scaffolding, authoring, validating and evaluating a neutral Scenario Pack in an Operations Intelligence Workbench checkout.",
+  "author": {
+    "name": "Operations Intelligence Workbench maintainers",
+    "url": "https://github.com/shekibahmed/operations-intelligence-workbench"
+  },
+  "homepage": "https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/PACK_AUTHORING.md",
+  "repository": "https://github.com/shekibahmed/operations-intelligence-workbench",
+  "license": "MIT",
+  "keywords": ["scenario-pack", "pack-authoring", "evaluation", "fixtures"]
+}
