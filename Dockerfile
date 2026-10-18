@@ -9,6 +9,13 @@ FROM node:22-alpine AS build
 WORKDIR /app
 RUN corepack enable
 ENV NEXT_OUTPUT=standalone
+# Public origin of the deployment. `next build` reads it (HSTS header,
+# robots.txt and sitemap.xml are baked at build time), and Render passes
+# service environment variables to the build as Docker build arguments only
+# if they are declared here. Build stage only: it is a public value, and no
+# secret (DATABASE_URL, SESSION_SECRET, ...) may ever be declared as an ARG.
+ARG NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}
 COPY . .
 RUN pnpm install --frozen-lockfile \
   && pnpm --filter '!@oiw/web' --recursive --if-present run build \

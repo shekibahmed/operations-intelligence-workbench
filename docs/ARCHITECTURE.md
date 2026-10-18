@@ -35,6 +35,7 @@ overhead without a measured need.
 | `@oiw/ingestion` | Source adapter implementations (text, CSV, JSON, PDF text-layer) | contracts, application ports |
 | `@oiw/rules` | Closed-catalogue rule condition evaluation | contracts, domain |
 | `@oiw/scenario-sdk` | Pack loading, authoring and validation support (`buildPackRegistry`) | contracts |
+| `@oiw/mcp-server` | Stdio MCP server for agents over `@oiw/scenario-sdk`: read-mostly (pack listing, manifests, fixtures, casebook, validation, evaluation); the only write is `scaffold_pack`, refused unless `OIW_MCP_ALLOW_WRITE=1`; never touches the application database | scenario-sdk, contracts |
 | `@oiw/audit` | Append-only audit policy and implementation | contracts, application ports |
 | `@oiw/ui` | Shared pack-configured presentation primitives | contracts |
 | `@oiw/evals` | Evaluation runner and measures (`pnpm eval`) | contracts, application ports |

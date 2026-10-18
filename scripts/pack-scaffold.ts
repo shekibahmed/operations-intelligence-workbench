@@ -29,6 +29,27 @@ function fail(message: string): never {
   process.exit(1);
 }
 
+// A value that begins with `-` is almost certainly a mistyped or swallowed
+// option (`--name --description ...`), and control characters (newlines
+// included) would corrupt the generated files.
+function hasControlCharacter(value: string): boolean {
+  for (const character of value) {
+    const code = character.codePointAt(0)!;
+    if (code <= 0x1f || (code >= 0x7f && code <= 0x9f)) return true;
+  }
+  return false;
+}
+
+function assertSafeText(flag: string, value: string): void {
+  if (value.trim() === "") fail(`${flag} must not be empty`);
+  if (value.startsWith("-")) {
+    fail(`${flag} value ${JSON.stringify(value)} looks like an option (leading "-")`);
+  }
+  if (hasControlCharacter(value)) {
+    fail(`${flag} value must not contain control characters`);
+  }
+}
+
 function parseArguments(argv: string[]): { packId: string; name: string; description: string } {
   const positional: string[] = [];
   let name: string | undefined;
@@ -53,6 +74,8 @@ function parseArguments(argv: string[]): { packId: string; name: string; descrip
   if (name === undefined || description === undefined || positional.length === 0) {
     fail(`expected <pack-id> --name <name> --description <description>\n\n${usage()}`);
   }
+  assertSafeText("--name", name);
+  assertSafeText("--description", description);
   return { packId: positional[0]!, name, description };
 }
 
@@ -102,7 +125,13 @@ async function main(): Promise<void> {
   const manifestPath = join(targetDirectory, "manifest.yaml");
   const manifest = readFileSync(manifestPath, "utf8")
     .replace(/^id: template$/m, `id: ${packId}`)
-    .replace(/^name: "Template Pack"$/m, `name: "${name.replaceAll('"', "'")}"`);
+    // JSON strings are valid YAML double-quoted scalars, so quotes, colons and
+    // backslashes in the name cannot break the manifest. A replacer function
+    // keeps `$` sequences in the name literal.
+    .replace(/^name: "Template Pack"$/m, () => `name: ${JSON.stringify(name)}`);
+  if (!manifest.includes(`\nname: ${JSON.stringify(name)}\n`)) {
+    fail("could not set the manifest name (template manifest.yaml changed shape?)");
+  }
   writeFileSync(manifestPath, manifest);
 
   // Rename `template-`-prefixed file names to match their references.
