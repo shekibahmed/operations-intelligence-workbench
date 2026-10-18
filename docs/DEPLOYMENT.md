@@ -7,11 +7,12 @@ described in `docs/SECURITY.md` §6.
 
 The supported targets are a container host (Google Cloud Run or equivalent)
 plus a Neon-hosted plain PostgreSQL database, and, for the free public
-synthetic demo, Render's free web tier plus Neon free (§9). The app reads Scenario Packs
-from the filesystem at runtime, so edge runtimes and file-tracing-based
-serverless hosts are poor fits; the previous Vercel plus Supabase runbook is
-retained as Appendix A for teams that already run there. Supabase Auth,
-Storage and RLS are not used on the P0 critical path (Plan Amendment A4).
+synthetic demo, Render's free web tier plus Neon free (§9). The app reads
+Scenario Packs from the filesystem at runtime, so edge runtimes and
+file-tracing-based serverless hosts are poor fits; the previous Vercel plus
+Supabase runbook is retained as Appendix A for teams that already run there.
+Supabase Auth, Storage and RLS are not used on the P0 critical path (Plan
+Amendment A4).
 
 ## 1. Preconditions
 
@@ -435,8 +436,9 @@ session-cookie `Secure` attribute (driven by `NODE_ENV`).
 ### 9.5 Rate-limit identity on Render
 
 `OIW_TRUSTED_PROXY_HEADER=x-forwarded-for` makes the app take the client
-address from the leftmost `X-Forwarded-For` entry that Render's proxy forwards. Render's documentation does not state how it treats a client-supplied
-`X-Forwarded-For`; a Render feedback thread reports that Render appends to
+address from the leftmost `X-Forwarded-For` entry that Render's proxy
+forwards. Render's documentation does not state how it treats a
+client-supplied `X-Forwarded-For`; a Render feedback thread reports that Render appends to
 rather than overwrites the incoming chain (staff in that thread describe the
 first entry as the real client IP, which is not documented behaviour). If
 so, a determined visitor could rotate IP buckets by sending their own

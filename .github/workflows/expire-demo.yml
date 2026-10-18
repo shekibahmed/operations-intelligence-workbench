@@ -21,11 +21,13 @@ jobs:
   expire:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
+      # The secret is scoped to the steps that need it, never the whole job,
+      # so dependency install scripts cannot read it.
       - name: Check configuration
         id: config
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           if [ -z "$DATABASE_URL" ]; then
             echo "::notice::DATABASE_URL secret is not set; nothing to expire."
@@ -67,4 +69,5 @@ jobs:
             pnpm demo:expire
           fi
         env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           BEFORE: ${{ github.event.inputs.before }}

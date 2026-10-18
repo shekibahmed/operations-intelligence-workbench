@@ -34,12 +34,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      # Secrets are scoped to the single steps that need them, never the whole
+      # job, so dependency install scripts cannot read them.
       DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
     steps:
       - name: Check configuration
         id: config
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: |
           if [ -z "$DATABASE_URL" ]; then
             echo "::notice::DATABASE_URL secret is not set; skipping migrate and deploy (hosting not configured)."
@@ -72,10 +74,14 @@ jobs:
 
       - name: Migrate database
         if: steps.config.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: pnpm db:migrate
 
       - name: Trigger Render deploy
         if: steps.config.outputs.enabled == 'true'
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
         run: |
           if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
             echo "::notice::RENDER_DEPLOY_HOOK_URL secret is not set; database migrated, Render deploy not triggered."
