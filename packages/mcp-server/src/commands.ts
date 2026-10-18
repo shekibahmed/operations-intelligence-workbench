@@ -13,6 +13,36 @@ const EVAL_TIMEOUT_MS = 10 * 60_000;
 const SCAFFOLD_TIMEOUT_MS = 60_000;
 const RESERVED_PACK_ID = "template";
 const FIELD_LIMIT = 500;
+/** Printable text only: no control characters (newlines, tabs, NUL) and no backslashes, which would break the generated YAML scalar. */
+const PRINTABLE_FIELD = /^[^\p{Cc}\\]+$/u;
+const PRINTABLE_FIELD_MESSAGE = "must be printable text without control characters, newlines or backslashes";
+
+/** Variables a child `pnpm` may inherit. Everything else, including credentials, stays out of the child. */
+const CHILD_ENV_ALLOWLIST = [
+  "PATH",
+  "HOME",
+  "USER",
+  "LANG",
+  "TMPDIR",
+  "TERM",
+  "COREPACK_HOME",
+  "COREPACK_ENABLE_DOWNLOAD_PROMPT",
+  "PNPM_HOME",
+  "XDG_CACHE_HOME",
+  "XDG_DATA_HOME",
+  "XDG_CONFIG_HOME",
+  "SystemRoot",
+  "SCENARIO_PACKS_DIR",
+  "OIW_REPO_ROOT",
+] as const;
+
+function childEnv(env: Record<string, string | undefined>, extra: readonly string[] = []): Record<string, string | undefined> {
+  const picked: Record<string, string | undefined> = {};
+  for (const key of [...CHILD_ENV_ALLOWLIST, ...extra]) {
+    if (env[key] !== undefined) picked[key] = env[key];
+  }
+  return picked;
+}
 
 const VALIDATE_LINE = /^(TEMPLATE )?(OK|FAIL|SKIP)\s+(\S+)(?:\s+\((.+)\))?/u;
 
@@ -64,8 +94,9 @@ async function readEvalResult(path: string, notBefore: number): Promise<EvalFile
 }
 
 export function registerCommandTools(server: McpServer, config: OiwServerConfig): void {
-  const run = (args: string[], timeoutMs: number) =>
-    config.commandRunner({ command: "pnpm", args, cwd: config.repositoryRoot, env: config.env, timeoutMs });
+  // `extraEnv` names additional variables a single tool may pass on; only `run_eval` needs `DATABASE_URL`.
+  const run = (args: string[], timeoutMs: number, extraEnv: readonly string[] = []) =>
+    config.commandRunner({ command: "pnpm", args, cwd: config.repositoryRoot, env: childEnv(config.env, extraEnv), timeoutMs });
 
   server.registerTool(
     "validate_packs",
@@ -109,7 +140,7 @@ export function registerCommandTools(server: McpServer, config: OiwServerConfig)
         return errorResult("packId must be lowercase kebab-case, for example my-pack");
       }
       const startedAt = Date.now();
-      const result = await run(["eval", ...(packId === undefined ? [] : ["--pack", packId])], EVAL_TIMEOUT_MS);
+      const result = await run(["eval", ...(packId === undefined ? [] : ["--pack", packId])], EVAL_TIMEOUT_MS, ["DATABASE_URL"]);
       const evaluation = await readEvalResult(join(config.repositoryRoot, "packages/evals/eval-results.json"), startedAt);
       const ok = result.exitCode === 0;
       return jsonResult(
@@ -146,8 +177,20 @@ export function registerCommandTools(server: McpServer, config: OiwServerConfig)
         "Industry language belongs only inside the new pack, never in platform core code. After scaffolding, author in docs/PACK_AUTHORING.md order, then run validate_packs and run_eval.",
       inputSchema: {
         id: z.string().max(100).describe("New pack id, lowercase kebab-case."),
-        name: z.string().min(1).max(FIELD_LIMIT).describe("Human-readable pack name."),
-        description: z.string().min(1).max(FIELD_LIMIT).describe("One or two sentences on the operational problem."),
+        name: z
+          .string()
+          .min(1)
+          .max(FIELD_LIMIT)
+          .regex(PRINTABLE_FIELD, `name ${PRINTABLE_FIELD_MESSAGE}`)
+          .refine((value) => !value.startsWith("-"), "name must not start with '-'")
+          .describe("Human-readable pack name."),
+        description: z
+          .string()
+          .min(1)
+          .max(FIELD_LIMIT)
+          .regex(PRINTABLE_FIELD, `description ${PRINTABLE_FIELD_MESSAGE}`)
+          .refine((value) => !value.startsWith("-"), "description must not start with '-'")
+          .describe("One or two sentences on the operational problem."),
       },
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     },

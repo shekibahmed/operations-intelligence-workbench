@@ -37,4 +37,3 @@ The platform core is neutral: schemas, rules, workflows, fixtures and labels liv
 - [Architecture decision records](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/decisions/ADR-002-scenario-packs.md): Why Scenario Packs are the extension point.
 - [UX specification](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/UX_SPEC.md): Screens and widgets for the web application.
 - [Demo script](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/DEMO_SCRIPT.md): Guided walkthrough per pack.
-- [Project state](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/SESSION.md): Current merged work and active contracts.

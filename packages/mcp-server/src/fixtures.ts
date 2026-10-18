@@ -42,7 +42,7 @@ async function loadGold(
   }
 }
 
-function encodeContent(bytes: Uint8Array): { encoding: "utf8" | "base64"; data: string } {
+export function encodeContent(bytes: Uint8Array): { encoding: "utf8" | "base64"; data: string } {
   try {
     return { encoding: "utf8", data: new TextDecoder("utf-8", { fatal: true }).decode(bytes) };
   } catch {

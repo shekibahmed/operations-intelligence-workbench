@@ -2,7 +2,10 @@
 
 A read-mostly [Model Context Protocol](https://modelcontextprotocol.io) server over
 Operations Intelligence Workbench (OIW) Scenario Packs. It speaks stdio, calls no
-model, and never touches the application database.
+model, and does not touch the application database. The one exception is
+`run_eval`, which runs the evaluation against the database named by
+`DATABASE_URL` and writes to it, so point it at a throwaway evaluation database,
+never one that holds real data.
 
 Its most useful job for agent builders: `list_fixtures` hands you the adversarial
 synthetic corpus (prompt injection, look-alike identifiers, negations, conflicting
@@ -23,7 +26,7 @@ Every tool returns one compact JSON text block. Failures set `isError`.
 | `list_fixtures` | Fixture artifacts of one pack and set (`smoke`, `demo`, `edge-cases`; default `edge-cases`), with sha256, source metadata and the gold `expectedOutcome` where one exists. Options: `includeContent` (raw text under `untrustedContent`, base64 for binary), `includeExtraction`, `artifactIds`. |
 | `get_casebook` | The recorded evidence casebook a pack ships, or the list of packs that ship one. |
 | `validate_packs` | Runs `pnpm validate:packs` and returns the per-directory status. |
-| `run_eval` | Runs `pnpm eval` (optionally one `packId`) and returns scores per dimension. Needs `DATABASE_URL`; can take minutes. |
+| `run_eval` | Runs `pnpm eval` (optionally one `packId`) and returns scores per dimension. Needs `DATABASE_URL` and writes to that database during evaluation; can take minutes. |
 | `scaffold_pack` | Runs `pnpm pack:scaffold`. Refused unless `OIW_MCP_ALLOW_WRITE=1`. The id must match `^[a-z0-9]+(-[a-z0-9]+)*$`. |
 
 ### Example: test an extractor against the edge cases
@@ -46,7 +49,12 @@ the hazard being tested.
 | `OIW_MCP_ALLOW_WRITE` | unset | Set to `1` to enable `scaffold_pack`. |
 
 `validate_packs`, `run_eval` and `scaffold_pack` start `pnpm` with `execFile`
-(no shell), so arguments cannot be re-parsed.
+(no shell), so arguments cannot be re-parsed. The child process receives an
+allowlisted environment (`PATH`, `HOME`, pnpm and corepack locations,
+`SCENARIO_PACKS_DIR`, `OIW_REPO_ROOT`), plus `DATABASE_URL` for `run_eval` only;
+other variables are not passed on. `scaffold_pack` accepts `name` and
+`description` as printable text only (no control characters, newlines or
+backslashes, and no leading `-`).
 
 ## Build and run
 
