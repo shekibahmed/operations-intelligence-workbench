@@ -1,0 +1,81 @@
+WEBVTT
+
+1
+00:00:01.000 --> 00:00:06.910
+Pick a scenario. Everything shown here is
+synthetic demo data.
+
+2
+00:00:06.910 --> 00:00:13.910
+Starting creates a private demo workspace,
+already loaded with sample data.
+
+3
+00:00:13.910 --> 00:00:22.920
+New reports arrive as raw text,
+spreadsheets and documents.
+
+4
+00:00:22.920 --> 00:00:31.330
+One click runs AI extraction. No outside
+model is needed for this demo.
+
+5
+00:00:31.330 --> 00:00:38.800
+The raw report becomes structured fields,
+each with a confidence score.
+
+6
+00:00:38.800 --> 00:00:48.300
+Anything uncertain goes to a person.
+Original text on the left, evidence on the
+right.
+
+7
+00:00:48.300 --> 00:00:57.350
+A human confirms the fact, so it can be
+trusted.
+
+8
+00:00:57.350 --> 00:01:06.530
+A fixed rule checks the facts and fires.
+Every condition it tested is shown.
+
+9
+00:01:06.530 --> 00:01:14.690
+A case is opened automatically, with an
+owner, priority and evidence.
+
+10
+00:01:14.690 --> 00:01:22.220
+The follow-up actions are already
+assigned.
+
+11
+00:01:22.220 --> 00:01:31.560
+The system proposes an action but never
+acts alone. High-risk choices need a
+person.
+
+12
+00:01:31.560 --> 00:01:40.230
+The approver records why, in their own
+words.
+
+13
+00:01:40.230 --> 00:01:47.020
+Approved, and recorded.
+
+14
+00:01:47.020 --> 00:01:54.590
+The dashboards update from that single
+approval.
+
+15
+00:01:54.590 --> 00:02:02.210
+Every step is kept in an audit trail, in
+order.
+
+16
+00:02:02.210 --> 00:02:08.980
+Same flow, applied to your own operations.
