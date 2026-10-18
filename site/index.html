@@ -37,7 +37,7 @@
     </a>
     <nav class="top__nav" aria-label="Page sections">
       <a href="#pipeline">Pipeline</a>
-      <!--requires id=nav-walk any=media/trailer.mp4+media/trailer.vtt,media/asset-reliability-tour.mp4+media/asset-reliability-tour.vtt,media/process-exceptions-tour.mp4+media/process-exceptions-tour.vtt,media/document-assurance-tour.mp4+media/document-assurance-tour.vtt--><a href="#walkthroughs">Walkthroughs</a><!--/requires id=nav-walk-->
+      <!--requires id=nav-walk any=media/trailer.mp4+media/trailer.vtt,media/asset-reliability.mp4+media/asset-reliability.vtt,media/process-exceptions.mp4+media/process-exceptions.vtt,media/document-assurance.mp4+media/document-assurance.vtt--><a href="#walkthroughs">Walkthroughs</a><!--/requires id=nav-walk-->
       <a href="#scenarios">Scenarios</a>
       <a href="#honest">Trust</a>
       <a href="#agents">For agents</a>
@@ -139,7 +139,7 @@
   </div>
 </section>
 
-<!--requires id=walk any=media/trailer.mp4+media/trailer.vtt,media/asset-reliability-tour.mp4+media/asset-reliability-tour.vtt,media/process-exceptions-tour.mp4+media/process-exceptions-tour.vtt,media/document-assurance-tour.mp4+media/document-assurance-tour.vtt-->
+<!--requires id=walk any=media/trailer.mp4+media/trailer.vtt,media/asset-reliability.mp4+media/asset-reliability.vtt,media/process-exceptions.mp4+media/process-exceptions.vtt,media/document-assurance.mp4+media/document-assurance.vtt-->
 <section class="walk" id="walkthroughs" aria-labelledby="walk-h">
   <div class="wrap">
     <div class="section-head">
@@ -153,7 +153,7 @@
       <div class="frame frame--video">
         <video controls preload="none" playsinline poster="media/poster-trailer.jpg" aria-label="25-second trailer">
           <source src="media/trailer.mp4" type="video/mp4">
-          <track kind="captions" srclang="en" label="English" default src="media/trailer.vtt">
+          <track kind="captions" srclang="en" label="English (burned in)" src="media/trailer.vtt">
         </video>
       </div>
       <figcaption><strong>Trailer</strong> &middot; 25 seconds. The pipeline, one case, one approval.</figcaption>
@@ -161,34 +161,34 @@
     <!--/requires id=v-trailer-->
 
     <div class="video-grid">
-      <!--requires id=v-ar all=media/asset-reliability-tour.mp4,media/asset-reliability-tour.vtt-->
+      <!--requires id=v-ar all=media/asset-reliability.mp4,media/asset-reliability.vtt-->
       <figure class="video" id="tour-asset-reliability">
         <div class="frame frame--video">
           <video controls preload="none" playsinline poster="media/poster-asset-reliability.jpg" aria-label="Asset Reliability guided tour">
-            <source src="media/asset-reliability-tour.mp4" type="video/mp4">
-            <track kind="captions" srclang="en" label="English" default src="media/asset-reliability-tour.vtt">
+            <source src="media/asset-reliability.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="English" default src="media/asset-reliability.vtt">
           </video>
         </div>
         <figcaption><strong>Asset Reliability</strong> &middot; a repeat brake fault, from chat message to removal from service.</figcaption>
       </figure>
       <!--/requires id=v-ar-->
-      <!--requires id=v-pe all=media/process-exceptions-tour.mp4,media/process-exceptions-tour.vtt-->
+      <!--requires id=v-pe all=media/process-exceptions.mp4,media/process-exceptions.vtt-->
       <figure class="video" id="tour-process-exceptions">
         <div class="frame frame--video">
           <video controls preload="none" playsinline poster="media/poster-process-exceptions.jpg" aria-label="Process Exceptions guided tour">
-            <source src="media/process-exceptions-tour.mp4" type="video/mp4">
-            <track kind="captions" srclang="en" label="English" default src="media/process-exceptions-tour.vtt">
+            <source src="media/process-exceptions.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="English" default src="media/process-exceptions.vtt">
           </video>
         </div>
         <figcaption><strong>Process Exceptions</strong> &middot; a viscosity deviation that turns out to span two batches.</figcaption>
       </figure>
       <!--/requires id=v-pe-->
-      <!--requires id=v-da all=media/document-assurance-tour.mp4,media/document-assurance-tour.vtt-->
+      <!--requires id=v-da all=media/document-assurance.mp4,media/document-assurance.vtt-->
       <figure class="video" id="tour-document-assurance">
         <div class="frame frame--video">
           <video controls preload="none" playsinline poster="media/poster-document-assurance.jpg" aria-label="Document Assurance guided tour">
-            <source src="media/document-assurance-tour.mp4" type="video/mp4">
-            <track kind="captions" srclang="en" label="English" default src="media/document-assurance-tour.vtt">
+            <source src="media/document-assurance.mp4" type="video/mp4">
+            <track kind="captions" srclang="en" label="English" default src="media/document-assurance.vtt">
           </video>
         </div>
         <figcaption><strong>Document Assurance</strong> &middot; a liability-cap conflict in a services agreement.</figcaption>
@@ -212,21 +212,21 @@
         <h3>Asset Reliability</h3>
         <p>A recurring brake fault on asset A-142 at a fictional distribution center, from an informal chat report to a safety-critical repeat occurrence.</p>
         <p class="card__gate"><span>A person approves</span>removing an asset from service</p>
-        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/asset-reliability/README.md">Pack on GitHub</a><!--requires id=c-ar all=media/asset-reliability-tour.mp4,media/asset-reliability-tour.vtt--> <a href="#tour-asset-reliability">Watch the tour</a><!--/requires id=c-ar--></p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/asset-reliability/README.md">Pack on GitHub</a><!--requires id=c-ar all=media/asset-reliability.mp4,media/asset-reliability.vtt--> <a href="#tour-asset-reliability">Watch the tour</a><!--/requires id=c-ar--></p>
       </li>
       <li class="card">
         <svg class="card__icon" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="10" fill="#fdf3e2"/><path d="M13 8h6m-5 0v6.2L9.600 21a2.2 2.2 0 0 0 1.900 3.300h9a2.2 2.2 0 0 0 1.900-3.300L18 14.2V8m-6.600 10h9.2" fill="none" stroke="#8a4a06" stroke-width="1.600" stroke-linejoin="round" stroke-linecap="round"/></svg>
         <h3>Process Exceptions</h3>
         <p>A viscosity deviation on supplier lot KM-LOT-448 at a fictional processing plant, escalating across two batches into a cross-batch pattern.</p>
         <p class="card__gate"><span>A person approves</span>holding the affected output</p>
-        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/process-exceptions/README.md">Pack on GitHub</a><!--requires id=c-pe all=media/process-exceptions-tour.mp4,media/process-exceptions-tour.vtt--> <a href="#tour-process-exceptions">Watch the tour</a><!--/requires id=c-pe--></p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/process-exceptions/README.md">Pack on GitHub</a><!--requires id=c-pe all=media/process-exceptions.mp4,media/process-exceptions.vtt--> <a href="#tour-process-exceptions">Watch the tour</a><!--/requires id=c-pe--></p>
       </li>
       <li class="card">
         <svg class="card__icon" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="10" fill="#e5f5ea"/><path d="M11 8.500h7l4 4V23a1.500 1.500 0 0 1-1.500 1.500h-9.500A1.500 1.500 0 0 1 9.500 23V10A1.500 1.500 0 0 1 11 8.500zM18 8.500v4h4M12.500 17h7m-7 3h5" fill="none" stroke="#196b31" stroke-width="1.600" stroke-linejoin="round" stroke-linecap="round"/></svg>
         <h3>Document Assurance</h3>
         <p>A liability-cap conflict in a fictional master services agreement, from contract execution to a formally proposed exception.</p>
         <p class="card__gate"><span>A person approves</span>accepting a tracked exception</p>
-        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/document-assurance/README.md">Pack on GitHub</a><!--requires id=c-da all=media/document-assurance-tour.mp4,media/document-assurance-tour.vtt--> <a href="#tour-document-assurance">Watch the tour</a><!--/requires id=c-da--></p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/document-assurance/README.md">Pack on GitHub</a><!--requires id=c-da all=media/document-assurance.mp4,media/document-assurance.vtt--> <a href="#tour-document-assurance">Watch the tour</a><!--/requires id=c-da--></p>
       </li>
     </ul>
   </div>
