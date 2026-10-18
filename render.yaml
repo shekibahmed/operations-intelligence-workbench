@@ -1,0 +1,40 @@
+# Render Blueprint for the free public synthetic demo.
+# Spec: https://render.com/docs/blueprint-spec
+# Owner steps: docs/DEPLOYMENT.md §9. Do not put secret values in this file.
+services:
+  - type: web
+    name: oiw-demo
+    runtime: docker
+    plan: free
+    # Keep in the same region as the Neon project (docs/DEPLOYMENT.md §9).
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    branch: main
+    # Deploys are triggered by .github/workflows/deploy.yml (migrate first,
+    # then the deploy hook), never by a bare commit. `off` replaces the
+    # deprecated `autoDeploy: false`.
+    autoDeployTrigger: "off"
+    # robots.txt is rendered by the app without touching the database.
+    healthCheckPath: /robots.txt
+    envVars:
+      # Neon *direct* (unpooled) URI with sslmode=require. Prompted for once
+      # when the Blueprint is first applied; never stored here.
+      - key: DATABASE_URL
+        sync: false
+      # Public origin, e.g. https://oiw-demo.onrender.com (no trailing slash).
+      # Read at BUILD time for HSTS/sitemap; see docs/DEPLOYMENT.md §9.
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: OIW_RATE_LIMIT_IP_SALT
+        generateValue: true
+      - key: OIW_TRUSTED_PROXY_HEADER
+        value: x-forwarded-for
+      - key: OIW_RATE_LIMIT_STORE
+        value: postgres
+      - key: DATABASE_POOL_MAX
+        value: "3"
+      - key: OIW_ASSESSMENT_SINK
+        value: postgres
