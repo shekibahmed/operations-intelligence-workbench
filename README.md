@@ -19,6 +19,8 @@ high-risk decision go through without a recorded human approval.
   <img src="docs/media/hero.gif" width="720" alt="Five captioned moments from the Asset Reliability guided tour: a report arrives and AI extracts each fact with its confidence; uncertain facts go to a human reviewer; a rule fires and every condition is visible; a person approves the proposed action; dashboards update from that approval">
 </p>
 
+<p align="center"><sub>Looping preview of about 25 seconds with no pause control. The <a href="https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs">walkthroughs</a> can be paused.</sub></p>
+
 In about five minutes you follow one piece of information, such as a
 group-chat message about a brake fault, from first report to an approved and
 audited decision. Every fact the AI extracts is tied to the exact words that
@@ -180,14 +182,17 @@ sets a Decision to `approved` when no matching approved Approval row exists.
 The bypass attempts are tested against real PostgreSQL, not only asserted. At
 the application and contract layers:
 
-- an Approval for Decision X cannot authorise Decision Y (replay), and a raw
-  `UPDATE` of Y to `approved` is rejected by the trigger even when X is approved;
+- an Approval for Decision X cannot authorise Decision Y (replay);
 - empty, whitespace-only, `system` and `provider` approver identities are rejected
   and write no Approval, status change or audit entry;
 - provider output shaped like an approval creates no Approval and approves no
   Decision, including every prompt-injection fixture in the shared test matrix;
 - two parallel opposing approval attempts end with one Approval and one final
   status.
+
+At the database layer, the trigger rejects a raw `UPDATE` of Decision Y to
+`approved` even when Decision X is approved. It guards direct writes to
+`decisions.status` only.
 
 The honest limit: the database does not yet stop a writer who can also write
 the `approvals` table directly. Such a writer can re-point or delete an Approval
@@ -205,7 +210,7 @@ Entity types, labels, observation, event and case schemas, workflow states,
 rules, dashboards, metrics, seed data and tour steps all come from a versioned,
 schema-validated Scenario Pack (`scenario-packs/<pack-id>/`, ADR-002), never
 from core packages. `pnpm architecture:check` scans the non-test sources of
-every package under `packages/` for pack IDs and industry terms, confirms no
+every package under `packages/` for pack IDs and industry terms <!-- OIW-918: scan scope holds only after OIW-918 merges -->, confirms no
 TypeScript project in the repository compiles any Scenario Pack file, and
 confirms the pack registry still loads every other pack when any one pack
 directory is removed.
