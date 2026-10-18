@@ -5,6 +5,8 @@ import Link from "next/link";
 import { AnalyticsPageEvents } from "@/components/analytics/AnalyticsPageEvents";
 import { LogoMark } from "@/components/brand/Logo";
 import { MarketingFooter, MarketingHeader } from "@/components/marketing/chrome";
+import { PIPELINE_NODES, PipelineHero } from "@/components/marketing/PipelineHero";
+import { Stats } from "@/components/marketing/Stats";
 import {
   IconBranch,
   IconChart,
@@ -148,6 +150,9 @@ const TRUST_CHIPS = [
   "MIT open source",
 ];
 
+const WALKTHROUGH_URL =
+  "https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs";
+
 const PACK_ICONS: ComponentType<SVGProps<SVGSVGElement>>[] = [IconTrendUp, IconZap, IconFiles];
 
 export default function LandingPage() {
@@ -205,12 +210,20 @@ export default function LandingPage() {
                 Adapt this workflow
               </Link>
             </div>
-            <a
-              href="/casebook/a-142-repeat-fault.html"
-              className="mt-5 rounded-md text-sm font-medium text-[var(--color-accent-soft-ink)] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
-            >
-              Read the evidence casebook
-            </a>
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+              <a
+                href="/casebook/a-142-repeat-fault.html"
+                className="rounded-md text-sm font-medium text-[var(--color-accent-soft-ink)] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
+              >
+                Read the evidence casebook
+              </a>
+              <a
+                href={WALKTHROUGH_URL}
+                className="rounded-md text-sm font-medium text-[var(--color-accent-soft-ink)] underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-accent)]"
+              >
+                Watch the 2-minute walkthrough
+              </a>
+            </div>
             <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-ink-muted">
               {TRUST_CHIPS.map((chip) => (
                 <li key={chip} className="flex items-center gap-1.5">
@@ -228,6 +241,11 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
+
+            {/* Animated pipeline: one report, source to approved decision */}
+            <div className="mt-12 flex w-full justify-center">
+              <PipelineHero />
+            </div>
 
             {/* Product visual */}
             <div className="relative mt-14 w-full max-w-5xl">
@@ -261,6 +279,12 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <Stats
+          packCount={stubPacks.length}
+          lensCount={LENS_SUMMARIES.length}
+          stageCount={PIPELINE_NODES.length}
+        />
+
         {/* Pipeline */}
         <section id="how-it-works" aria-labelledby="how-it-works-heading" className="border-t border-border bg-surface-muted/60">
           <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
@@ -281,7 +305,7 @@ export default function LandingPage() {
               {PIPELINE_STEPS.map((step, index) => (
                 <li
                   key={step.title}
-                  className="relative rounded-xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-card-hover"
+                  className="reveal-on-scroll relative rounded-xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-card-hover"
                 >
                   <div className="flex items-center gap-3">
                     <span
@@ -350,7 +374,7 @@ export default function LandingPage() {
               {CAPABILITIES.map((capability) => (
                 <li
                   key={capability.title}
-                  className="flex gap-4 rounded-xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-card-hover"
+                  className="reveal-on-scroll flex gap-4 rounded-xl border border-border bg-surface p-5 shadow-card transition-shadow hover:shadow-card-hover"
                 >
                   <span
                     aria-hidden="true"

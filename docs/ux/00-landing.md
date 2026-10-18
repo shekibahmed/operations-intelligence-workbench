@@ -37,3 +37,21 @@ hero → lens-cards → footer spine and adds pipeline, capability-grid,
 scenario-pack, quick-start, and firm-CTA sections. Behaviour stays per
 `docs/UX_SPEC.md` §5.1; the additions are a recorded deviation (see the
 §5.1 note and `docs/agent-runs/OIW-907.md`), not a spec rewrite.
+
+## Motion note (2026-10-18, OIW-910)
+
+Between the hero copy and the product screenshot sits a pipeline figure:
+
+```text
+ (Source)--(Artifact)--(Observation)--[Review]--(Event)--(Rule)--(Case/Decision)--[Approval]--(Audit)
+      o ----------> packet travels left to right, pausing at the two human stages
+```
+
+- At 1024px and wider the nine stages run in one row; below that they stack
+  in one column (the 390px layout) with a vertical connector.
+- Stages stagger in and connectors draw in under 2 s; a small packet then
+  loops every 10 s, lighting each stage as it passes.
+- An "at a glance" band of four figures follows the hero (scenario packs,
+  lenses, pipeline stages, evaluation score on synthetic fixtures).
+- With `prefers-reduced-motion: reduce` the diagram is fully static and
+  complete; the packet is hidden and figures show their final values.
