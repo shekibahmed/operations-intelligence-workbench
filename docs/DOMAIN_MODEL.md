@@ -106,6 +106,11 @@ outcome, comment and time. High- and critical-risk Decisions may not enter
 `approved` through application services without a matching Approval. Keeping
 the records separate makes governance inspectable and auditable.
 
+The database backs this: an Approval must name a non-blank approver, is
+append-only (no UPDATE; DELETE only as the cascade of removing its Decision,
+Case or Workspace), and a blank approver cannot satisfy the approved-Decision
+gate (ADR-013).
+
 ### MetricDefinition
 
 A named parameterisation of a closed core aggregation. Its classification is

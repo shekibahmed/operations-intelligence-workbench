@@ -560,6 +560,12 @@ export const approvals = pgTable(
     scopedUnique("approvals_id_workspace_unique").on(table.id, table.workspaceId),
     scopedIndex("approvals_workspace_idx").on(table.workspaceId),
     foreignKey({ columns: [table.decisionId, table.workspaceId], foreignColumns: [decisions.id, decisions.workspaceId] }).onDelete("cascade"),
+    // Mirrored by migration 0004, which also adds the append-only trigger and
+    // tightens the human-approval trigger; drizzle cannot express triggers.
+    check(
+      "approvals_approver_not_blank",
+      sql`${table.approver} ~ '[^[:space:]\\u00a0\\u0085\\u1680\\u180e\\u2000-\\u200f\\u2028-\\u202f\\u205f-\\u2060\\u3000\\ufeff]'`,
+    ),
   ],
 );
 
