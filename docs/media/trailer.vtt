@@ -1,0 +1,21 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:04.443
+1. A report arrives. AI extracts each fact and its confidence
+Synthetic demo data
+
+00:00:04.443 --> 00:00:09.610
+2. Uncertain facts go to a human reviewer
+Synthetic demo data
+
+00:00:09.610 --> 00:00:14.610
+3. A rule fires, every condition is visible
+Synthetic demo data
+
+00:00:14.610 --> 00:00:21.068
+4. A person approves the proposed action
+Synthetic demo data
+
+00:00:21.068 --> 00:00:25.068
+5. Dashboards update from that approval
+Synthetic demo data
