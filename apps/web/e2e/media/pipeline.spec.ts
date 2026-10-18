@@ -104,7 +104,7 @@ test.describe("trailer and music", () => {
   });
 
   test("music is quiet, fades in over 2 s and out over 3 s, and a short clip never fades out before zero", () => {
-    expect(musicChain("1:a", 25)).toBe("[1:a]volume=0.18,afade=t=in:st=0:d=2,afade=t=out:st=22.00:d=3[a]");
+    expect(musicChain("1:a", 25)).toBe("[1:a]volume=0.85,afade=t=in:st=0:d=2,afade=t=out:st=22.00:d=3[a]");
     expect(musicChain("1:a", 1)).toContain("afade=t=out:st=0.00:d=3");
   });
 

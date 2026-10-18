@@ -76,7 +76,7 @@ and that the page logged no console errors.
 ## Music
 
 The encoder loops `apps/web/public/media/ambience.mp3` at a quiet volume
-(0.18) with a 2 s fade in and a 3 s fade out. If the file is missing, or
+(0.85, about -20 LUFS integrated; there is no narration, so the music is the only audio track) with a 2 s fade in and a 3 s fade out. If the file is missing, or
 `--no-music` is passed, the MP4s are written without an audio stream. Credit
 the track in `docs/media/CREDITS.md`.
 

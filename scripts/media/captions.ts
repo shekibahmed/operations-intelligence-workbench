@@ -17,7 +17,7 @@ export interface MarksFile {
   marks: Mark[];
 }
 
-export const MUSIC_VOLUME = 0.18;
+export const MUSIC_VOLUME = 0.85;
 
 export function requireThat(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
