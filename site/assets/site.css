@@ -74,7 +74,7 @@ ul, ol { padding: 0; list-style: none; }
 .top__nav { display: none; gap: 1.5rem; }
 .top__nav a { color: var(--muted); text-decoration: none; font-size: .9375rem; padding: .35rem 0; }
 .top__nav a:hover { color: var(--ink); }
-@media (min-width: 1000px) { .top__nav { display: flex; } }
+@media (min-width: 1200px) { .top__nav { display: flex; } }
 
 .music__btn {
   font: 500 .875rem/1 var(--font);
@@ -93,6 +93,7 @@ ul, ol { padding: 0; list-style: none; }
 .music__btn[aria-pressed="true"] { background: var(--accent-soft); border-color: #b9c9f6; color: #1a41b5; }
 .music__btn[aria-pressed="true"]::before { background: var(--accent); }
 .music__btn:hover { border-color: var(--accent); }
+.music__btn[hidden] { display: none; }
 .music noscript audio { height: 36px; max-width: 220px; }
 
 /* ---------- Buttons ---------- */
@@ -257,6 +258,8 @@ section { padding-block: clamp(4.5rem, 9vw, 8rem); }
   .stage__btn:hover .stage__desc, .stage__btn:focus-visible .stage__desc, .stage.is-open .stage__desc { opacity: 1; transform: translate(-50%, 0); }
   .stage:first-child .stage__btn:hover .stage__desc, .stage:first-child .stage__btn:focus-visible .stage__desc, .stage:first-child.is-open .stage__desc { transform: translate(0, 0); }
   .stage:last-child .stage__btn:hover .stage__desc, .stage:last-child .stage__btn:focus-visible .stage__desc, .stage:last-child.is-open .stage__desc { transform: translate(0, 0); }
+  /* WCAG 1.4.13: Escape dismisses a tooltip shown by hover or focus. */
+  .stage.is-dismissed .stage__desc { opacity: 0 !important; }
   .pipe__stage { padding-top: 100px; }
 
   /* horizontal: the line and packet run along the node centres */

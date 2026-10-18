@@ -47,6 +47,7 @@ function escapeAttribute(value: string): string {
 /**
  * Removes `<!--requires id=X all|any=path,path-->...<!--/requires id=X-->`
  * blocks whose files are missing, and unwraps the ones that are satisfied.
+ * In `any` mode an entry like `a+b` needs both files.
  */
 export function applyRequirements(html: string, has: (path: string) => boolean, removed: string[]): string {
   const opening = /<!--requires id=([a-z0-9-]+) (all|any)=([^ >]+?)-->/;
@@ -60,11 +61,12 @@ export function applyRequirements(html: string, has: (path: string) => boolean, 
     const closeAt = output.indexOf(close, start + open.length);
     if (closeAt < 0) throw new Error(`Unclosed requires block: ${id}`);
     const paths = list.split(",");
-    const satisfied = mode === "all" ? paths.every(has) : paths.some(has);
+    // In "any" mode an entry may join several files with "+", meaning all of them.
+    const satisfied = mode === "all" ? paths.every(has) : paths.some((entry) => entry.split("+").every(has));
     if (satisfied) {
       output = output.slice(0, start) + output.slice(start + open.length, closeAt) + output.slice(closeAt + close.length);
     } else {
-      removed.push(`${id} (needs ${mode === "all" ? "all" : "any"} of ${paths.join(", ")})`);
+      removed.push(`${id} (needs ${mode} of ${paths.join(", ")})`);
       output = output.slice(0, start) + output.slice(closeAt + close.length);
     }
   }

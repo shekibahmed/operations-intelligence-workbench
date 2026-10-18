@@ -48,7 +48,10 @@ In `index.html`, markup that depends on an optional file is wrapped in
 build removes the block when the files are absent (and logs `hidden: NAME`),
 and unwraps it when they are present. So the site builds with or without the
 videos, captions, posters, music and `llms.txt`, and picks each one up on the
-next build after it lands. A missing `poster` file just drops the attribute.
+next build after it lands. A missing `poster` file just drops the attribute. A video block needs both its
+MP4 and its `.vtt` captions; without the captions the whole block (and the links
+to it) is hidden, so no video ships without a captions track. In `any` mode an
+entry such as `a.mp4+a.vtt` means both files.
 
 ### Live demo link
 

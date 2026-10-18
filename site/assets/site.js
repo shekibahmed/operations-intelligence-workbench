@@ -8,7 +8,11 @@
   var stages = document.querySelectorAll("[data-pipe] .stage");
   function closeStages(except) {
     stages.forEach(function (stage) {
-      if (stage !== except) stage.classList.remove("is-open");
+      if (stage !== except) {
+        stage.classList.remove("is-open");
+        var btn = stage.querySelector(".stage__btn");
+        if (btn) btn.setAttribute("aria-expanded", "false");
+      }
     });
   }
   stages.forEach(function (stage) {
@@ -17,12 +21,25 @@
     button.addEventListener("click", function (event) {
       event.stopPropagation();
       closeStages(stage);
-      stage.classList.toggle("is-open");
+      var open = stage.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", open ? "true" : "false");
+      stage.classList.remove("is-dismissed");
+    });
+    // A new hover or focus shows the tooltip again after an Escape dismissal.
+    ["mouseenter", "focus"].forEach(function (name) {
+      button.addEventListener(name, function () { stage.classList.remove("is-dismissed"); });
     });
   });
   document.addEventListener("click", function () { closeStages(null); });
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeStages(null);
+    if (event.key !== "Escape") return;
+    closeStages(null);
+    // WCAG 1.4.13: hide tooltips shown by hover or focus without moving focus.
+    stages.forEach(function (stage) {
+      if (stage.matches(":hover") || stage.contains(document.activeElement)) {
+        stage.classList.add("is-dismissed");
+      }
+    });
   });
 
   // Videos: never autoplay, and only one thing makes sound at a time.

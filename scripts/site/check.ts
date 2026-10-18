@@ -33,6 +33,7 @@ interface PwPage {
   evaluate<T>(expression: string): Promise<T>;
   on(event: "response", handler: (response: PwResponse) => void): void;
   waitForTimeout(ms: number): Promise<void>;
+  keyboard: { press(key: string): Promise<void> };
   locator(selector: string): PwLocator;
   setViewportSize(size: { width: number; height: number }): Promise<void>;
 }
@@ -153,6 +154,9 @@ async function checkViewport(browser: PwBrowser, base: string, out: string, labe
     await page.locator(".stage:nth-child(4) .stage__btn").focus();
     await page.waitForTimeout(300);
     expect(await page.evaluate<boolean>("Number(getComputedStyle(document.querySelector('.stage:nth-child(4) .stage__desc')).opacity) === 1"), `${tag}: keyboard focus reveals the stage tooltip`);
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(300);
+    expect(await page.evaluate<boolean>("Number(getComputedStyle(document.querySelector('.stage:nth-child(4) .stage__desc')).opacity) === 0"), `${tag}: Escape dismisses the focused stage tooltip`);
     await page.evaluate("document.activeElement && document.activeElement.blur()");
   }
 
