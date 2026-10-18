@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1080"><title>A free adversarial test corpus for document AI - carousel</title><style>
+:root{--accent:#1f4fd8;--ink:#12151c;--muted:#575f6e;--border:#e4e7ec;--soft:#edf2fe}
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden;padding:96px 80px 0;display:flex;flex-direction:column;page-break-after:always;break-after:page;background:#fff}
+.slide:last-child{page-break-after:auto;break-after:auto}
+.kicker{align-self:flex-start;font-size:34px;font-weight:700;letter-spacing:.02em;color:var(--accent);background:var(--soft);padding:8px 24px;border-radius:999px;margin-bottom:28px}
+h1{font-weight:800;letter-spacing:-.025em;line-height:1.08;font-size:76px}
+.bar{width:120px;height:10px;background:var(--accent);border-radius:6px;margin:40px 0 40px}
+p.body{font-size:38px;line-height:1.42;color:var(--muted);font-weight:500}
+.figs{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;padding:24px 0 24px}
+.shot{position:relative;overflow:hidden;border:2px solid var(--border);border-radius:20px;box-shadow:0 10px 30px rgba(18,21,28,.10);background:#fff;flex:none}
+.shot img{position:absolute;display:block;max-width:none}
+.shot.fade{-webkit-mask-image:linear-gradient(to right,#000 88%,transparent);mask-image:linear-gradient(to right,#000 88%,transparent)}
+.hl{position:absolute;border:4px solid var(--accent);border-radius:10px;background:rgba(31,79,216,.10)}
+.cap{font-size:26px;line-height:1.3;color:var(--muted);text-align:center;margin-top:-6px}
+.imgslide h1{font-size:64px}
+.imgslide .bar{margin:28px 0 28px;height:8px}
+.imgslide p.body{font-size:34px}
+.cover{background:var(--accent);color:#fff;justify-content:center;padding-top:0;padding-bottom:140px}
+.cover h1{font-size:104px;line-height:1.04}
+.cover .bar{background:#fff;margin:56px 0}
+.cover p.body{color:#e6edff;font-size:42px}
+.cover .tag{font-size:34px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#cfdcff;margin-bottom:40px}
+.cover .foot,.cover .foot span{color:#cfdcff;border-color:rgba(255,255,255,.3)}
+.panel{background:var(--soft);border-radius:28px;padding:44px 48px;margin-top:8px}
+.panel p.body{color:var(--ink)}
+.last h1{font-size:84px}
+.spacer{flex:1}
+.foot{flex:none;margin:0 -80px;padding:0 80px;height:104px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--border);font-size:26px;color:var(--muted);font-weight:600}
+.foot b{color:var(--ink);font-weight:700}
+.foot .num{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:800;font-size:30px}
+.cover .foot .num{color:#fff}
+.cover .foot b{color:#fff}
+.cover .foot{position:absolute;left:80px;right:80px;bottom:0;margin:0;padding:0;width:auto}
+</style></head><body><section class="slide cover"><div class="tag">Carousel</div><h1>A free adversarial test corpus for document AI</h1><div class="bar"></div><p class="body">52 synthetic edge-case files across three domains, each with an expected result. MIT licensed, plain files, in the repo.</p><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">1 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>What is in it</h1><div class="bar"></div><p class="body" style="font-size:40px">Chat messages, emails, CSV rows, JSON records and PDF-style reports. Asset reliability has 20 files, process exceptions 16, document assurance 16.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">2 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Prompt injection in four formats</h1><div class="bar"></div><p class="body" style="font-size:40px">Orders to ignore prior rules and approve the case, placed in a chat or email, a CSV cell, a JSON field and a PDF text page. Twelve files in all.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">3 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Look-alike IDs</h1><div class="bar"></div><p class="body" style="font-size:40px">A Cyrillic "А" in "А-142", a Cyrillic "В" in a batch ID, fullwidth digits in a contract reference, a smudged "A-14_" tag.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">4 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Negations that mention the risk</h1><div class="bar"></div><p class="body" style="font-size:40px">A report that no wear was observed on the brake assembly. A batch ruled out as supplier-related. A subject line saying Clause 8.2 does not apply to Project Harbor.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">5 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Duplicates, exact and near</h1><div class="bar"></div><p class="body" style="font-size:40px">Exact duplicates and a near-duplicate of an earlier file. Counting the same event twice is the failure.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">6 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Payloads aimed at the UI and exports</h1><div class="bar"></div><p class="body" style="font-size:40px">A script tag, a javascript: link, an =HYPERLINK formula in a CSV cell, a 3,000-character run of the letter a, combining marks, a right-to-left override.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">7 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Missing, conflicting and thin evidence</h1><div class="bar"></div><p class="body" style="font-size:40px">A missing asset ID. Conflicting dates. A high-risk item with no supporting evidence. Each one tests whether an extractor guesses.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">8 / 10</span></div></section>
+<section class="slide imgslide"><h1>How to use it</h1><div class="bar"></div><p class="body">Open scenario-packs/*/fixtures/edge-cases. Each fixture has an expected extraction and a gold entry. Run your extractor, diff the results. Link in the first comment.</p><div class="figs"><div class="shot fade" style="width:920px;height:378px"><img src="../../screenshots/scenario-selector.png" alt="" style="width:1613px;left:-111px;top:-464px"></div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">9 / 10</span></div></section>
+<section class="slide last"><div class="spacer" style="flex:.6"></div><h1>Limits</h1><div class="bar"></div><div class="panel"><p class="body">Synthetic and small. English apart from one Spanish file. PDFs are text-layer stand-ins, not scans. The expected answers are our own judgement.</p></div><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">10 / 10</span></div></section></body></html>

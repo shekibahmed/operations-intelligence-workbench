@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=1080"><title>A chat message became a governed decision - carousel</title><style>
+:root{--accent:#1f4fd8;--ink:#12151c;--muted:#575f6e;--border:#e4e7ec;--soft:#edf2fe}
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff;color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.slide{position:relative;width:1080px;height:1350px;overflow:hidden;padding:96px 80px 0;display:flex;flex-direction:column;page-break-after:always;break-after:page;background:#fff}
+.slide:last-child{page-break-after:auto;break-after:auto}
+.kicker{align-self:flex-start;font-size:34px;font-weight:700;letter-spacing:.02em;color:var(--accent);background:var(--soft);padding:8px 24px;border-radius:999px;margin-bottom:28px}
+h1{font-weight:800;letter-spacing:-.025em;line-height:1.08;font-size:76px}
+.bar{width:120px;height:10px;background:var(--accent);border-radius:6px;margin:40px 0 40px}
+p.body{font-size:38px;line-height:1.42;color:var(--muted);font-weight:500}
+.figs{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:22px;padding:24px 0 24px}
+.shot{position:relative;overflow:hidden;border:2px solid var(--border);border-radius:20px;box-shadow:0 10px 30px rgba(18,21,28,.10);background:#fff;flex:none}
+.shot img{position:absolute;display:block;max-width:none}
+.shot.fade{-webkit-mask-image:linear-gradient(to right,#000 88%,transparent);mask-image:linear-gradient(to right,#000 88%,transparent)}
+.hl{position:absolute;border:4px solid var(--accent);border-radius:10px;background:rgba(31,79,216,.10)}
+.cap{font-size:26px;line-height:1.3;color:var(--muted);text-align:center;margin-top:-6px}
+.imgslide h1{font-size:64px}
+.imgslide .bar{margin:28px 0 28px;height:8px}
+.imgslide p.body{font-size:34px}
+.cover{background:var(--accent);color:#fff;justify-content:center;padding-top:0;padding-bottom:140px}
+.cover h1{font-size:104px;line-height:1.04}
+.cover .bar{background:#fff;margin:56px 0}
+.cover p.body{color:#e6edff;font-size:42px}
+.cover .tag{font-size:34px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#cfdcff;margin-bottom:40px}
+.cover .foot,.cover .foot span{color:#cfdcff;border-color:rgba(255,255,255,.3)}
+.panel{background:var(--soft);border-radius:28px;padding:44px 48px;margin-top:8px}
+.panel p.body{color:var(--ink)}
+.last h1{font-size:84px}
+.spacer{flex:1}
+.foot{flex:none;margin:0 -80px;padding:0 80px;height:104px;display:flex;align-items:center;justify-content:space-between;border-top:2px solid var(--border);font-size:26px;color:var(--muted);font-weight:600}
+.foot b{color:var(--ink);font-weight:700}
+.foot .num{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:800;font-size:30px}
+.cover .foot .num{color:#fff}
+.cover .foot b{color:#fff}
+.cover .foot{position:absolute;left:80px;right:80px;bottom:0;margin:0;padding:0;width:auto}
+</style></head><body><section class="slide cover"><div class="tag">Carousel</div><h1>A chat message became a governed decision</h1><div class="bar"></div><p class="body">One synthetic brake fault on forklift A-142, followed from a group-chat message to a recorded human approval. Every name and record is fictional.</p><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">1 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>It started as one line in a chat</h1><div class="bar"></div><p class="body" style="font-size:40px">May 18. A worker writes that the brakes grind and the pedal feels spongy, and mentions brake work "back in the spring". The forklift is still stopping.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">2 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Five more records held the rest</h1><div class="bar"></div><p class="body" style="font-size:40px">An April pad-replacement CSV, a May inspection report, a June 2 ramp incident, a hold-from-service email and a repair update.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">3 / 10</span></div></section>
+<section class="slide imgslide"><h1>One vague phrase went to a person</h1><div class="bar"></div><p class="body">"Brake work done in spring" came out at 70% confidence, so it was queued for review with the exact words underlined, not accepted.</p><div class="figs"><div class="shot" style="width:820px;height:215px"><img src="../../screenshots/review-queue.png" alt="" style="width:2624px;left:-1087px;top:-886px"><i class="hl" style="left:33px;top:78px;width:742px;height:94px"></i></div><div class="shot" style="width:560px;height:280px"><img src="../../screenshots/review-queue.png" alt="" style="width:2240px;left:-1654px;top:-403px"><i class="hl" style="left:12px;top:95px;width:536px;height:161px"></i></div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">4 / 10</span></div></section>
+<section class="slide imgslide"><h1>A written rule did the counting</h1><div class="bar"></div><p class="body">Rule safety-critical-removal-approval needs a safety-critical reading plus at least two related events inside 60 days. In the recorded case it counted four.</p><div class="figs"><div class="shot" style="width:820px;height:265px"><img src="../../screenshots/rule-trace.png" alt="" style="width:2116px;left:-423px;top:-727px"></div><div class="shot" style="width:820px;height:248px"><img src="../../screenshots/rule-trace.png" alt="" style="width:2116px;left:-1270px;top:-670px"><i class="hl" style="left:20px;top:170px;width:777px;height:53px"></i></div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">5 / 10</span></div></section>
+<section class="slide imgslide"><h1>The rule proposed. It did not decide.</h1><div class="bar"></div><p class="body">The output is a critical-risk "remove from service" decision, awaiting approval. The rule only proposes. A person has to approve it.</p><div class="figs"><div class="shot" style="width:690px;height:591px"><img src="../../screenshots/decision-card.png" alt="" style="width:1781px;left:-356px;top:-257px"><i class="hl" style="left:534px;top:25px;width:134px;height:36px"></i><i class="hl" style="left:19px;top:505px;width:551px;height:67px"></i></div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">6 / 10</span></div></section>
+<section class="slide"><div class="spacer" style="flex:.6"></div><h1>Approval is its own record</h1><div class="bar"></div><p class="body" style="font-size:40px">A person approves with a required comment. That creates a separate Approval with approver, outcome and time, and only then does the decision move to approved.</p><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">7 / 10</span></div></section>
+<section class="slide imgslide"><h1>Every step is in the audit trail</h1><div class="bar"></div><p class="body">The review acceptance and the approval each leave an entry. Each entry has an actor, a subject and a timestamp, and the trail exports as CSV or JSON.</p><div class="figs"><div class="shot fade" style="width:920px;height:309px"><img src="../../screenshots/audit-explorer.png" alt="" style="width:1840px;left:-368px;top:-280px"></div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">8 / 10</span></div></section>
+<section class="slide imgslide"><h1>Approved is not the same as done</h1><div class="bar"></div><p class="body">After approval the case is still open and the inspection action still has no completion recorded. The system does not assume a repair happened.</p><div class="figs"><div class="shot" style="width:760px;height:105px"><img src="../../screenshots/case-detail.png" alt="" style="width:1785px;left:-357px;top:-195px"></div><div class="shot" style="width:860px;height:165px"><img src="../../screenshots/case-detail.png" alt="" style="width:2219px;left:-1332px;top:-407px"></div><div class="cap">Case detail: the case is Open and the inspection action item is still open.</div></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">9 / 10</span></div></section>
+<section class="slide last"><div class="spacer" style="flex:.6"></div><h1>What this is, and what it is not</h1><div class="bar"></div><div class="panel"><p class="body">Synthetic data. A fixture provider replays authored extractions; no live model. The approval was scripted and no maintenance lead was consulted. A demo, not production.</p></div><div class="spacer"></div><div class="foot"><b>Operations Intelligence Workbench</b><span class="num">10 / 10</span></div></section></body></html>
