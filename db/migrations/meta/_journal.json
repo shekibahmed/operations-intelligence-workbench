@@ -29,6 +29,13 @@
       "when": 1789230124854,
       "tag": "0003_spotty_marvel_apes",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792284598141,
+      "tag": "0004_approval_db_hardening",
+      "breakpoints": true
     }
   ]
 }

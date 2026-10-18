@@ -14,3 +14,10 @@ playwright-report/
 test-results/
 .vercel/
 gui-test-screenshots/
+_site/
+.site-media/
+
+# Walkthrough media: raw recordings and encoded videos are published as release assets, not committed.
+docs/media/*.webm
+docs/media/*.mp4
+docs/media/.raw-*/
