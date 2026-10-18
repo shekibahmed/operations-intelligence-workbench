@@ -6,7 +6,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
-import { buildVtt, markTime, musicChain, parseMarks, requireThat, type MarksFile } from "./captions.js";
+import { buildVtt, markTime, musicChain, parseMarks, requireThat, timestamp, type MarksFile } from "./captions.js";
 
 const exec = promisify(execFile);
 const root = resolve(import.meta.dirname, "../..");
@@ -223,6 +223,19 @@ async function encodeTrailer(withMusic: boolean, work: string): Promise<void> {
     { inputs: ["-i", raw, ...(withMusic ? MUSIC_INPUT : [])], graph: parts.join(";"), audio: withMusic, seconds: total, out: resolve(mediaDirectory, "trailer.mp4") },
     work,
   );
+  // Sidecar captions mirror the burned-in captions so players and accessibility
+  // checkers find a text track; the site does not show it by default.
+  let cursor = 0;
+  const cues: string[] = ["WEBVTT", ""];
+  for (const segment of TRAILER_SEGMENTS) {
+    const seconds = segment.clips.reduce((sum, clip) => sum + clip.len / clip.speed, 0);
+    cues.push(`${timestamp(cursor)} --> ${timestamp(cursor + seconds)}`, segment.caption, SYNTHETIC_LABEL, "");
+    cursor += seconds;
+  }
+  await writeFile(resolve(mediaDirectory, "trailer.vtt"), cues.join("\n"));
+  // Poster: the middle of the rule-trace segment, where every condition is visible.
+  const ruleStart = TRAILER_SEGMENTS.slice(0, 2).reduce((sum, segment) => sum + segment.clips.reduce((s2, clip) => s2 + clip.len / clip.speed, 0), 0);
+  await ffmpeg(["-ss", (ruleStart + 2).toFixed(2), "-i", resolve(mediaDirectory, "trailer.mp4"), "-frames:v", "1", "-q:v", "3", resolve(mediaDirectory, "poster-trailer.jpg")]);
 }
 
 /** Palette-based GIF from the trailer; steps down frame rate and width until it fits. */
