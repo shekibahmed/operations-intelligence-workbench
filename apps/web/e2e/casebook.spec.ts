@@ -87,7 +87,7 @@ async function expectAccount(page: Page) {
   const audio = page.locator("audio");
   await expect(audio).toHaveCount(1);
   await expect(audio).toHaveAttribute("preload", "none");
-  await expect(audio).not.toHaveAttribute("autoplay", /.*/);
+  expect(await audio.evaluate((element) => element.hasAttribute("autoplay"))).toBe(false);
   expect(await audio.evaluate((element) => element.closest("details")?.open)).toBe(false);
   await expect(page.locator("aside.music summary")).toHaveText("Optional background music (off)");
 }
@@ -164,7 +164,7 @@ test("section navigation and outbound evidence have usable destinations offline"
   expect(requests).toEqual([]);
 });
 
-for (const width of [1280, 390]) {
+for (const width of [1280, 768, 390]) {
   test(`keyboard reading, native evidence and next steps at ${width}px`, async ({ context, page }) => {
     await page.setViewportSize({ width, height: 900 });
     const requests = await openReader(context, page, artifactURL.href);
@@ -200,6 +200,18 @@ for (const width of [1280, 390]) {
       await tabTo(page, cta);
       await expectVisibleFocus(cta);
     }
+    // The optional music disclosure is a native control: reachable, visibly focused and
+    // toggled by Enter and Space. Opening it must not make the browser request the audio.
+    const music = page.locator("aside.music");
+    const musicSummary = music.locator("summary");
+    await tabTo(page, musicSummary);
+    await expectVisibleFocus(musicSummary);
+    await page.keyboard.press("Enter");
+    await expect(music.locator("audio")).toBeVisible();
+    await expect(musicSummary).toBeFocused();
+    await page.keyboard.press("Space");
+    await expect(music.locator("audio")).toBeHidden();
+    await expect(musicSummary).toBeFocused();
     await expectNoOverflow(page);
     for (const supporting of await page.locator("details[id^=evidence-]").all()) {
       await supporting.locator("summary").click();
@@ -208,6 +220,17 @@ for (const width of [1280, 390]) {
     await expectAccount(page);
     expect(requests).toEqual([]);
     if (process.env.REGEN_CASEBOOK_SCREENSHOTS === "1") {
+      const mode = width === 390 ? "mobile" : width === 768 ? "tablet" : "desktop";
+      // The closed and opened music disclosure above the footer, for the pull request description.
+      await page.goto(artifactURL.href);
+      await page.locator("footer").scrollIntoViewIfNeeded();
+      await page.screenshot({ path: fileURLToPath(new URL(`casebook-${mode}-music-closed.png`, screenshotDirectory)) });
+      await page.locator("aside.music summary").click();
+      await page.locator("footer").scrollIntoViewIfNeeded();
+      await page.screenshot({ path: fileURLToPath(new URL(`casebook-${mode}-music-open.png`, screenshotDirectory)) });
+      await page.locator("aside.music summary").click();
+    }
+    if (process.env.REGEN_CASEBOOK_SCREENSHOTS === "1" && width !== 768) {
       const mode = width === 390 ? "mobile" : "desktop";
       for (const id of ["review", "rule", "remaining", "next-steps"]) {
         await page.locator(`#${id}`).screenshot({ path: fileURLToPath(new URL(`casebook-${mode}-${id}.png`, screenshotDirectory)) });
@@ -268,6 +291,12 @@ test("@http production public file matches disk bytes and reads without cookies 
   expect(response.headers()["content-type"]).toMatch(/^text\/html/);
   expect(response.headers()["set-cookie"]).toBeUndefined();
   expect(await response.body()).toEqual(await readFile(artifactURL));
+  // The optional recording is a same-origin static file, served byte-for-byte from disk.
+  const recording = await request.get("/media/ambience.mp3");
+  expect(recording.status()).toBe(200);
+  expect(recording.headers()["content-type"]).toMatch(/^audio\//);
+  expect(recording.headers()["set-cookie"]).toBeUndefined();
+  expect(await recording.body()).toEqual(await readFile(new URL("../public/media/ambience.mp3", import.meta.url)));
   const requests = await openReader(context, page, new URL(servedPath, baseURL).href);
   await expectAccount(page);
   const servedText = await page.locator("main").innerText();

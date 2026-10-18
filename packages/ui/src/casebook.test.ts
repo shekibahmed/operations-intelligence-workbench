@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { renderCasebook, type CasebookDocument } from "./casebook.js";
 
@@ -36,9 +38,29 @@ describe("standalone casebook presentation", () => {
     expect(html).not.toMatch(/autoplay/i);
     expect(html).toContain("Optional background music (off)");
     expect(html).toContain('src="../media/ambience.mp3"');
-    expect(html.indexOf("</main>")).toBeLessThan(html.indexOf('<aside class="music"'));
-    expect(html.indexOf("</aside>")).toBeLessThan(html.indexOf("<footer>"));
+    const start = html.indexOf('<aside class="music"');
+    expect(start).toBeGreaterThan(-1);
+    const end = html.indexOf("</aside>", start);
+    expect(end).toBeGreaterThan(start);
+    // The music block sits after the main content and closes before the footer.
+    expect(html.indexOf("</main>")).toBeLessThan(start);
+    expect(end).toBeLessThan(html.indexOf("<footer>"));
+    const block = html.slice(start, end);
+    expect(block).toContain("<details><summary>Optional background music (off)</summary>");
+    expect(block).not.toMatch(/<details[^>]*\sopen/i);
+    expect(block.match(/<audio/g)).toHaveLength(1);
+    expect(block).not.toMatch(/<a[\s>]|<form|<img|<iframe|<link|<button|<script|autoplay/i);
     expect(html).not.toMatch(/<button|<script/);
+  });
+
+  it("binds the committed audio file to the licence evidence in the media credits", () => {
+    const audio = readFileSync(new URL("../../../apps/web/public/media/ambience.mp3", import.meta.url));
+    const credits = readFileSync(new URL("../../../docs/media/CREDITS.md", import.meta.url), "utf8");
+    const recorded = credits.match(/Committed file SHA-256 \| `([0-9a-f]{64})`/)?.[1];
+    expect(recorded).toBeDefined();
+    expect(createHash("sha256").update(audio).digest("hex")).toBe(recorded);
+    expect(audio.byteLength).toBeLessThanOrEqual(1_572_864);
+    expect(credits).toContain('LicenseShortName = "Public domain"');
   });
 
   it("displays untrusted source and presentation strings as text", () => {

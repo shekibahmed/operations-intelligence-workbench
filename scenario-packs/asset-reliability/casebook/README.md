@@ -13,8 +13,7 @@ and capability explanations live in this pack. The generic renderer and landing
 entry do not contain the scenario narrative.
 
 The optional background music at the end of the page is presentation, not recorded
-evidence: it is off by default, loads nothing until play is pressed, and is
-credited in `docs/media/CREDITS.md`.
+evidence.
 
 ## Inputs and historical identity
 

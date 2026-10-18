@@ -54,7 +54,8 @@ Processed only with ffmpeg from the downloaded original; no other source audio:
   -20.2 LUFS with ebur128), true peak limit -2 dBTP.
 - 2 s fade-in and 3 s fade-out.
 - Resampled to 44.1 kHz, stereo MP3 at 96 kbps (1,080,886 bytes); source
-  metadata tags stripped.
+  metadata tags dropped (`ffprobe` shows only the ffmpeg encoder tag). The fade-out
+  was measured: mean level falls from -24 dB at 85 s to -78 dB at 89.8 s.
 
 ### Where it is used
 
