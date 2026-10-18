@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.shekibahmed/oiw-mcp",
+  "title": "Operations Intelligence Workbench",
+  "description": "Read-mostly MCP server over Operations Intelligence Workbench Scenario Packs: pack manifests, an adversarial synthetic fixture corpus with expected outcomes, an evidence casebook, pack validation and deterministic evaluation.",
+  "repository": {
+    "url": "https://github.com/shekibahmed/operations-intelligence-workbench",
+    "source": "github",
+    "subfolder": "packages/mcp-server"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@oiw/mcp-server",
+      "version": "0.1.0",
+      "runtimeHint": "npx",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "OIW_REPO_ROOT",
+          "description": "Path to an Operations Intelligence Workbench checkout. Defaults to the checkout containing this package.",
+          "isRequired": false
+        },
+        {
+          "name": "SCENARIO_PACKS_DIR",
+          "description": "Directory of Scenario Packs to read. Defaults to scenario-packs under the repository root.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_ALLOW_WRITE",
+          "description": "Set to 1 to allow the scaffold_pack tool to create pack directories. Unset by default.",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}
