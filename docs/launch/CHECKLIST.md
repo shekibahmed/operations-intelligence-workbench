@@ -5,8 +5,8 @@ front of people over fourteen days. Tick boxes as you go. Every post is made
 by the owner personally; the drafts in this folder are starting points, not
 final copy.
 
-Links used throughout. Only the live demo and its `/llms.txt` were confirmed
-live on 2026-10-18; the Pages site was not (see below):
+Links used throughout. The live demo, its `/llms.txt` and the Pages site were
+all confirmed live (HTTP 200) on 2026-10-18:
 
 - Live demo: https://operations-intelligence-workbench.onrender.com . The
   `/demo` page selects a pack and starts a guest workspace. No sign-in. It runs
@@ -14,12 +14,11 @@ live on 2026-10-18; the Pages site was not (see below):
   migrates Neon and redeploys (`.github/workflows/deploy.yml`), provided the
   owner secrets `DATABASE_URL` and `RENDER_DEPLOY_HOOK_URL` are set. They are.
 - Pages site: https://shekibahmed.github.io/operations-intelligence-workbench/
-  (planned content: animated nine-stage pipeline, walkthrough videos at
-  `#walkthroughs`, rendered casebook at `casebook/a-142-repeat-fault.html`, an
-  agent section and opt-in background music). It is not live: on 2026-10-18 the
-  root and the casebook page returned 404, and PR #21 (OIW-915) was still open.
-  Do not post a Pages link until PR #21 has merged and the D0 link check
-  resolves it. The README on `main` already links to these Pages URLs.
+  (animated nine-stage pipeline, walkthrough videos at `#walkthroughs`,
+  rendered casebook at `casebook/a-142-repeat-fault.html`, `media/trailer.mp4`,
+  `llms.txt`, an agent section and an opt-in background music toggle on the
+  landing page). Live since PR #21 (OIW-915) merged: all of these returned 200
+  on 2026-10-18. The README on `main` links to these Pages URLs.
 - Videos, on the GitHub release `media-latest`: `trailer.mp4` (25 s, burned-in
   captions labelled Synthetic demo data) and the walkthroughs
   `asset-reliability.mp4`, `process-exceptions.mp4` and
@@ -27,8 +26,8 @@ live on 2026-10-18; the Pages site was not (see below):
   is `docs/media/hero.gif`.
 - Repo: https://github.com/shekibahmed/operations-intelligence-workbench
 
-No `<LIVE_DEMO_URL>` placeholder is left in this file. Other drafts in this
-folder may still carry one; D0 has a step to find them.
+No demo-URL placeholder is left in this file or in the other drafts; D0 has a
+step to re-check.
 
 ## Before you start
 
@@ -68,12 +67,13 @@ people will find out anyway.
 
 Quote these as written or in your own plain words. Each points to a file.
 
-- **The approval gate is enforced at the application and database layers, and
-  partly at the contract layer.** The contract (`approver: z.string().min(1)`
-  in `packages/contracts/src/domain.ts`) rejects only an empty approver.
+- **The approval gate is enforced by the application services and the
+  database.** The shared contract (`approver: z.string().min(1)` in
+  `packages/contracts/src/domain.ts`) only requires a non-empty string.
   Whitespace-only and no-break-space approvers pass the contract and are
-  rejected by the application and the database (open issue #48 asks for the
-  contract to reject them too). Say "three layers" only with that qualifier.
+  rejected by the application services and the database (open issue #48 asks
+  for the contract to reject them too). Say "three layers" only with that
+  qualifier.
   Migration `db/migrations/0004_approval_db_hardening.sql` and
   `docs/decisions/ADR-013-database-enforced-approval-integrity.md` add a CHECK
   that rejects blank approvers (including no-break space and zero-width
@@ -94,11 +94,14 @@ Quote these as written or in your own plain words. Each points to a file.
 - **The adversarial corpus**: 52 edge-case artifacts (20 Asset Reliability, 16
   Process Exceptions, 16 Document Assurance), each with an expected outcome.
   They carry 143 expected observations: 130 extracted, 10
-  insufficient-evidence and 3 negated. Prompt-injection-style artifacts are
-  among them, but do not quote an injection count until you have re-counted:
-  the edge-case narratives list 4 per pack, while the product injection
-  matrix (`tests/security/injection/product-injection-matrix.test.ts`) expects
-  10 fixtures per pack, 30 in total. Counts come from
+  insufficient-evidence and 3 negated. Two injection numbers, with these exact
+  meanings: 12 instruction-style prompt-injection fixtures (4 formats: message,
+  CSV cell, JSON field, PDF text page, times 3 packs), which is the README
+  figure; and 30 fixtures in the full injection matrix
+  (`docs/quality/INJECTION_TEST_MATRIX.md`,
+  `tests/security/injection/product-injection-matrix.test.ts`: 10 classes times
+  3 packs, adding HTML, markdown-link, spreadsheet-formula, pathological
+  Unicode, homoglyph and rule-keyword stuffing payloads). Counts come from
   `scenario-packs/*/fixtures/edge-cases/index.json` and
   `scenario-packs/*/evaluations/edge-cases.gold.json`. Re-count before you
   quote them (D0).
@@ -117,25 +120,24 @@ Quote these as written or in your own plain words. Each points to a file.
   `claude plugin marketplace add shekibahmed/operations-intelligence-workbench`
   then `claude plugin install oiw-pack-authoring@oiw`. It is not published to
   npm or the MCP registry yet. That is an owner step (D5), so do not say it is.
-- **Music**: the optional background music is Erik Satie, Gymnopedie No. 1,
+- **Music**: the opt-in background music (on the Pages landing page and the casebook) is Erik Satie, Gymnopedie No. 1,
   performed by Robin Alciatore (Musopen), public domain. Credits are in
   `docs/media/CREDITS.md`. It is off until a reader presses play.
 - **Rule wording**: the `safety-critical-removal-approval` rule description
   says "at least one other related event", but the engine requires two other
   related events (issue #47). Describe the rule by its predicate, not by its
   description text.
-- **Security**: OIW-922 (PR #39) is meant to clear the 17 open Dependabot
-  alerts (next 16.3.8, sharp 0.35.5, dev transitive floors). On 2026-10-18 the
-  PR was open and the 17 alerts were still open on `main`. Say nothing about
-  it until the PR has merged and the alert list is empty.
+- **Security**: OIW-922 (PR #39) is merged (next 16.3.8, sharp 0.35.5, dev
+  transitive floors). The Dependabot API reported 0 open alerts on 2026-10-18.
+  Re-check the count before you mention it, and do not call the project
+  audited.
 
 ### Files this checklist points to
 
-Before a day's tasks, check the file exists on `main`. As of 2026-10-18 only
+Before a day's tasks, check the file exists on `main`. As of 2026-10-18
 `docs/contributing/FIRST_CONTRIBUTIONS.md`, `docs/media/CREDITS.md` and
-`docs/media/hero.gif` are in the integration tree. The `docs/launch/` files
-(this checklist, the drafts and `carousels/`) live only on the OIW-917 branch
-until it merges.
+`docs/media/hero.gif` are on `main`. The `docs/launch/` files (this checklist,
+the drafts and `carousels/`) live only on the OIW-917 branch until it merges.
 
 | File | Used on |
 |---|---|
@@ -150,21 +152,20 @@ until it merges.
 The drafts above were written before the demo, MCP server and videos were
 live. Where they still say "no hosted demo", "`packages/mcp-server` does not
 exist", or "replay against a different decision is not yet tested", the
-current state in this file wins. "Pages returns 404" is still true until PR
-#21 merges. Fix the draft before
-you use it, in your own words.
+current state in this file wins. Fix the draft before you use it, in your own
+words.
 
 ### What is shipped, and what is still an owner step
 
 The animated landing pipeline (OIW-910), walkthrough videos, `llms.txt`, MCP
 server and Claude Code plugin are merged to `main`, so they can be mentioned
-once the D0 checks pass. The Pages site is not merged. Facts to keep straight:
+once the D0 checks pass. The Pages site (PR #21) is merged and live. Facts to
+keep straight:
 
 - Not published: the MCP server is not on npm or in the MCP registry. Do not
   announce it as installable from either. D5 covers the owner steps.
-- PR #21 (Pages) and PR #39 (OIW-922, dependency alerts) were both open on
-  2026-10-18. Check their state when you post. If either has not merged, leave
-  out what depends on it.
+- PRs #21 (Pages), #25 (approval hardening), #26 (README), #27, #29 and #39
+  (OIW-922, dependency alerts) are all merged to `main` (checked 2026-10-18).
 - Do not announce anything as coming soon.
 
 ### Calendar assumption
@@ -221,17 +222,17 @@ working thing.
       testing is what is deployed.
 - [ ] Run the link check over every URL in the launch drafts and the README.
       It must report the Pages root, `#walkthroughs`,
-      `casebook/a-142-repeat-fault.html` and the live demo's `/llms.txt`. Until
-      PR #21 has merged and deployed, the Pages links return 404; wait for it. Do not
-      post any link that does not resolve. The casebook source is
+      `casebook/a-142-repeat-fault.html`, `media/trailer.mp4` and the live demo's
+      `/llms.txt`. All returned 200 on 2026-10-18. Do not post any link that
+      does not resolve. The casebook source is
       `apps/web/public/casebook/a-142-repeat-fault.html`, in the repo.
 - [ ] On a phone, check `#walkthroughs` loads and the three walkthroughs play
       with captions on. Check `trailer.mp4` from the `media-latest` release
       plays on mute with its burned-in captions readable.
 - [ ] Re-count the corpus: 52 artifacts (20, 16, 16), 143 expected observations
-      (130 extracted, 10 insufficient-evidence, 3 negated), and settle the
-      injection fixture count (4 per pack in the narratives, 10 per pack in the
-      product injection matrix), from `scenario-packs/*/fixtures/edge-cases/index.json`
+      (130 extracted, 10 insufficient-evidence, 3 negated), 12 instruction-style
+      injection fixtures (4 per pack) and 30 injection-matrix fixtures (10 per
+      pack), from `scenario-packs/*/fixtures/edge-cases/index.json`
       and `scenario-packs/*/evaluations/edge-cases.gold.json`. Run `pnpm eval`
       and `pnpm architecture:check` before you quote anything from them.
 - [ ] From a clean machine or fresh clone, follow the agent instructions as a
@@ -244,7 +245,7 @@ working thing.
       interest. Known issue #46: the analytics session can split on a visitor's
       first page load, so expect session counts to run slightly high.
 - [ ] Find leftover placeholders in the other drafts with
-      `grep -rn "LIVE_DEMO_URL" docs/launch` and replace each with
+      `grep -rn "DEMO_URL" docs/launch` and replace each with
       https://operations-intelligence-workbench.onrender.com (or `/demo` where
       the text means "try it").
 - [ ] Check CI is green on `main`:
@@ -259,8 +260,8 @@ working thing.
       Remove any that are not accurate (`llm-evaluation` needs the caveat that
       the harness runs on fixtures, not a live model). Do not add more.
 - [ ] Check the repo description and website field. The website field already
-      points at the live demo. Keep it; switch it to the Pages site only after
-      that site resolves.
+      points at the live demo. Keep it, or switch it to the Pages site (200 on
+      2026-10-18).
 - [ ] Publish GitHub Release v0.1.0 with short honest notes: what is in it
       (three packs, the evaluation suite, the database-enforced approval gate,
       the MCP server and plugin, the walkthrough videos), that the provider is
@@ -304,9 +305,8 @@ working thing.
       the text (owner or superuser can drop triggers, and TRUNCATE is not covered by the row triggers; the database
       cannot tell a real person from a non-blank string; the demo approver is a
       guest session). Remove what you cannot point to a file for.
-- [ ] Replace `<LIVE_DEMO_URL>` in the article with the live demo URL, and
-      add the walkthroughs (`#walkthroughs`) and casebook links once the D0
-      link check passes.
+- [ ] Check the article's demo, walkthroughs (`#walkthroughs`) and casebook
+      links resolve (D0 link check).
 - [ ] Publish on dev.to first. This is the canonical copy.
 - [ ] Publish on Hashnode with the canonical URL set to the dev.to post.
 - [ ] Add the repo link and, once only, one plain line about who made it.

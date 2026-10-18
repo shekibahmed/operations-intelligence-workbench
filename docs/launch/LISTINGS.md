@@ -9,8 +9,8 @@ them, but not every rule was re-checked in a final review. Anything marked
 their sections, so re-read the linked file before you submit and match
 whatever it says on the day.
 
-Repo claims in this file were refreshed on 2026-10-18 against the integration
-checkout (`main` plus the pull requests queued to merge that day) and were then
+Repo claims in this file were refreshed on 2026-10-18 against `main`
+(all related pull requests are merged) and were then
 cross-checked by two independent passes. Claims that did not hold were
 corrected or removed.
 
@@ -26,11 +26,10 @@ Fixed links used in this file:
 - Pages site: https://shekibahmed.github.io/operations-intelligence-workbench/
   (animated nine-stage pipeline, walkthrough videos at `#walkthroughs`,
   rendered casebook at `casebook/a-142-repeat-fault.html`, agent section,
-  opt-in background music) is not live yet. The Pages root and the casebook
-  page both returned 404 on 2026-10-18, and PR #21 (OIW-915, the Pages site) was
-  still open. The site source is in the repo (`site/index.html`). The site goes
-  up only after PR #21 merges and `pages.yml` runs, so have the launch
-  link-check confirm each Pages URL before you paste any of them into a
+  opt-in background music toggle on the landing page) is live (PR #21,
+  OIW-915). The root, `#walkthroughs`, the casebook page, `media/trailer.mp4`
+  and `llms.txt` returned 200 on 2026-10-18. The source is in the repo
+  (`site/index.html`). Re-run the link check before you paste any URL into a
   submission.
 - Repo: https://github.com/shekibahmed/operations-intelligence-workbench
 - Agent surface: `llms.txt` at the repo root, also served at
@@ -423,8 +422,8 @@ submit.
 Fit gap, in both cases: these lists are about governing AI agents at runtime.
 OIW is a reference platform where AI-derived proposals cannot become approved
 decisions without a recorded human approval, and the rule is enforced in the
-application and in the database. The contract layer rejects only an empty
-approver; whitespace-only rejection there is open issue #48. It is not a runtime
+application services and in the database. The shared contract only requires a
+non-empty approver string; whitespace-only handling there is open issue #48. It is not a runtime
 that sits in front of someone else's agent. Describe it as what it is. A
 maintainer who says it is out of scope is making a fair call.
 
@@ -591,9 +590,8 @@ gh repo edit shekibahmed/operations-intelligence-workbench \
 gh repo view shekibahmed/operations-intelligence-workbench --json repositoryTopics,homepageUrl
 ```
 
-Optional: once the Pages site is live (it returned 404 on 2026-10-18), you may
-prefer the Pages URL as the website field, since it would carry the videos and
-the casebook.
+Optional: the Pages site is live (200 on 2026-10-18), so you may prefer the
+Pages URL as the website field, since it carries the videos and the casebook.
 The demo URL is a fine value too. Pick one.
 
 ---
@@ -614,9 +612,9 @@ Creating `v0.1.0` makes that the newest release, and GitHub will then flag it
 Before tagging:
 
 - [ ] `main` is green in CI.
-- [ ] Every pull request queued to merge on 2026-10-18 is merged (landing page
-      and Pages deploy, agent surface, adversarial corpus, database approval
-      hardening, security updates), so the tag points at what the notes
+- [ ] Landing page and Pages deploy, agent surface, adversarial corpus,
+      database approval hardening and security updates are all merged to
+      `main` (checked 2026-10-18), so the tag points at what the notes
       describe. The notes below describe that state.
 - [ ] `package.json` version is already `0.1.0`. No bump needed.
 
@@ -657,11 +655,12 @@ This is a demo and a reference implementation. It is not a production system.
   event is assembled, a rule fires and creates a signal, a case and a
   proposed decision, a person approves it, and the Leadership, Operations and
   Technical dashboards update from that one approval.
-- Approval enforced at the application and database layers. A
+- Approval enforced by the application services and the database. A
   Decision cannot be set to approved without a recorded Approval from a named
   approver. Whitespace-only, `system` and `provider` approvers are rejected in
-  the application layer, the contract layer rejects only an empty approver
-  (issue #48 is open), and a database CHECK blocks blank approvers. An Approval for one Decision cannot authorise
+  the application services, the shared contract only requires a non-empty
+  approver string (issue #48 is open), and a database CHECK blocks blank
+  approvers. An Approval for one Decision cannot authorise
   another, approval-shaped provider output never creates an Approval, and parallel opposing approvals
   end with one Approval and one final status
   (`tests/security/approval-governance.test.ts`,
@@ -685,24 +684,23 @@ This is a demo and a reference implementation. It is not a production system.
 - An adversarial test corpus: 52 edge-case artifacts (20 Asset Reliability,
   16 Process Exceptions, 16 Document Assurance) with expected outcomes, 143
   expected observations (130 extracted, 10 insufficient-evidence, 3 negated),
-  and 30 prompt-injection fixtures (10 per pack). Fixture text is untrusted data
-  and contains instruction-like strings on purpose.
+  and 12 instruction-style prompt-injection fixtures (4 formats times 3 packs),
+  part of a 30-fixture injection matrix (10 classes times 3 packs). Fixture
+  text is untrusted data and contains instruction-like strings on purpose.
 - An evaluation harness (`pnpm eval`) covering 11 dimensions, including field
   precision and recall,
   classification, evidence spans, entity resolution, abstention, rule
   execution, approval policy, duplicate prevention and case state, for all
   three packs.
-- A recorded evidence casebook you can read with no setup, in the repo at
-  `apps/web/public/casebook/a-142-repeat-fault.html`. Add the Pages link
-  (`.../casebook/a-142-repeat-fault.html`) only after the link-check shows it
-  live; it returned 404 on 2026-10-18.
+- A recorded evidence casebook you can read with no setup, rendered at
+  https://shekibahmed.github.io/operations-intelligence-workbench/casebook/a-142-repeat-fault.html
+  (source in the repo at `apps/web/public/casebook/a-142-repeat-fault.html`).
 - Guided tour and free exploration in the web app. Live demo, guest workspace,
   no sign-in: https://operations-intelligence-workbench.onrender.com/demo (free
   hosting; the first request after idle can take about a minute).
-- Site source with an animated nine-stage pipeline and a walkthroughs section
-  (`site/index.html`). The Pages URL
-  (https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs)
-  returned 404 on 2026-10-18 and goes in the notes only once it is live.
+- Project site with an animated nine-stage pipeline and a walkthroughs section
+  (`site/index.html`), live at
+  https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs.
   A 25-second trailer (burned-in captions, labelled synthetic demo data) and
   three walkthroughs of about 128 seconds each (captions embedded as a soft
   track) are assets on the `media-latest` release. The `.vtt` caption files are
@@ -783,15 +781,16 @@ Check before publishing the notes:
 - The 1.000 evaluation figure comes from the README ("it reports 1.000 on
   every dimension") and from run notes in docs/agent-runs. Run `pnpm eval` on
   the commit you are tagging and edit the figure if it differs.
-- The Pages site was not live on 2026-10-18 (404; PR #21 still open). Remove
-  the Pages links from the notes, or confirm they are live, before you publish.
+- The Pages links returned 200 on 2026-10-18. Re-check them before you publish.
 - The 52 artifacts and 143 observations were counted from
   `scenario-packs/*/fixtures/edge-cases/index.json` and
   `scenario-packs/*/evaluations/edge-cases.gold.json`. The 30 injection
-  fixtures (10 per pack) were counted by the `suspicious-content-detected`
-  warning in `scenario-packs/*/fixtures/edge-cases/extractions/`; this matches
-  `docs/SECURITY.md` line 89. README.md (around line 317) still says 12 and
-  should be corrected to 30. Recount if any of these files changed after
+  matrix fixtures (10 classes per pack) were counted by the
+  `suspicious-content-detected` warning in
+  `scenario-packs/*/fixtures/edge-cases/extractions/`; this matches
+  `docs/SECURITY.md` line 89 and `docs/quality/INJECTION_TEST_MATRIX.md`. The
+  README's 12 is correct and means something narrower: the instruction-style
+  fixtures (4 formats times 3 packs). Recount if any of these files changed after
   2026-10-18.
 
 After publishing: in the repo, open Watch, Custom, tick Releases, so the
@@ -806,8 +805,7 @@ asks for a version.
 
 What was checked on 2026-10-18, and what was not.
 
-Checked against the integration checkout (`main` plus the pull requests queued
-to merge that day) and live sources:
+Checked against `main` and live sources:
 
 - Repository: the only tag and release is `media-latest` (walkthrough media);
   no `v0.1.0`. `package.json` version 0.1.0, MIT, root package private;
@@ -828,9 +826,9 @@ to merge that day) and live sources:
 - Adversarial corpus: 20, 16 and 16 entries in the three
   `fixtures/edge-cases/index.json` files (52); the three `edge-cases.gold.json`
   files hold 143 expected observations (130 extracted, 10 insufficient-evidence,
-  3 negated); 30 instruction-like injection fixtures (10 per pack) by their
-  `suspicious-content-detected` warnings. An earlier draft said 12 (4 per
-  pack); that figure did not reproduce.
+  3 negated); 30 injection-matrix fixtures (10 per pack) by their
+  `suspicious-content-detected` warnings, of which 12 are instruction-style
+  (4 per pack: message, CSV cell, JSON field, PDF text page), the README figure.
 - MCP server: seven registered tools, `OIW_MCP_ALLOW_WRITE` gate, root
   `.mcp.json`, draft `server.json` (`io.github.shekibahmed/oiw-mcp`, 225
   character description, identifier `@oiw/mcp-server`), `private: true`, no
@@ -856,8 +854,6 @@ to merge that day) and live sources:
 
 Not checked, or still open:
 
-- The Pages site is not live: the root and the casebook page returned HTTP 404
-  on 2026-10-18 and PR #21 was open. Nothing here treats it as live.
 - Whether the MCP server runs from a clean clone and from a real client, and
   the OS icons for the awesome-mcp-servers line. Owner steps.
 - awesome-selfhosted pull request template, `addition.md`, `licenses.yml`,

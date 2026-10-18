@@ -1,6 +1,6 @@
 # Launch kit (OIW-917)
 
-Drafts for announcing Operations Intelligence Workbench. Nothing here has been posted. Read the owner notes and "pending" items in each file before using it.
+Drafts for announcing Operations Intelligence Workbench. Nothing here has been posted. Read the owner notes in each file before using it.
 
 ## Files
 
@@ -27,9 +27,10 @@ Drafts for announcing Operations Intelligence Workbench. Nothing here has been p
 
 ## Pending placeholders and URLs (link-checked 2026-10-18)
 
-- Pages site, casebook and `#walkthroughs` anchor: PR #21 is merged and all three returned 200 on 2026-10-18. Several drafts (SHOW_HN, LINKEDIN, ARTICLE, REDDIT, LISTINGS, CHECKLIST) still say "not live (404)" and use repo-path fallbacks. Update those lines before posting, then re-run the link check.
+- Pages site, `#walkthroughs`, casebook, `media/trailer.mp4` and `llms.txt` (https://shekibahmed.github.io/operations-intelligence-workbench/): live, all 200 on 2026-10-18.
+- PRs #21, #25, #26, #27, #29 and #39 are merged. Dependabot open alerts: 0 (2026-10-18). Re-run the link check and the alert count before posting.
+- Injection counts: 12 instruction-style fixtures (4 formats times 3 packs, the README figure); 30 fixtures in the full matrix (10 classes times 3 packs, `docs/quality/INJECTION_TEST_MATRIX.md`).
 - Demo host (`operations-intelligence-workbench.onrender.com`, `/demo`, `/llms.txt`): 200 on 2026-10-18. Check the demo is warm before posting.
 - Release `v0.1.0`: 404, not yet cut.
 - `http://localhost:3000/demo` is a local example, not checkable.
 - `<NPM_PACKAGE>` and other angle-bracket placeholders: fill in at submission. The `$(uname` mcp-publisher URL is a shell template and is not a real link.
-- `<LIVE_DEMO_URL>` appears only in CHECKLIST.md as a reminder of what to replace.

@@ -15,22 +15,19 @@
 > and saying "I posted this" is not the same as asking for votes, but the
 > safest course is to not share the HN link at all. Let it stand on the content.
 
-Status: refreshed 2026-10-18 (a Sunday) against the integration tree (main plus
-every PR queued to merge that day). The first draft was written earlier the
-same day, before the live demo, the Pages site, the agent surface, the
-adversarial corpus and the database-level approval hardening existed. Every
-repository fact below was read from files in that tree and then checked a
-second time against it and against GitHub. Where the two disagreed, the text
-below says what the tree supports. Re-check the items marked "re-verify", and
-re-check that everything queued has actually merged to `main`, before
-posting.
+Status: refreshed 2026-10-18 against `main`. The first draft was written
+earlier the same day, before the live demo, the Pages site, the agent surface,
+the adversarial corpus and the database-level approval hardening existed. All
+of those are now merged to `main` and live. Every repository fact below was
+read from files on `main` and checked against GitHub. Re-check the items
+marked "re-verify" before posting.
 
 Live demo: https://operations-intelligence-workbench.onrender.com
 (`/demo` selects a pack). The demo, `/demo` and `/llms.txt` returned 200 when
 last checked. The Pages site
-(https://shekibahmed.github.io/operations-intelligence-workbench/) is **not
-live yet**: it returned 404 on 2026-10-18 because its workflow only exists in
-queued PR #21.
+(https://shekibahmed.github.io/operations-intelligence-workbench/) is live: the
+root, `#walkthroughs`, `casebook/a-142-repeat-fault.html`, `media/trailer.mp4`
+and `llms.txt` all returned 200 on 2026-10-18.
 
 ---
 
@@ -39,22 +36,18 @@ queued PR #21.
 The demo gate from the first draft is satisfied: the hosted demo exists and
 the live URL has replaced the old placeholder everywhere in this file. What is left:
 
-- [ ] **Everything queued for today is merged to `main` and the last deploy is
-      green.** Every CI-green merge to `main` migrates Neon and redeploys the
-      demo (`deploy.yml`). The claims below depend on: the approval hardening
-      (migration `0004`, ADR-013; PR #25, OIW-919), PR #21 (Pages site), and
-      PR #39 (OIW-922, dependency updates). On 2026-10-18 all three were still
-      open and absent from `main`. If any of these is not merged and deployed,
-      do not post; the text would claim something the demo does not have.
+- [ ] **The last deploy to `main` is green.** Every CI-green merge to `main`
+      migrates Neon and redeploys the demo (`deploy.yml`). The claims below
+      depend on the approval hardening (migration `0004`, ADR-013; PR #25,
+      OIW-919), the Pages site (PR #21) and the dependency updates (PR #39,
+      OIW-922). All three are merged to `main` (checked 2026-10-18). Confirm
+      the latest `deploy.yml` run succeeded, so the demo has the hardening.
 - [ ] **Link-check the public URLs and see them return 200:** the Pages site,
       `.../#walkthroughs`, the casebook at
       `.../casebook/a-142-repeat-fault.html`, the demo `/demo` and the demo
-      `/llms.txt`. The Pages site deploys when PR #21 merges and returned 404
-      before that. Do not post the Pages links in the first comment until this
-      check passes. If the Pages URL still fails, fall back to the repo-file
-      casebook (`apps/web/public/casebook/a-142-repeat-fault.html`, which
-      exists in the tree) and link the walkthrough MP4s from the GitHub release
-      `media-latest` instead of the `#walkthroughs` section.
+      `/llms.txt`. All of them returned 200 on 2026-10-18 (the Pages site also
+      serves `media/trailer.mp4`). Re-run the check on the day. Do not post a
+      link that does not resolve.
 - [ ] **Open the demo in a private window, on your phone, and on a different
       network.** Confirm: `/demo` loads and the scenario selector works,
       "Start guided tour" creates a guest workspace with no sign-in, the
@@ -83,10 +76,10 @@ the live URL has replaced the old placeholder everywhere in this file. What is l
 - [ ] **Re-verify the quoted numbers** (see "Numbers to re-verify" at the end).
 - [ ] **Repo front page reads well** at https://github.com/shekibahmed/operations-intelligence-workbench
       (README has the live-demo badge and links, hero GIF, LICENSE visible).
-- [ ] **Security tab.** 17 Dependabot alerts were open on 2026-10-18. PR #39
-      (OIW-922) targets them (next 16.3.8, sharp 0.35.5, dev transitive
-      floors) but is not merged. After it merges, confirm the alert count is
-      zero before you say anything about it. Do not call the project audited.
+- [ ] **Security tab.** PR #39 (OIW-922) is merged (next 16.3.8, sharp 0.35.5,
+      dev transitive floors). The Dependabot API reported 0 open alerts on
+      2026-10-18. Re-check the count before you say anything about it. Do not
+      call the project audited.
 - [ ] **Use your own long-standing account.** Do not use a new or throwaway
       account, and do not post from more than one account.
 
@@ -105,8 +98,8 @@ Notes on choosing:
 
 - Option 1 is the plainest and the safest.
 - Option 2 puts the distinctive design choice in the title. It is accurate:
-  the gate is enforced by a database trigger and constraints (ADR-013, which
-  is in the integration tree and reaches `main` with PR #25). It will
+  the gate is enforced by a database trigger and constraints (ADR-013, on
+  `main` since PR #25). It will
   attract the database-minded readers and the "is this over-engineered" crowd.
   Be ready for "a superuser can drop the trigger"; answer 7 concedes it.
 - Option 3 is the most intriguing and the most likely to be read as a claim
@@ -181,9 +174,7 @@ roughly this length (about 400 words of prose as drafted, plus the links).
 >
 > Repo: https://github.com/shekibahmed/operations-intelligence-workbench
 > Captioned walkthrough videos (a 25-second trailer and three tours of about
-> two minutes), no setup (post these two Pages links only after the pre-flight
-> link-check returns 200; until then use the `media-latest` release and the
-> repo-file casebook):
+> two minutes), no setup:
 > https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs
 > One case as a rendered evidence casebook:
 > https://shekibahmed.github.io/operations-intelligence-workbench/casebook/a-142-repeat-fault.html
@@ -421,14 +412,13 @@ features of it. Do not present them as part of the core.
   each (`asset-reliability.mp4`, `process-exceptions.mp4`,
   `document-assurance.mp4`, WebVTT captions), in the GitHub release
   `media-latest` (the MP4s are release assets; the WebVTT files are committed
-  in `docs/media/`). They are meant to appear on the Pages site at
-  `#walkthroughs`, but that site is not live until PR #21 merges. The README
-  hero is
+  in `docs/media/`). They are on the live Pages site at `#walkthroughs`
+  (the trailer is also at `media/trailer.mp4`). The README hero is
   `docs/media/hero.gif`. Use the trailer for the native video upload on
   LinkedIn, not here.
-- The Pages site (source in `site/`; not live until PR #21 merges) has an
-  animated nine-stage pipeline, the rendered casebook, an agent section and
-  optional background music. The music is off unless a
+- The Pages site (source in `site/`, live) has an animated nine-stage
+  pipeline, the rendered casebook, an agent section and an opt-in background
+  music toggle on the landing page. The music is off unless a
   visitor turns it on: Erik Satie, Gymnopedie No. 1, performed by Robin
   Alciatore (Musopen), public domain; credits are in `docs/media/CREDITS.md`.
 
@@ -521,8 +511,8 @@ latest CI run.
 | `pnpm architecture:check` behaviour (pack IDs, industry terms, no pack file compiled, registry loads without any one pack) | `scripts/architecture-check.ts` | run it |
 | MCP server has 7 tools; `scaffold_pack` needs `OIW_MCP_ALLOW_WRITE=1`; not published to npm or the MCP registry | `packages/mcp-server`, `llms.txt` | read the README; search npm |
 | Good-first-issue seeds #40 to #45; follow-ups #46 to #48 | GitHub issues, `docs/contributing/FIRST_CONTRIBUTIONS.md` | open the issues |
-| Dependabot alerts: 17 open on 2026-10-18; PR #39 (OIW-922) targets them | PR #39 | Security tab after merge |
-| Pages site and casebook URLs return 200 | PR #21, `.github/workflows/pages.yml` | `curl -I` each URL; 404 before PR #21 deploys |
+| Dependabot open alerts: 0 on 2026-10-18, after PR #39 (OIW-922, merged) | Security tab, `gh api repos/shekibahmed/operations-intelligence-workbench/dependabot/alerts?state=open` | re-run the API call |
+| Pages root, `#walkthroughs`, casebook, `media/trailer.mp4` and `llms.txt` return 200 | `.github/workflows/pages.yml` | `curl -sIL` each URL |
 | Fixture extractions hold 145 observations against 143 in gold (two artifacts differ) | `scenario-packs/*/fixtures/edge-cases/extractions/`, `evaluations/edge-cases.gold.json` | count both |
 | FR-021 is P1 and not implemented | `docs/PRD.md` section 15, README limitations | grep FR-021 |
 | MIT, copyright 2026 Shekib Ahmed | `LICENSE` | read it |

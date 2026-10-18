@@ -6,8 +6,8 @@
 > copy that reads as generated works against it. Keep the facts and the stated
 > limits, change the sentences. Nothing here has been posted.
 
-Status: draft for OIW-917, refreshed on 2026-10-18 against the state of `main`
-plus the PRs queued to merge that day. Audience: operations leaders, plant and maintenance
+Status: draft for OIW-917, refreshed on 2026-10-18 against `main`
+(PRs #21, #25, #26, #27, #29 and #39 are all merged). Audience: operations leaders, plant and maintenance
 heads, compliance and legal ops, CIOs, and AI builders.
 
 Placeholders and links used throughout:
@@ -15,9 +15,9 @@ Placeholders and links used throughout:
 - Live demo: https://operations-intelligence-workbench.onrender.com (Render
   free plan with a Neon free database; `/demo` selects a pack; a guest
   workspace, no sign-in)
-- Pages site (NOT LIVE yet; every Pages URL returned 404 on 2026-10-18): https://shekibahmed.github.io/operations-intelligence-workbench/
-- Walkthrough videos (Pages, not live yet): https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs
-- Casebook (Pages, not live yet): https://shekibahmed.github.io/operations-intelligence-workbench/casebook/a-142-repeat-fault.html
+- Pages site (live; returned 200 on 2026-10-18): https://shekibahmed.github.io/operations-intelligence-workbench/
+- Walkthrough videos (Pages, live): https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs
+- Casebook (Pages, live): https://shekibahmed.github.io/operations-intelligence-workbench/casebook/a-142-repeat-fault.html
 - Video files: https://github.com/shekibahmed/operations-intelligence-workbench/releases/tag/media-latest
   (`trailer.mp4`, `asset-reliability.mp4`, `process-exceptions.mp4`,
   `document-assurance.mp4`)
@@ -25,14 +25,13 @@ Placeholders and links used throughout:
 
 Hosting facts to keep in mind on posting day:
 
-- The Pages site is not live. On 2026-10-18 the Pages root, `#walkthroughs` and
-  the casebook URL all returned 404. The deploy (`pages.yml`) runs on a push to
-  `main` that touches `site/**` or `apps/web/public/casebook/**`, and PR #21
-  (OIW-915) is still open. Do not post a Pages URL until it resolves: merge
-  PR #21, wait for the deploy, then open every Pages URL in a private window.
-  Until then, point to the repo and the live demo. The casebook is also a single
-  self-contained file at `apps/web/public/casebook/a-142-repeat-fault.html`; a
-  repo link to it shows the source, not the rendered page.
+- The Pages site is live. On 2026-10-18 the Pages root, `#walkthroughs`, the
+  casebook URL, `media/trailer.mp4` and `llms.txt` all returned 200. The deploy
+  (`pages.yml`) runs on a push to `main` that touches `site/**` or
+  `apps/web/public/casebook/**`. Open every Pages URL in a private window
+  before you post. The casebook is also a single self-contained file in the
+  repo at `apps/web/public/casebook/a-142-repeat-fault.html`; a repo link to it
+  shows the source, not the rendered page, so link the Pages URL.
 - The live demo is on free hosting. A keepalive pings it every 10 minutes
   between 06:00 and 22:00 UTC; outside those hours, or after 15 idle minutes,
   the first request can take about a minute. Open it yourself a few minutes
@@ -76,12 +75,12 @@ sentence, stay inside it.
 | Dashboard metrics are classified observed, calculated, estimated or hypothetical. In the leadership screenshot Critical Signals, Open Reliability Cases and Pending Decisions are badged Calculated, and "Estimated Downtime Exposure" (about 24h) is badged Hypothetical with a note that it is not an observed measurement. A hypothetical metric must carry a summary and a non-empty list of assumptions; other kinds may not. | README.md, ADR-012, `docs/screenshots/leadership-dashboard.png` |
 | `pnpm architecture:check` scans the non-test sources of every package under `packages/` for pack IDs (read from the pack manifests) and for industry terms (for example "brake"), confirms that no TypeScript project compiles a scenario-pack file, and confirms that the pack registry loads every other pack with any one pack removed. One lifecycle integration test runs unchanged against all three packs. `_template` is validated by `validate:packs` but skipped by the pack registry, so it is not loaded as a fourth pack. | `scripts/architecture-check.ts`, README.md |
 | Live demo at https://operations-intelligence-workbench.onrender.com on Render free and Neon free. `/demo` selects a pack; the workspace is a guest workspace with no sign-in. A keepalive pings every 10 minutes between 06:00 and 22:00 UTC; otherwise the first request after 15 idle minutes can take about a minute. Every CI-green merge to `main` migrates Neon and redeploys. | `render.yaml`, `.github/workflows/deploy.yml`, `.github/workflows/keepalive.yml` |
-| Pages site source in `site/` includes the walkthrough videos (`#walkthroughs`), the rendered casebook, an agent section and opt-in background music. It is not live until PR #21 merges and `pages.yml` deploys; nothing here may describe it as live before then. | `site/`, `.github/workflows/pages.yml` |
+| Pages site source in `site/` includes the walkthrough videos (`#walkthroughs`), the rendered casebook, an agent section and opt-in background music toggle on the landing page. It is live (PR #21, deployed by `pages.yml`). | `site/`, `.github/workflows/pages.yml` |
 | Videos on the GitHub release `media-latest`: `trailer.mp4` (25 seconds, burned-in captions labelled Synthetic demo data) and three walkthroughs, `asset-reliability.mp4`, `process-exceptions.mp4` and `document-assurance.mp4` (about 128 seconds each, WebVTT captions). The README hero is `docs/media/hero.gif`. | `docs/media/README.md` |
 | Background music on the site is opt-in: Erik Satie, Gymnopedie No. 1, performed by Robin Alciatore (Musopen), public domain. | `docs/media/CREDITS.md` |
 | Agent surface: `llms.txt` at the repo root, also served at the live demo `/llms.txt`; `packages/mcp-server`, a stdio MCP server with 7 tools (`list_packs`, `get_pack_manifest`, `list_fixtures`, `get_casebook`, `validate_packs`, `run_eval`, `scaffold_pack`), where `scaffold_pack` writes only with `OIW_MCP_ALLOW_WRITE=1`; a root `.mcp.json`; and a Claude Code plugin, installed with `claude plugin marketplace add shekibahmed/operations-intelligence-workbench` then `claude plugin install oiw-pack-authoring@oiw`. None of it is published to npm or the MCP registry yet; do not say it is. | `llms.txt`, `packages/mcp-server/`, `.mcp.json`, `plugins/oiw-pack-authoring/` |
 | Contributors: six good-first-issue seeds are open as GitHub issues #40 to #45. Follow-ups: #46 (analytics session can split on first load), #47 (casebook refresh for the rule wording), #48 (approver whitespace in the contract). | `docs/contributing/FIRST_CONTRIBUTIONS.md` |
-| Dependency security: OIW-922 (PR #39) is open and not merged. It is meant to clear the 17 open Dependabot alerts (next 16.3.8, sharp 0.35.5, and floors on dev transitive dependencies). Do not say the alerts are cleared until it merges. Not used in a post. | PR #39 |
+| Dependency security: OIW-922 (PR #39) is merged (next 16.3.8, sharp 0.35.5, and floors on dev transitive dependencies). The Dependabot API reported 0 open alerts on 2026-10-18. Re-check the count before quoting it; not used in a post. | PR #39 |
 | Licence is MIT. The data is synthetic. | LICENSE, README.md |
 | The README states that `pnpm eval` reports 1.000 on every dimension. No eval output is stored in the repo and it has not been re-run for this kit. Re-run it before quoting the number. | README.md |
 
@@ -157,7 +156,7 @@ documentation.
       shekibahmed/operations-intelligence-workbench`, then `claude plugin
       install oiw-pack-authoring@oiw`."
     - "`llms.txt` is at the repo root and at the live demo's `/llms.txt`."
-    - "Walkthrough videos with captions: #walkthroughs on the Pages site." (Only after the Pages site is live; use the `media-latest` release link until then.)
+    - "Walkthrough videos with captions: #walkthroughs on the Pages site."
     - "Six good-first-issue seeds are open as issues #40 to #45."
 13. **Before every post:** re-run `pnpm eval` if the post quotes it, run the
     link check and open every link in a private window (the Pages URLs
@@ -173,9 +172,8 @@ Live demo (free hosting, a guest workspace, no sign-in; the first load after idl
 All data is synthetic.
 ```
 
-The casebook line works only once the Pages site is live. Until then, delete
-that line or replace it with the repo link to
-`apps/web/public/casebook/a-142-repeat-fault.html` (which shows the source).
+The casebook line points to the live Pages site (200 on 2026-10-18). Re-check
+it before you post.
 
 ---
 
@@ -505,8 +503,8 @@ Live demo (free hosting, a guest workspace, no sign-in; the first load after idl
 ```
 
 Run the link check before posting. The walkthrough and casebook links are on the
-Pages site, which is not live yet (404 on 2026-10-18). Do not post those two
-lines until they resolve. Until then, post the repo and live demo lines only.
+Pages site, which returned 200 on 2026-10-18. Do not post a line whose link
+does not resolve.
 
 ---
 
