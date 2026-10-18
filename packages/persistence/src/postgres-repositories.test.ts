@@ -732,6 +732,13 @@ const blankApprovers = [
   ["tab and newline", "\t\r\n"],
   ["non-breaking space", "\u00a0"],
   ["zero-width space", "\u200b"],
+  ["figure space", "\u2007"],
+  ["narrow no-break space", "\u202f"],
+  ["ogham space mark", "\u1680"],
+  ["mongolian vowel separator", "\u180e"],
+  ["em space", "\u2003"],
+  ["ideographic space", "\u3000"],
+  ["next line", "\u0085"],
   ["mixed whitespace", " \u00a0\t\u200b\ufeff "],
 ] as const;
 
@@ -935,7 +942,11 @@ describe.sequential("OIW-919 migration 0004 applies to a database holding existi
     await migrate(scratch.database, { migrationsFolder: migrationsDirectory });
 
     const applied = await scratch.client<{ count: string }[]>`SELECT count(*)::text AS count FROM drizzle.__drizzle_migrations`;
-    expect(Number(applied[0]?.count)).toBe(5);
+    const journal = JSON.parse(await readFile(join(migrationsDirectory, "meta/_journal.json"), "utf8")) as {
+      entries: { tag: string }[];
+    };
+    expect(Number(applied[0]?.count)).toBe(journal.entries.length);
+    expect(journal.entries.map((entry) => entry.tag)).toContain("0004_approval_db_hardening");
     expect(await scratchRepositories.approvals.list(workspaceId)).toEqual([records.approval]);
     expect((await scratchRepositories.decisions.findById(workspaceId, records.decision.id))?.status).toBe("approved");
     expect(await scratchRepositories.auditEntries.list(workspaceId)).toEqual([records.auditEntry]);

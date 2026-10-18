@@ -474,7 +474,7 @@
       "checkConstraints": {
         "approvals_approver_not_blank": {
           "name": "approvals_approver_not_blank",
-          "value": "\"approvals\".\"approver\" ~ '[^[:space:]\\u00a0\\u200b\\u200c\\u200d\\u2060\\ufeff]'"
+          "value": "\"approvals\".\"approver\" ~ '[^[:space:]\\u00a0\\u0085\\u1680\\u180e\\u2000-\\u200f\\u2028-\\u202f\\u205f-\\u2060\\u3000\\ufeff]'"
         }
       },
       "isRLSEnabled": false

@@ -75,4 +75,109 @@ describe("Postgres workspace expiry entrypoint", () => {
     expect(await repositories.workspaces.findById(activeGuestId)).not.toBeNull();
     expect(await repositories.workspaces.findById(privateId)).not.toBeNull();
   });
+
+  it("expires a guest workspace that holds an approved Decision and its append-only Approval", async () => {
+    const workspaceId = randomUUID();
+    const sourceId = randomUUID();
+    const artifactId = randomUUID();
+    const segmentId = randomUUID();
+    const caseId = randomUUID();
+    const decisionId = randomUUID();
+    const at = "1999-01-01T00:00:00.000Z";
+    cleanupIds.push(workspaceId);
+
+    await repositories.workspaces.insert({
+      id: workspaceId,
+      name: "Expired synthetic guest with approval",
+      slug: `expired-approval-${workspaceId}`,
+      activePackId: null,
+      mode: "public-demo",
+      createdAt: at,
+      resetAt: null,
+      expiresAt: "2000-01-01T00:00:00.000Z",
+    });
+    await repositories.sources.insert(workspaceId, {
+      id: sourceId,
+      workspaceId,
+      sourceType: "message",
+      name: "Synthetic source",
+      configuration: {},
+      createdAt: at,
+    });
+    await repositories.artifacts.insert(workspaceId, {
+      id: artifactId,
+      workspaceId,
+      sourceId,
+      artifactType: "message",
+      mimeType: "text/plain",
+      receivedAt: at,
+      occurredAt: at,
+      rawReference: "synthetic/expiry-approval",
+      rawText: "Synthetic evidence only.",
+      checksum: "c".repeat(64),
+      metadata: {},
+      processingStatus: "processed",
+    });
+    await repositories.artifactSegments.insert(workspaceId, {
+      id: segmentId,
+      artifactId,
+      locator: { kind: "text-range", start: 0, end: 19 },
+      excerpt: "Synthetic evidence",
+      checksum: null,
+      createdAt: at,
+    });
+    await repositories.cases.insert(workspaceId, {
+      id: caseId,
+      workspaceId,
+      caseType: "test-case",
+      title: "Synthetic expiry case",
+      status: "open",
+      priority: "high",
+      severity: "critical",
+      owner: null,
+      dueAt: null,
+      relatedEntityIds: [],
+      relatedEventIds: [],
+      relatedSignalIds: [],
+      closureRequirementIds: [],
+      reEvaluationStatus: "current",
+      createdAt: at,
+      updatedAt: at,
+    });
+    await repositories.decisions.insert(workspaceId, {
+      id: decisionId,
+      workspaceId,
+      caseId,
+      decisionType: "test-decision",
+      proposal: "Synthetic controlled proposal",
+      rationale: "Expiry with an Approval present",
+      evidenceSegmentIds: [segmentId],
+      riskLevel: "critical",
+      approvalPolicyId: "human-required",
+      status: "awaiting-approval",
+      createdAt: at,
+      decidedAt: null,
+    });
+    await repositories.approvals.insert(workspaceId, {
+      id: randomUUID(),
+      workspaceId,
+      decisionId,
+      approver: "expiry-test-reviewer",
+      outcome: "approved",
+      comment: null,
+      approvedAt: at,
+    });
+    await connection.client.unsafe("UPDATE decisions SET status = 'approved', decided_at = $2 WHERE id = $1", [
+      decisionId,
+      at,
+    ]);
+    expect(await repositories.approvals.list(workspaceId)).toHaveLength(1);
+
+    const result = await new WorkspaceExpirySweep(repositories.workspaces).run("2001-01-01T00:00:00.000Z");
+
+    expect(result.deletedWorkspaceIds).toContain(workspaceId);
+    expect(await repositories.workspaces.findById(workspaceId)).toBeNull();
+    expect(await repositories.approvals.list(workspaceId)).toEqual([]);
+    expect(await repositories.decisions.list(workspaceId)).toEqual([]);
+  });
 });

@@ -564,7 +564,7 @@ export const approvals = pgTable(
     // tightens the human-approval trigger; drizzle cannot express triggers.
     check(
       "approvals_approver_not_blank",
-      sql`${table.approver} ~ '[^[:space:]\\u00a0\\u200b\\u200c\\u200d\\u2060\\ufeff]'`,
+      sql`${table.approver} ~ '[^[:space:]\\u00a0\\u0085\\u1680\\u180e\\u2000-\\u200f\\u2028-\\u202f\\u205f-\\u2060\\u3000\\ufeff]'`,
     ),
   ],
 );

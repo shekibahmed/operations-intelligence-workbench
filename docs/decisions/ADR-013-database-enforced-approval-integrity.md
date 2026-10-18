@@ -30,12 +30,20 @@ Migration `0004_approval_db_hardening` adds three controls.
 
 1. **Non-blank approver.** CHECK `approvals_approver_not_blank` requires at
    least one character that is not whitespace. The expression is
-   `approver ~ '[^[:space:] ​‌‍⁠﻿]'`. `btrim` was
+   `approver ~ '[^[:space:]\u00a0\u0085\u1680\u180e\u2000-\u200f\u2028-\u202f\u205f-\u2060\u3000\ufeff]'`
+   (regex escapes, so the migration, the drizzle schema and this record are
+   textually identical and contain no invisible characters). `btrim` was
    rejected because it strips only the space character, so tabs and newlines
-   would pass; the set above adds the non-breaking space and the common
-   zero-width/BOM characters that `[:space:]` does not cover in every locale.
-   The list is a deliberate floor, not a Unicode-complete definition of
-   "visible".
+   would pass. `[:space:]` alone was rejected because its coverage of non-ASCII
+   code points depends on the database locale (a C-locale server would not
+   treat U+3000 as blank), and even on `en_US.utf8` it omits U+2007 figure
+   space, U+202F narrow no-break space, U+1680 and U+180E. The explicit set adds
+   NEL, the no-break space, U+1680, U+180E, the U+2000-U+200F spaces and
+   zero-width characters, U+2028-U+202F, U+205F-U+2060, U+3000 and the BOM.
+   Blankness of any code point outside this set still relies on the server
+   locale's `[:space:]`. The list is a deliberate floor, not a Unicode-complete
+   definition of "visible"; `postgres-repositories.test.ts` pins each listed
+   class.
 2. **Defence in depth in the gate.** `require_human_approval_for_approved_decision`
    now also requires the qualifying Approval to have a non-blank approver, so the
    gate stays closed even if the CHECK were dropped or bypassed.
@@ -100,8 +108,8 @@ workspace expiry still works.
 ## Threat Model and Limits
 
 Defends against: a SQL writer (migration mistake, mis-scoped script, injected
-statement that reaches `UPDATE`/`DELETE`/`INSERT`) forging, editing or silently
-removing an individual Approval, or approving a Decision with a blank approver.
+statement that reaches `UPDATE`/`DELETE`/`INSERT`) forging, editing or deleting an
+individual Approval row, or approving a Decision with a blank approver.
 
 Does not defend against:
 
@@ -112,7 +120,10 @@ Does not defend against:
   Those are administrative acts and outside application-level threats.
 - Deleting a whole Decision (or its Case/Workspace) together with its
   Approvals. That removes the governed object, so no approved Decision is left
-  without an Approval, and the append-only audit entries remain.
+  without an Approval, but the cascade is not audited at the database level: an
+  ad-hoc `DELETE FROM decisions WHERE id = ...` removes the Approval with no
+  audit entry. This is a residual risk, accepted because the cascade is also the
+  legitimate path for expiry and reset.
 - An approver string that is non-blank but not a real person. Identity is the
   application's session boundary; the database only guarantees one is recorded.
 
