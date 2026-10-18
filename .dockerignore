@@ -13,3 +13,11 @@ tests
 docker-compose.yml
 Dockerfile
 .dockerignore
+site
+_site
+plugins
+.claude-plugin
+render.yaml
+.mcp.json
+docs/media/*.mp4
+docs/media/*.webm

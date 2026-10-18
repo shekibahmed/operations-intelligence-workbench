@@ -1,0 +1,63 @@
+name: Keep demo warm
+
+# Pings the hosted demo so Render's free web service is awake during the
+# hours people are likely to open outreach links. Owner setup:
+# docs/DEPLOYMENT.md §9. With no `RENDER_APP_URL` repository variable the
+# run is a successful no-op.
+#
+# Platform limits that shape this job:
+# - Render free web services spin down after 15 minutes without inbound
+#   traffic; a 10 minute cadence keeps an awake service awake. Waking one
+#   takes about a minute, so retries below allow for it.
+# - A spun-down service answers /robots.txt with a built-in "disallow all"
+#   WITHOUT waking the app, so we ping `/` (the landing page) instead.
+# - Render grants 750 free instance hours per workspace per month; 16 h/day
+#   of uptime is about 490 h, leaving headroom. Do not widen the window to
+#   24 h/day if other free services share the workspace.
+# - GitHub disables scheduled workflows in a public repository after 60 days
+#   without repository activity. Any commit, or re-enabling the workflow in
+#   the Actions tab, restarts the schedule.
+# - Neon free computes autosuspend after 5 minutes idle. This ping never
+#   touches the database, so Neon suspends normally and resumes on the first
+#   real request (a short extra delay on the first query).
+# - GitHub scheduled runs can be delayed or skipped under load; this is best
+#   effort, not a guarantee.
+on:
+  schedule:
+    # Every 10 minutes, 06:00-21:50 UTC.
+    - cron: "*/10 6-21 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      RENDER_APP_URL: ${{ vars.RENDER_APP_URL }}
+    steps:
+      - name: Ping demo
+        run: |
+          if [ -z "$RENDER_APP_URL" ]; then
+            echo "::notice::RENDER_APP_URL repository variable is not set; nothing to ping."
+            exit 0
+          fi
+          case "$RENDER_APP_URL" in
+            https://*) ;;
+            *) echo "::error::RENDER_APP_URL must start with https://"; exit 1 ;;
+          esac
+          url="${RENDER_APP_URL%/}/"
+          for attempt in 1 2 3 4 5 6; do
+            code=$(curl --silent --output /dev/null --write-out '%{http_code}' --max-time 75 "$url" || true)
+            echo "attempt $attempt: HTTP $code"
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 15
+          done
+          # Best effort: a warning keeps a Render or Neon outage from paging
+          # the repository owner every 10 minutes.
+          echo "::warning::Demo did not return HTTP 200 after 6 attempts (last: $code)."
