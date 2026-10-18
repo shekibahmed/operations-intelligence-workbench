@@ -1,0 +1,104 @@
+name: Pages
+
+# Publishes the static project site (site/ plus casebook, media, screenshots and
+# agent docs) to GitHub Pages. See site/README.md.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "scripts/site/**"
+      - "apps/web/public/casebook/**"
+      - "apps/web/public/media/**"
+      - "docs/media/**"
+      - "docs/screenshots/**"
+      - "docs/ARCHITECTURE.md"
+      - "docs/DOMAIN_MODEL.md"
+      - "docs/PACK_AUTHORING.md"
+      - "docs/EVALUATION.md"
+      - "AGENTS.md"
+      - "llms.txt"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # The github-pages environment only accepts deployments from main, but a
+  # release event runs on the release tag. Hand release events over to a
+  # workflow_dispatch run on main instead of deploying from the tag.
+  redispatch:
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  build:
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Walkthrough videos are release assets, not committed files. The site
+      # still builds (and hides the video blocks) when the release is absent.
+      - name: Download walkthrough videos
+        run: gh release download media-latest --dir .site-media --pattern '*.mp4' || echo no media release
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Build site
+        run: SITE_MEDIA_DIR=.site-media LIVE_DEMO_URL="$LIVE_DEMO_URL" pnpm site:build
+        env:
+          LIVE_DEMO_URL: ${{ vars.LIVE_DEMO_URL }}
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
