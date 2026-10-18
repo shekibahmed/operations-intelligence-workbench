@@ -283,8 +283,12 @@ route is outside the workspace shell).
   connectors are `aria-hidden`; no stage is conveyed by colour alone (the two
   human stages say so in text). Scroll-reveal uses
   `animation-timeline: view()` behind `@supports` and is static elsewhere.
+  The scroll-reveal slides cards up without changing opacity, so text is
+  never hidden before it scrolls into view and full-page captures and print
+  show every card.
   The evaluation figure carries a visible "on synthetic fixtures" qualifier
-  linking to `docs/EVALUATION.md`. No `<video>` is embedded; a text link
+  linking to `docs/EVALUATION.md`, plus a `Calculated` provenance badge
+  beside the value (§7.1). No `<video>` is embedded; a text link
   points to the hosted walkthroughs.
 
 ### 5.2 R2 — Scenario Selector (`/demo`)

@@ -143,6 +143,8 @@ const CAPABILITIES = [
   },
 ];
 
+// "1.000" mirrors the `pnpm eval` aggregate (docs/EVALUATION.md; checked
+// 2026-10-18) and the Stats band in components/marketing/Stats.tsx.
 const TRUST_CHIPS = [
   "Demo journey enforced in CI",
   "Evaluation suite scores 1.000",

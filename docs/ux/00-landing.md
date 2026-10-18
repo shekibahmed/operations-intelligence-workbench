@@ -52,6 +52,11 @@ Between the hero copy and the product screenshot sits a pipeline figure:
 - Stages stagger in and connectors draw in under 2 s; a small packet then
   loops every 10 s, lighting each stage as it passes.
 - An "at a glance" band of four figures follows the hero (scenario packs,
-  lenses, pipeline stages, evaluation score on synthetic fixtures).
+  lenses, pipeline stages, evaluation score on synthetic fixtures). The
+  evaluation score carries a `Calculated` provenance badge beside it
+  (UX_SPEC §7.1); the other three are structural counts, not metrics.
+- Scroll-reveal on the "How it works" and capability cards only slides them
+  up (translate, no opacity), so every card is visible in full-page captures
+  and print.
 - With `prefers-reduced-motion: reduce` the diagram is fully static and
   complete; the packet is hidden and figures show their final values.

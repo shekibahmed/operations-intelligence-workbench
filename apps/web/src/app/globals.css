@@ -375,7 +375,9 @@ mark {
 /*
  * Scroll-reveal for the "How it works" and capability cards. Progressive
  * enhancement only: browsers without scroll-driven animations (and
- * reduced-motion visitors) get the static cards.
+ * reduced-motion visitors) get the static cards. The cards slide up into
+ * place but are never hidden, so text is always present and full-page
+ * captures and print show every card.
  */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
@@ -387,13 +389,13 @@ mark {
   }
 }
 
+/* Translate only, never opacity: cards stay fully visible (and legible to
+   axe, full-page captures and print) before they scroll into view. */
 @keyframes reveal-up {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(24px);
   }
   to {
-    opacity: 1;
     transform: none;
   }
 }

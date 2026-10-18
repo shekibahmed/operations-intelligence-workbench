@@ -1,9 +1,19 @@
 import type { ReactNode } from "react";
 
 import { CountUp } from "@/components/marketing/CountUp";
+import { ProvenanceBadge } from "@/components/widgets/ProvenanceBadge";
 
 const EVALUATION_DOC =
   "https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/EVALUATION.md";
+
+/**
+ * Aggregate score of `pnpm eval` (docs/EVALUATION.md): every dimension 1.000
+ * against all three packs, run 2026-10-18 (OIW-910). The score is Calculated
+ * (deterministic harness over synthetic fixtures). Update this constant, the
+ * page trust chip and the social image together when the harness result
+ * changes.
+ */
+const EVALUATION_SCORE = 1;
 
 interface StatsProps {
   packCount: number;
@@ -11,12 +21,21 @@ interface StatsProps {
   stageCount: number;
 }
 
-function Stat({ label, children }: { label: ReactNode; children: ReactNode }) {
+function Stat({
+  label,
+  children,
+  provenance,
+}: {
+  label: ReactNode;
+  children: ReactNode;
+  provenance?: ReactNode;
+}) {
   return (
     <div className="flex flex-col-reverse justify-end gap-1">
       <dt className="text-sm text-ink-muted">{label}</dt>
-      <dd className="text-3xl font-semibold tabular-nums tracking-tight text-ink sm:text-4xl">
-        {children}
+      <dd className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-3xl font-semibold tabular-nums tracking-tight text-ink sm:text-4xl">
+        <span>{children}</span>
+        {provenance ? <span className="text-sm font-normal">{provenance}</span> : null}
       </dd>
     </div>
   );
@@ -37,6 +56,7 @@ export function Stats({ packCount, lensCount, stageCount }: StatsProps) {
           <CountUp value={stageCount} />
         </Stat>
         <Stat
+          provenance={<ProvenanceBadge classification="calculated" />}
           label={
             <>
               evaluation score on synthetic fixtures (
@@ -50,7 +70,7 @@ export function Stats({ packCount, lensCount, stageCount }: StatsProps) {
             </>
           }
         >
-          <CountUp value={1} decimals={3} />
+          <CountUp value={EVALUATION_SCORE} decimals={3} />
         </Stat>
       </dl>
     </section>
