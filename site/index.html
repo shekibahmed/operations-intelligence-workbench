@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operations Intelligence Workbench</title>
+<meta name="description" content="An open-source reference platform where AI proposes, a person approves and the system enforces it. Evidence-cited extraction, deterministic rules, recorded approvals and an audit trail, demonstrated on synthetic data.">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://shekibahmed.github.io/operations-intelligence-workbench/">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/site.css">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Operations Intelligence Workbench">
+<meta property="og:title" content="Operations Intelligence Workbench: AI proposes, a person approves, the system enforces it">
+<meta property="og:description" content="Open-source reference platform for evidence-backed operational decisions. Watch the pipeline, read a recorded case, explore the code. Synthetic data only.">
+<meta property="og:url" content="https://shekibahmed.github.io/operations-intelligence-workbench/">
+<meta property="og:image" content="https://shekibahmed.github.io/operations-intelligence-workbench/img/leadership-dashboard.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="The Leadership dashboard of the Operations Intelligence Workbench demo, showing critical signals, open cases and a labelled hypothetical downtime estimate.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Operations Intelligence Workbench">
+<meta name="twitter:description" content="AI proposes, a person approves, the system enforces it. Open source, synthetic data, MIT licensed.">
+<meta name="twitter:image" content="https://shekibahmed.github.io/operations-intelligence-workbench/img/leadership-dashboard.png">
+<meta name="twitter:image:alt" content="The Leadership dashboard of the Operations Intelligence Workbench demo.">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap top__row">
+    <a class="brand" href="#top" aria-label="Operations Intelligence Workbench, top of page">
+      <svg class="brand__mark" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="8" fill="#1f4fd8"/><circle cx="9" cy="16" r="2.6" fill="#fff"/><circle cx="16" cy="16" r="2.6" fill="#fff" opacity=".75"/><circle cx="23" cy="16" r="2.6" fill="#fff" opacity=".5"/></svg>
+      <span class="brand__name">Operations Intelligence Workbench</span>
+      <span class="brand__short" aria-hidden="true">OIW</span>
+    </a>
+    <nav class="top__nav" aria-label="Page sections">
+      <a href="#pipeline">Pipeline</a>
+      <!--requires id=nav-walk any=media/trailer.mp4,media/asset-reliability-tour.mp4,media/process-exceptions-tour.mp4,media/document-assurance-tour.mp4--><a href="#walkthroughs">Walkthroughs</a><!--/requires id=nav-walk-->
+      <a href="#scenarios">Scenarios</a>
+      <a href="#honest">Trust</a>
+      <a href="#agents">For agents</a>
+      <a href="https://github.com/shekibahmed/operations-intelligence-workbench">GitHub</a>
+    </nav>
+    <!--requires id=music-ui all=media/ambience.mp3-->
+    <div class="music">
+      <button type="button" class="music__btn" id="music-toggle" aria-pressed="false" hidden>Background music: off</button>
+      <audio id="music-audio" preload="none" loop src="media/ambience.mp3"></audio>
+      <noscript><audio controls preload="none" loop src="media/ambience.mp3" aria-label="Background music"></audio></noscript>
+    </div>
+    <!--/requires id=music-ui-->
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <p class="eyebrow rise" style="--d:0ms">Open source &middot; MIT licensed &middot; synthetic data</p>
+    <h1 class="rise" style="--d:80ms"><span>AI proposes.</span> <span class="hl">A person approves.</span> <span>The system enforces it.</span></h1>
+    <p class="hero__lede rise" style="--d:160ms">The Operations Intelligence Workbench turns messages, spreadsheets and documents into evidence-cited observations, cases and decisions. Models and rules propose. People approve. Every step is audited.</p>
+    <div class="hero__cta rise" style="--d:240ms">
+      <a class="btn btn--primary" href="{{LIVE_DEMO_URL}}">{{LIVE_DEMO_LABEL}}</a>
+      <!--requires id=cta-trailer all=media/trailer.mp4--><a class="btn btn--ghost" href="#trailer"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Watch the 25-second trailer</a><!--/requires id=cta-trailer-->
+      <a class="btn btn--ghost" href="casebook/a-142-repeat-fault.html">Read the casebook</a>
+      <a class="btn btn--ghost" href="https://github.com/shekibahmed/operations-intelligence-workbench"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .2a8 8 0 0 0-2.5 15.6c.4.1.5-.2.5-.4v-1.5c-2.2.5-2.7-1-2.7-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.900.9 2.300.7.1-.5.3-.9.5-1.100-1.800-.2-3.600-.9-3.600-4 0-.9.3-1.600.8-2.100-.1-.2-.4-1 .1-2.100 0 0 .7-.2 2.2.8a7.500 7.500 0 0 1 4 0c1.500-1 2.2-.8 2.2-.8.400 1.100.2 1.900.1 2.100.5.600.8 1.300.8 2.100 0 3.100-1.900 3.800-3.700 4 .3.3.6.8.6 1.500v2.2c0 .2.1.5.6.4A8 8 0 0 0 8 .2z"/></svg>GitHub</a>
+    </div>
+    <p class="hero__note rise" style="--d:300ms">Everything here uses synthetic data. The demo&rsquo;s extraction provider is deterministic, so there are no live model calls.</p>
+
+    <figure class="frame frame--hero rise" style="--d:380ms">
+      <div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span>Leadership view &middot; synthetic workspace</span></div>
+      <img src="img/leadership-dashboard.png" width="1280" height="720" alt="The Leadership dashboard after an approval: critical signals, open reliability cases, pending decisions, cases by severity, a repeat-fault trend and a downtime estimate labelled hypothetical rather than observed.">
+    </figure>
+  </div>
+</section>
+
+<section class="strip" aria-label="Key facts">
+  <ul class="wrap strip__list">
+    <li><strong>Synthetic data only</strong><span>Fictional sites, assets and people</span></li>
+    <li><strong>Deterministic demo provider</strong><span>No live model call or API key</span></li>
+    <li><strong>Approval bypass tested</strong><span>Adversarial cases run in CI</span></li>
+    <li><strong>MIT licensed</strong><span>Read it, run it, fork it</span></li>
+  </ul>
+</section>
+
+<section class="pipeline" id="pipeline" aria-labelledby="pipeline-h">
+  <div class="wrap">
+    <div class="section-head section-head--dark">
+      <p class="eyebrow eyebrow--dark">The pipeline</p>
+      <h2 id="pipeline-h">From a chat message to an approved decision, in nine steps</h2>
+      <p class="lead">Follow one report through the system. Machines propose at the edges, a person decides at the two gates that matter, and the rest is recorded and enforced.</p>
+    </div>
+
+    <div class="pipe" data-pipe>
+      <div class="pipe__stage">
+        <div class="pipe__line" aria-hidden="true"></div>
+        <div class="pipe__packet" aria-hidden="true"><i></i></div>
+        <ol class="pipe__list">
+          <li class="stage stage--system" style="--i:0">
+            <button type="button" class="stage__btn" aria-describedby="s1d"><span class="stage__node"><i class="stage__ring"></i><b>1</b></span><span class="stage__text"><span class="stage__name">Source</span><span class="stage__kind">System</span><span class="stage__desc" id="s1d">Messages, CSVs, JSON records and PDFs arrive from where work already happens.</span></span></button>
+          </li>
+          <li class="stage stage--system" style="--i:1">
+            <button type="button" class="stage__btn" aria-describedby="s2d"><span class="stage__node"><i class="stage__ring"></i><b>2</b></span><span class="stage__text"><span class="stage__name">Artifact</span><span class="stage__kind">System</span><span class="stage__desc" id="s2d">Each input is stored unchanged, with exact, addressable text segments.</span></span></button>
+          </li>
+          <li class="stage stage--ai" style="--i:2">
+            <button type="button" class="stage__btn" aria-describedby="s3d"><span class="stage__node"><i class="stage__ring"></i><b>3</b></span><span class="stage__text"><span class="stage__name">Observation</span><span class="stage__kind">AI proposes</span><span class="stage__desc" id="s3d">A validated provider proposes fields, each with cited evidence and a confidence.</span></span></button>
+          </li>
+          <li class="stage stage--person" style="--i:3">
+            <button type="button" class="stage__btn" aria-describedby="s4d"><span class="stage__node"><i class="stage__ring"></i><b>4</b></span><span class="stage__text"><span class="stage__name">Review</span><span class="stage__kind">Person</span><span class="stage__desc" id="s4d">Uncertain fields wait until a person accepts, corrects or rejects them.</span></span></button>
+          </li>
+          <li class="stage stage--system" style="--i:4">
+            <button type="button" class="stage__btn" aria-describedby="s5d"><span class="stage__node"><i class="stage__ring"></i><b>5</b></span><span class="stage__text"><span class="stage__name">Event</span><span class="stage__kind">System</span><span class="stage__desc" id="s5d">Accepted observations resolve to known entities and assemble into events.</span></span></button>
+          </li>
+          <li class="stage stage--system" style="--i:5">
+            <button type="button" class="stage__btn" aria-describedby="s6d"><span class="stage__node"><i class="stage__ring"></i><b>6</b></span><span class="stage__text"><span class="stage__name">Rule</span><span class="stage__kind">System</span><span class="stage__desc" id="s6d">Deterministic rules fire on a closed set of facts and show their working.</span></span></button>
+          </li>
+          <li class="stage stage--system" style="--i:6">
+            <button type="button" class="stage__btn" aria-describedby="s7d"><span class="stage__node"><i class="stage__ring"></i><b>7</b></span><span class="stage__text"><span class="stage__name">Case and decision</span><span class="stage__kind">System</span><span class="stage__desc" id="s7d">Rules open a case and propose a decision. They cannot approve it.</span></span></button>
+          </li>
+          <li class="stage stage--person" style="--i:7">
+            <button type="button" class="stage__btn" aria-describedby="s8d"><span class="stage__node"><i class="stage__ring"></i><b>8</b></span><span class="stage__text"><span class="stage__name">Approval</span><span class="stage__kind">Person</span><span class="stage__desc" id="s8d">A high-risk decision stays a proposal until a person&rsquo;s approval is recorded.</span></span></button>
+          </li>
+          <li class="stage stage--system" style="--i:8">
+            <button type="button" class="stage__btn" aria-describedby="s9d"><span class="stage__node"><i class="stage__ring"></i><b>9</b></span><span class="stage__text"><span class="stage__name">Audit</span><span class="stage__kind">System</span><span class="stage__desc" id="s9d">Every material step is appended to a trail with actor, subject and time.</span></span></button>
+          </li>
+        </ol>
+      </div>
+      <div class="pipe__foot">
+        <p class="pipe__legend" aria-label="Legend">
+          <span class="chip chip--ai">AI proposes</span>
+          <span class="chip chip--person">A person decides</span>
+          <span class="chip chip--system">The system records and enforces</span>
+        </p>
+        <p class="pipe__hint">Hover, focus or tap a step to read what it does. The packet stops if your system asks for reduced motion.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--requires id=walk any=media/trailer.mp4,media/asset-reliability-tour.mp4,media/process-exceptions-tour.mp4,media/document-assurance-tour.mp4-->
+<section class="walk" id="walkthroughs" aria-labelledby="walk-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Walkthroughs</p>
+      <h2 id="walk-h">Watch it work before you install anything</h2>
+      <p class="lead">A short trailer and one guided tour per scenario, recorded against the synthetic demo. Nothing plays until you press play, and captions are on by default.</p>
+    </div>
+
+    <!--requires id=v-trailer all=media/trailer.mp4-->
+    <figure class="video video--trailer" id="trailer">
+      <div class="frame frame--video">
+        <video controls preload="none" playsinline poster="media/poster-trailer.jpg" aria-label="25-second trailer">
+          <source src="media/trailer.mp4" type="video/mp4">
+          <!--requires id=t-trailer all=media/trailer.vtt--><track kind="captions" srclang="en" label="English" default src="media/trailer.vtt"><!--/requires id=t-trailer-->
+        </video>
+      </div>
+      <figcaption><strong>Trailer</strong> &middot; 25 seconds. The pipeline, one case, one approval.</figcaption>
+    </figure>
+    <!--/requires id=v-trailer-->
+
+    <div class="video-grid">
+      <!--requires id=v-ar all=media/asset-reliability-tour.mp4-->
+      <figure class="video" id="tour-asset-reliability">
+        <div class="frame frame--video">
+          <video controls preload="none" playsinline poster="media/poster-asset-reliability.jpg" aria-label="Asset Reliability guided tour">
+            <source src="media/asset-reliability-tour.mp4" type="video/mp4">
+            <!--requires id=t-ar all=media/asset-reliability-tour.vtt--><track kind="captions" srclang="en" label="English" default src="media/asset-reliability-tour.vtt"><!--/requires id=t-ar-->
+          </video>
+        </div>
+        <figcaption><strong>Asset Reliability</strong> &middot; a repeat brake fault, from chat message to removal from service.</figcaption>
+      </figure>
+      <!--/requires id=v-ar-->
+      <!--requires id=v-pe all=media/process-exceptions-tour.mp4-->
+      <figure class="video" id="tour-process-exceptions">
+        <div class="frame frame--video">
+          <video controls preload="none" playsinline poster="media/poster-process-exceptions.jpg" aria-label="Process Exceptions guided tour">
+            <source src="media/process-exceptions-tour.mp4" type="video/mp4">
+            <!--requires id=t-pe all=media/process-exceptions-tour.vtt--><track kind="captions" srclang="en" label="English" default src="media/process-exceptions-tour.vtt"><!--/requires id=t-pe-->
+          </video>
+        </div>
+        <figcaption><strong>Process Exceptions</strong> &middot; a viscosity deviation that turns out to span two batches.</figcaption>
+      </figure>
+      <!--/requires id=v-pe-->
+      <!--requires id=v-da all=media/document-assurance-tour.mp4-->
+      <figure class="video" id="tour-document-assurance">
+        <div class="frame frame--video">
+          <video controls preload="none" playsinline poster="media/poster-document-assurance.jpg" aria-label="Document Assurance guided tour">
+            <source src="media/document-assurance-tour.mp4" type="video/mp4">
+            <!--requires id=t-da all=media/document-assurance-tour.vtt--><track kind="captions" srclang="en" label="English" default src="media/document-assurance-tour.vtt"><!--/requires id=t-da-->
+          </video>
+        </div>
+        <figcaption><strong>Document Assurance</strong> &middot; a liability-cap conflict in a services agreement.</figcaption>
+      </figure>
+      <!--/requires id=v-da-->
+    </div>
+  </div>
+</section>
+<!--/requires id=walk-->
+
+<section class="scenarios" id="scenarios" aria-labelledby="scen-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Three scenarios, one core</p>
+      <h2 id="scen-h">Same engine, different industries</h2>
+      <p class="lead">Industry vocabulary, schemas, rules and workflows live in swappable Scenario Packs. The core has no industry logic in it, and a check in CI scans for that.</p>
+    </div>
+    <ul class="cards">
+      <li class="card">
+        <svg class="card__icon" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="10" fill="#edf2fe"/><path d="M11 21.500l6.400-6.400a4 4 0 0 0 5-5l-2.600 2.600-2.300-.5-.5-2.300 2.600-2.600a4 4 0 0 0-5 5L9.2 19.700a1.800 1.800 0 0 0 2.600 2.600z" fill="none" stroke="#1a41b5" stroke-width="1.600" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <h3>Asset Reliability</h3>
+        <p>A recurring brake fault on asset A-142 at a fictional distribution center, from an informal chat report to a safety-critical repeat occurrence.</p>
+        <p class="card__gate"><span>A person approves</span>removing an asset from service</p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/asset-reliability/README.md">Pack on GitHub</a><!--requires id=c-ar all=media/asset-reliability-tour.mp4--> <a href="#tour-asset-reliability">Watch the tour</a><!--/requires id=c-ar--></p>
+      </li>
+      <li class="card">
+        <svg class="card__icon" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="10" fill="#fdf3e2"/><path d="M13 8h6m-5 0v6.2L9.600 21a2.2 2.2 0 0 0 1.900 3.300h9a2.2 2.2 0 0 0 1.900-3.300L18 14.2V8m-6.600 10h9.2" fill="none" stroke="#8a4a06" stroke-width="1.600" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <h3>Process Exceptions</h3>
+        <p>A viscosity deviation on supplier lot KM-LOT-448 at a fictional processing plant, escalating across two batches into a cross-batch pattern.</p>
+        <p class="card__gate"><span>A person approves</span>holding the affected output</p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/process-exceptions/README.md">Pack on GitHub</a><!--requires id=c-pe all=media/process-exceptions-tour.mp4--> <a href="#tour-process-exceptions">Watch the tour</a><!--/requires id=c-pe--></p>
+      </li>
+      <li class="card">
+        <svg class="card__icon" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="10" fill="#e5f5ea"/><path d="M11 8.500h7l4 4V23a1.500 1.500 0 0 1-1.500 1.500h-9.500A1.500 1.500 0 0 1 9.500 23V10A1.500 1.500 0 0 1 11 8.500zM18 8.500v4h4M12.500 17h7m-7 3h5" fill="none" stroke="#196b31" stroke-width="1.600" stroke-linejoin="round" stroke-linecap="round"/></svg>
+        <h3>Document Assurance</h3>
+        <p>A liability-cap conflict in a fictional master services agreement, from contract execution to a formally proposed exception.</p>
+        <p class="card__gate"><span>A person approves</span>accepting a tracked exception</p>
+        <p class="card__links"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/scenario-packs/document-assurance/README.md">Pack on GitHub</a><!--requires id=c-da all=media/document-assurance-tour.mp4--> <a href="#tour-document-assurance">Watch the tour</a><!--/requires id=c-da--></p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="honest" id="honest" aria-labelledby="honest-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Trust</p>
+      <h2 id="honest-h">How the AI is kept honest</h2>
+      <p class="lead">These are screens from the running demo. Each one shows a control that stops a model&rsquo;s guess from quietly becoming a fact.</p>
+    </div>
+
+    <div class="rows">
+      <article class="row">
+        <div class="row__text">
+          <h3>Every claim cites its evidence, and uncertainty goes to a person</h3>
+          <ul class="ticks">
+            <li><strong>Evidence and confidence.</strong> Each extracted field keeps the exact source segment, the extractor&rsquo;s identity and version, and a confidence. With no support, it says so instead of inventing a value.</li>
+            <li><strong>Review queue.</strong> Low-confidence or ambiguous fields wait. The reviewer sees the raw source, the candidate value and the cited span, then accepts, corrects or rejects.</li>
+          </ul>
+        </div>
+        <figure class="frame row__shot">
+          <div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span>Review queue</span></div>
+          <img loading="lazy" src="img/review-queue.png" width="1280" height="720" alt="A review queue item showing the raw chat source with the evidence span underlined, the extracted value, a confidence of 70 percent, the extractor version, and Accept, Correct and Reject actions.">
+        </figure>
+      </article>
+
+      <article class="row row--flip">
+        <div class="row__text">
+          <h3>Rules are deterministic and show their working</h3>
+          <ul class="ticks">
+            <li><strong>Closed fact catalogue.</strong> Rules cannot run arbitrary expressions. They read named facts the pack defines.</li>
+            <li><strong>Visible trace.</strong> Every firing shows the facts it evaluated and the condition tree that matched, so a reviewer can see exactly why a case was opened.</li>
+          </ul>
+        </div>
+        <figure class="frame row__shot">
+          <div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span>Rule trace</span></div>
+          <img loading="lazy" src="img/rule-trace.png" width="1280" height="720" alt="The fact evaluation and passing condition tree behind a decision proposal.">
+        </figure>
+      </article>
+
+      <article class="row">
+        <div class="row__text">
+          <h3>Approval is a recorded human act</h3>
+          <ul class="ticks">
+            <li><strong>Proposals only.</strong> Providers and rules can propose a decision. They cannot approve, execute or change workflow state.</li>
+            <li><strong>Enforced, then attacked.</strong> A high- or critical-risk decision cannot reach approved without a separate approval record. This is enforced in application code and the database, and tested with bypass, replay and injection attempts.</li>
+          </ul>
+        </div>
+        <figure class="frame row__shot">
+          <div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span>Decision awaiting approval</span></div>
+          <img loading="lazy" src="img/decision-card.png" width="1280" height="720" alt="A critical-risk decision to remove an asset from service, with its evidence links, the triggering rule, the required approver role, and Approve, Reject and Request more information actions.">
+        </figure>
+      </article>
+
+      <article class="row row--flip">
+        <div class="row__text">
+          <h3>Everything lands in an audit trail</h3>
+          <ul class="ticks">
+            <li><strong>Append-only.</strong> Actor, subject, timestamp and causal links for each material step.</li>
+            <li><strong>Corrections add, never rewrite.</strong> A correction appends a new entry and re-evaluates. History stays as it was.</li>
+          </ul>
+        </div>
+        <figure class="frame row__shot">
+          <div class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><span>Audit explorer</span></div>
+          <img loading="lazy" src="img/audit-explorer.png" width="1280" height="720" alt="The audit explorer listing decision approved, rule evaluated and case outcome entries, each with actor and subject, plus CSV and JSON export buttons.">
+        </figure>
+      </article>
+    </div>
+
+    <aside class="straight" aria-labelledby="straight-h">
+      <h3 id="straight-h">Straight answers about what this is</h3>
+      <ul>
+        <li><strong>All data is synthetic.</strong> Sites, assets, people and documents are fictional.</li>
+        <li><strong>The demo provider is deterministic.</strong> Each fixture maps to a recorded expected extraction, so there is no live model call and no API key. The interface can take a live provider; none is wired in.</li>
+        <li><strong>Demo approvals are scripted.</strong> They show the control working inside a synthetic app. They do not stand for physical work or measured results.</li>
+        <li><strong>No customer results or ROI claims.</strong> Dashboard figures are labelled observed, calculated, estimated or hypothetical, and a hypothetical figure is never shown as an outcome.</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section class="casebook" id="casebook" aria-labelledby="case-h">
+  <div class="wrap">
+    <div class="casebook__card">
+      <div>
+        <p class="eyebrow">No setup</p>
+        <h2 id="case-h">Read one case from first message to approval</h2>
+        <p>The evidence casebook follows a single synthetic case: the original reports, an uncertain extraction, scripted review, a deterministic rule, a proposed decision, a recorded approval and the work still open. The supporting files are embedded, so it reads offline.</p>
+        <p class="casebook__cta"><a class="btn btn--primary" href="casebook/a-142-repeat-fault.html">Open the casebook</a></p>
+      </div>
+      <ul class="casebook__list" aria-label="What the casebook covers">
+        <li>Original reports, quoted</li>
+        <li>Uncertain extraction and review</li>
+        <li>Rule trace and proposed decision</li>
+        <li>Recorded approval and remaining work</li>
+        <li>Checksummed supporting evidence</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="agents" id="agents" aria-labelledby="agents-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">For agents and builders</p>
+      <h2 id="agents-h">Built to be read, tested against and extended</h2>
+      <p class="lead">If you build agents or extractors, the repository gives you an index to read, tools to call and a corpus of awkward inputs to test against.</p>
+    </div>
+
+    <div class="agent-grid">
+      <article class="panel">
+        <h3>llms.txt</h3>
+        <p>A machine-readable index of the docs, scenario packs and agent entry points, in the llmstxt.org format.</p>
+        <!--requires id=a-llms all=llms.txt--><p><a href="llms.txt"><code>llms.txt</code></a></p><!--/requires id=a-llms-->
+        <p class="small">Raw Markdown for agents: <a href="AGENTS.md"><code>AGENTS.md</code></a>, <a href="docs/ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a>, <a href="docs/DOMAIN_MODEL.md"><code>DOMAIN_MODEL.md</code></a>, <a href="docs/PACK_AUTHORING.md"><code>PACK_AUTHORING.md</code></a>, <a href="docs/EVALUATION.md"><code>EVALUATION.md</code></a>.</p>
+      </article>
+
+      <article class="panel">
+        <h3>MCP server</h3>
+        <p>Read-mostly tools over scenario packs, fixtures and the evaluation harness, over stdio. Clone the repo, run <code>pnpm build</code>, then register it:</p>
+        <pre tabindex="0"><code>{
+  "mcpServers": {
+    "oiw": {
+      "command": "node",
+      "args": ["packages/mcp-server/dist/cli.js"]
+    }
+  }
+}</code></pre>
+        <p class="small"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/tree/main/packages/mcp-server">Server README and client configs</a></p>
+      </article>
+
+      <article class="panel">
+        <h3>Claude Code plugin</h3>
+        <p>A pack-authoring skill that walks an agent through scaffold, author, validate and evaluate.</p>
+        <pre tabindex="0"><code>claude plugin marketplace add shekibahmed/operations-intelligence-workbench
+claude plugin install oiw-pack-authoring@oiw</code></pre>
+      </article>
+
+      <article class="panel">
+        <h3>Author a pack</h3>
+        <p>A new industry is a directory, not a fork. The guide documents the validator-enforced contract in authoring order, with a scaffold command and a template that already validates.</p>
+        <pre tabindex="0"><code>pnpm pack:scaffold my-pack --name "My Pack" \
+  --description "What it covers"
+pnpm validate:packs &amp;&amp; pnpm eval --pack my-pack</code></pre>
+        <p class="small"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/PACK_AUTHORING.md">Pack authoring guide</a></p>
+      </article>
+
+      <article class="panel">
+        <h3>Adversarial fixture corpus</h3>
+        <p>Every pack ships edge-case artifacts with gold outcomes: missing identifiers, conflicting dates, ambiguous references, negation, duplicates, and prompt-injection text hidden in chat, CSV, JSON and PDF content. Use them to test your own extractors.</p>
+        <p class="small"><a href="https://github.com/shekibahmed/operations-intelligence-workbench/tree/main/scenario-packs/asset-reliability/fixtures/edge-cases">Browse the edge cases</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="run" id="run" aria-labelledby="run-h">
+  <div class="wrap run__inner">
+    <div>
+      <p class="eyebrow">Run it</p>
+      <h2 id="run-h">Four commands to your own copy</h2>
+      <p>The guided tour creates an isolated, seeded guest workspace on first click. You need Node 22, pnpm 11 and Docker for the local Postgres.</p>
+      <p class="run__cta"><a class="btn btn--primary" href="{{LIVE_DEMO_URL}}">{{LIVE_DEMO_LABEL}}</a></p>
+    </div>
+    <pre tabindex="0"><code>git clone https://github.com/shekibahmed/operations-intelligence-workbench.git
+cd operations-intelligence-workbench
+pnpm install &amp;&amp; docker compose up -d &amp;&amp; pnpm db:migrate
+pnpm dev   # then open http://localhost:3000/demo</code></pre>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__grid">
+    <div>
+      <p class="foot__brand">Operations Intelligence Workbench</p>
+      <p class="small">Built by Shekib and <a href="https://bekaamchor.com">Kaamchor</a>. Released under the <a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/LICENSE">MIT License</a>.</p>
+      <p class="small">Contact: <a href="mailto:hello@bekaamchor.com">hello@bekaamchor.com</a></p>
+    </div>
+    <div>
+      <p class="small">All data on this site and in the demo is synthetic. This site sets no cookies and runs no analytics or third-party scripts.</p>
+      <!--requires id=f-credit all=media/ambience.mp3--><p class="small">Optional background music is a public-domain recording, off by default. See the <a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/media/CREDITS.md">credits</a>.</p><!--/requires id=f-credit-->
+    </div>
+    <ul class="foot__links">
+      <li><a href="https://github.com/shekibahmed/operations-intelligence-workbench">GitHub repository</a></li>
+      <li><a href="casebook/a-142-repeat-fault.html">Evidence casebook</a></li>
+      <li><a href="https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/ARCHITECTURE.md">Architecture</a></li>
+      <li><a href="https://bekaamchor.com">Kaamchor</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

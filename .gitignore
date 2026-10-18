@@ -14,3 +14,5 @@ playwright-report/
 test-results/
 .vercel/
 gui-test-screenshots/
+_site/
+.site-media/
