@@ -15,6 +15,7 @@ const corePackageDirectories = [
   "packages/rules",
   "packages/audit",
   "packages/evals",
+  "packages/mcp-server",
 ];
 
 const prohibitedIndustryTerms = [
