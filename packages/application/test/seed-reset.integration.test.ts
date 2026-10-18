@@ -170,6 +170,67 @@ describe("asset-reliability guest seed and reset", () => {
       initialA.sources.length + 1,
     );
 
+    // An approved Decision with its append-only Approval must not block reset.
+    const seededArtifact = initialA.artifacts[0];
+    if (seededArtifact === undefined) throw new Error("Seed produced no Artifact");
+    const segmentId = randomUUID();
+    const caseId = randomUUID();
+    await repositories.artifactSegments.insert(workspaceA.id, {
+      id: segmentId,
+      artifactId: seededArtifact.id,
+      locator: { kind: "text-range", start: 0, end: 1 },
+      excerpt: seededArtifact.rawText.slice(0, 1),
+      checksum: null,
+      createdAt: "2026-08-31T10:31:00.000Z",
+    });
+    await repositories.cases.insert(workspaceA.id, {
+      id: caseId,
+      workspaceId: workspaceA.id,
+      caseType: "reset-check",
+      title: "Synthetic reset case",
+      status: "open",
+      priority: "high",
+      severity: "critical",
+      owner: null,
+      dueAt: null,
+      relatedEntityIds: [],
+      relatedEventIds: [],
+      relatedSignalIds: [],
+      closureRequirementIds: [],
+      reEvaluationStatus: "current",
+      createdAt: "2026-08-31T10:32:00.000Z",
+      updatedAt: "2026-08-31T10:32:00.000Z",
+    });
+    const decisionId = randomUUID();
+    await repositories.decisions.insert(workspaceA.id, {
+      id: decisionId,
+      workspaceId: workspaceA.id,
+      caseId,
+      decisionType: "reset-check",
+      proposal: "Synthetic controlled proposal",
+      rationale: "Reset with an Approval present",
+      evidenceSegmentIds: [segmentId],
+      riskLevel: "critical",
+      approvalPolicyId: "human-required",
+      status: "awaiting-approval",
+      createdAt: "2026-08-31T10:35:00.000Z",
+      decidedAt: null,
+    });
+    await repositories.approvals.insert(workspaceA.id, {
+      id: randomUUID(),
+      workspaceId: workspaceA.id,
+      decisionId,
+      approver: "reset-test-reviewer",
+      outcome: "approved",
+      comment: null,
+      approvedAt: "2026-08-31T10:36:00.000Z",
+    });
+    await testConnection.client.unsafe("UPDATE decisions SET status = 'approved', decided_at = $2 WHERE id = $1", [
+      decisionId,
+      "2026-08-31T10:36:00.000Z",
+    ]);
+    expect(await repositories.approvals.list(workspaceA.id)).toHaveLength(1);
+
     const reset = await resetService.reset(workspaceA, pack, loadFixtureSet);
     expect(reset).toMatchObject({
       fixtureSet: "demo",
