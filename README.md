@@ -190,15 +190,21 @@ the application and contract layers:
 - two parallel opposing approval attempts end with one Approval and one final
   status.
 
-At the database layer, the trigger rejects a raw `UPDATE` of Decision Y to
-`approved` even when Decision X is approved. It guards direct writes to
-`decisions.status` only.
+At the database layer (migration `0004`, [ADR-013](docs/decisions/ADR-013-database-enforced-approval-integrity.md)):
 
-The honest limit: the database does not yet stop a writer who can also write
-the `approvals` table directly. Such a writer can re-point or delete an Approval
-or insert an empty approver, and the trigger checks that an approved row exists,
-not that its approver is a real person. The tests record these as known gaps.
-<!-- OIW-919: update this paragraph when the database approval hardening merges -->
+- a trigger rejects a raw `UPDATE` of Decision Y to `approved` unless an
+  approved Approval for Y exists with a non-blank approver, even when Decision X
+  is approved;
+- a `CHECK` constraint rejects blank approvers, including whitespace-only,
+  non-breaking and zero-width characters;
+- Approvals are append-only: every `UPDATE` is rejected, and a `DELETE` succeeds
+  only when the whole Decision or Workspace is being removed (demo expiry and
+  reset).
+
+The honest limit: a table owner or superuser can still drop a trigger or
+`TRUNCATE` the table, and the database cannot tell whether a non-blank approver
+is a real person. In the public demo the approver is the guest session; there
+is no single sign-on.
 
 The full attack list and the test that covers each one are in
 [`docs/EVALUATION.md` §9](docs/EVALUATION.md) and
@@ -210,7 +216,7 @@ Entity types, labels, observation, event and case schemas, workflow states,
 rules, dashboards, metrics, seed data and tour steps all come from a versioned,
 schema-validated Scenario Pack (`scenario-packs/<pack-id>/`, ADR-002), never
 from core packages. `pnpm architecture:check` scans the non-test sources of
-every package under `packages/` for pack IDs and industry terms <!-- OIW-918: scan scope holds only after OIW-918 merges -->, confirms no
+every package under `packages/` for pack IDs and industry terms, confirms no
 TypeScript project in the repository compiles any Scenario Pack file, and
 confirms the pack registry still loads every other pack when any one pack
 directory is removed.
