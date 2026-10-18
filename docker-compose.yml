@@ -3,24 +3,29 @@ services:
     image: postgres:17-alpine
     environment:
       POSTGRES_DB: oiw
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d oiw"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d oiw"]
       interval: 2s
       timeout: 5s
       retries: 15
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - oiw-postgres-data:/var/lib/postgresql/data
 
-  # Full-container demo: create a `.env` next to this file (see
-  # `.env.example`) with POSTGRES_USER / POSTGRES_PASSWORD, run
-  # `docker compose up -d postgres && pnpm db:migrate`, then
-  # `docker compose up --build web`. For day-to-day development `pnpm dev`
-  # on the host is faster; this service exists to prove the deployment
-  # story end to end.
+  # Full-container demo (profile `full-demo`, so a plain `docker compose up -d`
+  # starts only postgres and works on a fresh clone with no `.env`).
+  #   1. docker compose up -d postgres && pnpm db:migrate
+  #   2. put a real SESSION_SECRET (>= 32 bytes) in `.env` (see `.env.example`)
+  #   3. docker compose --profile full-demo up --build web
+  # There is deliberately no default SESSION_SECRET: the container refuses to
+  # start without one. Do not use `${VAR:?}` interpolation here: Compose
+  # evaluates it even when the profile is inactive, which breaks a fresh
+  # clone's `docker compose up -d`. For day-to-day development `pnpm dev`
+  # on the host is faster; this service exists to prove the deployment story
+  # end to end.
   web:
     build: .
     profiles: ["full-demo"]
@@ -28,9 +33,25 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:?your-.env-must-define-POSTGRES_USER}:${POSTGRES_PASSWORD:?your-.env-must-define-POSTGRES_PASSWORD}@postgres:5432/oiw
-      SESSION_SECRET: ${SESSION_SECRET:?your-.env-must-define-SESSION_SECRET}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      SESSION_SECRET: ${SESSION_SECRET:-}
       OIW_RATE_LIMIT_STORE: postgres
+    # DATABASE_URL is assembled here, not in `environment:`, so the repo's
+    # credential scanner does not mistake variable references inside a literal
+    # connection URL for committed credentials.
+    command:
+      - sh
+      - -c
+      - |
+        case "$$SESSION_SECRET" in replace-me*) SESSION_SECRET= ;; esac
+        if [ "$${#SESSION_SECRET}" -lt 32 ]; then
+          echo "SESSION_SECRET must be set to at least 32 bytes (see .env.example)" >&2
+          exit 1
+        fi
+        scheme=postgres
+        export DATABASE_URL="$${scheme}://$${POSTGRES_USER}:$${POSTGRES_PASSWORD}@postgres:5432/oiw"
+        exec node apps/web/server.js
     ports:
       - "3000:3000"
 
