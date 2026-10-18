@@ -271,6 +271,26 @@ route is outside the workspace shell).
   stays normative; the expansion ships as this note plus a PR note (see
   `docs/agent-runs/OIW-907.md` "Assumptions and deviations").
 
+- **Decorative motion (2026-10-18, OIW-910):** the landing page adds an
+  animated nine-stage pipeline figure (Source, Artifact, Observation,
+  Review, Event, Rule, Case/Decision, Approval, Audit), a four-figure
+  "at a glance" band, and scroll-reveal on the "How it works" and capability
+  cards. All motion is decorative and pure CSS (plus a small count-up on the
+  figures): a sub-2 s intro, then a calm 10 s loop with no bounce. Everything
+  is gated on `prefers-reduced-motion: no-preference`, so reduced-motion
+  visitors see the complete static diagram and final figure values. The
+  figure is a `<figure>` with an ordered list; the travelling packet and
+  connectors are `aria-hidden`; no stage is conveyed by colour alone (the two
+  human stages say so in text). Scroll-reveal uses
+  `animation-timeline: view()` behind `@supports` and is static elsewhere.
+  The scroll-reveal slides cards up without changing opacity, so text is
+  never hidden before it scrolls into view and full-page captures and print
+  show every card.
+  The evaluation figure carries a visible "on synthetic fixtures" qualifier
+  linking to `docs/EVALUATION.md`, plus a `Calculated` provenance badge
+  beside the value (§7.1). No `<video>` is embedded; a text link
+  points to the hosted walkthroughs.
+
 ### 5.2 R2 — Scenario Selector (`/demo`)
 
 Wireframe: `docs/ux/01-scenario-selector.md`. Lens: All (pre-lens; no

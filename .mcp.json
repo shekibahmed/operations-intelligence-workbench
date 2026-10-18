@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "oiw": {
+      "command": "node",
+      "args": ["packages/mcp-server/dist/cli.js"]
+    }
+  }
+}

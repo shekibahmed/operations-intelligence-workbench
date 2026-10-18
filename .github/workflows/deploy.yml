@@ -1,0 +1,101 @@
+name: Deploy demo
+
+# Migrates the production database, then triggers the Render deploy hook.
+# The container image cannot run migrations (no tsx or migration sources in
+# the final stage), so they run here. Owner setup: docs/DEPLOYMENT.md §9.
+#
+# Runs after CI succeeds on a push to main, or manually. With no
+# `DATABASE_URL` secret the run is a successful no-op.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-demo
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # workflow_run executes with repository secrets, so only deploy commits
+    # that were pushed to this repository's main (never a fork PR whose
+    # branch happens to be called main). Manual runs are limited to main.
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      || (github.event_name == 'workflow_run'
+          && github.event.workflow_run.conclusion == 'success'
+          && github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Secrets are scoped to the single steps that need them, never the whole
+      # job, so dependency install scripts cannot read them.
+      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+    steps:
+      - name: Check configuration
+        id: config
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "::notice::DATABASE_URL secret is not set; skipping migrate and deploy (hosting not configured)."
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.config.outputs.enabled == 'true'
+        with:
+          # The commit CI validated, not whatever main is by now.
+          ref: ${{ env.DEPLOY_SHA }}
+
+      - uses: pnpm/action-setup@v4
+        if: steps.config.outputs.enabled == 'true'
+        with:
+          version: 11.25.0
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        if: steps.config.outputs.enabled == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install
+        if: steps.config.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Migrate database
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm db:migrate
+
+      - name: Trigger Render deploy
+        if: steps.config.outputs.enabled == 'true'
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "::notice::RENDER_DEPLOY_HOOK_URL secret is not set; database migrated, Render deploy not triggered."
+            exit 0
+          fi
+          # Deploy exactly the commit CI validated (Render's `ref` parameter),
+          # not whatever main is by now. The hook URL is a credential: never
+          # echo it. --fail-with-body surfaces Render's error text (e.g. 401
+          # after Regenerate Hook).
+          case "$RENDER_DEPLOY_HOOK_URL" in
+            *\?*) hook="${RENDER_DEPLOY_HOOK_URL}&ref=${DEPLOY_SHA}" ;;
+            *) hook="${RENDER_DEPLOY_HOOK_URL}?ref=${DEPLOY_SHA}" ;;
+          esac
+          curl --silent --show-error --fail-with-body --max-time 60 \
+            --retry 3 --retry-delay 5 -X POST "$hook"
+          echo
+          echo "Render deploy triggered."
