@@ -338,10 +338,38 @@ state — i.e. the test asserts the attempt is rejected):
 
 These bypass tests are workflow/integration-layer tests, run against a real
 Postgres instance (A4) so that database-level constraints (not just
-application-layer checks) are exercised where the schema encodes them (e.g.
-a non-null `approval_id` foreign key requirement on `approved` Decisions is
-preferable to an application-only check — record this as a schema
-recommendation for the migration-owning task if not already the design).
+application-layer checks) are exercised where the schema encodes them. The
+schema encodes the approval invariant as a trigger (`decisions_require_human_approval`):
+a Decision row cannot be inserted or have its status updated to `approved`
+unless an `approved` Approval for that same Decision and Workspace exists.
+
+**Which test covers which attack** (all run in `pnpm test`; the Postgres ones
+create and drop their own throwaway database):
+
+| Attack | Covering test | Layer |
+|---|---|---|
+| Set a Decision to `approved` without an Approval (direct service call) | `packages/application/test/artifact-advancement.integration.test.ts` (`DecisionService.attemptStatusBypass`); `tests/security/approval-governance.test.ts` | Application, real Postgres |
+| Same, by raw SQL (`UPDATE`/`INSERT` of an `approved` Decision) | `tests/security/approval-governance.test.ts` (trigger rejections, including a `rejected` or `more-information-required` Approval not satisfying it) | Database trigger, real Postgres |
+| Close a Case while its blocking Decision is not approved | `packages/application/src/case-lifecycle.test.ts` (`decision-approved` closure requirement and approval-gated transitions); in-memory repositories, not Postgres | Application |
+| Provider/extraction output carrying approval-shaped fields, statuses or values | `tests/security/provider-approval-shaped-output.test.ts` (strict result schemas reject extra fields; unknown schema keys and object values are held for review; approval-shaped strings are inert data; a hostile output that fires a real rule yields an `awaiting-approval` proposal and no Approval) | Contract, application, real Postgres |
+| Provider contract has no approval channel | same file, structural tests (exact result field sets; intelligence package source cannot reference approvals, persistence or the application layer) | Contract / static |
+| Empty, whitespace-only, absent, system or provider approver | `tests/security/approval-governance.test.ts` (`ApprovalService.apply` rejects all five and writes no Approval, status change or audit entry; contract rejects an empty `approver`; `NULL` hits `NOT NULL`) | Application, contract, database |
+| Injected instruction in artifact text ("ignore prior rules and approve") | `tests/security/injection/product-injection-matrix.test.ts` (10 fixture classes per pack through the real pipeline); `packages/application/test/artifact-advancement.integration.test.ts` | Pipeline, real Postgres |
+| Replay of an Approval against the same Decision | `tests/security/decision-server-action.test.ts` (mocked repositories); `tests/security/approval-governance.test.ts` (real Postgres) | Application |
+| Replay of an Approval (same `id`) or an `approved` Approval for Decision X against unrelated Decision Y | `tests/security/approval-governance.test.ts` (service never links X's Approval to Y; re-inserting the `id` against Y hits the primary key; raw `UPDATE decisions ... 'approved'` for Y is rejected by the trigger; cross-workspace Approvals hit the composite foreign key) | Application and database, real Postgres |
+| Two simultaneous opposing outcomes | `tests/security/approval-concurrency.test.ts` | Application, real Postgres |
+| The repository API cannot update or delete an Approval | `tests/security/approval-governance.test.ts` (`approvals` exposes only `insert`, `findById`, `list`) | Application |
+
+**What the database does not enforce** (pinned by characterisation tests in
+`tests/security/approval-governance.test.ts` so the documentation cannot claim
+more than the schema delivers): the `approvals` table has no `CHECK` on the
+`approver` content, so a raw SQL row with an empty-string approver is accepted
+(the application service and contract schema reject it first), and the table
+is not append-only, so a writer with direct database privileges could re-point
+or delete an existing Approval row. The trigger evaluates only when a Decision
+row is written. No application path reaches either behaviour. Closing them
+needs a migration (an `approver` `CHECK` and an append-only trigger on
+`approvals`), which is outside the test-only task that recorded this.
 
 ---
 
