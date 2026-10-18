@@ -5,6 +5,13 @@ import { join, resolve } from "node:path";
 const repositoryRoot = resolve(import.meta.dirname, "..");
 const scenarioPacksDirectory = resolve(repositoryRoot, "scenario-packs");
 const templateDirectory = join(scenarioPacksDirectory, "_template");
+// Where the new pack is written. Defaults to `scenario-packs/`; the scaffold
+// test points it at a temporary directory so it never touches the live tree.
+const outputDirectory = resolve(process.env.OIW_SCAFFOLD_OUTPUT_DIR ?? scenarioPacksDirectory);
+
+// Set once the target directory exists, so any later failure removes the
+// partial pack instead of leaving one that blocks the next run.
+let createdDirectory: string | undefined;
 
 const PACK_ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -26,6 +33,7 @@ function usage(): string {
 
 function fail(message: string): never {
   console.error(`pack:scaffold: ${message}`);
+  if (createdDirectory !== undefined) rmSync(createdDirectory, { recursive: true, force: true });
   process.exit(1);
 }
 
@@ -102,12 +110,19 @@ async function main(): Promise<void> {
     fail(`pack id must be kebab-case (e.g. field-compliance), got ${JSON.stringify(packId)}`);
   }
   if (!existsSync(templateDirectory)) fail("scenario-packs/_template is missing");
-  const targetDirectory = join(scenarioPacksDirectory, packId);
+  const targetDirectory = join(outputDirectory, packId);
   if (existsSync(targetDirectory)) {
     fail(`scenario-packs/${packId} already exists — refusing to overwrite`);
   }
+  // Fail before writing anything if the template manifest no longer has the
+  // shape the name rewrite below depends on.
+  const templateManifest = readFileSync(join(templateDirectory, "manifest.yaml"), "utf8");
+  if (!/^name: "Template Pack"$/m.test(templateManifest)) {
+    fail("could not set the manifest name (template manifest.yaml changed shape?)");
+  }
 
   cpSync(templateDirectory, targetDirectory, { recursive: true });
+  createdDirectory = targetDirectory;
 
   // Rewrite the `template-` identifier prefix everywhere (manifest paths,
   // schema ids, rule references, fixture index ids, gold sets). Artifact
@@ -184,6 +199,7 @@ async function main(): Promise<void> {
     }
   }
 
+  createdDirectory = undefined;
   console.log(`Scaffolded scenario-packs/${packId} (${index.length} smoke fixtures verified).`);
   console.log("Next: pnpm validate:packs");
 }

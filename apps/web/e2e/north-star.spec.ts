@@ -41,7 +41,11 @@ test("north-star: PRD §13 asset-reliability journey — scenario selection thro
     // server action and the beacon race cookie-less and each mints its own
     // session, splitting this journey's events across two sessions.
     const scenarioSelectedBeacon = page.waitForResponse(
-      (response) => response.url().endsWith("/api/analytics") && response.request().method() === "POST",
+      (response) => {
+        const request = response.request();
+        if (!response.url().endsWith("/api/analytics") || request.method() !== "POST") return false;
+        return (request.postDataJSON() as { name?: string } | null)?.name === "scenario-selected";
+      },
     );
     await page.getByRole("link", { name: "Start with Asset Reliability" }).click();
 

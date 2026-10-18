@@ -423,8 +423,10 @@ prerendered as static content, so their URLs are fixed at build time, not
 read per request. Render passes a Docker service's environment variables to
 `docker build` as build arguments, and a build argument only reaches
 `next build` if the `Dockerfile` declares it. The `Dockerfile` therefore
-declares `ARG NEXT_PUBLIC_SITE_URL` with a matching `ENV` in the build stage
-(the final image stage does not carry it). It must not gain an `ARG` for
+declares `ARG NEXT_PUBLIC_SITE_URL` (default `http://localhost:3000`, the
+application's own fallback, so a plain `docker build -t oiw-web .` still
+works) with a matching `ENV` in the build stage; the final image stage does
+not carry it. An empty value is treated as unset. It must not gain an `ARG` for
 `DATABASE_URL` or any other secret, because build arguments can end up in
 image layers.
 
