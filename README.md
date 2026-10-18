@@ -30,7 +30,7 @@ decision, but only a person can approve it. All data is synthetic.
 | If you run operations, risk or compliance | If you build with AI agents |
 |---|---|
 | [Try the live demo](#try-it-in-60-seconds): no sign-in, no install | [How AI conclusions are checked](#how-are-ai-conclusions-checked) and [where approval happens](#where-does-human-approval-happen) |
-| [Watch the walkthroughs](https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs): leadership, operations, technical | [Reuse the adversarial test corpus](#reuse-the-adversarial-test-corpus): 52 hostile and ambiguous artifacts with expected outcomes |
+| [Watch the walkthroughs](https://shekibahmed.github.io/operations-intelligence-workbench/#walkthroughs): a 25-second trailer and three two-minute tours | [Reuse the adversarial test corpus](#reuse-the-adversarial-test-corpus): 52 hostile and ambiguous artifacts with expected outcomes |
 | [Read the casebook](https://shekibahmed.github.io/operations-intelligence-workbench/casebook/a-142-repeat-fault.html): one case, start to finish, with the evidence | [Use it from an agent](#use-it-from-an-agent): `llms.txt`, an MCP server, a Claude Code plugin |
 | [Talk to the team](#who-builds-this-and-how-can-they-help-you) about adapting it to your workflow | [Run it locally](#run-it-locally) and [contribute in an afternoon](#contribute-in-an-afternoon) |
 
