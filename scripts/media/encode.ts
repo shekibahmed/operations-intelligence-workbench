@@ -6,6 +6,8 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
+import { buildVtt, markTime, musicChain, parseMarks, requireThat, type MarksFile } from "./captions.js";
+
 const exec = promisify(execFile);
 const root = resolve(import.meta.dirname, "../..");
 const mediaDirectory = resolve(root, "docs/media");
@@ -17,24 +19,6 @@ export const PACKS = ["asset-reliability", "process-exceptions", "document-assur
 const MAX_MP4_BYTES = 9.5 * 1024 * 1024;
 const MAX_GIF_BYTES = 7.5 * 1024 * 1024;
 const FPS = 25;
-const MUSIC_VOLUME = 0.18;
-
-interface Mark {
-  id: string;
-  caption: string;
-  t: number;
-}
-interface MarksFile {
-  schemaVersion: 1;
-  pack: string;
-  viewport: { width: number; height: number };
-  endsAt: number;
-  marks: Mark[];
-}
-
-function requireThat(condition: unknown, message: string): asserts condition {
-  if (!condition) throw new Error(message);
-}
 
 async function ffmpeg(args: string[]): Promise<void> {
   try {
@@ -81,46 +65,8 @@ export async function probe(file: string): Promise<Probe> {
 
 async function loadMarks(pack: string): Promise<MarksFile> {
   const file = resolve(mediaDirectory, `${pack}.marks.json`);
-  const marks = JSON.parse(await readFile(file, "utf8")) as MarksFile;
-  requireThat(marks.schemaVersion === 1 && marks.marks.length > 0, `${pack}: marks file is empty or from an unknown version`);
-  return marks;
-}
-
-function markTime(marks: MarksFile, id: string): number {
-  const found = marks.marks.find((entry) => entry.id === id);
-  requireThat(found !== undefined, `${marks.pack}: no mark named ${id}`);
-  return found.t;
-}
-
-function timestamp(seconds: number): string {
-  const ms = Math.max(0, Math.round(seconds * 1000));
-  const pad = (n: number, width = 2) => String(n).padStart(width, "0");
-  return `${pad(Math.floor(ms / 3_600_000))}:${pad(Math.floor(ms / 60_000) % 60)}:${pad(Math.floor(ms / 1000) % 60)}.${pad(ms % 1000, 3)}`;
-}
-
-function wrap(text: string, width = 42): string {
-  const lines: string[] = [];
-  let line = "";
-  for (const word of text.split(/\s+/)) {
-    if (line !== "" && `${line} ${word}`.length > width) {
-      lines.push(line);
-      line = word;
-    } else {
-      line = line === "" ? word : `${line} ${word}`;
-    }
-  }
-  if (line !== "") lines.push(line);
-  return lines.join("\n");
-}
-
-/** WebVTT captions from the marks; `trim` is how much of the raw recording's start was cut. */
-export function buildVtt(marks: MarksFile, trim: number): string {
-  const cues = marks.marks.map((mark, index) => {
-    const start = Math.max(0, mark.t - trim);
-    const end = (marks.marks[index + 1]?.t ?? marks.endsAt) - trim;
-    return `${index + 1}\n${timestamp(start)} --> ${timestamp(Math.max(end, start + 0.5))}\n${wrap(mark.caption)}\n`;
-  });
-  return `WEBVTT\n\n${cues.join("\n")}`;
+  requireThat(existsSync(file), `${file} is missing; run pnpm media:capture first`);
+  return parseMarks(JSON.parse(await readFile(file, "utf8")), pack);
 }
 
 interface Job {
@@ -157,10 +103,6 @@ async function encodeMp4(job: Job, work: string): Promise<void> {
   requireThat((await stat(job.out)).size <= MAX_MP4_BYTES, `${job.out} is still over ${MAX_MP4_BYTES} bytes after a two-pass encode`);
 }
 
-/** Looped background music, quiet, with a 2 s fade in and a 3 s fade out. */
-function musicChain(inputLabel: string, seconds: number): string {
-  return `[${inputLabel}]volume=${MUSIC_VOLUME},afade=t=in:st=0:d=2,afade=t=out:st=${Math.max(0, seconds - 3).toFixed(2)}:d=3[a]`;
-}
 const MUSIC_INPUT = ["-stream_loop", "-1", "-i", musicFile];
 
 async function encodeWalkthrough(pack: string, withMusic: boolean, work: string): Promise<{ trim: number }> {
@@ -177,8 +119,10 @@ async function encodeWalkthrough(pack: string, withMusic: boolean, work: string)
   const graph = `[0:v]fps=${FPS},format=yuv420p[v]${withMusic ? `;${musicChain("1:a", seconds)}` : ""}`;
   await encodeMp4({ inputs, graph, audio: withMusic, subtitleInput: withMusic ? 2 : 1, seconds, out: resolve(mediaDirectory, `${pack}.mp4`) }, work);
 
-  const review = markTime(marks, "review-ambiguity");
-  await ffmpeg(["-i", raw, "-ss", (review + 2.4).toFixed(2), "-frames:v", "1", "-q:v", "3", resolve(mediaDirectory, `poster-${pack}.jpg`)]);
+  // The poster is the approved decision: at this step the tour panel sits beside the
+  // card, whereas on the review step it covers the Confidence and Status rows.
+  const approved = markTime(marks, "decision-approved");
+  await ffmpeg(["-i", raw, "-ss", (approved + 2).toFixed(2), "-frames:v", "1", "-q:v", "3", resolve(mediaDirectory, `poster-${pack}.jpg`)]);
   return { trim };
 }
 
@@ -198,7 +142,7 @@ interface TrailerSegment {
 }
 export const TRAILER_SEGMENTS: TrailerSegment[] = [
   {
-    caption: "1. A report arrives and AI extracts the facts",
+    caption: "1. A report arrives. AI extracts each fact and its confidence",
     clips: [
       { mark: "inbox-arrival", from: 1.2, len: 2.6, speed: 2 },
       { mark: "inbox-extracted", from: -2.4, len: 4.4, speed: 1.4 },
@@ -229,6 +173,8 @@ export const TRAILER_SEGMENTS: TrailerSegment[] = [
   },
 ];
 
+const SYNTHETIC_LABEL = "Synthetic demo data";
+
 async function fontFile(): Promise<string> {
   for (const query of ["Liberation Sans:bold", "DejaVu Sans:bold", "sans:bold"]) {
     try {
@@ -254,7 +200,8 @@ async function encodeTrailer(withMusic: boolean, work: string): Promise<void> {
   let clipIndex = 0;
   for (const [segmentIndex, segment] of TRAILER_SEGMENTS.entries()) {
     const captionFile = resolve(work, `caption-${segmentIndex}.txt`);
-    await writeFile(captionFile, segment.caption);
+    // Every trailer frame, and so every hero GIF frame, says the data is synthetic.
+    await writeFile(captionFile, `${segment.caption}\n${SYNTHETIC_LABEL}`);
     const lengths = segment.clips.map((clip) => clip.len / clip.speed);
     const segmentSeconds = lengths.reduce((sum, value) => sum + value, 0);
     for (const [i, clip] of segment.clips.entries()) {

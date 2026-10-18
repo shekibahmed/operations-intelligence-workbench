@@ -128,7 +128,9 @@ for (const pack of PACKS) {
           await pickedUpBy(dialog);
           await presenter.hold(1200);
           presenter.mark("decision-comment", CAPTIONS["decision-comment"]!);
-          await presenter.type(dialog.getByLabel(/Comment/), APPROVAL_COMMENT);
+          const commentField = dialog.getByLabel(/Comment/);
+          await presenter.type(commentField, APPROVAL_COMMENT);
+          await expect(commentField).toHaveValue(APPROVAL_COMMENT);
           await presenter.hold(1200);
           await presenter.click(dialog.getByRole("button", { name: "Approve", exact: true }));
           await expect(dialog).toBeHidden();
@@ -146,6 +148,16 @@ for (const pack of PACKS) {
         }
       }
 
+      // The encoder cuts the trailer and captions from these marks, so check them before they are saved.
+      for (const step of steps) {
+        expect(presenter.marks.some((mark) => mark.id === step.id), `no mark recorded for tour step ${step.id}`).toBe(true);
+      }
+      for (const id of ["inbox-extracted", "review-accepted", "decision-comment", "decision-approved"]) {
+        expect(presenter.marks.some((mark) => mark.id === id), `no mark recorded for ${id}`).toBe(true);
+      }
+      const times = presenter.marks.map((mark) => mark.t);
+      expect(times, "marks must not go backwards in time").toEqual([...times].sort((a, b) => a - b));
+
       const endsAt = presenter.now();
       const marksFile: MarksFile = { schemaVersion: 1, pack: pack.id, viewport: VIEWPORT, endsAt, marks: presenter.marks };
       await writeFile(resolve(out, `${pack.id}.marks.json`), `${JSON.stringify(marksFile, null, 2)}\n`);
@@ -155,7 +167,8 @@ for (const pack of PACKS) {
       await video?.delete();
       await rm(rawDirectory, { recursive: true, force: true });
     }
-    if (consoleProblems.length > 0) console.log(`console errors seen during ${pack.id}:\n${consoleProblems.join("\n")}`);
+    // A page error during a recording means the tour regressed; do not publish media of it.
+    expect(consoleProblems, `console errors seen during ${pack.id}`).toEqual([]);
   });
 }
 

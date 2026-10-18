@@ -14,7 +14,7 @@ Committed (small, reviewable):
 | `hero.gif` | Looping GIF cut from the trailer, for the README (under 7.5 MB) |
 | `<pack>.vtt` | WebVTT captions for each walkthrough |
 | `<pack>.marks.json` | Timestamped step marks the captions, poster and trailer are cut from |
-| `poster-<pack>.jpg` | Poster frame taken at the review step |
+| `poster-<pack>.jpg` | Poster frame of the approved decision, two seconds after approval |
 
 Not committed (gitignored, published as release assets instead):
 
@@ -22,7 +22,7 @@ Not committed (gitignored, published as release assets instead):
 | --- | --- |
 | `<pack>.webm` | Raw Playwright recording, kept locally so encoding can be re-run |
 | `<pack>.mp4` | Walkthrough, H.264 + AAC, under 9.5 MB, captions embedded as a soft track |
-| `trailer.mp4` | About 25 s story in five moments, burned-in captions |
+| `trailer.mp4` | About 25 s story in five moments, burned-in captions that also say the data is synthetic |
 
 `<pack>` is each of `asset-reliability`, `process-exceptions` and
 `document-assurance`.
@@ -63,6 +63,16 @@ The capture spec and config refuse to run unless `MEDIA_CAPTURE=1`,
 `MEDIA_CAPTURE_PORT` and `MEDIA_CAPTURE_OUT` are set by the runner, and the
 spec self-skips otherwise, so CI and the default `pnpm test:e2e` never record.
 
+## Tests
+
+`apps/web/e2e/media/pipeline.spec.ts` runs in the ordinary `pnpm test:e2e`. It
+needs no browser, ffmpeg or server for its checks: caption timestamps and
+wrapping, WebVTT cue order, marks validation, the trailer's moments and length,
+the music filter chain, and the refusals of the capture config and runner. The
+capture spec also checks, before saving marks, that every tour step has a mark
+in non-decreasing time, that the typed approval comment is what was intended,
+and that the page logged no console errors.
+
 ## Music
 
 The encoder loops `apps/web/public/media/ambience.mp3` at a quiet volume
@@ -98,7 +108,36 @@ for each moment live in `apps/web/e2e/media/presenter.ts`. The trailer is
 cut from the asset-reliability recording using the marks; edit
 `TRAILER_SEGMENTS` in `scripts/media/encode.ts` to change it.
 
+## Using the hero GIF
+
+`hero.gif` loops and runs about 25 seconds with no pause control, and a README
+cannot add one. When embedding it:
+
+- Put a link to the captioned, controllable `trailer.mp4` (the release asset)
+  directly beside it, for example "Watch the trailer with controls".
+- Give it alt text that describes the story, for example: "Synthetic demo:
+  a report arrives, AI extracts the facts with confidence scores, a person
+  reviews an uncertain fact, a rule fires, a person approves the action, and
+  the dashboards update."
+- Keep the synthetic-data wording. Every trailer and GIF frame carries a
+  "Synthetic demo data" caption, and the app's own top-bar notice is too small
+  to read at the GIF's 960 px width, so do not crop the bottom caption off.
+
 ## Known limits
+
+- The tour panel covers part of the right-hand pane on the review step at
+  1280 by 800. In the process-exceptions and document-assurance walkthroughs
+  the Confidence row of the Observation detail is behind the panel for part of
+  that step, and in asset-reliability the Status badge is partly covered. This
+  is the shipped tour overlay's placement (in `apps/web/src`), so it is not
+  changed here. The posters avoid it by using the approved-decision frame, and
+  the trailer's confidence moment is taken from the inbox, where nothing is
+  covered. Overlay placement needs a follow-up in the app.
+- With no `apps/web/public/media/ambience.mp3` (added by OIW-911), the MP4s
+  have no audio stream. The music path is exercised only when the track is
+  present; its filter chain is unit tested in `apps/web/e2e/media/pipeline.spec.ts`.
+- Walkthroughs run about two minutes because reading beats are scaled to the
+  tour panel's text (3 to 6 seconds), not fixed at 2 to 3 seconds.
 
 - The tour panel is a floating overlay and can cover part of the right-hand
   pane on shorter screens (1280 by 800 is the recorded size).

@@ -5,87 +5,87 @@
     "width": 1280,
     "height": 800
   },
-  "endsAt": 128.24,
+  "endsAt": 129.02,
   "marks": [
     {
       "id": "scenario",
       "caption": "Pick a scenario. Everything shown here is synthetic demo data.",
-      "t": 1.54
+      "t": 1.48
     },
     {
       "id": "start",
       "caption": "Starting creates a private demo workspace, already loaded with sample data.",
-      "t": 7.51
+      "t": 7.44
     },
     {
       "id": "inbox-arrival",
       "caption": "New reports arrive as raw text, spreadsheets and documents.",
-      "t": 13.95
+      "t": 14.43
     },
     {
       "id": "inbox-process",
       "caption": "One click runs AI extraction. No outside model is needed for this demo.",
-      "t": 23.29
+      "t": 23.75
     },
     {
       "id": "inbox-extracted",
       "caption": "The raw report becomes structured fields, each with a confidence score.",
-      "t": 31.14
+      "t": 31.57
     },
     {
       "id": "review-ambiguity",
       "caption": "Anything uncertain goes to a person. Original text on the left, evidence on the right.",
-      "t": 39.16
+      "t": 39.58
     },
     {
       "id": "review-accepted",
       "caption": "A human confirms the fact, so it can be trusted.",
-      "t": 48.6
+      "t": 49.07
     },
     {
       "id": "rule-trace",
       "caption": "A fixed rule checks the facts and fires. Every condition it tested is shown.",
-      "t": 56.64
+      "t": 57.16
     },
     {
       "id": "case-list",
       "caption": "A case is opened automatically, with an owner, priority and evidence.",
-      "t": 66.25
+      "t": 66.84
     },
     {
       "id": "case-detail",
       "caption": "The follow-up actions are already assigned.",
-      "t": 74.24
+      "t": 74.87
     },
     {
       "id": "decision-approval",
       "caption": "The system proposes an action but never acts alone. High-risk choices need a person.",
-      "t": 81.68
+      "t": 82.35
     },
     {
       "id": "decision-comment",
       "caption": "The approver records why, in their own words.",
-      "t": 91.21
+      "t": 91.86
     },
     {
       "id": "decision-approved",
       "caption": "Approved, and recorded.",
-      "t": 99.88
+      "t": 100.61
     },
     {
       "id": "dashboard-update",
       "caption": "The dashboards update from that single approval.",
-      "t": 106.67
+      "t": 107.4
     },
     {
       "id": "technical-trace",
       "caption": "Every step is kept in an audit trail, in order.",
-      "t": 113.88
+      "t": 114.64
     },
     {
       "id": "adapt-cta",
       "caption": "Same flow, applied to your own operations.",
-      "t": 121.47
+      "t": 122.26
     }
   ]
 }

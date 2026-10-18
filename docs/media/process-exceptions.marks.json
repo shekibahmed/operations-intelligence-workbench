@@ -5,7 +5,7 @@
     "width": 1280,
     "height": 800
   },
-  "endsAt": 128.84,
+  "endsAt": 129.48,
   "marks": [
     {
       "id": "scenario",
@@ -15,77 +15,77 @@
     {
       "id": "start",
       "caption": "Starting creates a private demo workspace, already loaded with sample data.",
-      "t": 7.52
+      "t": 7.41
     },
     {
       "id": "inbox-arrival",
       "caption": "New reports arrive as raw text, spreadsheets and documents.",
-      "t": 14.06
+      "t": 14.41
     },
     {
       "id": "inbox-process",
       "caption": "One click runs AI extraction. No outside model is needed for this demo.",
-      "t": 23.14
+      "t": 23.42
     },
     {
       "id": "inbox-extracted",
       "caption": "The raw report becomes structured fields, each with a confidence score.",
-      "t": 31.42
+      "t": 31.83
     },
     {
       "id": "review-ambiguity",
       "caption": "Anything uncertain goes to a person. Original text on the left, evidence on the right.",
-      "t": 38.93
+      "t": 39.3
     },
     {
       "id": "review-accepted",
       "caption": "A human confirms the fact, so it can be trusted.",
-      "t": 48.45
+      "t": 48.8
     },
     {
       "id": "rule-trace",
       "caption": "A fixed rule checks the facts and fires. Every condition it tested is shown.",
-      "t": 57.04
+      "t": 57.85
     },
     {
       "id": "case-list",
       "caption": "A case is opened automatically, with an owner, priority and evidence.",
-      "t": 66.29
+      "t": 67.03
     },
     {
       "id": "case-detail",
       "caption": "The follow-up actions are already assigned.",
-      "t": 74.49
+      "t": 75.19
     },
     {
       "id": "decision-approval",
       "caption": "The system proposes an action but never acts alone. High-risk choices need a person.",
-      "t": 82.05
+      "t": 82.72
     },
     {
       "id": "decision-comment",
       "caption": "The approver records why, in their own words.",
-      "t": 91.41
+      "t": 92.06
     },
     {
       "id": "decision-approved",
       "caption": "Approved, and recorded.",
-      "t": 100.14
+      "t": 100.73
     },
     {
       "id": "dashboard-update",
       "caption": "The dashboards update from that single approval.",
-      "t": 106.93
+      "t": 107.52
     },
     {
       "id": "technical-trace",
       "caption": "Every step is kept in an audit trail, in order.",
-      "t": 114.48
+      "t": 115.09
     },
     {
       "id": "adapt-cta",
       "caption": "Same flow, applied to your own operations.",
-      "t": 122.06
+      "t": 122.71
     }
   ]
 }
