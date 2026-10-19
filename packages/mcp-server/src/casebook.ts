@@ -31,7 +31,7 @@ async function readCase(packDirectory: string): Promise<Record<string, unknown> 
 }
 
 export function registerCasebookTool(server: McpServer, config: OiwServerConfig): void {
-  server.registerTool(
+  if (config.enabledTools.has("get_casebook")) server.registerTool(
     "get_casebook",
     {
       title: "Get evidence casebook",

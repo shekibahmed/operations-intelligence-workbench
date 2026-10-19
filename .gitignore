@@ -1,5 +1,8 @@
 node_modules/
 dist/
+# Created only while packing @oiw/mcp-server. Not a second source of packs or of package.json.
+packages/mcp-server/scenario-packs/
+packages/mcp-server/package.json.publish-backup
 *.tsbuildinfo
 build/
 .next/

@@ -25,7 +25,7 @@ The platform core is neutral: schemas, rules, workflows, fixtures and labels liv
 
 ## For agents
 
-- [MCP server](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/packages/mcp-server/README.md): Read-mostly stdio server (`oiw-mcp`) with tools list_packs, get_pack_manifest, list_fixtures, get_casebook, validate_packs, run_eval and scaffold_pack. Use list_fixtures with set edge-cases to pull the adversarial corpus and its expected outcomes.
+- [MCP server](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/packages/mcp-server/README.md): Read-mostly server (`oiw-mcp` / `@oiw/mcp-server`) with tools list_packs, get_pack_manifest, list_fixtures, get_casebook, validate_packs, run_eval and scaffold_pack. stdio by default; `--http` serves streamable HTTP at `/mcp` and starts with the read-only tools. Use list_fixtures with set edge-cases to pull the adversarial corpus and its expected outcomes. Publishing steps are in RELEASING.md.
 - [MCP registration](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/.mcp.json): Project-scoped Claude Code configuration; run `pnpm build` first.
 - [Pack-authoring skill](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/plugins/oiw-pack-authoring/skills/pack-authoring/SKILL.md): Claude Code plugin skill; install with `claude plugin marketplace add shekibahmed/operations-intelligence-workbench` then `claude plugin install oiw-pack-authoring@oiw`.
 - [First contributions](https://github.com/shekibahmed/operations-intelligence-workbench/blob/main/docs/contributing/FIRST_CONTRIBUTIONS.md): Four bounded challenge types and the issue-first rule.

@@ -98,7 +98,7 @@ export function registerCommandTools(server: McpServer, config: OiwServerConfig)
   const run = (args: string[], timeoutMs: number, extraEnv: readonly string[] = []) =>
     config.commandRunner({ command: "pnpm", args, cwd: config.repositoryRoot, env: childEnv(config.env, extraEnv), timeoutMs });
 
-  server.registerTool(
+  if (config.enabledTools.has("validate_packs")) server.registerTool(
     "validate_packs",
     {
       title: "Validate Scenario Packs",
@@ -123,7 +123,7 @@ export function registerCommandTools(server: McpServer, config: OiwServerConfig)
     },
   );
 
-  server.registerTool(
+  if (config.enabledTools.has("run_eval")) server.registerTool(
     "run_eval",
     {
       title: "Run fixture evaluation",
@@ -167,7 +167,7 @@ export function registerCommandTools(server: McpServer, config: OiwServerConfig)
     },
   );
 
-  server.registerTool(
+  if (config.enabledTools.has("scaffold_pack")) server.registerTool(
     "scaffold_pack",
     {
       title: "Scaffold a Scenario Pack",

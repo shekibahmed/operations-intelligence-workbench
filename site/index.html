@@ -349,12 +349,12 @@
       <!--requires id=a-mcp all=llms.txt-->
       <article class="panel">
         <h3>MCP server</h3>
-        <p>Read-mostly tools over scenario packs, fixtures and the evaluation harness, over stdio. Clone the repo, run <code>pnpm build</code>, then register it:</p>
+        <p>Read-mostly tools over scenario packs, fixtures and an evidence casebook. stdio via npx after the package is published; <code>--http</code> serves streamable HTTP at <code>/mcp</code> and starts read-only. From a checkout, <code>pnpm build</code> then <code>node packages/mcp-server/dist/cli.js</code> is the same server.</p>
         <pre tabindex="0"><code>{
   "mcpServers": {
     "oiw": {
-      "command": "node",
-      "args": ["packages/mcp-server/dist/cli.js"]
+      "command": "npx",
+      "args": ["-y", "@oiw/mcp-server"]
     }
   }
 }</code></pre>

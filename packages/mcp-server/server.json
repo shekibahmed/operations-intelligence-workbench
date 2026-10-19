@@ -2,7 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.shekibahmed/oiw-mcp",
   "title": "Operations Intelligence Workbench",
-  "description": "Read-mostly MCP server over Operations Intelligence Workbench Scenario Packs: pack manifests, an adversarial synthetic fixture corpus with expected outcomes, an evidence casebook, pack validation and deterministic evaluation.",
+  "description": "Scenario Packs, adversarial synthetic fixtures, an evidence casebook and pack checks.",
+  "websiteUrl": "https://github.com/shekibahmed/operations-intelligence-workbench",
   "repository": {
     "url": "https://github.com/shekibahmed/operations-intelligence-workbench",
     "source": "github",
@@ -12,6 +13,7 @@
   "packages": [
     {
       "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@oiw/mcp-server",
       "version": "0.1.0",
       "runtimeHint": "npx",
@@ -19,17 +21,48 @@
       "environmentVariables": [
         {
           "name": "OIW_REPO_ROOT",
-          "description": "Path to an Operations Intelligence Workbench checkout. Defaults to the checkout containing this package.",
+          "description": "Path to an Operations Intelligence Workbench checkout. Read tools also work from the packs shipped in the npm package. Command tools need a checkout.",
           "isRequired": false
         },
         {
           "name": "SCENARIO_PACKS_DIR",
-          "description": "Directory of Scenario Packs to read. Defaults to scenario-packs under the repository root.",
+          "description": "Directory of Scenario Packs to read. Defaults to scenario-packs in the checkout, or the copy shipped in the package.",
           "isRequired": false
         },
         {
           "name": "OIW_MCP_ALLOW_WRITE",
-          "description": "Set to 1 to allow the scaffold_pack tool to create pack directories. Unset by default.",
+          "description": "Set to 1 to register scaffold_pack and allow it to create pack directories. Unset by default.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_ALLOW_EVAL",
+          "description": "Set to 1 to register run_eval on the HTTP transport. It writes to DATABASE_URL. stdio registers it already.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_ALLOWED_TOOLS",
+          "description": "Comma-separated allow list. Intersected with the tools this process may register. Does not enable a tool by itself.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_AUTH_TOKEN",
+          "description": "When set, HTTP /mcp requires Authorization: Bearer with this value. /health stays open.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "OIW_MCP_TRANSPORT",
+          "description": "Set to http to listen with streamable HTTP instead of stdio. --stdio still forces stdio.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_HOST",
+          "description": "HTTP bind address. Default 127.0.0.1. A non-loopback host refuses write and eval tools unless OIW_MCP_AUTH_TOKEN is set.",
+          "isRequired": false
+        },
+        {
+          "name": "OIW_MCP_PORT",
+          "description": "HTTP port. Default 8787. The MCP path is /mcp.",
           "isRequired": false
         }
       ]

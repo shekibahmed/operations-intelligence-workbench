@@ -71,7 +71,7 @@ function describeArtifact(
 }
 
 export function registerFixtureTools(server: McpServer, config: OiwServerConfig): void {
-  server.registerTool(
+  if (config.enabledTools.has("list_fixtures")) server.registerTool(
     "list_fixtures",
     {
       title: "List pack fixtures",
