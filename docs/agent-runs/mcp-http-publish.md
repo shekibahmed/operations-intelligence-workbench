@@ -12,7 +12,7 @@ COMPLETE
 - `README.md`, `llms.txt`, `apps/web/public/llms.txt`, `site/index.html`, `docs/ARCHITECTURE.md`, `glama.json`, `eslint.config.mjs`, `pnpm-lock.yaml`
 
 ## Commits
-On branch `cursor/mcp-http-npm-f530`. The commit that adds this file is the implementation commit.
+- `66f3c2c3083357df3dbac5b88e41e1d78a5ae309` on `cursor/mcp-http-npm-f530` — streamable HTTP, publishable package, docs.
 
 ## Tests run and results
 - `pnpm --filter @oiw/mcp-server exec tsc -b --pretty false` — pass
