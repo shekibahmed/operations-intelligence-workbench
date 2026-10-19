@@ -30,7 +30,7 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/oiw
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v4
         with:
@@ -75,7 +75,7 @@ jobs:
       OIW_TRUSTED_PROXY_HEADER: none
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: pnpm/action-setup@v4
         with:
