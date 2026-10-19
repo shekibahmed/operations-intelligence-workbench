@@ -33,7 +33,7 @@ export function packNotFound(registry: PackRegistry, packId: string) {
 }
 
 export function registerPackTools(server: McpServer, config: OiwServerConfig): void {
-  server.registerTool(
+  if (config.enabledTools.has("list_packs")) server.registerTool(
     "list_packs",
     {
       title: "List Scenario Packs",
@@ -79,7 +79,7 @@ export function registerPackTools(server: McpServer, config: OiwServerConfig): v
     },
   );
 
-  server.registerTool(
+  if (config.enabledTools.has("get_pack_manifest")) server.registerTool(
     "get_pack_manifest",
     {
       title: "Get Scenario Pack manifest",

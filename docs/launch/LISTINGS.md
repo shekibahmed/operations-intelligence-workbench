@@ -35,11 +35,11 @@ Fixed links used in this file:
 - Agent surface: `llms.txt` at the repo root, also served at
   https://operations-intelligence-workbench.onrender.com/llms.txt.
 
-One placeholder remains:
-
-- `<NPM_PACKAGE>`: the npm package name chosen for the MCP server (see
-  section 3). The workspace package is currently named `@oiw/mcp-server` and is
-  marked private; the name you publish under is an owner decision.
+The MCP package name is `@oiw/mcp-server`. It is no longer marked private.
+Publishing still has to be done by the maintainer: [`RELEASING.md`](../../RELEASING.md).
+Paste-ready text for the MCP registry, awesome-mcp-servers, Smithery and Glama
+is in [`mcp-listings.md`](mcp-listings.md). Where this file still says the
+package is private or that there is no `npx` command, follow those two files.
 
 All submissions are made by the owner, under the owner's own account, after
 reading the target's rules. Nothing in this file has been posted.

@@ -14,4 +14,15 @@ export default tseslint.config(
       "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     },
   },
+  {
+    files: ["packages/mcp-server/scripts/**/*.mjs"],
+    languageOptions: {
+      sourceType: "module",
+      globals: {
+        URL: "readonly",
+        console: "readonly",
+        process: "readonly",
+      },
+    },
+  },
 );

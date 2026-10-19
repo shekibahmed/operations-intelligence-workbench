@@ -10,6 +10,7 @@ Drafts for announcing Operations Intelligence Workbench. Nothing here has been p
 - `LINKEDIN.md`: LinkedIn posts, carousel scripts and a facts table.
 - `REDDIT.md`: per-subreddit post drafts and a fact-check status section.
 - `LISTINGS.md`: awesome-list and registry submissions with draft entries.
+- `mcp-listings.md`: paste-ready text for the MCP registry, awesome-mcp-servers, Smithery and Glama. Publish steps are in the repo-root `RELEASING.md`.
 - `carousels/`: four rendered 1080x1350 PDFs, each next to its source `.html`.
   - `1-chat-message-governed-decision`
   - `2-review-queue-for-humans`

@@ -1,5 +1,62 @@
 # Operations Intelligence Workbench
 
+Open-source workbench that cites the evidence behind each extracted fact and blocks a high-risk decision until a person records an approval.
+
+## Start the MCP server
+
+Three commands. The first is stdio, for a local agent. The second is streamable HTTP on `127.0.0.1:8787` (`/mcp`, SSE responses, read-only tools). The third points HTTP at a checkout so `validate_packs`, `run_eval` and `scaffold_pack` can run this repo's `pnpm` scripts.
+
+```bash
+npx -y @oiw/mcp-server
+npx -y @oiw/mcp-server --http --port 8787
+OIW_REPO_ROOT="$(pwd)" npx -y @oiw/mcp-server --http --port 8787
+```
+
+`@oiw/mcp-server` reaches npm when a maintainer publishes it from a version tag. The steps are in [`RELEASING.md`](RELEASING.md). Until `npm view @oiw/mcp-server version` succeeds, start the same server from a checkout with `pnpm install && pnpm build && node packages/mcp-server/dist/cli.js`. The HTTP default omits `run_eval` (it writes to `DATABASE_URL`) and `scaffold_pack` (it writes files). Pass `--allow-eval` and `--allow-write` to register them. Restrict the list with `--allowed-tools list_packs,list_fixtures` or `OIW_MCP_ALLOWED_TOOLS`. Details: [`packages/mcp-server/README.md`](packages/mcp-server/README.md).
+
+### Claude Code, Codex and Grok
+
+**Claude Code** (stdio):
+
+```json
+{
+  "mcpServers": {
+    "oiw": {
+      "command": "npx",
+      "args": ["-y", "@oiw/mcp-server"],
+      "env": { "OIW_MCP_ALLOWED_TOOLS": "list_packs,get_pack_manifest,list_fixtures,get_casebook" }
+    }
+  }
+}
+```
+
+HTTP, once `oiw-mcp --http` is listening: `{ "type": "http", "url": "http://127.0.0.1:8787/mcp" }` under the same `oiw` key. A checkout already registers the built stdio server in [`.mcp.json`](.mcp.json).
+
+**Codex** (`~/.codex/config.toml`):
+
+```toml
+[mcp_servers.oiw]
+command = "npx"
+args = ["-y", "@oiw/mcp-server"]
+enabled_tools = ["list_packs", "get_pack_manifest", "list_fixtures", "get_casebook"]
+```
+
+For HTTP, use `url = "http://127.0.0.1:8787/mcp"` instead of `command` and `args`. `enabled_tools` is the allow list.
+
+**Grok** accepts only streaming HTTP or SSE, so the stdio command will not connect. Point `server_url` at an HTTPS `/mcp` you run. Do not use the Render demo URL: that host is the web app, it is not this server, and on the free tier it sleeps when idle.
+
+```json
+{
+  "type": "mcp",
+  "server_url": "https://your-host.example/mcp",
+  "server_label": "oiw",
+  "server_description": "Read-only Scenario Packs, adversarial synthetic fixtures and an evidence casebook.",
+  "allowed_tools": ["list_packs", "get_pack_manifest", "list_fixtures", "get_casebook"]
+}
+```
+
+The Python SDK names that list `allowed_tool_names`.
+
 **AI proposes. A person approves. The system enforces it and keeps the record.**
 
 An open-source, industry-neutral workbench that turns messages, files and
@@ -274,21 +331,20 @@ pnpm architecture:check                   # pack-neutrality and credential-patte
   live demo and the Pages site) gives a language model a map of the docs, the
   packs and the agent surface.
 - **MCP server.** [`packages/mcp-server`](packages/mcp-server/README.md) is a
-  read-mostly stdio server with seven tools: `list_packs`, `get_pack_manifest`,
+  read-mostly server with seven tools: `list_packs`, `get_pack_manifest`,
   `list_fixtures`, `get_casebook`, `validate_packs`, `run_eval` and
-  `scaffold_pack`. It calls no model. `run_eval` writes to the database in
-  `DATABASE_URL`, so point it at a throwaway database, and `scaffold_pack`
-  is refused unless `OIW_MCP_ALLOW_WRITE=1`. Build first, then the checked-in
-  [`.mcp.json`](.mcp.json) registers it for Claude Code sessions started in the
-  checkout:
+  `scaffold_pack`. It calls no model. stdio is the default. `--http` serves
+  streamable HTTP at `/mcp` and starts with the five read-only tools.
+  `run_eval` writes to the database in `DATABASE_URL`, so point it at a
+  throwaway database. `scaffold_pack` is refused unless
+  `OIW_MCP_ALLOW_WRITE=1`. The quickstart and the Claude Code, Codex and Grok
+  snippets are at the top of this file. From a checkout, before the npm
+  package is published, build and use the checked-in [`.mcp.json`](.mcp.json):
 
   ```bash
   pnpm install && pnpm build
-  claude mcp add oiw -- node packages/mcp-server/dist/cli.js   # or rely on .mcp.json
+  node packages/mcp-server/dist/cli.js
   ```
-
-  Configurations for Claude Desktop and Cursor are in the
-  [server README](packages/mcp-server/README.md).
 - **Claude Code plugin.** A plugin with one skill that walks an agent through
   scaffolding, writing, validating and evaluating a new Scenario Pack:
 
