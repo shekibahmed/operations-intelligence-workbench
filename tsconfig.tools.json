@@ -1,12 +1,11 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "declaration": false,
     "declarationMap": false,
     "noEmit": true,
     "paths": {
-      "@oiw/contracts": ["packages/contracts/src/index.ts"]
+      "@oiw/contracts": ["./packages/contracts/src/index.ts"]
     }
   },
   "include": [
