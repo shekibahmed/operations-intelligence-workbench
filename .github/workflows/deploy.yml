@@ -56,7 +56,7 @@ jobs:
           # The commit CI validated, not whatever main is by now.
           ref: ${{ env.DEPLOY_SHA }}
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         if: steps.config.outputs.enabled == 'true'
         with:
           version: 11.25.0
