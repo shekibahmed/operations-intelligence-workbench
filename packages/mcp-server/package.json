@@ -51,9 +51,9 @@
     "postpack": "node scripts/restore-pack.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.32.1",
-    "yaml": "^2.6.0",
-    "zod": "^4.1.5"
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@oiw/scenario-sdk": "workspace:*",

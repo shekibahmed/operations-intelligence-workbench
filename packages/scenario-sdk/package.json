@@ -8,7 +8,7 @@
   "scripts": { "build": "tsc -b", "typecheck": "tsc -b --pretty false" },
   "dependencies": {
     "@oiw/contracts": "workspace:*",
-    "yaml": "^2.6.0",
-    "zod": "^4.1.5"
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
   }
 }
