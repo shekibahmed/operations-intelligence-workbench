@@ -83,7 +83,7 @@ jobs:
         env:
           LIVE_DEMO_URL: ${{ vars.LIVE_DEMO_URL }}
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v3
         with:
