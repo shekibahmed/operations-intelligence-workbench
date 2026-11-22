@@ -5,7 +5,8 @@
     "declarationMap": false,
     "noEmit": true,
     "paths": {
-      "@oiw/contracts": ["./packages/contracts/src/index.ts"]
+      "@oiw/contracts": ["./packages/contracts/src/index.ts"],
+      "@oiw/scenario-sdk": ["./packages/scenario-sdk/src/index.ts"]
     }
   },
   "include": [
