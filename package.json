@@ -20,6 +20,7 @@
     "dev": "pnpm --filter '!@oiw/web' --recursive --if-present run build && pnpm --filter @oiw/web run dev",
     "dev:web-only": "pnpm --filter @oiw/web run dev",
     "eval": "tsx scripts/eval.ts",
+    "eval:llm": "tsx scripts/eval-llm.ts",
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run && pnpm --filter @oiw/web run test && pnpm run test:security",
     "test:security": "vitest run --config tests/security/vitest.config.ts",
