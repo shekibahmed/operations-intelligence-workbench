@@ -191,7 +191,11 @@ Artifacts, evidence coordinates, expected extractions and gold evaluation
 results are authored and versioned together
 (`docs/PACK_AUTHORING.md` §4, the "checksum workflow").
 
-This is the default and only P0 provider; the common `IntelligenceProvider`
+An optional `OpenAICompatibleIntelligenceProvider` (FR-021, ADR-014) talks
+to any OpenAI-compatible chat endpoint and is used only by `pnpm eval:llm`.
+It computes evidence offsets itself from verbatim quotes and withholds any
+value it cannot ground. The fixture provider remains the default and only P0
+provider; the common `IntelligenceProvider`
 interface also defines classification and summarisation, and a live/optional
 provider (`OptionalLLMIntelligenceProvider`, PRD FR-021) can satisfy the same
 interface with no caller-side branching, but no live provider is required or
