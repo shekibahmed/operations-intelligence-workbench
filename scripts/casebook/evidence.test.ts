@@ -42,7 +42,7 @@ async function run(directory: string, args: string[]) {
   try {
     return await exec("pnpm", args, { cwd: directory, env: process.env });
   } catch (error) {
-    if (error !== null && typeof error === "object" && "stdout" in error && "stderr" in error) throw new Error(`${String(error.stdout)}${String(error.stderr)}`);
+    if (error !== null && typeof error === "object" && "stdout" in error && "stderr" in error) throw new Error(`${String(error.stdout)}${String(error.stderr)}`, { cause: error });
     throw error;
   }
 }
