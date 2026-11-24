@@ -25,7 +25,7 @@ async function ffmpeg(args: string[]): Promise<void> {
     await exec("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", ...args], { maxBuffer: 64 * 1024 * 1024 });
   } catch (error) {
     const detail = error instanceof Error && "stderr" in error ? String((error as { stderr: unknown }).stderr) : String(error);
-    throw new Error(`ffmpeg failed: ${detail.slice(0, 1500)}`);
+    throw new Error(`ffmpeg failed: ${detail.slice(0, 1500)}`, { cause: error });
   }
 }
 

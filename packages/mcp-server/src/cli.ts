@@ -85,7 +85,7 @@ export function parseCli(argv: readonly string[], env: Record<string, string | u
     values = parsed.values;
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    throw new Error(`${message}\n\n${HELP}`);
+    throw new Error(`${message}\n\n${HELP}`, { cause: error });
   }
 
   if (values.http && values.stdio) {
