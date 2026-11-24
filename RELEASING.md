@@ -97,7 +97,14 @@ commands as above.
 
 ## 5. Official MCP registry
 
-Install `mcp-publisher` and publish `packages/mcp-server/server.json` after the
+The tag workflow does this for you. After `publish-npm` succeeds, the
+`publish-mcp-registry` job downloads a pinned `mcp-publisher`, checks its
+Sigstore signature, logs in with GitHub OIDC (no token to store) and publishes
+`packages/mcp-server/server.json`. Check the result with the `curl` command at
+the end of this section.
+
+Use the manual steps below only if that job fails or you published from a
+machine. Install `mcp-publisher` and publish `packages/mcp-server/server.json` after the
 npm package is public. The registry rejects a server whose npm package is
 missing or whose `mcpName` does not equal `server.json` `name`.
 
