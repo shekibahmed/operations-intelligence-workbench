@@ -268,7 +268,7 @@ afterAll(async () => {
   await connection.close();
 });
 
-describe.sequential("Postgres persistence repositories", () => {
+describe("Postgres persistence repositories", { concurrent: false }, () => {
   it("round-trips every canonical persisted object", async () => {
     const records = createRecordSet("round-trip");
     await insertRecordSet(records);
@@ -742,7 +742,7 @@ const blankApprovers = [
   ["mixed whitespace", " \u00a0\t\u200b\ufeff "],
 ] as const;
 
-describe.sequential("OIW-919 database-level Approval hardening", () => {
+describe("OIW-919 database-level Approval hardening", { concurrent: false }, () => {
   async function insertUnapproved(slug: string): Promise<RecordSet> {
     const records = createRecordSet(slug);
     await insertRecordSet(records, { withApproval: false });
@@ -877,7 +877,7 @@ describe.sequential("OIW-919 database-level Approval hardening", () => {
   });
 });
 
-describe.sequential("OIW-919 migration 0004 applies to a database holding existing data", () => {
+describe("OIW-919 migration 0004 applies to a database holding existing data", { concurrent: false }, () => {
   const migrationsDirectory = resolve(import.meta.dirname, "../../../db/migrations");
   const scratchName = `oiw919_upgrade_${process.pid}_${randomUUID().replaceAll("-", "").slice(0, 8)}`;
   const scratchUrl = new URL(process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/oiw");
