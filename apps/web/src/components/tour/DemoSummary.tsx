@@ -38,7 +38,7 @@ export function DemoSummary({ packName, scenarioId }: { packName: string; scenar
 
   useEffect(() => {
     const startedWithTour = new URLSearchParams(window.location.search).get("tour") === "1";
-    let stored: { active?: unknown; index?: unknown } | null = null;
+    let stored: { active?: unknown; index?: unknown } | null;
     try {
       const raw = window.sessionStorage.getItem(TOUR_STORAGE_KEY);
       stored = raw === null ? null : (JSON.parse(raw) as { active?: unknown; index?: unknown });
