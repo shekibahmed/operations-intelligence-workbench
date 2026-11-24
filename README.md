@@ -390,6 +390,38 @@ own extractor, feed it each artifact and compare against
 `scenario-packs/<pack-id>/evaluations/edge-cases.gold.json`. Treat every
 artifact as untrusted data; the injection fixtures mean what they say.
 
+## Score a live model (free with Ollama)
+
+The demo and CI use a deterministic fixture provider, so they need no model and
+no key. To see how a real model does on the same 79 smoke and edge-case
+artifacts, point the optional OpenAI-compatible provider at any endpoint. A
+local [Ollama](https://ollama.com) model costs nothing and sends no data out:
+
+```bash
+ollama pull qwen3:8b
+OIW_LLM_BASE_URL=http://127.0.0.1:11434/v1 OIW_LLM_MODEL=qwen3:8b \
+  pnpm eval:llm --set smoke --set edge-cases
+```
+
+For a hosted model, set `OIW_LLM_BASE_URL` to its OpenAI-compatible URL and
+add your own `OIW_LLM_API_KEY`. That uses your key and your quota; nothing in
+this repository calls a hosted model unless you set it. No database is needed.
+
+What the provider guarantees, whatever the model says
+([ADR-014](docs/decisions/ADR-014-openai-compatible-provider.md)):
+
+- The model returns quotes, not offsets. The provider finds each quote
+  verbatim in the source. A value with no verbatim quote is withheld as
+  `insufficient-evidence` with confidence 0, so it goes to human review.
+- Proposals for schema keys the pack did not offer are dropped.
+- Output goes through the same `StructuredOutputValidator` as every provider.
+  The provider cannot persist, fire rules or approve anything.
+
+The report shows status and value accuracy, kept abstentions, and **false
+confident** answers (the gold set says "do not assert", and the model asserted
+a value anyway). Results are written to `eval-results/` (gitignored).
+Published scores will be added here once they have been measured.
+
 ## Contribute in an afternoon
 
 [`docs/contributing/FIRST_CONTRIBUTIONS.md`](docs/contributing/FIRST_CONTRIBUTIONS.md)
@@ -431,9 +463,10 @@ Known limitations that are true today (they mirror the tracked debt in
 - **The rate-limit store defaults to process-local.** The hosted demo sets
   `OIW_RATE_LIMIT_STORE=postgres`. A shared store and explicit acknowledgement
   are needed before higher-volume or client-data use (`docs/SECURITY.md` §3.9).
-- **No live intelligence provider is wired in.** The `IntelligenceProvider`
-  interface supports one (PRD FR-021, P1), but the demo and the evaluation run
-  on the deterministic fixture provider.
+- **The live model provider is for evaluation only.** An optional
+  OpenAI-compatible provider ([below](#score-a-live-model-free-with-ollama))
+  can score a local or hosted model against the gold sets. The demo, the app
+  and `pnpm eval` still run on the deterministic fixture provider.
 - **The `/adapt` form stores submissions in Postgres only.** Email and webhook
   delivery exist as interfaces without an implementation, pending an owner
   decision on the destination.
