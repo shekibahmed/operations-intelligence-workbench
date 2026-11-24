@@ -1,3 +1,4 @@
 export * from "./fixture-provider.js";
 export * from "./provider.js";
 export * from "./validation.js";
+export * from "./openai-compatible-provider.js";
