@@ -5,9 +5,11 @@
 1. Check [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) (the scripted
    walkthrough) and [`docs/PACK_AUTHORING.md`](docs/PACK_AUTHORING.md)
    (adding your own Scenario Pack) — most questions are answered there.
-2. Search
+2. Ask in
+   [GitHub Discussions](https://github.com/shekibahmed/operations-intelligence-workbench/discussions),
+   or search
    [existing issues](https://github.com/shekibahmed/operations-intelligence-workbench/issues)
-   — if your question is new, open one with the **Question** template.
+   and open one with the **Question** template.
 
 ## Bugs and security issues
 
